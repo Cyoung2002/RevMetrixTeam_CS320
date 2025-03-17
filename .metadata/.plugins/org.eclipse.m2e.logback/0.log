@@ -1,0 +1,56 @@
+2025-03-16 17:53:54,688 [Worker-1: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2025-03-16 17:56:48,710 [Worker-22: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-build-tools:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/build-tools/pom.xml.
+2025-03-16 17:56:49,005 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:49,008 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2025-03-16 17:56:49,015 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:49,015 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/build-tools/src/test/resources
+2025-03-16 17:56:49,131 [Worker-22: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-standard-compat:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/compat/pom.xml.
+2025-03-16 17:56:49,220 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:49,221 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2025-03-16 17:56:49,228 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:49,229 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/compat/src/test/resources
+2025-03-16 17:56:49,479 [Worker-24: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using NULL lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-standard:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/pom.xml.
+2025-03-16 17:56:49,631 [Worker-24: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-build-tools:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/build-tools/pom.xml.
+2025-03-16 17:56:49,633 [Worker-9: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:49,634 [Worker-9: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2025-03-16 17:56:49,666 [Worker-9: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:49,666 [Worker-9: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/compat/src/test/resources
+2025-03-16 17:56:49,680 [Worker-24: Updating Maven Dependencies] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-standard-compat:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/compat/pom.xml.
+2025-03-16 17:56:49,964 [Worker-22: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-standard-impl:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/impl/pom.xml.
+2025-03-16 17:56:50,042 [Worker-22: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-standard-compat:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/compat/pom.xml.
+2025-03-16 17:56:50,050 [Worker-22: Building] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/impl: org.apache.taglibs:taglibs-standard-impl:1.2.5 with classifier  to /impl/target/classes
+2025-03-16 17:56:50,075 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:50,076 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2025-03-16 17:56:50,097 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:50,098 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2025-03-16 17:56:50,254 [Worker-22: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-standard-jstlel:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/jstlel/pom.xml.
+2025-03-16 17:56:50,280 [Worker-22: Building] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/impl: org.apache.taglibs:taglibs-standard-impl:1.2.5 with classifier  to /impl/target/classes
+2025-03-16 17:56:50,303 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:50,305 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 6 resources
+2025-03-16 17:56:50,322 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:50,323 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
+2025-03-16 17:56:50,430 [Worker-22: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-standard-spec:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/spec/pom.xml.
+2025-03-16 17:56:50,496 [Worker-22: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-standard-impl:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/impl/pom.xml.
+2025-03-16 17:56:50,509 [Worker-22: Building] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/spec: org.apache.taglibs:taglibs-standard-spec:1.2.5 with classifier  to /spec/target/classes
+2025-03-16 17:56:50,566 [Worker-22: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-standard-compat:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/compat/pom.xml.
+2025-03-16 17:56:50,570 [Worker-22: Building] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/spec: org.apache.taglibs:taglibs-standard-spec:1.2.5 with classifier  to /spec/target/classes
+2025-03-16 17:56:50,570 [Worker-22: Building] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/impl: org.apache.taglibs:taglibs-standard-impl:1.2.5 with classifier  to /impl/target/classes
+2025-03-16 17:56:50,621 [Worker-22: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: org.apache.taglibs:taglibs-standard-jstlel:1.2.5 @ /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/jstlel/pom.xml.
+2025-03-16 17:56:50,623 [Worker-22: Building] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/spec: org.apache.taglibs:taglibs-standard-spec:1.2.5 with classifier  to /spec/target/classes
+2025-03-16 17:56:50,623 [Worker-22: Building] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/impl: org.apache.taglibs:taglibs-standard-impl:1.2.5 with classifier  to /impl/target/classes
+2025-03-16 17:56:50,656 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:50,656 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/spec/src/main/resources
+2025-03-16 17:56:50,658 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:50,658 [Worker-22: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/spec/src/test/resources
+2025-03-16 17:56:51,774 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:51,774 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 4 resources
+2025-03-16 17:56:51,780 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:51,780 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /Users/caroline/Desktop/cs320-Spring2025/RevMetrixTeam_CS320/CS320_Lab02/war/WEB-INF/taglibs-standard-1.2.5/compat/src/test/resources
+2025-03-16 17:56:51,866 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:51,866 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 14 resources
+2025-03-16 17:56:51,885 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:51,886 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2025-03-16 17:56:51,978 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:51,979 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 6 resources
+2025-03-16 17:56:51,986 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2025-03-16 17:56:51,987 [Worker-15: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 2 resources
