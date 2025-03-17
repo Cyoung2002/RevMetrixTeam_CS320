@@ -25,22 +25,24 @@
 			<table>
 				<tr>
 					<td class="label">First number:</td>
-					<td><input type="text" name="first" size="12" value="${first}" /></td>
+					<td><input type="text" name="first" size="12" value="${numbers.firstStr}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Second number:</td>
-					<td><input type="text" name="second" size="12" value="${second}" /></td>
+					<td><input type="text" name="second" size="12" value="${numbers.secondStr}" /></td>
 				</tr>
 				 <tr>
 					<td class="label">Third number:</td>
-					<td><input type="text" name="third" size="12" value="${Third}" /></td>
+					<td><input type="text" name="third" size="12" value="${numbers.thirdStr}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Result:</td>
-					<td>${result}</td>
+					<td>${numbers.result}</td>
 				</tr>
 			</table>
 			<input type="Submit" name="submit" value="Add Numbers!">
 		</form>
+		
+		<button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
 	</body>
 </html>

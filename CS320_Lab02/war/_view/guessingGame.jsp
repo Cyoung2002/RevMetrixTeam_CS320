@@ -8,6 +8,7 @@
 	</head>
 
 	<body>
+			<button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
 		<form action="${pageContext.servletContext.contextPath}/guessingGame" method="post">
 			<c:if test="${empty game}">
 				<input name="startGame" type="submit" value="Start game" />
