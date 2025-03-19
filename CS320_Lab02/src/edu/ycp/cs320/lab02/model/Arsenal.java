@@ -6,14 +6,14 @@ import java.util.ArrayList;
 public class Arsenal {
 	
 	private String arsenalName;
-	private ArrayList balls;
+	private ArrayList<Ball> balls;
 	
 	
 	public Arsenal(){
 	}
 	public Arsenal(String name){
 		this.arsenalName = name;
-		balls = new ArrayList();
+		balls = new ArrayList<Ball>();
 	}
 
 	
@@ -23,12 +23,24 @@ public class Arsenal {
 	public String getArsenalName() {
 		return arsenalName;
 	}
-	public ArrayList getBalls() {
+	public ArrayList<Ball> getBalls() {
 		return balls;
 	}
 	
 	
-	public boolean addNewBall(Object ball) {
+	public Ball makeBall(String name, String color, Double weight) {
+		Ball bally = new Ball();
+		
+		bally.setName(name);
+		bally.setColor(color);
+		//bally.setBrand(brand);
+		//bally.setCore(core);
+		//bally.setDiameter(diameter);
+		bally.setWeight(weight);
+		
+		return bally;
+	}
+	public boolean addNewBall(Ball ball) {
 		if(this.balls.contains(ball)) {
 			return false;
 		}
@@ -37,14 +49,14 @@ public class Arsenal {
 			return true;
 		}
 	}
-	public boolean duplicateBall(Object ball) {
+	public boolean duplicateBall(Ball ball) {
 		if(this.balls.contains(ball)) {
 			this.balls.add(ball);
 			return true;
 		}
 		return false;
 	}
-	public boolean deleteBall(Object ball) {
+	public boolean deleteBall(Ball ball) {
 		if(this.balls.contains(ball)) {
 			this.balls.remove(ball);
 			return true;

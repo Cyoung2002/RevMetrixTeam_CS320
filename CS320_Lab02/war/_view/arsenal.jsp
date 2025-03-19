@@ -41,7 +41,7 @@
     <!-- Form -->
     <form action="/arsenal" method="post">
 
-        <!-- Existing Ball Dropdown -->
+        <!-- Existing Ball Drop-down -->
         <div id="existingBallDropdown">
             <label for="selectedBall">Select a Ball:</label>
             <select name="selectedBall" id="selectedBall">
