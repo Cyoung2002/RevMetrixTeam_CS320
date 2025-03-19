@@ -2,9 +2,12 @@ package edu.ycp.cs320.lab02.model;
 
 
 public class Ball {
+	private Double diameter;
 	private Double weight;
 	private String color;
 	private String name;
+	private String brand;
+	private String core;
 	
 	public Ball(){
 	}
@@ -31,6 +34,30 @@ public class Ball {
 	
 	void setName(String name) {
 		this.name = name;
+	}
+	
+	Double getDiameter() {
+		return diameter;
+	}
+	
+	void setDiameter(Double diameter) {
+		this.diameter = diameter;
+	}
+	
+	String getBrand() {
+		return brand;
+	}
+	
+	void setBrand(String brand) {
+		this.brand = brand;
+	}
+	
+	String getCore() {
+		return core;
+	}
+	
+	void setCore(String core) {
+		this.core = core;
 	}
 	
 }
