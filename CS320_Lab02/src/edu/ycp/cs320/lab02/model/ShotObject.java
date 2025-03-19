@@ -25,6 +25,8 @@ public class ShotObject {
 		//during shot.
 		
 		this.shotNum = shotNum;
+		this.count = count;
+		this.leave = leave;
 		
 	}
 	
