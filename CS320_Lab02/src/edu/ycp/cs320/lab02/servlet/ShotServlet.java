@@ -7,9 +7,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab02.controller.NumbersController;
-import edu.ycp.cs320.lab02.model.GuessingGame;
-import edu.ycp.cs320.lab02.model.Numbers;
+//import edu.ycp.cs320.lab02.controller.NumbersController;
+//import edu.ycp.cs320.lab02.model.GuessingGame;
+//import edu.ycp.cs320.lab02.model.Numbers;
+
+import edu.ycp.cs320.lab02.model.ShotObject;
+import edu.ycp.cs320.lab02.model.Frame;
+import edu.ycp.cs320.lab02.model.Ball;
+import edu.ycp.cs320.lab02.model.Arsenal;
 
 public class ShotServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
