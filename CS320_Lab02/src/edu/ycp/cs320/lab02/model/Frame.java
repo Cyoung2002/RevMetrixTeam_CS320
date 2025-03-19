@@ -9,9 +9,11 @@ public class Frame {
 	private String result;
 	private List<Integer> shotNum;
 	
+	// Generic frame constructor
 	public Frame() {
 	}
 	
+	// Complete frame constructor
 	public Frame(int frame, int lane, String result, int shotNum){
 		this.frameNum = frame;
 		this.laneNum = lane;
@@ -43,7 +45,7 @@ public class Frame {
 		return result;
 	}
 	
-	public void addShotNum(int shot) {
+	public void setShotNum(int shot) {
         this.shotNum.add(shot);
     }
 
@@ -51,15 +53,17 @@ public class Frame {
         return shotNum;
     }
     
+    // Method to cancel (clear) a frame. Clears the shot and sets the result of the frame to a blank String.
     public boolean cancelFrame() {
         this.result = "";
         this.shotNum.clear();
         return true;
     }
     
-    public boolean modifyFrame(String newResult, List<Integer> newShots) {
+    // Method to modify the fields of a frame. Allows user to input new result and shot number values.
+    public boolean modifyFrame(String newResult, List<Integer> newShot) {
         this.result = newResult;
-        this.shotNum = new ArrayList<>(newShots);
+        this.shotNum = new ArrayList<>(newShot);
         return true;
     }
 }
