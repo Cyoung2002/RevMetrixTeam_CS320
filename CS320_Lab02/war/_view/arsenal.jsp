@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 
 <head>
@@ -53,7 +54,7 @@
             </select>
         </div>
 
-        <!-- Add New Ball Fields -->
+         <!-- Add New Ball Fields -->
         <div id="newBallFields">
             <label>Name:</label>
             <input type="text" name="name">

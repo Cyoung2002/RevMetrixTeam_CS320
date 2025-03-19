@@ -23,10 +23,9 @@ public class ArsenalServlet extends HttpServlet {
 		arsenal.addNewBall(arsenal.makeBall("smallball", "blue", 6.8));
 		arsenal.addNewBall(arsenal.makeBall("corny", "yellow", 4.0));
 		
-		
 		// Pass list of balls to JSP
 		request.setAttribute("balls", arsenal.getBalls()); 
-	    request.getRequestDispatcher("/view/arsenal.jsp").forward(request, response); 
+	    request.getRequestDispatcher("/_view/arsenal.jsp").forward(request, response);
 	}
 	
 	@Override
@@ -62,7 +61,7 @@ public class ArsenalServlet extends HttpServlet {
 	        arsenal.deleteBall(ballToDelete);
 	    }
 
-	    response.sendRedirect("/view/arsenal");
+	    response.sendRedirect("/_view/arsenal");
 	}
 
 }
