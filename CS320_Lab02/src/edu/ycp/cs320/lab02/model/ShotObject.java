@@ -7,9 +7,14 @@ public class ShotObject {
 	private Ball shotBall = new Ball(); //Reference to ball object
 	private int[] count = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};	//How many pins & which pins are knocked over
 	private int[] leave = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};	//How many & which pins are left standing
-	// Frame shotFrame = new Frame(); can't make until frame object added
+	Frame shotFrame = new Frame();
 	private String typeOfLeave = "";
 	private String Position = "";
+	
+	
+	public ShotObject() {
+		
+	}
 	
 	public ShotObject(int shotNum, int[] count, int[]leave){
 		//Constructor to create instance of shot
