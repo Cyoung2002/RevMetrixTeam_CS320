@@ -12,6 +12,15 @@ public class Ball {
 	public Ball(){
 	}
 	
+	public Ball(Double diameter, Double weight, String color, String name, String brand, String core) {
+		this.diameter = diameter;
+		this.weight = weight;
+		this.color = color;
+		this.name = name;
+		this.brand = brand;
+		this.core = core;
+		
+	}
 	Double getWeight() {
 		return weight;
 	}
