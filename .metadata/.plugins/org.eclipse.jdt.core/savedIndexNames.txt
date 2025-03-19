@@ -18,7 +18,6 @@ INDEX VERSION 1.134+/Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProje
 4112385756.index
 3222910155.index
 3166893072.index
-3410831927.index
 1062812671.index
 172096567.index
 3941949757.index
