@@ -2,10 +2,12 @@ package edu.ycp.cs320.lab02.servlet;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList; // import the ArrayList class
 
 //import edu.ycp.cs320.lab02.controller.NumbersController;
 //import edu.ycp.cs320.lab02.model.GuessingGame;
@@ -18,99 +20,37 @@ import edu.ycp.cs320.lab02.model.Arsenal;
 
 public class ShotServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-
-		System.out.println("Shot Servlet: doGet");	
-		
-		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/shot.jsp").forward(req, resp);
-	}
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		
-		System.out.println("Shot: doPost");
-		
-		Numbers model = new Numbers();
-		NumbersController controller = new NumbersController();
-		controller.setModel(model);
-		
-
-		// holds the error message text, if there is any
-		String errorMessage = null;
-
-
-		
-		
-		// decode POSTed form parameters and dispatch to controller
-		try {
-			
-			try {
-				
-				Double first = getDoubleFromParameter(req.getParameter("first"));
-				Double second = getDoubleFromParameter(req.getParameter("second"));
-				Double third = getDoubleFromParameter(req.getParameter("third"));
-		
-				
-				
-				// check for errors in the form data before using is in a calculation
-					controller.setAddNum(first, second, third);
-					controller.add();
-				
-			
-			
-			}catch (NullPointerException e){
-				
-				//errorMessage = "Please specify three numbers";
-			}
-			// otherwise, data is good, do the calculation
-			// must create the controller each time, since it doesn't persist between POSTs
-			// the view does not alter data, only controller methods should be used for that
-			// thus, always call a controller method to operate on the data
-
-			
-		} catch (NumberFormatException e) {
-			//errorMessage = "Invalid double";
-			
-		}
-		
-		
-		String firstStr = req.getParameter("first");
-		String secondStr = req.getParameter("second");
-		String thirdStr = req.getParameter("third");
-//		String resultStr = req.getParameter("result");
-		
-		controller.setAddNumStr(firstStr,secondStr,thirdStr);
-		
-		req.setAttribute("numbers", model);
-		
-		// Add parameters as request attributes
-		// this creates attributes named "first" and "second for the response, and grabs the
-		// values that were originally assigned to the request attributes, also named "first" and "second"
-		// they don't have to be named the same, but in this case, since we are passing them back
-		// and forth, it's a good idea
-		
-		// add result objects as attributes
-		// this adds the errorMessage text and the result to the response
-		req.setAttribute("errorMessage", errorMessage);
-	//	req.setAttribute("result", result);
-		//same thing "numbers",model
-
-		
-		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/shot.jsp").forward(req, resp);
-	}
-
-	// gets double from the request with attribute named s
-	private Double getDoubleFromParameter(String s) {
-		if (s == null || s.equals("")) {
-			return null;
-		} else {
-			return Double.parseDouble(s);
-		}
-	}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int shotNum = Integer.parseInt(request.getParameter("shotNum"));
+            int[] count = new int[10];
+            int[] leave = new int[10];
+            
+            // Populate count and leave arrays from request parameters
+            for (int i = 0; i < 10; i++) {
+                count[i] = Integer.parseInt(request.getParameter("count" + i));
+                leave[i] = Integer.parseInt(request.getParameter("leave" + i));
+            }
+            
+            // Instantiate Ball and Frame objects
+            Ball shotBall = new Ball(); // Modify if Ball has specific attributes
+            Frame shotFrame = new Frame(); // Modify if Frame needs specific setup
+            
+            // Create ShotObject instance
+            ShotObject shot = new ShotObject(shotNum, count, leave, shotBall, shotFrame);
+            
+            // Set ShotObject as request attribute
+            request.setAttribute("shot", shot);
+            
+            // Forward request to JSP page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/shot.jsp");
+            dispatcher.forward(request, response);
+        } catch (NumberFormatException e) {
+            request.setAttribute("error", "Invalid input format. Please enter numeric values.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
+        }
+    }
 }
