@@ -112,6 +112,13 @@ public class ShotObject {
 		this.shotBall = shotBall;
 	}
 	
+	public Frame getshotFrame() {
+		return shotFrame;
+	}
+	
+	public void setShotFrame(Frame shotFrame) {
+		this.shotFrame = shotFrame;
+	}
 	
 }
 
