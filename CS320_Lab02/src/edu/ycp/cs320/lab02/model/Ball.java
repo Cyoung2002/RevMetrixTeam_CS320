@@ -22,51 +22,51 @@ public class Ball {
 		
 	}
 	
-	Double getWeight() {
+	public Double getWeight() {
 		return weight;
 	}
 	
-	void setWeight(Double weight) {
+	public void setWeight(Double weight) {
 		this.weight = weight;
 	}
 	
-	String getColor(){
+	public String getColor(){
 		return color;
 	}
 	
-	void setColor(String color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 	
-	String getName() {
+	public String getName() {
 		return name;
 	}
 	
-	void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	
-	Double getDiameter() {
+	public Double getDiameter() {
 		return diameter;
 	}
 	
-	void setDiameter(Double diameter) {
+	public void setDiameter(Double diameter) {
 		this.diameter = diameter;
 	}
 	
-	String getBrand() {
+	public String getBrand() {
 		return brand;
 	}
 	
-	void setBrand(String brand) {
+	public void setBrand(String brand) {
 		this.brand = brand;
 	}
 	
-	String getCore() {
+	public String getCore() {
 		return core;
 	}
 	
-	void setCore(String core) {
+	public void setCore(String core) {
 		this.core = core;
 	}
 	
