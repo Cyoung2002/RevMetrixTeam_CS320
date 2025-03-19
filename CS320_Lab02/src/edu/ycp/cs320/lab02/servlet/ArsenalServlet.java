@@ -11,17 +11,20 @@ import edu.ycp.cs320.lab02.model.Arsenal;
 import edu.ycp.cs320.lab02.model.Ball; 
 
 public class ArsenalServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 	
+	private static final long serialVersionUID = 1L;
 	Arsenal arsenal = new Arsenal("Demo");
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// Populate ball arsenal with demo balls
 		Ball bally = arsenal.makeBall("BigBall", "red", 2.5);
 		arsenal.addNewBall(bally);
 		arsenal.addNewBall(arsenal.makeBall("smallball", "blue", 6.8));
 		arsenal.addNewBall(arsenal.makeBall("corny", "yellow", 4.0));
+		
+		System.out.println("Arsenal Servlet: doGet");	
 		
 		// Pass list of balls to JSP
 		request.setAttribute("balls", arsenal.getBalls()); 
@@ -30,7 +33,10 @@ public class ArsenalServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String action = request.getParameter("action");
+	    
+		String action = request.getParameter("action");
+	    
+	    System.out.println("Arsenal Servlet: doPost");
 
 	    if ("addNew".equals(action)) {
 	        // Adding a new ball
@@ -61,7 +67,8 @@ public class ArsenalServlet extends HttpServlet {
 	        arsenal.deleteBall(ballToDelete);
 	    }
 
-	    response.sendRedirect("/_view/arsenal");
+	    response.sendRedirect("/_view/arsenal.jsp");
+	    //request.getRequestDispatcher("/_view/arsenal.jsp").forward(request, response);
 	}
 
 }
