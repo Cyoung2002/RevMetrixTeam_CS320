@@ -5,6 +5,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import edu.ycp.cs320.lab02.model.Frame;
 
 public class FrameTest {
@@ -15,6 +18,7 @@ public class FrameTest {
 		model = new Frame();
 	}
 	
+	// Getters and Setters Tests
 	@Test
 	public void testSetFrameNum() {
 		model.setFrameNum(3);
@@ -53,14 +57,29 @@ public class FrameTest {
 	}
 	
 	@Test
-	public void testAddShotNum() {
-		model.addShotNum(1);
+	public void testSetShotNum() {
+		model.setShotNum(1);
 		assertEquals(1, model.getShotNum());
 	}
 	
 	@Test
 	public void testGetShotNum() {
-		model.addShotNum(2);
+		model.setShotNum(2);
 		assertEquals(2, model.getShotNum());
+	}
+	
+	// Tests of Frame Methods
+	@Test
+	public void testCancelFrame() {
+		model.setShotNum(2);
+		model.setResult("Strike");
+		assertEquals(true, model.cancelFrame());
+	}
+	
+	@Test
+	public void testModifyFrame() {
+	    model.setShotNum(2);
+	    model.setResult("Strike");
+	    assertEquals(true, model.modifyFrame("Spare", Arrays.asList(1)));
 	}
 }
