@@ -34,6 +34,8 @@
 			<button id="arsenalbutton" onclick="location.href= 'http://localhost:8081/lab02/arsenal' ">Arsenal</button>
 			</>
 			<button id="shotbutton" onclick="location.href= 'http://localhost:8081/lab02/shot' ">Log a Shot</button>
+			</>
+			<button id="establishmentbutton" onclick="location.href= 'http://localhost:8081/lab02/establishment' ">Establishments</button>
 		</div>
 	</body>
 </html>
