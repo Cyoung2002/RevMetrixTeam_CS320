@@ -4,7 +4,7 @@ package edu.ycp.cs320.lab02.model;
 
 public class ShotObject {
 	private int shotNum;	//shotNum is which shot number (1 or 2)
-	//private Ball shotBall = new Ball(); can't make until ball object added
+	private Ball shotBall = new Ball(); //Reference to ball object
 	private int[] count = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};	//How many pins & which pins are knocked over
 	private int[] leave = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};	//How many & which pins are left standing
 	// Frame shotFrame = new Frame(); can't make until frame object added
@@ -29,8 +29,8 @@ public class ShotObject {
 		//this.count = ;	//Need to have access to frame information to reference previous shot to determine
 		//this.leave = ;	//Need to have access to frame information to reference previous shot to determine
 		// DO NOT DISCARD FRAME
-		this.typeOfLeave = ""; //Return current leave to empty since it is not known anymore
-		this.Position = ""; //Return current position to empty since it is not known anymore
+		this.setTypeOfLeave(""); //Return current leave to empty since it is not known anymore
+		this.setPosition(""); //Return current position to empty since it is not known anymore
 		return true;
 	}
 	
@@ -48,18 +48,65 @@ public class ShotObject {
 	public int getShotNum() {
 		return shotNum;
 	}
-
+	
+	//Gets the entire array of pin data
 	public int[] getCount() {
 		return count;
 	}
 	
+	//Gets one pins data out of the array
 	public int getCountIndividual(int i) {
 		return count[i];
 	}
 
+	//This method is meant to allow the system to change the entire array of pins to whatever values
 	public void setCount(int[] count) {
 		this.count = count;
 	}
+	
+	//This method is meant to allow the system to change a particular pins state
+	public void setCountIndividual(int whichPin, int knocked) {
+		count[whichPin] = knocked; 
+	}
+	
+	//Leave section may be redundant
+	public int[] getLeave() {
+		return leave;
+	}
+	public int getLeaveIndividual(int i) {
+		return count[i];
+	}
+	public void setLeave(int[] leave) {
+		this.leave = leave;
+	}
+	public void setLeaveIndividual(int whichPin, int knocked) {
+		count[whichPin] = knocked; 
+	}
+
+	public String getTypeOfLeave() {
+		return typeOfLeave;
+	}
+
+	public void setTypeOfLeave(String typeOfLeave) {
+		this.typeOfLeave = typeOfLeave;
+	}
+
+	public String getPosition() {
+		return Position;
+	}
+
+	public void setPosition(String position) {
+		Position = position;
+	}
+
+	public Ball getShotBall() {
+		return shotBall;
+	}
+
+	public void setShotBall(Ball shotBall) {
+		this.shotBall = shotBall;
+	}
+	
 	
 }
 
