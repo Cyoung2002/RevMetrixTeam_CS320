@@ -25,6 +25,10 @@
     <servlet-name>MultiplyNumbersServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab02.servlet.MultiplyNumbersServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ShotServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.ShotServlet</servlet-class>
+  </servlet>
   
   <!-- AJAX servlets. -->
   <servlet>
@@ -55,6 +59,10 @@
   <servlet-mapping>
     <servlet-name>MultiplyNumbersServlet</servlet-name>
     <url-pattern>/multiplyNumbers</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ShotServlet</servlet-name>
+    <url-pattern>/shot</url-pattern>
   </servlet-mapping>
   
   <!--  AJAX servlet mappings. -->
