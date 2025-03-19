@@ -9,6 +9,9 @@ public class Frame {
 	private String result;
 	private List<Integer> shotNum;
 	
+	public Frame() {
+	}
+	
 	public Frame(int frame, int lane, String result, int shotNum){
 		this.frameNum = frame;
 		this.laneNum = lane;

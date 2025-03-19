@@ -21,6 +21,7 @@ public class Ball {
 		this.core = core;
 		
 	}
+	
 	Double getWeight() {
 		return weight;
 	}
