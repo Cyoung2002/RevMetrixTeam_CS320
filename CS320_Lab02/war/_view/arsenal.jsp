@@ -1,48 +1,70 @@
 <!DOCTYPE html>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html lang="en">
 
-<html>
-	<head>
-		<title>Add Numbers</title>
-		<style type="text/css">
-		.error {
-			color: red;
-		}
-		
-		td.label {
-			text-align: right;
-		}
-		</style>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <title>Bowling Ball Arsenal</title>
+    <script>
+        function updateForm() {
+            let action = document.getElementById("action").value;
+            let newBallFields = document.getElementById("newBallFields");
+            let existingBallDropdown = document.getElementById("existingBallDropdown");
 
-	<body>
-		<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-		</c:if>
-	
-		<form action="${pageContext.servletContext.contextPath}/addNumbers" method="post">
-			<table>
-				<tr>
-					<td class="label">First number:</td>
-					<td><input type="text" name="first" size="12" value="${numbers.firstStr}" /></td>
-				</tr>
-				<tr>
-					<td class="label">Second number:</td>
-					<td><input type="text" name="second" size="12" value="${numbers.secondStr}" /></td>
-				</tr>
-				 <tr>
-					<td class="label">Third number:</td>
-					<td><input type="text" name="third" size="12" value="${numbers.thirdStr}" /></td>
-				</tr>
-				<tr>
-					<td class="label">Result:</td>
-					<td>${numbers.result}</td>
-				</tr>
-			</table>
-			<input type="Submit" name="submit" value="Add Numbers!">
-		</form>
-		
-		<button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
-	</body>
+            if (action === "addNew") {
+                newBallFields.style.display = "block";
+                existingBallDropdown.style.display = "none";
+            } else {
+                newBallFields.style.display = "none";
+                existingBallDropdown.style.display = "block";
+            }
+        }
+
+        window.onload = function() {
+            updateForm(); // Set correct form state on page load
+        };
+    </script>
+</head>
+<body>
+    <h2>Manage Your Bowling Ball Arsenal</h2>
+
+    <!-- Action Selection -->
+    <label for="action">Choose an action:</label>
+    <select id="action" name="action" onchange="updateForm()">
+        <option value="addNew">Add New Ball</option>
+        <option value="addDuplicate">Duplicate Existing Ball</option>
+        <option value="delete">Delete Existing Ball</option>
+    </select>
+
+    <br><br>
+
+    <!-- Form -->
+    <form action="/arsenal" method="post">
+
+        <!-- Existing Ball Drop-down -->
+        <div id="existingBallDropdown">
+            <label for="selectedBall">Select a Ball:</label>
+            <select name="selectedBall" id="selectedBall">
+                <c:forEach var="ball" items="${balls}">
+                    <option value="${ball.name},${ball.color},${ball.weight}">
+                        ${ball.name} - ${ball.color} - ${ball.weight} lbs
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
+
+        <!-- Add New Ball Fields -->
+        <div id="newBallFields">
+            <label>Name:</label>
+            <input type="text" name="name">
+            <label>Color:</label>
+            <input type="text" name="color">
+            <label>Weight:</label>
+            <input type="number" name="weight" step="0.1">
+        </div>
+
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
 </html>
