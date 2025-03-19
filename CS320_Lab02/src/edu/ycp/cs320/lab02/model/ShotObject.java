@@ -17,10 +17,6 @@ public class ShotObject {
 	}
 	
 	public ShotObject(int shotNum, int[] count, int[]leave){
-		//Constructor to create instance of shot
-		//Should have reference to frame, be able to access and use logic to determine
-		//where in frame the shot is (to instantiate if it's the first or second shot/new frame etc
-		
 		//Should instantiate with previously used/selected ball, but can be changed
 		//during shot.
 		
@@ -29,6 +25,40 @@ public class ShotObject {
 		this.leave = leave;
 		
 	}
+	
+	public ShotObject(int shotNum, int[] count, int[]leave, Ball shotBall) {
+		//Should instantiate with previously used/selected ball, but can be changed
+		//during shot.
+		
+		this.shotNum = shotNum;
+		this.count = count;
+		this.leave = leave;
+		this.shotBall = shotBall;
+	}
+	
+
+	public ShotObject(int shotNum, int[] count, int[]leave, Ball shotBall, Frame shotFrame) {
+		//Should instantiate with previously used/selected ball, but can be changed
+		//during shot.
+		
+		this.shotNum = shotNum;
+		this.count = count;
+		this.leave = leave;
+		this.shotBall = shotBall;
+		this.shotFrame = shotFrame;
+	}
+	
+	public ShotObject(int shotNum, int[] count, int[]leave, Frame shotFrame) {
+		//Should instantiate with previously used/selected ball, but can be changed
+		//during shot.
+		
+		this.shotNum = shotNum;
+		this.count = count;
+		this.leave = leave;
+		this.shotFrame = shotFrame;
+
+	}
+	
 	
 	public boolean discardShot() {
 		this.shotNum = 0;	//shotNum is set to 0, to show the shot has been thrown away
