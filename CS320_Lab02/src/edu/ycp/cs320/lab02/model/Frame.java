@@ -1,16 +1,19 @@
 package edu.ycp.cs320.lab02.model;
 
+import java.util.List;
+import java.util.ArrayList;
+
 public class Frame {
 	private int frameNum;
 	private int laneNum;
 	private String result;
-	private int shotNum;
+	private List<Integer> shotNum;
 	
-	public Frame(int frame, int lane, String result, int shot){
+	public Frame(int frame, int lane, String result, int shotNum){
 		this.frameNum = frame;
 		this.laneNum = lane;
 		this.result = result;
-		this.shotNum = shot;
+		this.shotNum = new ArrayList<>();
 	}
 	
 	public void setFrameNum(int frame) {
@@ -37,11 +40,11 @@ public class Frame {
 		return result;
 	}
 	
-	public void setShotNum(int shot) {
-		this.shotNum = shot;
-	}
-	
-	public int getShotNum() {
-		return shotNum;
-	}
+	public void addShotNum(int shot) {
+        this.shotNum.add(shot);
+    }
+
+    public List<Integer> getShotNum() {
+        return shotNum;
+    }
 }
