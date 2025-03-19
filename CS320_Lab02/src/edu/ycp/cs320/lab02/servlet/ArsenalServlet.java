@@ -24,7 +24,7 @@ public class ArsenalServlet extends HttpServlet {
 		arsenal.addNewBall(arsenal.makeBall("smallball", "blue", 6.8));
 		arsenal.addNewBall(arsenal.makeBall("corny", "yellow", 4.0));
 		
-		System.out.println("MultiplyNumbers Servlet: doGet");	
+		System.out.println("Arsenal Servlet: doGet");	
 		
 		// Pass list of balls to JSP
 		request.setAttribute("balls", arsenal.getBalls()); 
@@ -36,7 +36,7 @@ public class ArsenalServlet extends HttpServlet {
 	    
 		String action = request.getParameter("action");
 	    
-	    System.out.println("multiplyNumbers Servlet: doPost");
+	    System.out.println("Arsenal Servlet: doPost");
 
 	    if ("addNew".equals(action)) {
 	        // Adding a new ball
@@ -68,6 +68,7 @@ public class ArsenalServlet extends HttpServlet {
 	    }
 
 	    response.sendRedirect("/_view/arsenal.jsp");
+	    //request.getRequestDispatcher("/_view/arsenal.jsp").forward(request, response);
 	}
 
 }
