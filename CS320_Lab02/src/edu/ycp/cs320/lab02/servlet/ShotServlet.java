@@ -97,7 +97,7 @@ public class ShotServlet extends HttpServlet {
 
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/shot.jsp").forward(req, resp);
 	}
 
 	// gets double from the request with attribute named s
