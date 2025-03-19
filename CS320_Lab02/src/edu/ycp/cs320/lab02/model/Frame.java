@@ -47,4 +47,16 @@ public class Frame {
     public List<Integer> getShotNum() {
         return shotNum;
     }
+    
+    public boolean cancelFrame() {
+        this.result = "";
+        this.shotNum.clear();
+        return true;
+    }
+    
+    public boolean modifyFrame(String newResult, List<Integer> newShots) {
+        this.result = newResult;
+        this.shotNum = new ArrayList<>(newShots);
+        return true;
+    }
 }
