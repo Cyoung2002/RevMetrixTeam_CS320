@@ -40,7 +40,7 @@
     <br><br>
 
     <!-- Form -->
-    <form action="/arsenal" method="post">
+    <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
 
         <!-- Existing Ball Drop-down -->
         <div id="existingBallDropdown">
