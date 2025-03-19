@@ -60,7 +60,7 @@ public class ShotServlet extends HttpServlet {
 			
 			}catch (NullPointerException e){
 				
-				errorMessage = "Please specify three numbers";
+				//errorMessage = "Please specify three numbers";
 			}
 			// otherwise, data is good, do the calculation
 			// must create the controller each time, since it doesn't persist between POSTs
@@ -69,7 +69,7 @@ public class ShotServlet extends HttpServlet {
 
 			
 		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
+			//errorMessage = "Invalid double";
 			
 		}
 		
