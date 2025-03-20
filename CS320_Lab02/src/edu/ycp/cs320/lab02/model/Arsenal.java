@@ -1,7 +1,6 @@
 package edu.ycp.cs320.lab02.model;
 
 import java.util.ArrayList;
-//import edu.ycp.cs320.lab02.model.Ball;
 
 public class Arsenal {
 	
@@ -51,8 +50,8 @@ public class Arsenal {
 	}
 	public boolean duplicateBall(Ball dupe) {
 		for(Ball ball : balls) {
-			if(ball.getName().equals(dupe.getName()) && ball.getColor().equals(dupe.getColor()) && ball.getWeight() == dupe.getWeight()) {
-				this.balls.add(ball);
+			if(dupe.getName().equals(ball.getName())) {
+				balls.add(ball);
 				return true;
 			}
 		}
@@ -60,8 +59,8 @@ public class Arsenal {
 	}
 	public boolean deleteBall(Ball dupe) {
 		for(Ball ball : balls) {
-			if(ball.getName().equals(dupe.getName()) && ball.getColor().equals(dupe.getColor()) && ball.getWeight() == dupe.getWeight()) {
-				this.balls.remove(ball);
+			if(dupe.getName().equals(ball.getName())) {
+				balls.remove(ball);
 				return true;
 			}
 		}

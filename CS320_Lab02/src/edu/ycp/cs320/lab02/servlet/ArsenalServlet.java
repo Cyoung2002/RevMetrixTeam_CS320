@@ -19,25 +19,15 @@ public class ArsenalServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// Populate ball arsenal with demo balls if first doGet
-		if(arsenal.getBalls().isEmpty()) {
-			Ball bally = arsenal.makeBall("BigBall", "red", 2.5);
-			arsenal.addNewBall(bally);
-			arsenal.addNewBall(arsenal.makeBall("smallball", "blue", 6.8));
-			arsenal.addNewBall(arsenal.makeBall("corny", "yellow", 4.0));
-			if(arsenal.getBalls().contains(bally)) {
-				System.out.println("arsenal contains bally");
-			}
-			Ball bally2 = arsenal.makeBall("BigBall", "red", 2.5);
-			if(arsenal.getBalls().contains(bally2)) {
-				System.out.println("arsenal contains bally2");
-			}
-		}
-		
-		
 		System.out.println("Arsenal Servlet: doGet");	
 		
-		// Pass list of balls to JSP
+		// Populate ball arsenal with demo balls if first doGet
+		if(arsenal.getBalls().isEmpty()) {
+			arsenal.addNewBall(arsenal.makeBall("BigBall", "red", 2.5));
+			arsenal.addNewBall(arsenal.makeBall("smallball", "blue", 6.8));
+			arsenal.addNewBall(arsenal.makeBall("corny", "yellow", 4.0));
+		}
+		
 		request.setAttribute("balls", arsenal.getBalls()); 
 	    request.getRequestDispatcher("/_view/arsenal.jsp").forward(request, response);
 	}
@@ -45,20 +35,22 @@ public class ArsenalServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    
+	    // check action
 		String action = request.getParameter("action");
 		System.out.println(action);
 	    
 	    System.out.println("Arsenal Servlet: doPost");
 
 	    if ("addNew".equals(action)) {
+	    	// check that it has entered addNew action
 	    	System.out.println("addNew action");
+	    	
 	        // Adding a new ball
 	        String name = request.getParameter("name");
 	        String color = request.getParameter("color");
 	        double weight = Double.parseDouble(request.getParameter("weight"));
 
-	        // Ball newBall = new Ball(name, color, weight);
+	        // Partial constructor for now
 	        Ball newBall = arsenal.makeBall(name, color, weight);
 	        
 	        if (!arsenal.addNewBall(newBall)) {
@@ -66,40 +58,43 @@ public class ArsenalServlet extends HttpServlet {
 	            return;
 	        }
 	        System.out.println("new ball added");
+	        
+	        // print ball arsenal to check
 	        for(Ball ball : arsenal.getBalls()) {
-	        	System.out.println(ball.getName());
-	        	System.out.println(ball.getColor());	
+	        	System.out.println(ball.getName() + " - " + ball.getColor() + " - " + ball.getWeight() + " lbs");
 	        }
 
 	    } else if ("addDuplicate".equals(action)) {
+	    	// Check that it has entered duplicate action
 	    	System.out.println("duplicate action");
+	    	
 	        // Duplicating an existing ball
-	        String[] ballData = request.getParameter("selectedBall").split(",");
-	        // Ball dupeBall = new Ball(ballData[0], ballData[1], Double.parseDouble(ballData[2]));
-	        // arsenal.duplicateBall(dupeBall);
+	        String[] ballData = request.getParameter("selectedBallDupe").split(",");
 	        
+	        // Parse string from user selection
 	        System.out.println(ballData[0]);
 	        System.out.println(ballData[1]);
 	        System.out.println(Double.parseDouble(ballData[2]));
 	        
+	        // Partial constructor for now to compare temp ball against arsenal list
 	        arsenal.duplicateBall(arsenal.makeBall(ballData[0], ballData[1], Double.parseDouble(ballData[2])));
 	        System.out.println("ball duplicated");
 
 	    } else if ("delete".equals(action)) {
+	    	// Check that it has entered delete action
 	    	System.out.println("delete action");
+	    	
 	        // Deleting a selected ball
-	        String[] ballData = request.getParameter("selectedBall").split(",");
-	        // Ball ballToDelete = new Ball(ballData[0], ballData[1], Double.parseDouble(ballData[2]));
+	        String[] ballData = request.getParameter("selectedBallDelete").split(",");
+	        
+	        // Partial Constructor for now to compare temp ball against arsenal list
 	        Ball ballToDelete = arsenal.makeBall(ballData[0], ballData[1], Double.parseDouble(ballData[2]));
 	        arsenal.deleteBall(ballToDelete);
-	        System.out.println("ball deleted");
+	        System.out.println("Ball deleted");
 	    }
-
-	    System.out.println("sending redirect");
-	    // response.sendRedirect("/_view/arsenal.jsp");
+	    
+	    System.out.println("Sending redirect");	   
 	    response.sendRedirect(request.getContextPath() + "/arsenal");
-	    // request.getRequestDispatcher("/_view/arsenal.jsp").forward(request, response);
-	    // request.getRequestDispatcher("/_view/arsenal.jsp").forward(request, response);
 	}
 
 }
