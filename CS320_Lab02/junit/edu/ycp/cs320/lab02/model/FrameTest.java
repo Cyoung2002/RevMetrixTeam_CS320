@@ -71,13 +71,13 @@ public class FrameTest {
     public void testCancelFrame() {
         model.setShotNum(2);
         model.setResult("Strike");
-        assertTrue(model.cancelFrame());
+        assertTrue(model.cancelFrame(model.getResult(), model.getShotNum()));
     }
 
     @Test
     public void testModifyFrame() {
         model.setShotNum(2);
         model.setResult("Strike");
-        assertTrue(model.modifyFrame("Spare", Arrays.asList(1)));
+        assertTrue(model.modifyFrame("Spare", 1));
     }
 }
