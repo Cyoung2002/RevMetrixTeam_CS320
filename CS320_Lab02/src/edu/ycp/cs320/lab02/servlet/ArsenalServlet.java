@@ -15,6 +15,7 @@ public class ArsenalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Arsenal arsenal = new Arsenal("Demo");
 	
+	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -46,6 +47,7 @@ public class ArsenalServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    
 		String action = request.getParameter("action");
+		System.out.println(action);
 	    
 	    System.out.println("Arsenal Servlet: doPost");
 
@@ -75,6 +77,11 @@ public class ArsenalServlet extends HttpServlet {
 	        String[] ballData = request.getParameter("selectedBall").split(",");
 	        // Ball dupeBall = new Ball(ballData[0], ballData[1], Double.parseDouble(ballData[2]));
 	        // arsenal.duplicateBall(dupeBall);
+	        
+	        System.out.println(ballData[0]);
+	        System.out.println(ballData[1]);
+	        System.out.println(Double.parseDouble(ballData[2]));
+	        
 	        arsenal.duplicateBall(arsenal.makeBall(ballData[0], ballData[1], Double.parseDouble(ballData[2])));
 	        System.out.println("ball duplicated");
 
@@ -89,8 +96,10 @@ public class ArsenalServlet extends HttpServlet {
 	    }
 
 	    System.out.println("sending redirect");
-	    response.sendRedirect("/_view/arsenal.jsp");
-	    //request.getRequestDispatcher("/_view/arsenal.jsp").forward(request, response);
+	    // response.sendRedirect("/_view/arsenal.jsp");
+	    response.sendRedirect(request.getContextPath() + "/arsenal");
+	    // request.getRequestDispatcher("/_view/arsenal.jsp").forward(request, response);
+	    // request.getRequestDispatcher("/_view/arsenal.jsp").forward(request, response);
 	}
 
 }

@@ -49,17 +49,21 @@ public class Arsenal {
 			return true;
 		}
 	}
-	public boolean duplicateBall(Ball ball) {
-		if(this.balls.contains(ball)) {
-			this.balls.add(ball);
-			return true;
+	public boolean duplicateBall(Ball dupe) {
+		for(Ball ball : balls) {
+			if(ball.getName().equals(dupe.getName()) && ball.getColor().equals(dupe.getColor()) && ball.getWeight() == dupe.getWeight()) {
+				this.balls.add(ball);
+				return true;
+			}
 		}
 		return false;
 	}
-	public boolean deleteBall(Ball ball) {
-		if(this.balls.contains(ball)) {
-			this.balls.remove(ball);
-			return true;
+	public boolean deleteBall(Ball dupe) {
+		for(Ball ball : balls) {
+			if(ball.getName().equals(dupe.getName()) && ball.getColor().equals(dupe.getColor()) && ball.getWeight() == dupe.getWeight()) {
+				this.balls.remove(ball);
+				return true;
+			}
 		}
 		return false;
 	}
