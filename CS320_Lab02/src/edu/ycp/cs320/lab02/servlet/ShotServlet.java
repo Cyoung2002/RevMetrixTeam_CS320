@@ -20,26 +20,23 @@ import edu.ycp.cs320.lab02.model.Arsenal;
 
 public class ShotServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	 ShotObject shot = new ShotObject();
 	
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            int shotNum = Integer.parseInt(request.getParameter("shotNum"));
-            int[] count = new int[10];
-            int[] leave = new int[10];
+            shot.setShotNum(Integer.parseInt(request.getParameter("shotNum")));
             
             // Populate count and leave arrays from request parameters
             for (int i = 0; i < 10; i++) {
-                count[i] = Integer.parseInt(request.getParameter("count" + i));
-                leave[i] = Integer.parseInt(request.getParameter("leave" + i));
+            	shot.setCountIndividual(i, Integer.parseInt(request.getParameter("count" + i)));
+            	shot.setLeaveIndividual(i, Integer.parseInt(request.getParameter("leave" + i)));
             }
             
             // Instantiate Ball and Frame objects
             Ball shotBall = new Ball(); // Modify if Ball has specific attributes
             Frame shotFrame = new Frame(); // Modify if Frame needs specific setup
-            
-            // Create ShotObject instance
-            ShotObject shot = new ShotObject(shotNum, count, leave, shotBall, shotFrame);
+                        
             
             // Set ShotObject as request attribute
             request.setAttribute("shot", shot);
