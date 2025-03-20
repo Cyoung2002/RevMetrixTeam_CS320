@@ -24,7 +24,7 @@ public class ShotServlet extends HttpServlet {
 	
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
+        
             shot.setShotNum(Integer.parseInt(request.getParameter("shotNum")));
             
             // Populate count and leave arrays from request parameters
@@ -44,10 +44,6 @@ public class ShotServlet extends HttpServlet {
             // Forward request to JSP page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/shot.jsp");
             dispatcher.forward(request, response);
-        } catch (NumberFormatException e) {
-            request.setAttribute("error", "Invalid input format. Please enter numeric values.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
-            dispatcher.forward(request, response);
-        }
+       
     }
 }
