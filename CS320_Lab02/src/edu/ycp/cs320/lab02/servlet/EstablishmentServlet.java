@@ -12,23 +12,25 @@ import edu.ycp.cs320.lab02.model.Establishment;
 public class EstablishmentServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	Establishment establishment = new Establishment();
+	Establishment establishment = new Establishment("Name", "Location", "PhoneNumber", "Hours");
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// Populate ball arsenal with demo balls
+		// Populate establishment with demo establishments
 		
 		
-		Establishment establish = establishment.makeEstablishment("Name", "Location", "PhoneNumber", "Hours");
+		Establishment establish = establishment.makeEstablishment("Name1", "Location1", "PhoneNumber1", "Hours1");
 		establishment.addNewEstablishment(establish);
-		establishment.addNewEstablishment(establishment.makeEstablishment("", "", "", ""));
-		establishment.addNewEstablishment(establishment.makeEstablishment("", "", "", ""));
-		establishment.addNewEstablishment(establishment.makeEstablishment("", "", "", ""));
+		establishment.addNewEstablishment(establishment.makeEstablishment("Name2", "Location2", "PhoneNumber2", "Hours2"));
+		establishment.addNewEstablishment(establishment.makeEstablishment("Name3", "Location3", "PhoneNumber3", "Hours3"));
+		establishment.addNewEstablishment(establishment.makeEstablishment("Name4", "Location4", "PhoneNumber4", "Hours4"));
 		
 		System.out.println("Establishment Servlet: doGet");	
 		
-		// Pass list of balls to JSP
+		
+		
+		// Pass list of establishment to JSP
 		request.setAttribute("establishment", establishment.getEstablishments()); 
 	    request.getRequestDispatcher("/_view/establishment.jsp").forward(request, response);
 	}
@@ -41,7 +43,7 @@ public class EstablishmentServlet extends HttpServlet {
 	    System.out.println("Establishment Servlet: doPost");
 
 	    if ("addNew".equals(action)) {
-	        // Adding a new ball
+	        // Adding a new establishment
 	    	String name = request.getParameter("name");
 	    	String location = request.getParameter("location");
 	    	String phoneNumber = request.getParameter("phoneNumber");
