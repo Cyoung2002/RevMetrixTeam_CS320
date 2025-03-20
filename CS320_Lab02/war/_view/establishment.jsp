@@ -1,48 +1,74 @@
 <!DOCTYPE html>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html lang="en">
 
-<html>
-	<head>
-		<title>Establishment Details</title>
-		<style type="text/css">
-		.error {
-			color: red;
-		}
-		
-		td.label {
-			text-align: right;
-		}
-		</style>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <title>Establishments</title>
+    <script>
+        function updateForm() {
+            let action = document.getElementById("action").value;
+            let newEstablishmentFields = document.getElementById("newEstablishmentFields");
+            let existingEstablishmentDropdown = document.getElementById("existingEstablishmentDropdown");
 
-	<body>
-		<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-		</c:if>
-	
-		<form action="${pageContext.servletContext.contextPath}/establishment" method="post">
-			<table>
-				<tr>
-					<td class="label">First number:</td>
-					<td><input type="text" name="first" size="12" value="${numbers.firstStr}" /></td>
-				</tr>
-				<tr>
-					<td class="label">Second number:</td>
-					<td><input type="text" name="second" size="12" value="${numbers.secondStr}" /></td>
-				</tr>
-				 <tr>
-					<td class="label">Third number:</td>
-					<td><input type="text" name="third" size="12" value="${numbers.thirdStr}" /></td>
-				</tr>
-				<tr>
-					<td class="label">Result:</td>
-					<td>${numbers.result}</td>
-				</tr>
-			</table>
-			<input type="Submit" name="submit" value="Add Numbers!">
-		</form>
-		
-		<button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
-	</body>
+            if (action === "addNew") {
+                newEstablishmentFields.style.display = "block";
+                existingEstablishmentDropdown.style.display = "none";
+            } else {
+                newEstablishmentFields.style.display = "none";
+                existingEstablishmentDropdown.style.display = "block";
+            }
+        }
+
+        window.onload = function() {
+            updateForm(); // Set correct form state on page load
+        };
+    </script>
+</head>
+<body>
+    <h2>Manage Your Establishments</h2>
+
+    <!-- Action Selection -->
+    <label for="action">Choose an action:</label>
+    <select id="action" name="action" onchange="updateForm()">
+        <option value="addNew">Add New Establishment</option>
+        <option value="delete">Delete Existing Establishment</option>
+    </select>
+
+    <br><br>
+
+    <!-- Form -->
+    <form action="${pageContext.servletContext.contextPath}/establishment" method="post">
+
+        <!-- Existing Establishment Drop-down -->
+        <div id="existingEstablishmentDropdown">
+            <label for="selectedEstablishment">Select a Establishment:</label>
+            <select name="selectedEstablishment" id="selectedEstablishment">
+                <c:forEach var="Establishment" items="${establishments}">
+                    <option value="${establishment.name},${establishment.location},${establishment.phoneNumber},${establishment.hours}">
+                        ${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
+
+         <!-- Add New Establishment Fields -->
+        <div id="newEstablishmentFields">
+            <label>Name:</label>
+            <input type="text" name="name">
+            <label>Location:</label>
+            <input type="text" name="location">
+            <label>Phone Number:</label>
+            <input type="text" name="phoneNumber">
+            <label>Hours:</label>
+            <input type="text" name="hours">
+        </div>
+
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
+</body>
 </html>
