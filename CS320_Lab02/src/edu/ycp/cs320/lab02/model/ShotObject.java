@@ -10,7 +10,8 @@ public class ShotObject {
 	Frame shotFrame = new Frame();
 	private String typeOfLeave = "";
 	private String Position = "";
-	
+	//might need to make a new count so that we can store it in
+	private int countTemp = 0;
 	
 	public ShotObject() {
 		
@@ -150,6 +151,14 @@ public class ShotObject {
 	
 	public void setShotFrame(Frame shotFrame) {
 		this.shotFrame = shotFrame;
+	}
+
+	public int getCountTemp() {
+		return countTemp;
+	}
+
+	public void setCountTemp(int countTemp) {
+		this.countTemp = countTemp;
 	}
 	
 }

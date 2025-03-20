@@ -245,6 +245,13 @@
 			<input type="Submit" name="submit" value="<<<< Previous Frame" onclick="getPreviousFrame()">
 			<input type="Submit" name="submit" value="Next Frame >>>>" onclick="getNextFrame()">
         </div>
+        <div class="row">
+		    <label for="firstShot">First Shot:</label>
+		    <input type="text" id="firstShot" name="firstShot" readonly size="2" />
+		    
+		    <label for="secondShot">Second Shot:</label>
+		    <input type="text" id="secondShot" name="secondShot" readonly size="2" />
+		</div>
     </div>
 
     <script>

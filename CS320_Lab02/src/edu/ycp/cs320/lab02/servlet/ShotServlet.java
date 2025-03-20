@@ -27,15 +27,10 @@ public class ShotServlet extends HttpServlet {
 			
 			// Populate ball arsenal with demo balls if first doGet
 			
-		
-			
 			System.out.println("Shot Servlet: doGet");	
 			
 		    request.getRequestDispatcher("/_view/shot.jsp").forward(request, response);
 		}
-	 
-	 
-	 
 	 
 	
 	@Override
@@ -56,8 +51,6 @@ public class ShotServlet extends HttpServlet {
             
             // Set ShotObject as request attribute
             request.setAttribute("shot", shot);
-            
-         
-       
+                 
     }
 }
