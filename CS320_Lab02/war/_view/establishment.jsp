@@ -10,20 +10,24 @@
         function updateForm() {
             let action = document.getElementById("action").value;
             let newEstablishmentFields = document.getElementById("newEstablishmentFields");
-            let existingEstablishmentDropdown = document.getElementById("existingEstablishmentDropdown");
+            let existingEstablishmentDropdownDupe = document.getElementById("existingEstablishmentDropdownDupe");
+            let existingEstablishmentDropdownDelete = document.getElementById("existingEstablishmentDropdownDelete");
 
             if (action === "addNew") {
                 newEstablishmentFields.style.display = "block";
-                existingEstablishmentDropdown.style.display = "none";
+                existingEstablishmentDropdownDupe.style.display = "none";
+                existingEstablishmentDropdownDelete.style.display = "none";
             } else {
-                newEstablishmentFields.style.display = "none";
-                existingEstablishmentDropdown.style.display = "block";
+            	newEstablishmentFields.style.display = "none";
+                existingEstablishmentDropdownDupe.style.display = "none";
+                existingEstablishmentDropdownDelete.style.display = "block";
             }
         }
 
         window.onload = function() {
             updateForm(); // Set correct form state on page load
         };
+
     </script>
 </head>
 <body>
@@ -31,30 +35,19 @@
 
     <!-- Action Selection -->
     <label for="action">Choose an action:</label>
-    <select id="action" name="action" onchange="updateForm()">
-        <option value="addNew">Add New Establishment</option>
-        <option value="delete">Delete Existing Establishment</option>
+    
+    <select id="action" name="actionSelect" onchange="updateForm()">
+        <option value="addNew" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Add New Establishment</option>
+        <option value="delete" ${param.actionSelect == 'delete' ? 'selected' : ''}>Delete Existing Establishment</option>
     </select>
 
     <br><br>
 
     <!-- Form -->
-    <form action="${pageContext.servletContext.contextPath}/establishment" method="post">
+    <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
 
-        <!-- Existing Establishment Drop-down -->
-        <div id="existingEstablishmentDropdown">
-            <label for="selectedEstablishment">Select a Establishment:</label>
-            <select name="selectedEstablishment" id="selectedEstablishment">
-                <c:forEach var="Establishment" items="${establishments}">
-                    <option value="${establishment.name},${establishment.location},${establishment.phoneNumber},${establishment.hours}">
-                        ${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}
-                    </option>
-                </c:forEach>
-            </select>
-        </div>
-
-         <!-- Add New Establishment Fields -->
-        <div id="newEstablishmentFields">
+		<!-- Add New Establishment Fields -->
+        <div id="newBallFields">
             <label>Name:</label>
             <input type="text" name="name">
             <label>Location:</label>
@@ -63,12 +56,29 @@
             <input type="text" name="phoneNumber">
             <label>Hours:</label>
             <input type="text" name="hours">
+            
+            <br><br>
+        	<button type="submit" name="action" value="addNew">Submit</button>
         </div>
 
-        <br>
-        <button type="submit">Submit</button>
+        
+        <!-- Existing Establishment Drop-down for Deleting-->
+        <div id="existingEstablishmentDropdownDelete">
+            <label for="selectedEstablishmentDelete">Select a Establishment:</label>
+            <select name="selectedEstablishmentDelete" id="selectedEstablishmentDelete">
+                <c:forEach var="establishment" items="${establishments}">
+                    <option value="${establishment.name},${establishment.location},${establishment.phoneNumber},${establishment.hours}">
+                        ${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}
+                    </option>
+                </c:forEach>
+            </select>
+            <br><br>
+        	<button type="submit" name="action" value="delete">Submit</button>
+        </div>
+        
     </form>
-    
+    <!-- Index button -->
+    <br>
     <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
 </body>
 </html>
