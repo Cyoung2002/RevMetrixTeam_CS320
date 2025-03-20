@@ -57,9 +57,7 @@ public class ShotServlet extends HttpServlet {
             // Set ShotObject as request attribute
             request.setAttribute("shot", shot);
             
-            // Forward request to JSP page
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/shot.jsp");
-            dispatcher.forward(request, response);
+         
        
     }
 }
