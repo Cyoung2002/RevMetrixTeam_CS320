@@ -21,6 +21,22 @@ import edu.ycp.cs320.lab02.model.Arsenal;
 public class ShotServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	 ShotObject shot = new ShotObject();
+	 
+	 @Override
+		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+			
+			// Populate ball arsenal with demo balls if first doGet
+			
+		
+			
+			System.out.println("Shot Servlet: doGet");	
+			
+		    request.getRequestDispatcher("/_view/shot.jsp").forward(request, response);
+		}
+	 
+	 
+	 
+	 
 	
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
