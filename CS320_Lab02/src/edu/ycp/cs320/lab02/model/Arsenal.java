@@ -1,7 +1,6 @@
 package edu.ycp.cs320.lab02.model;
 
 import java.util.ArrayList;
-//import edu.ycp.cs320.lab02.model.Ball;
 
 public class Arsenal {
 	
@@ -49,17 +48,21 @@ public class Arsenal {
 			return true;
 		}
 	}
-	public boolean duplicateBall(Ball ball) {
-		if(this.balls.contains(ball)) {
-			this.balls.add(ball);
-			return true;
+	public boolean duplicateBall(Ball dupe) {
+		for(Ball ball : balls) {
+			if(dupe.getName().equals(ball.getName())) {
+				balls.add(ball);
+				return true;
+			}
 		}
 		return false;
 	}
-	public boolean deleteBall(Ball ball) {
-		if(this.balls.contains(ball)) {
-			this.balls.remove(ball);
-			return true;
+	public boolean deleteBall(Ball dupe) {
+		for(Ball ball : balls) {
+			if(dupe.getName().equals(ball.getName())) {
+				balls.remove(ball);
+				return true;
+			}
 		}
 		return false;
 	}
