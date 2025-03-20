@@ -24,6 +24,7 @@
         window.onload = function() {
             updateForm(); // Set correct form state on page load
         };
+
     </script>
 </head>
 <body>
@@ -31,7 +32,8 @@
 
     <!-- Action Selection -->
     <label for="action">Choose an action:</label>
-    <select id="action" name="action" onchange="updateForm()">
+    
+    <select id="action" name="actionSelect" onchange="updateForm()">
         <option value="addNew">Add New Ball</option>
         <option value="addDuplicate">Duplicate Existing Ball</option>
         <option value="delete">Delete Existing Ball</option>
@@ -54,7 +56,7 @@
             </select>
         </div>
 
-         <!-- Add New Ball Fields -->
+        <!-- Add New Ball Fields -->
         <div id="newBallFields">
             <label>Name:</label>
             <input type="text" name="name">
@@ -65,7 +67,9 @@
         </div>
 
         <br>
-        <button type="submit">Submit</button>
+        <!-- button type="submit">Submit</button-->
+        <!--button type="submit" name="action" value="addNew">Submit</button-->
+        <button type="submit" name="action">Submit</button>
     </form>
 </body>
 </html>
