@@ -20,7 +20,8 @@ import edu.ycp.cs320.lab02.model.Arsenal;
 
 public class ShotServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	 ShotObject shot = new ShotObject();
+	 ShotObject firstShot = new ShotObject();
+	 ShotObject secondShot = new ShotObject();
 	 
 	 @Override
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,13 +37,17 @@ public class ShotServlet extends HttpServlet {
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
-            shot.setShotNum(Integer.parseInt(request.getParameter("shotNum")));
+            //count
+            firstShot.modifyCount(0, Integer.parseInt(request.getParameter("firstShot")));
+            //leave
+            firstShot.modifyLeave(0, Integer.parseInt(request.getParameter("firstShot")));
             
-            // Populate count and leave arrays from request parameters
-            for (int i = 0; i < 10; i++) {
-            	shot.setCountIndividual(i, Integer.parseInt(request.getParameter("count" + i)));
-            	shot.setLeaveIndividual(i, Integer.parseInt(request.getParameter("leave" + i)));
-            }
+            //count
+            secondShot.modifyCount(Integer.parseInt(request.getParameter("firstShot")), Integer.parseInt(request.getParameter("secondShot")));
+            //leave
+            secondShot.modifyLeave(Integer.parseInt(request.getParameter("firstShot")), Integer.parseInt(request.getParameter("secondShot")));
+
+           
             
             // Instantiate Ball and Frame objects
             Ball shotBall = new Ball(); // Modify if Ball has specific attributes
@@ -50,7 +55,9 @@ public class ShotServlet extends HttpServlet {
                         
             
             // Set ShotObject as request attribute
-            request.setAttribute("shot", shot);
+            request.setAttribute("firstShot", firstShot);
+            request.setAttribute("secondShot", secondShot);
+
                  
     }
 }
