@@ -493,6 +493,9 @@
 			
             // clear the content of secondShot
             document.querySelector('.secondShot span').textContent = ' ';
+            
+            document.getElementById('firstShot').value = '';  // Reset first shot text box
+            document.getElementById('secondShot').value = ''; // Reset second shot text box
 			
 			// start with first shot
 			setFirstShot();
@@ -520,6 +523,9 @@
 			
             // clear the content of secondShot
             document.querySelector('.secondShot span').textContent = ' ';	
+            
+            document.getElementById('firstShot').value = '';  // Reset first shot text box
+            document.getElementById('secondShot').value = ''; // Reset second shot text box
 			
 			// start with first shot
 			setFirstShot();
