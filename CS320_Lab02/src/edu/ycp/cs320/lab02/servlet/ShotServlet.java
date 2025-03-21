@@ -23,6 +23,7 @@ public class ShotServlet extends HttpServlet {
 	 ShotObject firstShot = new ShotObject();
 	 ShotObject secondShot = new ShotObject();
 	 
+	 
 	 @Override
 		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
@@ -52,11 +53,16 @@ public class ShotServlet extends HttpServlet {
             // Instantiate Ball and Frame objects
             Ball shotBall = new Ball(); // Modify if Ball has specific attributes
             Frame shotFrame = new Frame(); // Modify if Frame needs specific setup
+            request.setAttribute("shotBall", shotBall);
+            request.setAttribute("shotFrame", shotFrame);
+
                         
             
             // Set ShotObject as request attribute
             request.setAttribute("firstShot", firstShot);
             request.setAttribute("secondShot", secondShot);
+            
+            request.getRequestDispatcher("/_view/shot.jsp").forward(request, response);
 
                  
     }

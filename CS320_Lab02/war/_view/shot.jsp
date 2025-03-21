@@ -243,14 +243,14 @@
         </div>
          <div class="row">
 		    <label for="firstShot">First Shot:</label>
-		    <input type="text" id="firstShot" name="firstShot" readonly size="2" />
+		    <input type="text" id="firstShot" name="firstShot" value = "${firstShot}" />
 		    
 		    <label for="secondShot">Second Shot:</label>
-		    <input type="text" id="secondShot" name="secondShot" readonly size="2" />
+		    <input type="text" id="secondShot" name="secondShot" value = "${secondShot}" />
 		</div>
 		<div class="row">
-			<input type="Submit" name="submit" value="<<<< Previous Frame" onclick="getPreviousFrame()">
-			<input type="Submit" name="submit" value="Next Frame >>>>" onclick="getNextFrame()">
+			<input type="Button" name="submit" value="<<<< Previous Frame" onclick="getPreviousFrame()">
+			<input type="Button" name="submit" value="Next Frame >>>>" onclick="getNextFrame()">
         </div>
        
     </div>
@@ -493,6 +493,9 @@
 			
             // clear the content of secondShot
             document.querySelector('.secondShot span').textContent = ' ';
+            
+            document.getElementById('firstShot').value = '';  // Reset first shot text box
+            document.getElementById('secondShot').value = ''; // Reset second shot text box
 			
 			// start with first shot
 			setFirstShot();
@@ -520,6 +523,9 @@
 			
             // clear the content of secondShot
             document.querySelector('.secondShot span').textContent = ' ';	
+            
+            document.getElementById('firstShot').value = '';  // Reset first shot text box
+            document.getElementById('secondShot').value = ''; // Reset second shot text box
 			
 			// start with first shot
 			setFirstShot();
