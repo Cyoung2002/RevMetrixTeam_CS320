@@ -24,8 +24,8 @@ public class ArsenalServlet extends HttpServlet {
 		// Populate ball arsenal with demo balls if first doGet
 		if(arsenal.getBalls().isEmpty()) {
 			arsenal.addNewBall(arsenal.makeBall("BigBall", "red", 2.5));
-			arsenal.addNewBall(arsenal.makeBall("smallball", "blue", 6.8));
-			arsenal.addNewBall(arsenal.makeBall("corny", "yellow", 4.0));
+			arsenal.addNewBall(arsenal.makeBall("Smallball", "blue", 6.8));
+			arsenal.addNewBall(arsenal.makeBall("Corny", "yellow", 4.0));
 		}
 		
 		request.setAttribute("balls", arsenal.getBalls()); 
