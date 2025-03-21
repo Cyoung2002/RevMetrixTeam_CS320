@@ -57,7 +57,7 @@
         	<c:forEach var="ball" items="${balls}">
         		<label>${ball.name} - ${ball.color} - ${ball.weight} lbs<br></label>
         	</c:forEach>
-        	<br><br>
+        	<br>
         	
             <label>Name:</label>
             <input type="text" name="name">
