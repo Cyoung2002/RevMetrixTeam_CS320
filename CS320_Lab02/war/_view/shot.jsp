@@ -249,8 +249,8 @@
 		    <input type="text" id="secondShot" name="secondShot" value = "${secondShot}" />
 		</div>
 		<div class="row">
-			<input type="Submit" name="submit" value="<<<< Previous Frame" onclick="getPreviousFrame()">
-			<input type="Submit" name="submit" value="Next Frame >>>>" onclick="getNextFrame()">
+			<input type="Button" name="submit" value="<<<< Previous Frame" onclick="getPreviousFrame()">
+			<input type="Button" name="submit" value="Next Frame >>>>" onclick="getNextFrame()">
         </div>
        
     </div>
