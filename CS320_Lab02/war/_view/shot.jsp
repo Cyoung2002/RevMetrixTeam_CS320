@@ -243,10 +243,10 @@
         </div>
          <div class="row">
 		    <label for="firstShot">First Shot:</label>
-		    <input type="text" id="firstShot" name="firstShot" readonly size="2" />
+		    <input type="text" id="firstShot" name="firstShot" value = "${firstShot}" />
 		    
 		    <label for="secondShot">Second Shot:</label>
-		    <input type="text" id="secondShot" name="secondShot" readonly size="2" />
+		    <input type="text" id="secondShot" name="secondShot" value = "${secondShot}" />
 		</div>
 		<div class="row">
 			<input type="Submit" name="submit" value="<<<< Previous Frame" onclick="getPreviousFrame()">
