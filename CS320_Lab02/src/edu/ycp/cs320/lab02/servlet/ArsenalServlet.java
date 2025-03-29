@@ -70,6 +70,7 @@ public class ArsenalServlet extends HttpServlet {
 	    	
 	        // Duplicating an existing ball
 	        String[] ballData = request.getParameter("selectedBallDupe").split(",");
+	        String nickname = request.getParameter("nickname");
 	        
 	        // Parse string from user selection
 	        System.out.println(ballData[0]);
@@ -77,7 +78,7 @@ public class ArsenalServlet extends HttpServlet {
 	        System.out.println(Double.parseDouble(ballData[2]));
 	        
 	        // Partial constructor for now to compare temp ball against arsenal list
-	        arsenal.duplicateBall(arsenal.makeBall(ballData[0], ballData[1], Double.parseDouble(ballData[2])));
+	        arsenal.duplicateBall((arsenal.makeBall(ballData[0], ballData[1], Double.parseDouble(ballData[2]))), nickname);
 	        System.out.println("ball duplicated");
 
 	    } else if ("delete".equals(action)) {

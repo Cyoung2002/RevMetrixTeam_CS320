@@ -81,6 +81,11 @@
                 </c:forEach>
             </select>
             <br><br>
+            
+            <label>Add a nickname to your duplicate ball:</label>
+            <input type="text" name="nickname">
+            
+            <br><br>
         	<button type="submit" name="action" value="addDuplicate">Submit</button>
         </div>
         
