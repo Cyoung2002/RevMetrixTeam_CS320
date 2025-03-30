@@ -40,18 +40,24 @@ public class Arsenal {
 		return bally;
 	}
 	public boolean addNewBall(Ball ball) {
-		if(this.balls.contains(ball)) {
-			return false;
+		//if(this.balls.contains(ball)) {
+		//	return false;
+		//}
+		for(Ball bally : balls) {
+			if(bally.getName().equals(ball.getName())) {
+				return false;
+			}
 		}
-		else {
-			this.balls.add(ball);
-			return true;
-		}
+		//else {
+		this.balls.add(ball);
+		return true;
+		//}
 	}
-	public boolean duplicateBall(Ball dupe) {
+	public boolean duplicateBall(Ball dupe, String nickname) {
 		for(Ball ball : balls) {
 			if(dupe.getName().equals(ball.getName())) {
-				balls.add(ball);
+				dupe.setName(dupe.getName() + " \"" + nickname + "\"");
+				balls.add(dupe);
 				return true;
 			}
 		}

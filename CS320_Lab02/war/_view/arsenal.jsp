@@ -53,6 +53,12 @@
 
 		<!-- Add New Ball Fields -->
         <div id="newBallFields">
+        
+        	<c:forEach var="ball" items="${balls}">
+        		<label>${ball.name} - ${ball.color} - ${ball.weight} lbs<br></label>
+        	</c:forEach>
+        	<br>
+        	
             <label>Name:</label>
             <input type="text" name="name">
             <label>Color:</label>
@@ -74,6 +80,11 @@
                     </option>
                 </c:forEach>
             </select>
+            <br><br>
+            
+            <label>Add a nickname to your duplicate ball:</label>
+            <input type="text" name="nickname">
+            
             <br><br>
         	<button type="submit" name="action" value="addDuplicate">Submit</button>
         </div>
