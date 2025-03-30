@@ -36,6 +36,8 @@
 			<button id="shotbutton" onclick="location.href= 'http://localhost:8081/lab02/shot' ">Log a Shot</button>
 			</>
 			<button id="establishmentbutton" onclick="location.href= 'http://localhost:8081/lab02/establishment' ">Establishments</button>
+			</>
+			<button id="eventbutton" onclick="location.href= 'http://localhost:8081/lab02/event' ">Events</button>
 		</div>
 	</body>
 </html>

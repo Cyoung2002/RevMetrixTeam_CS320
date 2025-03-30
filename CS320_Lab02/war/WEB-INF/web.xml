@@ -33,6 +33,10 @@
     <servlet-name>EstablishmentServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab02.servlet.EstablishmentServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>EventServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.EventServlet</servlet-class>
+  </servlet>
   
   <!-- AJAX servlets. -->
   <servlet>
@@ -71,6 +75,10 @@
   <servlet-mapping>
     <servlet-name>EstablishmentServlet</servlet-name>
     <url-pattern>/establishment</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EventServlet</servlet-name>
+    <url-pattern>/event</url-pattern>
   </servlet-mapping>
   
   <!--  AJAX servlet mappings. -->
