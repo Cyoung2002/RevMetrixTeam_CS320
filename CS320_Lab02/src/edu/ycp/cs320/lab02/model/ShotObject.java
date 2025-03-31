@@ -1,197 +1,136 @@
 package edu.ycp.cs320.lab02.model;
 
-//FOR REVEREND METRIX
+//For Reverend Metrix
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ShotObject {
-	private int shotNum;	//shotNum is which shot number (1 or 2)
-	private Ball shotBall = new Ball(); //Reference to ball object
-	private int[] count = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};	//List of pins and their state (0 = not been knocked down)
-	private int[] leave = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};	//List of pins and their state (1 = not been knocked down)
-	Frame shotFrame = new Frame();
-	private String typeOfLeave = "";
-	private String Position = "";
-	//might need to make a new count so that we can store it in
-	private int countAmt = 0;
-	private int leaveAmt = 10;
-	
-	public ShotObject() {
-		
-	}
-	
-	public ShotObject(int shotNum, int[] count, int[]leave){
-		//Should instantiate with previously used/selected ball, but can be changed
-		//during shot.
-		
-		this.shotNum = shotNum;
-		this.count = count;
-		this.leave = leave;
-		
-	}
-	
-	public ShotObject(int shotNum, int[] count, int[]leave, Ball shotBall) {
-		//Should instantiate with previously used/selected ball, but can be changed
-		//during shot.
-		
-		this.shotNum = shotNum;
-		this.count = count;
-		this.leave = leave;
-		this.shotBall = shotBall;
-	}
-	
+    // Constants
+    public static final int TOTAL_PINS = 10;
+    private static final int[] PIN_POSITIONS = {7, 8, 9, 10, 4, 5, 6, 2, 3, 1};
 
-	public ShotObject(int shotNum, int[] count, int[]leave, Ball shotBall, Frame shotFrame) {
-		//Should instantiate with previously used/selected ball, but can be changed
-		//during shot.
-		
-		this.shotNum = shotNum;
-		this.count = count;
-		this.leave = leave;
-		this.shotBall = shotBall;
-		this.shotFrame = shotFrame;
-	}
-	
-	public ShotObject(int shotNum, int[] count, int[]leave, Frame shotFrame) {
-		//Should instantiate with previously used/selected ball, but can be changed
-		//during shot.
-		
-		this.shotNum = shotNum;
-		this.count = count;
-		this.leave = leave;
-		this.shotFrame = shotFrame;
+    // Properties
+    private int shotNumber;
+    private Set<Integer> pinsKnockedDown = new HashSet<>();
+    private boolean isFoul;
+    private String specialMark;
 
-	}
-	
-	
-	public boolean discardShot() {
-		this.shotNum = 0;	//shotNum is set to 0, to show the shot has been thrown away
-		//Don't make ball null change it since the whole shot is being discarded (doesn't need to be)
-		//this.count = ;	//Need to have access to frame information to reference previous shot to determine
-		//this.leave = ;	//Need to have access to frame information to reference previous shot to determine
-		// DO NOT DISCARD FRAME
-		this.setTypeOfLeave(""); //Return current leave to empty since it is not known anymore
-		this.setPosition(""); //Return current position to empty since it is not known anymore
-		return true;
-	}
-	
-	public boolean modifyShot() {
-		//this should have access to anything that is instantiated within the shot itself (not frame level, only shot)
-		
-		
-		return true;
-	}
-	
-	//This method is inefficient but it should work. Essentially, regardless of which shot, the method goes through the array
-	//of "count" and sets the computed amount between the "first" and "second" count to be how many pins have been knocked down.
-	//This works, since when using this method we can hardcode the first shot's count array to have the "firstCount" to be 0,
-	//while the second is the amount the user entered as the first count amount on the webpage.
-	//Then for the second shot it uses both the provided amounts by the user (hence why this is inefficient, since it will go back
-	//through parts of the array. This essentially acts as another setter just for a pin amount instead of specific pin.
-	public boolean modifyCount(int firstCount, int secondCount) {
-		this.countAmt = firstCount + secondCount;
-		for(int i = 0; i < countAmt; i++) {
-			count[i] = 0;
-		}
-		return true;
-	}
-	
-	public boolean modifyLeave(int firstLeave, int secondLeave) {
-		this.leaveAmt = firstLeave + secondLeave;
-		for(int i = 0; i < leaveAmt; i++) {
-			leave[i] = 1;
-		}
-		return true;
-	}
-	
-	public void setShotNum(int shotNum) {
-		this.shotNum = shotNum;
-	}
-	
-	public int getShotNum() {
-		return shotNum;
-	}
-	
-	//Gets the entire array of pin data
-	public int[] getCount() {
-		return count;
-	}
-	
-	//Gets one pins data out of the array
-	public int getCountIndividual(int i) {
-		return count[i];
-	}
+    public ShotObject(int shotNumber) {
+        setShotNumber(shotNumber);
+    }
 
-	//This method is meant to allow the system to change the entire array of pins to whatever values
-	public void setCount(int[] count) {
-		this.count = count;
-	}
-	
-	//This method is meant to allow the system to change a particular pins state
-	public void setCountIndividual(int whichPin, int knocked) {
-		count[whichPin] = knocked; 
-	}
-	
-	//Leave section may be redundant
-	public int[] getLeave() {
-		return leave;
-	}
-	public int getLeaveIndividual(int i) {
-		return count[i];
-	}
-	public void setLeave(int[] leave) {
-		this.leave = leave;
-	}
-	public void setLeaveIndividual(int whichPin, int knocked) {
-		count[whichPin] = knocked; 
-	}
+    // Core Methods
+    public void recordPins(Integer... pins) {
+        if (isFoul) return;
+        
+        for (int pin : pins) {
+            if (pin >= 1 && pin <= TOTAL_PINS) {
+                pinsKnockedDown.add(pin);
+            }
+        }
+        updateSpecialMark();
+    }
 
-	public String getTypeOfLeave() {
-		return typeOfLeave;
-	}
+    // Special Mark Setters
+    public void setAsStrike() {
+        if (shotNumber == 2) throw new IllegalStateException("Cannot have strike on second shot");
+        pinsKnockedDown.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        specialMark = "X";
+    }
 
-	public void setTypeOfLeave(String typeOfLeave) {
-		this.typeOfLeave = typeOfLeave;
-	}
+    public void setAsSpare() {
+        if (shotNumber == 1) throw new IllegalStateException("Cannot have spare on first shot");
+        specialMark = "/";
+    }
 
-	public String getPosition() {
-		return Position;
-	}
+    public void setAsFoul() {
+        this.isFoul = true;
+        specialMark = "F";
+    }
 
-	public void setPosition(String position) {
-		Position = position;
-	}
+    public void setAsGutter() {
+        specialMark = "-";
+    }
 
-	public Ball getShotBall() {
-		return shotBall;
-	}
+    // Pin State Methods
+    public List<Integer> getStandingPins() {
+        return Arrays.stream(PIN_POSITIONS)
+                   .filter(pin -> !pinsKnockedDown.contains(pin))
+                   .boxed()
+                   .collect(Collectors.toList());
+    }
 
-	public void setShotBall(Ball shotBall) {
-		this.shotBall = shotBall;
-	}
-	
-	public Frame getshotFrame() {
-		return shotFrame;
-	}
-	
-	public void setShotFrame(Frame shotFrame) {
-		this.shotFrame = shotFrame;
-	}
+    public void setStandingPins(Set<Integer> standingPins) {
+        this.pinsKnockedDown.clear();
+        for (int pin = 1; pin <= TOTAL_PINS; pin++) {
+            if (!standingPins.contains(pin)) {
+                this.pinsKnockedDown.add(pin);
+            }
+        }
+        updateSpecialMark();
+    }
 
-	public int getCountAmt() {
-		return countAmt;
-	}
+    public void setStandingPinsFromForm(String[] standingPinValues) {
+        Set<Integer> standingPins = new HashSet<>();
+        if (standingPinValues != null) {
+            for (String pinStr : standingPinValues) {
+                standingPins.add(Integer.parseInt(pinStr));
+            }
+        }
+        setStandingPins(standingPins);
+    }
 
-	public void setCountAmt(int countAmt) {
-		this.countAmt = countAmt;
-	}
+    public Set<Integer> getPinsKnockedDown() {
+        return new HashSet<>(pinsKnockedDown);
+    }
 
-	public int getLeaveAmt() {
-		return leaveAmt;
-	}
+    // Helper Methods
+    private void updateSpecialMark() {
+        if (isFoul) {
+            specialMark = "F";
+            return;
+        }
+        
+        if (pinsKnockedDown.size() == TOTAL_PINS) {
+            specialMark = (shotNumber == 1) ? "X" : "/";
+        } else if (pinsKnockedDown.isEmpty()) {
+            specialMark = "-";
+        } else {
+            specialMark = null;
+        }
+    }
 
-	public void setLeaveAmt(int leaveAmt) {
-		this.leaveAmt = leaveAmt;
-	}
-	
-	
+    // Getters and Setters
+    public int getShotNumber() {
+        return shotNumber;
+    }
+
+    public void setShotNumber(int shotNumber) {
+        if (shotNumber < 1 || shotNumber > 2) {
+            throw new IllegalArgumentException("Shot number must be 1 or 2");
+        }
+        this.shotNumber = shotNumber;
+    }
+
+    public boolean isFoul() {
+        return isFoul;
+    }
+
+    public String getSpecialMark() {
+        return specialMark;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Shot %d: %s | Pins Down: %s/%d | %s",
+            shotNumber,
+            specialMark != null ? specialMark : "NORMAL",
+            pinsKnockedDown,
+            TOTAL_PINS,
+            isFoul ? "FOUL" : ""
+        );
+    }
 }
-
