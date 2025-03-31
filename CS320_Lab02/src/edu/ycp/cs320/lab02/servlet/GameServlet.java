@@ -7,105 +7,101 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab02.controller.NumbersController;
-import edu.ycp.cs320.lab02.model.GuessingGame;
-import edu.ycp.cs320.lab02.model.Numbers;
+import edu.ycp.cs320.lab02.model.Arsenal;
+import edu.ycp.cs320.lab02.model.Ball; 
 
 public class GameServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-
-		System.out.println("AddNumbers Servlet: doGet");	
-		
-		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
-	}
+	Arsenal arsenal = new Arsenal("Demo");
+	
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("AddNumbers Servlet: doPost");
+		System.out.println("Arsenal Servlet: doGet");	
 		
-		Numbers model = new Numbers();
-		NumbersController controller = new NumbersController();
-		controller.setModel(model);
-		
-
-		// holds the error message text, if there is any
-		String errorMessage = null;
-
-
-		
-		
-		// decode POSTed form parameters and dispatch to controller
-		try {
-			
-			try {
-				
-				Double first = getDoubleFromParameter(req.getParameter("first"));
-				Double second = getDoubleFromParameter(req.getParameter("second"));
-				Double third = getDoubleFromParameter(req.getParameter("third"));
-		
-				
-				
-				// check for errors in the form data before using is in a calculation
-					controller.setAddNum(first, second, third);
-					controller.add();
-				
-			
-			
-			}catch (NullPointerException e){
-				
-				errorMessage = "Please specify three numbers";
-			}
-			// otherwise, data is good, do the calculation
-			// must create the controller each time, since it doesn't persist between POSTs
-			// the view does not alter data, only controller methods should be used for that
-			// thus, always call a controller method to operate on the data
-
-			
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
-			
+		// Populate ball arsenal with demo balls if first doGet
+		if(arsenal.getBalls().isEmpty()) {
+			arsenal.addNewBall(arsenal.makeBall("BigBall", "red", "BowlerPro", "Wobble", 9.0, 2.5));
+			arsenal.addNewBall(arsenal.makeBall("Smallball", "blue", "BowlerPro", "Twist", 8.7, 6.8));
+			arsenal.addNewBall(arsenal.makeBall("Corny", "yellow", "Motiv", "Differential", 8.5, 4.0));
 		}
 		
-		
-		String firstStr = req.getParameter("first");
-		String secondStr = req.getParameter("second");
-		String thirdStr = req.getParameter("third");
-//		String resultStr = req.getParameter("result");
-		
-		controller.setAddNumStr(firstStr,secondStr,thirdStr);
-		
-		req.setAttribute("numbers", model);
-		
-		// Add parameters as request attributes
-		// this creates attributes named "first" and "second for the response, and grabs the
-		// values that were originally assigned to the request attributes, also named "first" and "second"
-		// they don't have to be named the same, but in this case, since we are passing them back
-		// and forth, it's a good idea
-		
-		// add result objects as attributes
-		// this adds the errorMessage text and the result to the response
-		req.setAttribute("errorMessage", errorMessage);
-	//	req.setAttribute("result", result);
-		//same thing "numbers",model
+		request.setAttribute("balls", arsenal.getBalls()); 
+	    request.getRequestDispatcher("/_view/arsenal.jsp").forward(request, response);
+	}
+	
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    // check action
+		String action = request.getParameter("action");
+		System.out.println(action);
+	    
+	    System.out.println("Arsenal Servlet: doPost");
 
-		
-		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
+	    if ("addNew".equals(action)) {
+	    	// check that it has entered addNew action
+	    	System.out.println("addNew action");
+	    	
+	        // Adding a new ball
+	    	String brand = request.getParameter("brand");
+	        String name = request.getParameter("name");
+	        String color = request.getParameter("color");
+	        String core = request.getParameter("core");
+	        double weight = Double.parseDouble(request.getParameter("weight"));
+	        double diameter = Double.parseDouble(request.getParameter("diameter"));
+
+	        // Partial constructor for now
+	        Ball newBall = arsenal.makeBall(name, color, brand, core, diameter, weight);
+	        
+	        if (!arsenal.addNewBall(newBall)) {
+	            response.getWriter().println("<html><body><h3>Error: This ball is already in your arsenal!</h3></body></html>");
+	            return;
+	        }
+	        System.out.println("new ball added");
+	        
+	        // print ball arsenal to check
+	        // for(Ball ball : arsenal.getBalls()) {
+	        // 	 System.out.println(ball.getName() + " - " + ball.getColor() + " - " + ball.getWeight() + " lbs");
+	        // }
+
+	    } else if ("addDuplicate".equals(action)) {
+	    	// Check that it has entered duplicate action
+	    	System.out.println("duplicate action");
+	    	
+	        // Duplicating an existing ball
+	        String[] ballData = request.getParameter("selectedBallDupe").split(",");
+	        String nickname = request.getParameter("nickname");
+	        
+	        // Parse string from user selection
+	        System.out.println(ballData[0]);						// brand
+	        System.out.println(ballData[1]);						// name
+	        System.out.println(ballData[2]);    					// color
+	        System.out.println(ballData[3]);						// core
+	        System.out.println(Double.parseDouble(ballData[4])); 	// weight
+	        System.out.println(Double.parseDouble(ballData[5])); 	// diameter
+	        
+	        // constructor to compare temp ball against arsenal list
+	        arsenal.duplicateBall(arsenal.makeBall(ballData[1], ballData[2], ballData[0], ballData[3], Double.parseDouble(ballData[5]), Double.parseDouble(ballData[4])), nickname);
+	        System.out.println("ball duplicated");
+
+	    } else if ("delete".equals(action)) {
+	    	// Check that it has entered delete action
+	    	System.out.println("delete action");
+	    	
+	        // Deleting a selected ball
+	        String[] ballData = request.getParameter("selectedBallDelete").split(",");
+	        
+	        // Constructor to compare temp ball against arsenal list
+	        Ball ballToDelete = arsenal.makeBall(ballData[1], ballData[2], ballData[0], ballData[3], Double.parseDouble(ballData[5]), Double.parseDouble(ballData[4]));
+	        arsenal.deleteBall(ballToDelete);
+	        System.out.println("Ball deleted");
+	    }
+	    
+	    System.out.println("Sending redirect");	   
+	    response.sendRedirect(request.getContextPath() + "/arsenal");
 	}
 
-	// gets double from the request with attribute named s
-	private Double getDoubleFromParameter(String s) {
-		if (s == null || s.equals("")) {
-			return null;
-		} else {
-			return Double.parseDouble(s);
-		}
-	}
 }

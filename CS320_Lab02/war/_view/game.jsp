@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Bowling Ball Arsenal</title>
+    <title>Game</title>
     <script>
         function updateForm() {
             let action = document.getElementById("action").value;
@@ -49,7 +49,7 @@
     <br><br>
 
     <!-- Form -->
-    <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
+    <form action="${pageContext.servletContext.contextPath}/game" method="post">
 
 		<!-- Add New Ball Fields -->
         <div id="newBallFields">
