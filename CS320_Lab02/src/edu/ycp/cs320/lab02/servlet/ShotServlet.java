@@ -1,69 +1,105 @@
 package edu.ycp.cs320.lab02.servlet;
 
-import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList; // import the ArrayList class
-
-//import edu.ycp.cs320.lab02.controller.NumbersController;
-//import edu.ycp.cs320.lab02.model.GuessingGame;
-//import edu.ycp.cs320.lab02.model.Numbers;
-
 import edu.ycp.cs320.lab02.model.ShotObject;
-import edu.ycp.cs320.lab02.model.Frame;
-import edu.ycp.cs320.lab02.model.Ball;
-import edu.ycp.cs320.lab02.model.Arsenal;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ShotServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	 ShotObject firstShot = new ShotObject();
-	 ShotObject secondShot = new ShotObject();
-	 
-	 
-	 @Override
-		protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			
-			// Populate ball arsenal with demo balls if first doGet
-			
-			System.out.println("Shot Servlet: doGet");	
-			
-		    request.getRequestDispatcher("/_view/shot.jsp").forward(request, response);
-		}
-	 
-	
-	@Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
         
-            //count
-            firstShot.modifyCount(0, Integer.parseInt(request.getParameter("firstShot")));
-            //leave
-            firstShot.modifyLeave(0, Integer.parseInt(request.getParameter("firstShot")));
-            
-            //count
-            secondShot.modifyCount(Integer.parseInt(request.getParameter("firstShot")), Integer.parseInt(request.getParameter("secondShot")));
-            //leave
-            secondShot.modifyLeave(Integer.parseInt(request.getParameter("firstShot")), Integer.parseInt(request.getParameter("secondShot")));
+        HttpSession session = req.getSession(true);
+        
+        // Initialize new shot if needed
+        if (session.getAttribute("currentShot") == null) {
+            resetSession(session);
+        }
 
-           
-            
-            // Instantiate Ball and Frame objects
-            Ball shotBall = new Ball(); // Modify if Ball has specific attributes
-            Frame shotFrame = new Frame(); // Modify if Frame needs specific setup
-            request.setAttribute("shotBall", shotBall);
-            request.setAttribute("shotFrame", shotFrame);
+        ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
+        int shotNumber = currentShot.getShotNumber();
 
-                        
+        // Prepare data for JSP
+        req.setAttribute("shotNumber", shotNumber);
+        req.setAttribute("frameNumber", session.getAttribute("frameNumber"));
+        
+        // Add additional attributes needed by JSP
+        req.setAttribute("gameDate", new Date()); // Current date
+        req.setAttribute("eventType", "Practice"); // Default event type
+        req.setAttribute("gameNumber", 1); // Default game number
+        
+        if (shotNumber == 1) {
+            // First shot - all pins available (empty standing pins)
+            req.setAttribute("standingPins", Arrays.asList());
+            req.setAttribute("standingPinsString", ""); // Empty string for JS
+        } else {
+            // Second shot - show first shot's standing pins
+            ShotObject firstShot = (ShotObject) session.getAttribute("firstShot");
+            List<Integer> standingPins = firstShot.getStandingPins();
+            req.setAttribute("standingPins", standingPins);
             
-            // Set ShotObject as request attribute
-            request.setAttribute("firstShot", firstShot);
-            request.setAttribute("secondShot", secondShot);
-            
-            request.getRequestDispatcher("/_view/shot.jsp").forward(request, response);
+            // Create comma-separated string for JavaScript
+            StringBuilder sb = new StringBuilder();
+            for (Integer pin : standingPins) {
+                if (sb.length() > 0) sb.append(",");
+                sb.append(pin);
+            }
+            req.setAttribute("standingPinsString", sb.toString());
+        }
+        
+        req.getRequestDispatcher("/_view/shot.jsp").forward(req, resp);
+    }
 
-                 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
+            throws ServletException, IOException {
+        
+        HttpSession session = req.getSession();
+        ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
+        
+        // Process STANDING pins (inverse selection)
+        String standingPinsParam = req.getParameter("standingPins");
+        Set<Integer> standingPins = new HashSet<>();
+        if (standingPinsParam != null && !standingPinsParam.isEmpty()) {
+            for (String pinStr : standingPinsParam.split(",")) {
+                standingPins.add(Integer.parseInt(pinStr));
+            }
+        }
+        currentShot.setStandingPins(standingPins);
+
+        // Process special marks
+        String specialMark = req.getParameter("specialMark");
+        if ("X".equals(specialMark)) currentShot.setAsStrike();
+        else if ("/".equals(specialMark)) currentShot.setAsSpare();
+        else if ("F".equals(specialMark)) currentShot.setAsFoul();
+        else if ("-".equals(specialMark)) currentShot.setAsGutter();
+
+        if (currentShot.getShotNumber() == 1) {
+            // Store first shot and prepare second
+            session.setAttribute("firstShot", currentShot);
+            currentShot.setShotNumber(2);
+        } else {
+            // Frame complete - reset for new frame
+            int frameNum = (int) session.getAttribute("frameNumber");
+            session.setAttribute("frameNumber", frameNum < 10 ? frameNum + 1 : 1);
+            resetSession(session);
+        }
+        
+        resp.sendRedirect("shot");
+    }
+
+    private void resetSession(HttpSession session) {
+        session.setAttribute("currentShot", new ShotObject(1));
+        session.setAttribute("firstShot", null);
+        if (session.getAttribute("frameNumber") == null) {
+            session.setAttribute("frameNumber", 1);
+        }
     }
 }

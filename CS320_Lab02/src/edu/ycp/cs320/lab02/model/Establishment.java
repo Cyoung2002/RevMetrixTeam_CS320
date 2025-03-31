@@ -23,7 +23,6 @@ public class Establishment {
 		
 	}
 	
-
 	public ArrayList<Establishment> getEstablishments() {
 		return establishments;
 	}
@@ -50,15 +49,24 @@ public class Establishment {
 		}
 	}
 	
-
-	public boolean deleteEstablishment(Establishment establishment) {
-		if(this.establishments.contains(establishment)) {
-			this.establishments.remove(establishment);
-			return true;
+	public boolean duplicateEstablishment(Establishment dupe) {
+		for(Establishment establishment : establishments) {
+			if(dupe.getName().equals(establishment.getName())) {
+				establishments.add(establishment);
+				return true;
+			}
 		}
 		return false;
 	}
-	
+	public boolean deleteEstablishment(Establishment dupe) {
+		for(Establishment establishment : establishments) {
+			if(dupe.getName().equals(establishment.getName())) {
+				establishments.remove(establishment);
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
 	//getters and setters

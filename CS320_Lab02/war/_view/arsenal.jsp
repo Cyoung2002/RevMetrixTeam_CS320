@@ -6,6 +6,127 @@
 <head>
     <meta charset="UTF-8">
     <title>Bowling Ball Arsenal</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0a0a2a;
+    color: #00ffcc;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Container for form and content */
+.container {
+    width: 80%;
+    margin: 20px auto;
+    background: #1a0033;
+    padding: 20px;
+    box-shadow: 0 0 15px #ff6600;
+    border-radius: 8px;
+}
+
+/* Main title */
+h1, h2 {
+    text-align: center;
+    color: #ff00ff;
+    text-shadow: 2px 2px 10px #ff6600;
+}
+
+/* Ball list styling */
+.ball-list {
+    list-style: none;
+    padding: 0;
+}
+
+.ball-item {
+    background: #220066;
+    color: #00ffcc;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px #ff6600;
+}
+
+.ball-item span {
+    font-weight: bold;
+    color: #ff00ff;
+}
+
+/* Form section */
+.form-container {
+    margin: 20px auto;
+    padding: 15px;
+    background: #330066;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #00ffcc;
+    width: 50%;
+    text-align: left;
+}
+
+/* Labels and inputs */
+label {
+    font-weight: bold;
+    color: #ff00ff;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input, select {
+    padding: 10px;
+    margin: 5px 0;
+    width: 100%;
+    border: 1px solid #00ffcc;
+    border-radius: 5px;
+    background: #220066;
+    color: #00ffcc;
+    font-size: 16px;
+}
+
+/* Dropdowns */
+select {
+    cursor: pointer;
+}
+
+/* Buttons */
+button {
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    text-shadow: 1px 1px 5px #000;
+    box-shadow: 0 0 10px #ff6600;
+    font-size: 16px;
+    margin: 10px;
+}
+
+button:hover {
+    background: #ff3300;
+    box-shadow: 0 0 15px #ff00ff;
+}
+
+/* Error messages */
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+/* Hide initially hidden form sections */
+#newBallFields, #existingBallDropdownDupe, #existingBallDropdownDelete {
+    display: none;
+}
+
+    
+    
+    </style>
     <script>
         function updateForm() {
             let action = document.getElementById("action").value;
@@ -55,16 +176,22 @@
         <div id="newBallFields">
         
         	<c:forEach var="ball" items="${balls}">
-        		<label>${ball.name} - ${ball.color} - ${ball.weight} lbs<br></label>
+        		<label>${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in<br></label>
         	</c:forEach>
         	<br>
         	
+        	<label>Brand:</label>
+            <input type="text" name="brand">
             <label>Name:</label>
             <input type="text" name="name">
             <label>Color:</label>
             <input type="text" name="color">
+            <label>Core:</label>
+            <input type="text" name="core">
             <label>Weight:</label>
             <input type="number" name="weight" step="0.1">
+            <label>Diameter:</label>
+            <input type="number" name="diameter" step="0.1">
             
             <br><br>
         	<button type="submit" name="action" value="addNew">Submit</button>
@@ -75,8 +202,8 @@
             <label for="selectedBallDupe">Select a Ball:</label>
             <select name="selectedBallDupe" id="selectedBallDupe">
                 <c:forEach var="ball" items="${balls}">
-                    <option value="${ball.name},${ball.color},${ball.weight}">
-                        ${ball.name} - ${ball.color} - ${ball.weight} lbs
+                    <option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
                     </option>
                 </c:forEach>
             </select>
@@ -94,8 +221,8 @@
             <label for="selectedBallDelete">Select a Ball:</label>
             <select name="selectedBallDelete" id="selectedBallDelete">
                 <c:forEach var="ball" items="${balls}">
-                    <option value="${ball.name},${ball.color},${ball.weight}">
-                        ${ball.name} - ${ball.color} - ${ball.weight} lbs
+                    <option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
                     </option>
                 </c:forEach>
             </select>

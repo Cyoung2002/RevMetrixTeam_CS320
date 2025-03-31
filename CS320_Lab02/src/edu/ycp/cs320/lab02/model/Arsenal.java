@@ -27,15 +27,15 @@ public class Arsenal {
 	}
 	
 	
-	public Ball makeBall(String name, String color, Double weight) {
-		Ball bally = new Ball();
+	public Ball makeBall(String name, String color, String brand, String core, Double diameter, Double weight) {
+		Ball bally = new Ball(diameter, weight, color, name, brand, core);
 		
-		bally.setName(name);
-		bally.setColor(color);
+		//bally.setName(name);
+		//bally.setColor(color);
 		//bally.setBrand(brand);
 		//bally.setCore(core);
 		//bally.setDiameter(diameter);
-		bally.setWeight(weight);
+		//bally.setWeight(weight);
 		
 		return bally;
 	}
