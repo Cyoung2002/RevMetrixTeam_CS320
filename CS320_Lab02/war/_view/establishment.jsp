@@ -201,7 +201,7 @@ button:hover {
         
     </form>
     <!-- Index button -->
-    <br>
     <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
+
 </body>
 </html>
