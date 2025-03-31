@@ -71,7 +71,7 @@ public class EstablishmentServlet extends HttpServlet {
 	        // Deleting a selected ball
 	        String[] establishmentData = request.getParameter("selectedEstablishmentDelete").split(",");
 	        
-	        // Partial Constructor for now to compare temp ball against arsenal list
+	        // Partial Constructor for now to compare temp argument against arsenal list
 	        Establishment establishmentToDelete = establishment.makeEstablishment(establishmentData[0], establishmentData[1], establishmentData[2], establishmentData[3]);
 	        establishment.deleteEstablishment(establishmentToDelete);
 	        System.out.println("Establishment deleted");
