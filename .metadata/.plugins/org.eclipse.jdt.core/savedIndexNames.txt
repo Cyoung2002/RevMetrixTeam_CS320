@@ -1,4 +1,6 @@
 INDEX VERSION 1.134+/Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProject_CS320/.metadata/.plugins/org.eclipse.jdt.core
+<<<<<<< HEAD
+=======
 3714060906.index
 2614137495.index
 1926610507.index
@@ -18,7 +20,6 @@ INDEX VERSION 1.134+/Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProje
 4112385756.index
 3222910155.index
 3166893072.index
-3410831927.index
 1062812671.index
 172096567.index
 3941949757.index
@@ -26,4 +27,5 @@ INDEX VERSION 1.134+/Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProje
 1401481087.index
 2448450902.index
 1859767286.index
+>>>>>>> main
 1865797976.index
