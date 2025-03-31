@@ -7,9 +7,8 @@
     <meta charset="UTF-8">
     <title>Establishments</title>
     
-    
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
 body {
     font-family: Arial, sans-serif;
     background-color: #0a0a2a;
@@ -120,32 +119,33 @@ button:hover {
     font-weight: bold;
 }
 
-	</style>
+/* Hide initially hidden form sections */
+#newEstablishmentFields, #existingEstablishmentDropdownDupe, #existingEstablishmentDropdownDelete {
+    display: none;
+}
 
-		<script>
-    	function updateForm() {
-        	let action = document.getElementById("action").value;
-        	let newEstablishmentFields = document.getElementById("newEstablishmentFields");
-        	let existingEstablishmentDropdownDupe = document.getElementById("existingEstablishmentDropdownDupe");
-        	let existingEstablishmentDropdownDelete = document.getElementById("existingEstablishmentDropdownDelete");
+    
+    
+    </style>
+    <script>
+    function updateForm() {
+        let action = document.getElementById("action").value;
+        let newEstablishmentFields = document.getElementById("newEstablishmentFields");
+        let existingEstablishmentDropdownDelete = document.getElementById("existingEstablishmentDropdownDelete");
 
-        	if (action == "addNew") {
-            	newEstablishmentFields.style.display = "block";
-            	existingEstablishmentDropdownDupe.style.display = "none";
-            	existingEstablishmentDropdownDelete.style.display = "none";
-        	} else {
-            	newEstablishmentFields.style.display = "none";
-            	existingEstablishmentDropdownDupe.style.display = "none";
-            	existingEstablishmentDropdownDelete.style.display = "block";
-        	}
-    	}
+        if (action === "addNew") {
+            newEstablishmentFields.style.display = "block";
+            existingEstablishmentDropdownDelete.style.display = "none";
+        } else if (action === "delete") {
+            newEstablishmentFields.style.display = "none";
+            existingEstablishmentDropdownDelete.style.display = "block";
+        }
+    }
+        window.onload = function() {
+            updateForm(); // Set correct form state on page load
+        };
 
-    	// Ensure form updates correctly when the page loads
-    	window.onload = function() {
-        	updateForm();
-    	};
-		</script>
-
+    </script>
 </head>
 <body>
     <h2>Manage Your Establishments</h2>
@@ -154,18 +154,23 @@ button:hover {
     <label for="action">Choose an action:</label>
     
     <select id="action" name="actionSelect" onchange="updateForm()">
-       <option value="addNew" <c:if test="${param.actionSelect == 'addNew'}">selected</c:if>>Add New Establishment</option>
-	   <option value="delete" <c:if test="${param.actionSelect == 'delete'}">selected</c:if>>Delete Existing Establishment</option>
-
+        <option value="addNew" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Add New Establishment</option>
+        <option value="delete" ${param.actionSelect == 'delete' ? 'selected' : ''}>Delete Existing Establishment</option>
     </select>
 
     <br><br>
 
     <!-- Form -->
-    <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
+    <form action="${pageContext.servletContext.contextPath}/establishment" method="post">
 
 		<!-- Add New Establishment Fields -->
         <div id="newEstablishmentFields">
+        
+        	<c:forEach var="establishment" items="${establishments}">
+        		<label>${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}<br></label>
+        	</c:forEach>
+        	<br>
+        	
             <label>Name:</label>
             <input type="text" name="name">
             <label>Location:</label>
@@ -179,7 +184,7 @@ button:hover {
         	<button type="submit" name="action" value="addNew">Submit</button>
         </div>
 
-        
+
         <!-- Existing Establishment Drop-down for Deleting-->
         <div id="existingEstablishmentDropdownDelete">
             <label for="selectedEstablishmentDelete">Select a Establishment:</label>
@@ -196,7 +201,7 @@ button:hover {
         
     </form>
     <!-- Index button -->
-    <br>
     <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
+
 </body>
 </html>
