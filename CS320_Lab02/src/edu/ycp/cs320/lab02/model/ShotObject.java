@@ -17,6 +17,8 @@ public class ShotObject {
     private Set<Integer> pinsKnockedDown = new HashSet<>();
     private boolean isFoul;
     private String specialMark;
+    
+    private Frame shotFrame;
 
     public ShotObject(int shotNumber) {
         setShotNumber(shotNumber);
@@ -133,4 +135,12 @@ public class ShotObject {
             isFoul ? "FOUL" : ""
         );
     }
+
+	public Frame getShotFrame() {
+		return shotFrame;
+	}
+
+	public void setShotFrame(Frame shotFrame) {
+		this.shotFrame = shotFrame;
+	}
 }
