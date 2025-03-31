@@ -65,13 +65,19 @@
             background-color: black;
             color: white;
         }
-        /* Second shot - previously standing pins from first shot */
-        .pin.second-shot.previous-standing {
+        /* Second shot - pins knocked down in first shot */
+        .pin.second-shot.knocked-down {
             background-color: #cccccc;
             color: #666666;
             cursor: not-allowed;
+            pointer-events: none;
         }
-        /* Second shot - newly selected pins (standing) are red */
+        /* Second shot - pins standing after first shot */
+        .pin.second-shot.standing {
+            background-color: black;
+            color: white;
+        }
+        /* Second shot - pins selected in current shot */
         .pin.second-shot.selected {
             background-color: #ff4444;
             color: white;
@@ -116,7 +122,7 @@
         </div>
         <div class="game-info">
             <div>Game ${gameNumber}</div>
-            <div>Frame ${frameNumber}</div>
+            <div>Frame ${frameNumber} - Shot ${shotNumber}</div>
         </div>
     </div>
 
@@ -128,63 +134,47 @@
             <div class="pin-layout">
                 <!-- Row 1 (Pins 7-8-9-10) -->
                 <div class="pin-row">
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 'second-shot'} 
-                        ${standingPins.contains(7) ? 'selected' : ''}
-                        ${shotNumber == 2 && !standingPins.contains(7) ? 'previous-standing' : ''}"
-                        data-pin="7">7
-                    </div>
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 'second-shot'} 
-                        ${standingPins.contains(8) ? 'selected' : ''}
-                        ${shotNumber == 2 && !standingPins.contains(8) ? 'previous-standing' : ''}"
-                        data-pin="8">8
-                    </div>
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 'second-shot'} 
-                        ${standingPins.contains(9) ? 'selected' : ''}
-                        ${shotNumber == 2 && !standingPins.contains(9) ? 'previous-standing' : ''}"
-                        data-pin="9">9
-                    </div>
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 'second-shot'} 
-                        ${standingPins.contains(10) ? 'selected' : ''}
-                        ${shotNumber == 2 && !standingPins.contains(10) ? 'previous-standing' : ''}"
-                        data-pin="10">10
-                    </div>
+                    <c:forEach var="pin" items="7,8,9,10">
+                        <div class="pin ${shotNumber == 1 ? 'first-shot' : 
+                            (standingPins.contains(pin) ? 'second-shot standing' : 'second-shot knocked-down')}
+                            ${(shotNumber == 2 && standingPins.contains(pin) && 
+                               (empty standingPinsString ? false : standingPinsString.contains(pin.toString()))) ? 
+                               'selected' : ''}"
+                            data-pin="${pin}">${pin}
+                        </div>
+                    </c:forEach>
                 </div>
                 <!-- Row 2 (Pins 4-5-6) -->
                 <div class="pin-row">
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 'second-shot'} 
-                        ${standingPins.contains(4) ? 'selected' : ''}
-                        ${shotNumber == 2 && !standingPins.contains(4) ? 'previous-standing' : ''}"
-                        data-pin="4">4
-                    </div>
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 'second-shot'} 
-                        ${standingPins.contains(5) ? 'selected' : ''}
-                        ${shotNumber == 2 && !standingPins.contains(5) ? 'previous-standing' : ''}"
-                        data-pin="5">5
-                    </div>
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 'second-shot'} 
-                        ${standingPins.contains(6) ? 'selected' : ''}
-                        ${shotNumber == 2 && !standingPins.contains(6) ? 'previous-standing' : ''}"
-                        data-pin="6">6
-                    </div>
+                    <c:forEach var="pin" items="4,5,6">
+                        <div class="pin ${shotNumber == 1 ? 'first-shot' : 
+                            (standingPins.contains(pin) ? 'second-shot standing' : 'second-shot knocked-down')}
+                            ${(shotNumber == 2 && standingPins.contains(pin) && 
+                               (empty standingPinsString ? false : standingPinsString.contains(pin.toString()))) ? 
+                               'selected' : ''}"
+                            data-pin="${pin}">${pin}
+                        </div>
+                    </c:forEach>
                 </div>
                 <!-- Row 3 (Pins 2-3) -->
                 <div class="pin-row">
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 'second-shot'} 
-                        ${standingPins.contains(2) ? 'selected' : ''}
-                        ${shotNumber == 2 && !standingPins.contains(2) ? 'previous-standing' : ''}"
-                        data-pin="2">2
-                    </div>
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 'second-shot'} 
-                        ${standingPins.contains(3) ? 'selected' : ''}
-                        ${shotNumber == 2 && !standingPins.contains(3) ? 'previous-standing' : ''}"
-                        data-pin="3">3
-                    </div>
+                    <c:forEach var="pin" items="2,3">
+                        <div class="pin ${shotNumber == 1 ? 'first-shot' : 
+                            (standingPins.contains(pin) ? 'second-shot standing' : 'second-shot knocked-down')}
+                            ${(shotNumber == 2 && standingPins.contains(pin) && 
+                               (empty standingPinsString ? false : standingPinsString.contains(pin.toString()))) ? 
+                               'selected' : ''}"
+                            data-pin="${pin}">${pin}
+                        </div>
+                    </c:forEach>
                 </div>
                 <!-- Row 4 (Pin 1) -->
                 <div class="pin-row">
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 'second-shot'} 
-                        ${standingPins.contains(1) ? 'selected' : ''}
-                        ${shotNumber == 2 && !standingPins.contains(1) ? 'previous-standing' : ''}"
+                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 
+                        (standingPins.contains(1) ? 'second-shot standing' : 'second-shot knocked-down')}
+                        ${(shotNumber == 2 && standingPins.contains(1) && 
+                           (empty standingPinsString ? false : standingPinsString.contains('1'))) ? 
+                           'selected' : ''}"
                         data-pin="1">1
                     </div>
                 </div>
@@ -204,50 +194,37 @@
             </div>
         </div>
 
-        <!-- Hidden field for standing pins -->
         <input type="hidden" name="standingPins" id="standingPins" value="${standingPinsString}">
     </form>
 
     <script>
-        // Track STANDING pins (selected pins)
-        let standingPins = new Set();
+        // Track STANDING pins (selected pins) for current shot
+        let currentShotPins = new Set();
         
         // Initialize from server if available
         <c:if test="${not empty standingPinsString}">
-            standingPins = new Set("${standingPinsString}".split(','));
+            "${standingPinsString}".split(',').forEach(pin => {
+                if (pin) currentShotPins.add(pin);
+            });
         </c:if>
         
         // Set up pin click handlers
-        document.querySelectorAll('.pin:not(.previous-standing)').forEach(pin => {
+        document.querySelectorAll('.pin.first-shot, .pin.second-shot.standing').forEach(pin => {
             pin.addEventListener('click', function() {
-                if (this.classList.contains('previous-standing')) return;
-                
                 const pinNum = this.getAttribute('data-pin');
                 
-                if (standingPins.has(pinNum)) {
-                    standingPins.delete(pinNum);
+                if (currentShotPins.has(pinNum)) {
+                    currentShotPins.delete(pinNum);
                     this.classList.remove('selected');
                 } else {
-                    standingPins.add(pinNum);
+                    currentShotPins.add(pinNum);
                     this.classList.add('selected');
                 }
                 
                 // Update hidden input
                 document.getElementById('standingPins').value = 
-                    Array.from(standingPins).join(',');
+                    Array.from(currentShotPins).join(',');
             });
-        });
-        
-        // Disable special buttons appropriately
-        document.addEventListener('DOMContentLoaded', function() {
-            const strikeBtn = document.querySelector('.option-btn.strike');
-            const spareBtn = document.querySelector('.option-btn.spare');
-            
-            if (${shotNumber == 1}) {
-                spareBtn.classList.add('disabled-btn');
-            } else {
-                strikeBtn.classList.add('disabled-btn');
-            }
         });
     </script>
 </body>

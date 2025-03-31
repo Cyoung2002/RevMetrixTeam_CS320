@@ -4,11 +4,7 @@ import edu.ycp.cs320.lab02.model.ShotObject;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ShotServlet extends HttpServlet {
     
@@ -29,25 +25,23 @@ public class ShotServlet extends HttpServlet {
         // Prepare data for JSP
         req.setAttribute("shotNumber", shotNumber);
         req.setAttribute("frameNumber", session.getAttribute("frameNumber"));
-        
-        // Add additional attributes needed by JSP
-        req.setAttribute("gameDate", new Date()); // Current date
-        req.setAttribute("eventType", "Practice"); // Default event type
-        req.setAttribute("gameNumber", 1); // Default game number
+        req.setAttribute("gameDate", new Date());
+        req.setAttribute("eventType", "Practice");
+        req.setAttribute("gameNumber", 1);
         
         if (shotNumber == 1) {
-            // First shot - all pins available (empty standing pins)
-            req.setAttribute("standingPins", Arrays.asList());
-            req.setAttribute("standingPinsString", ""); // Empty string for JS
+            // First shot - all pins start standing
+            req.setAttribute("standingPins", Arrays.asList(7,8,9,10,4,5,6,2,3,1));
+            req.setAttribute("standingPinsString", "");
         } else {
-            // Second shot - show first shot's standing pins
+            // Second shot - get standing pins from first shot
             ShotObject firstShot = (ShotObject) session.getAttribute("firstShot");
-            List<Integer> standingPins = firstShot.getStandingPins();
-            req.setAttribute("standingPins", standingPins);
+            List<Integer> standingAfterFirstShot = firstShot.getStandingPins();
+            req.setAttribute("standingPins", standingAfterFirstShot);
             
-            // Create comma-separated string for JavaScript
+            // Convert current selections to string for JS
             StringBuilder sb = new StringBuilder();
-            for (Integer pin : standingPins) {
+            for (Integer pin : currentShot.getStandingPins()) {
                 if (sb.length() > 0) sb.append(",");
                 sb.append(pin);
             }
@@ -64,7 +58,7 @@ public class ShotServlet extends HttpServlet {
         HttpSession session = req.getSession();
         ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
         
-        // Process STANDING pins (inverse selection)
+        // Process STANDING pins selection
         String standingPinsParam = req.getParameter("standingPins");
         Set<Integer> standingPins = new HashSet<>();
         if (standingPinsParam != null && !standingPinsParam.isEmpty()) {
@@ -85,6 +79,8 @@ public class ShotServlet extends HttpServlet {
             // Store first shot and prepare second
             session.setAttribute("firstShot", currentShot);
             currentShot.setShotNumber(2);
+            // Reset standing pins for second shot
+            currentShot.setStandingPins(new HashSet<>());
         } else {
             // Frame complete - reset for new frame
             int frameNum = (int) session.getAttribute("frameNumber");
