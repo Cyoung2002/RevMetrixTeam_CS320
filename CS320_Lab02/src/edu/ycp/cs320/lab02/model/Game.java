@@ -20,10 +20,16 @@ public class Game {
 	public Game(int gameNum, int startLane) {
 		this.gameNumber = gameNum;
 		this.startingLane = startLane;
-		this.laneSwitch = true;
 		this.currentFrame = 0;
 		this.score = 0;
 		frames = new ArrayList<Frame>();
+		
+		if(startingLane%2 == 0) {
+			this.laneSwitch = false;
+		}
+		else {
+			this.laneSwitch = true;
+		}
 	}
 
 	
@@ -62,8 +68,10 @@ public class Game {
 	public void switchLanes() {
 		if(laneSwitch == true) {
 			lane++;
+			laneSwitch = false;
 		} else {
 			lane--;
+			laneSwitch = true;
 		}
 	}
 	public boolean modifyGame(String modify) {
@@ -72,16 +80,14 @@ public class Game {
 		}
 		return false;  
 	}
-	public boolean cancelGame() {	// score will be the negative version of the points
-		score = score * -1; 		// collected in the game up to the point of canceling
-		return true; 				// check for a cancelled game by negative score value
+	public boolean cancelGame() {			// score will be the negative version of the points
+		score = score * -1; 				// collected in the game up to the point of canceling
+		return true; 						// check for a cancelled game by negative score value
 	}
-	public void updateScore(int points) {
+	public void updateScore(int points) {	// temporary score method before full ScoreController implementation
 		score += points;
 	}
-	//public boolean updateScoreFromStrike() {	
-	//}
-	//public boolean updateScoreFromSpare() {
-	//}
+	// Shot and game servlets have buttons to go straight to each others page
+	// Insert new shot method first
 }
 
