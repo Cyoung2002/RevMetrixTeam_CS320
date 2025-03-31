@@ -18,6 +18,10 @@
     <servlet-class>edu.ycp.cs320.lab02.servlet.AddNumbersServlet</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>GameServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.GameServlet</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>GuessingGameServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab02.servlet.GuessingGameServlet</servlet-class>
   </servlet>
@@ -55,6 +59,10 @@
   <servlet-mapping>
     <servlet-name>AddNumbersServlet</servlet-name>
     <url-pattern>/addNumbers</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GameServlet</servlet-name>
+    <url-pattern>/game</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>GuessingGameServlet</servlet-name>
