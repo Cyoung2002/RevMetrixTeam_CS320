@@ -9,7 +9,6 @@ public class Event {
 	private String session;
 	private double eventStats;
 	private int standings;
-	private ArrayList<Event> events;
 	
 	public Event(){
 	}
@@ -71,9 +70,9 @@ public class Event {
 		this.standings = standings;
 	}
 	
-	public ArrayList<Event> getEvents() {
-		return events;
-	}
+	//public ArrayList<Event> getEvents() {
+	//	return events;
+	//}
 	
 	public Event makeEvent(String name, String type, String location, String session, double eventStats, int standings) {
 		Event event = new Event();
@@ -87,24 +86,5 @@ public class Event {
 		
 		return event;
 	}
-	
-	public boolean addNewEvent(Event event) {
-		if(this.events.contains(event)) {
-			return false;
-		}
-		else {
-			this.events.add(event);
-			return true;
-		}
-	}
-	
-	public boolean deleteEvent(Event dupe) {
-		for(Event event : events) {
-			if(dupe.getName().equals(event.getName())) {
-				events.remove(event);
-				return true;
-			}
-		}
-		return false;
-	}
+
 }
