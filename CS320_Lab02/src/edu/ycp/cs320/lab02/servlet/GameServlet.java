@@ -6,106 +6,60 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpSession;
+import edu.ycp.cs320.lab02.model.Game;
+import edu.ycp.cs320.lab02.model.Frame;
 
-import edu.ycp.cs320.lab02.controller.NumbersController;
-import edu.ycp.cs320.lab02.model.GuessingGame;
-import edu.ycp.cs320.lab02.model.Numbers;
-
+@WebServlet("/GameServlet")
 public class GameServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-
-		System.out.println("AddNumbers Servlet: doGet");	
-		
-		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		
-		System.out.println("AddNumbers Servlet: doPost");
-		
-		Numbers model = new Numbers();
-		NumbersController controller = new NumbersController();
-		controller.setModel(model);
-		
-
-		// holds the error message text, if there is any
-		String errorMessage = null;
-
-
-		
-		
-		// decode POSTed form parameters and dispatch to controller
-		try {
-			
-			try {
-				
-				Double first = getDoubleFromParameter(req.getParameter("first"));
-				Double second = getDoubleFromParameter(req.getParameter("second"));
-				Double third = getDoubleFromParameter(req.getParameter("third"));
-		
-				
-				
-				// check for errors in the form data before using is in a calculation
-					controller.setAddNum(first, second, third);
-					controller.add();
-				
-			
-			
-			}catch (NullPointerException e){
-				
-				errorMessage = "Please specify three numbers";
-			}
-			// otherwise, data is good, do the calculation
-			// must create the controller each time, since it doesn't persist between POSTs
-			// the view does not alter data, only controller methods should be used for that
-			// thus, always call a controller method to operate on the data
-
-			
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
-			
-		}
-		
-		
-		String firstStr = req.getParameter("first");
-		String secondStr = req.getParameter("second");
-		String thirdStr = req.getParameter("third");
-//		String resultStr = req.getParameter("result");
-		
-		controller.setAddNumStr(firstStr,secondStr,thirdStr);
-		
-		req.setAttribute("numbers", model);
-		
-		// Add parameters as request attributes
-		// this creates attributes named "first" and "second for the response, and grabs the
-		// values that were originally assigned to the request attributes, also named "first" and "second"
-		// they don't have to be named the same, but in this case, since we are passing them back
-		// and forth, it's a good idea
-		
-		// add result objects as attributes
-		// this adds the errorMessage text and the result to the response
-		req.setAttribute("errorMessage", errorMessage);
-	//	req.setAttribute("result", result);
-		//same thing "numbers",model
-
-		
-		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
-	}
-
-	// gets double from the request with attribute named s
-	private Double getDoubleFromParameter(String s) {
-		if (s == null || s.equals("")) {
-			return null;
-		} else {
-			return Double.parseDouble(s);
-		}
-	}
+    private static final long serialVersionUID = 1L;
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Game game = (Game) session.getAttribute("game");
+        
+        if (game == null) {
+            game = new Game(1, 1); // Default game number and starting lane
+            session.setAttribute("game", game);
+        }
+        
+        request.setAttribute("game", game);
+        request.getRequestDispatcher("/game.jsp").forward(request, response);
+    }
+    
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Game game = (Game) session.getAttribute("game");
+        
+        if (game == null) {
+            game = new Game(1, 1);
+            session.setAttribute("game", game);
+        }
+        
+        // Handling shot input from ShotServlet
+        String pinStr = request.getParameter("pins");
+        if (pinStr != null) {
+            try {
+                int pins = Integer.parseInt(pinStr);
+                ArrayList<Frame> frames = game.getFrames();
+                Frame currentFrame;
+                
+                if (frames.isEmpty() || frames.get(frames.size() - 1).isComplete()) {
+                    currentFrame = game.newFrame();
+                } else {
+                    currentFrame = frames.get(frames.size() - 1);
+                }
+                
+                currentFrame.addShot(pins);
+                game.updateScore(pins);
+            } catch (NumberFormatException e) {
+                request.setAttribute("error", "Invalid pin count.");
+            }
+        }
+        
+        session.setAttribute("game", game);
+        response.sendRedirect("game.jsp");
+    }
 }

@@ -176,16 +176,22 @@ button:hover {
         <div id="newBallFields">
         
         	<c:forEach var="ball" items="${balls}">
-        		<label>${ball.name} - ${ball.color} - ${ball.weight} lbs<br></label>
+        		<label>${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in<br></label>
         	</c:forEach>
         	<br>
         	
+        	<label>Brand:</label>
+            <input type="text" name="brand">
             <label>Name:</label>
             <input type="text" name="name">
             <label>Color:</label>
             <input type="text" name="color">
+            <label>Core:</label>
+            <input type="text" name="core">
             <label>Weight:</label>
             <input type="number" name="weight" step="0.1">
+            <label>Diameter:</label>
+            <input type="number" name="diameter" step="0.1">
             
             <br><br>
         	<button type="submit" name="action" value="addNew">Submit</button>
@@ -196,8 +202,8 @@ button:hover {
             <label for="selectedBallDupe">Select a Ball:</label>
             <select name="selectedBallDupe" id="selectedBallDupe">
                 <c:forEach var="ball" items="${balls}">
-                    <option value="${ball.name},${ball.color},${ball.weight}">
-                        ${ball.name} - ${ball.color} - ${ball.weight} lbs
+                    <option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
                     </option>
                 </c:forEach>
             </select>
@@ -215,8 +221,8 @@ button:hover {
             <label for="selectedBallDelete">Select a Ball:</label>
             <select name="selectedBallDelete" id="selectedBallDelete">
                 <c:forEach var="ball" items="${balls}">
-                    <option value="${ball.name},${ball.color},${ball.weight}">
-                        ${ball.name} - ${ball.color} - ${ball.weight} lbs
+                    <option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
                     </option>
                 </c:forEach>
             </select>
