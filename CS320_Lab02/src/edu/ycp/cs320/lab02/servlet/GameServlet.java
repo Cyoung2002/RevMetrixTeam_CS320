@@ -26,7 +26,7 @@ public class GameServlet extends HttpServlet {
         }
         
         request.setAttribute("game", game);
-        request.getRequestDispatcher("/game.jsp").forward(request, response);
+        request.getRequestDispatcher("/_view/game.jsp").forward(request, response);
     }
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

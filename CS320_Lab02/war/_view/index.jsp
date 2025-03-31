@@ -158,6 +158,8 @@ button:hover {
 			</>
 			<button id="arsenalbutton" onclick="location.href= 'http://localhost:8081/lab02/arsenal' ">Arsenal</button>
 			</>
+			<button id="gamebutton" onclick="location.href= 'http://localhost:8081/lab02/game' ">Game</button>
+			</>
 			<button id="shotbutton" onclick="location.href= 'http://localhost:8081/lab02/shot' ">Log a Shot</button>
 			</>
 			<button id="establishmentbutton" onclick="location.href= 'http://localhost:8081/lab02/establishment' ">Establishments</button>
