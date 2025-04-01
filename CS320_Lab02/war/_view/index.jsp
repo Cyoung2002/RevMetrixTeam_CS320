@@ -4,13 +4,15 @@
 <html lang="en">
 
 	<head>
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+	
 	    <meta charset="UTF-8">
 	   <title>RevMetrix</title>
 		
 		 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Orbitron', sans-serif;
     background-color: #0a0a2a;
     color: #00ffcc;
     margin: 0;
@@ -157,12 +159,16 @@ button:hover {
 			<button id="guessingGameButton" onclick="location.href= 'http://localhost:8081/lab02/guessingGame' ">Guessing Game</button> -->
 			</>
 			<button id="arsenalbutton" onclick="location.href= 'http://localhost:8081/lab02/arsenal' ">Arsenal</button>
+           <br><br>
 			</>
 			<button id="gamebutton" onclick="location.href= 'http://localhost:8081/lab02/game' ">Game</button>
+			<br><br>
 			</>
 			<button id="shotbutton" onclick="location.href= 'http://localhost:8081/lab02/shot' ">Log a Shot</button>
+			<br><br>
 			</>
 			<button id="establishmentbutton" onclick="location.href= 'http://localhost:8081/lab02/establishment' ">Establishments</button>
+			<br><br>
 			</>
 			<button id="eventbutton" onclick="location.href= 'http://localhost:8081/lab02/event' ">Events</button>
 		</div>
