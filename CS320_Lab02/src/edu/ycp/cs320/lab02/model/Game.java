@@ -20,7 +20,7 @@ public class Game {
 	public Game(int gameNum, int startLane) {
 		this.gameNumber = gameNum;
 		this.startingLane = startLane;
-		this.currentFrame = 0;
+		this.currentFrame = 1;
 		this.score = 0;
 		frames = new ArrayList<Frame>();
 		
@@ -53,6 +53,12 @@ public class Game {
 	}
 	public ArrayList<Frame> getFrames() {
 		return frames;
+	}
+	public void setCurrentFrame(int current) {
+		this.currentFrame = current;
+	}
+	public Frame getCurrentFrame() {
+		return frames.get(currentFrame - 1);
 	}
 	
 	

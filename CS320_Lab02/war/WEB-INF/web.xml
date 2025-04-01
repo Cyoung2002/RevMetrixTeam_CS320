@@ -6,6 +6,10 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets --><servlet>
+  	<servlet-name>GameServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.lab02.servlet.GameServlet</servlet-class>
+</servlet>
+	<servlet>
   <servlet-name>ArsenalServlet</servlet-name>
   	<servlet-class>edu.ycp.cs320.lab02.servlet.ArsenalServlet</servlet-class>
   </servlet>
@@ -16,10 +20,6 @@
   <servlet>
     <servlet-name>AddNumbersServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab02.servlet.AddNumbersServlet</servlet-class>
-  </servlet>
-  <servlet>
-    <servlet-name>GameServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.lab02.servlet.GameServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>GuessingGameServlet</servlet-name>
@@ -49,6 +49,10 @@
   </servlet>
 
   <!-- Servlet mappings --><servlet-mapping>
+  	<servlet-name>GameServlet</servlet-name>
+  	<url-pattern>/game</url-pattern>
+</servlet-mapping>
+  <servlet-mapping>
   <servlet-name>ArsenalServlet</servlet-name>
   	<url-pattern>/arsenal</url-pattern>
   </servlet-mapping>
@@ -59,10 +63,6 @@
   <servlet-mapping>
     <servlet-name>AddNumbersServlet</servlet-name>
     <url-pattern>/addNumbers</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>GameServlet</servlet-name>
-    <url-pattern>/game</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>GuessingGameServlet</servlet-name>
@@ -81,7 +81,7 @@
     <url-pattern>/establishment</url-pattern>
   </servlet-mapping><!--Server Config-->
 
-	<session-config>0</session-config><!--  AJAX servlet mappings. -->
+<!--  AJAX servlet mappings. -->
   <servlet-mapping>
     <servlet-name>AddNumbersAjaxServlet</servlet-name>
     <url-pattern>/ajax/addNumbers</url-pattern>

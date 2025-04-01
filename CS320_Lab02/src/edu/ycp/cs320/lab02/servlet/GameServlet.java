@@ -1,7 +1,6 @@
 package edu.ycp.cs320.lab02.servlet;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,20 +10,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpSession;
 import edu.ycp.cs320.lab02.model.Game;
 import edu.ycp.cs320.lab02.model.Frame;
+import edu.ycp.cs320.lab02.model.ShotObject;
 
 
-@WebServlet("/game")
 public class GameServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Retrieve or create game object
-        Game game = (Game) request.getSession().getAttribute("game");
+        HttpSession session = request.getSession();
+        Game game = (Game) session.getAttribute("game");
 
         if (game == null) {
-            game = new Game(1, 1); // Initialize new game
-            request.getSession().setAttribute("game", game);
+            game = new Game(1, 1); // Initialize a new game
+            session.setAttribute("game", game);
         }
 
         request.getRequestDispatcher("/_view/game.jsp").forward(request, response);
@@ -32,19 +31,26 @@ public class GameServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Game game = (Game) request.getSession().getAttribute("game");
-
+        HttpSession session = request.getSession();
+        Game game = (Game) session.getAttribute("game");
+        
         if (game == null) {
             game = new Game(1, 1);
-            request.getSession().setAttribute("game", game);
+            session.setAttribute("game", game);
         }
 
-        // Add new frame if requested
+        // Retrieve shot data
+        ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
+        if (currentShot != null) {
+            Frame currentFrame = game.getCurrentFrame();
+            currentFrame.addShot(currentShot);
+        }
+
         if (request.getParameter("newFrame") != null) {
             game.newFrame();
         }
 
-        request.getSession().setAttribute("game", game);
-        response.sendRedirect("game");
+        session.setAttribute("game", game);
+        response.sendRedirect(request.getContextPath() + "/game");
     }
 }
