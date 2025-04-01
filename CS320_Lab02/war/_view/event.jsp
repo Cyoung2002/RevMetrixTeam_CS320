@@ -4,12 +4,13 @@
 <html lang="en">
 
 <head>
+    	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
      <title>Event</title>
     
         <style>
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Orbitron', sans-serif;
     background-color: #0a0a2a;
     color: #00ffcc;
     margin: 0;
@@ -19,7 +20,8 @@ body {
 
 /* Container for form and content */
 .container {
-    width: 80%;
+    width: 70%; /* Adjusted width for better margins */
+    max-width: 800px; /* Ensures it doesn't get too wide on larger screens */
     margin: 20px auto;
     background: #1a0033;
     padding: 20px;
@@ -59,12 +61,13 @@ h1, h2 {
 
 /* Form section */
 .form-container {
+    width: 60%; /* Adjusted width for better margins */
+    max-width: 500px; /* Prevents it from stretching too much */
     margin: 20px auto;
     padding: 15px;
     background: #330066;
     border-radius: 5px;
     box-shadow: 0 0 10px #00ffcc;
-    width: 50%;
     text-align: left;
 }
 
@@ -77,14 +80,15 @@ label {
 }
 
 input, select {
-    padding: 10px;
+    padding: 8px; /* Reduced padding */
     margin: 5px 0;
-    width: 100%;
+    width: 90%; /* Adjusted so they aren't too long */
+    max-width: 400px; /* Caps max length */
     border: 1px solid #00ffcc;
     border-radius: 5px;
     background: #220066;
     color: #00ffcc;
-    font-size: 16px;
+    font-size: 14px; /* Slightly smaller text */
 }
 
 /* Dropdowns */
@@ -116,11 +120,6 @@ button:hover {
 .error {
     color: red;
     font-weight: bold;
-}
-
-/* Hide initially hidden form sections */
-#newBallFields, #existingBallDropdownDupe, #existingBallDropdownDelete {
-    display: none;
 }
 
     
