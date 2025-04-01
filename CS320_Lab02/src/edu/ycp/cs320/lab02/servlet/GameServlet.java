@@ -12,54 +12,39 @@ import javax.servlet.http.HttpSession;
 import edu.ycp.cs320.lab02.model.Game;
 import edu.ycp.cs320.lab02.model.Frame;
 
-@WebServlet("/GameServlet")
+
+@WebServlet("/game")
 public class GameServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Game game = (Game) session.getAttribute("game");
-        
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Retrieve or create game object
+        Game game = (Game) request.getSession().getAttribute("game");
+
         if (game == null) {
-            game = new Game(1, 1); // Default game number and starting lane
-            session.setAttribute("game", game);
+            game = new Game(1, 1); // Initialize new game
+            request.getSession().setAttribute("game", game);
         }
-        
-        request.setAttribute("game", game);
+
         request.getRequestDispatcher("/_view/game.jsp").forward(request, response);
     }
-    
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        Game game = (Game) session.getAttribute("game");
-        
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Game game = (Game) request.getSession().getAttribute("game");
+
         if (game == null) {
             game = new Game(1, 1);
-            session.setAttribute("game", game);
+            request.getSession().setAttribute("game", game);
         }
-        
-        // Handling shot input from ShotServlet
-        String pinStr = request.getParameter("pins");
-        if (pinStr != null) {
-            try {
-                int pins = Integer.parseInt(pinStr);
-                ArrayList<Frame> frames = game.getFrames();
-                Frame currentFrame;
-                
-                if (frames.isEmpty() || frames.get(frames.size() - 1).isComplete()) {
-                    currentFrame = game.newFrame();
-                } else {
-                    currentFrame = frames.get(frames.size() - 1);
-                }
-                
-                currentFrame.addShot(pins);
-                game.updateScore(pins);
-            } catch (NumberFormatException e) {
-                request.setAttribute("error", "Invalid pin count.");
-            }
+
+        // Add new frame if requested
+        if (request.getParameter("newFrame") != null) {
+            game.newFrame();
         }
-        
-        session.setAttribute("game", game);
-        response.sendRedirect("game.jsp");
+
+        request.getSession().setAttribute("game", game);
+        response.sendRedirect("game");
     }
 }
