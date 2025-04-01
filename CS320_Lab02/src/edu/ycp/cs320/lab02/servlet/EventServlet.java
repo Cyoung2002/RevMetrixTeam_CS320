@@ -52,7 +52,7 @@ public class EventServlet extends HttpServlet {
 	        double eventStats = Double.parseDouble(request.getParameter("eventStats"));
 	        int standings = Integer.parseInt(request.getParameter("standings"));
 
-	        // Partial constructor for now
+	        // New event cnstructor
 	        Event newEvent = event.makeEvent(name, type, location, session, eventStats, standings);
 	        
 	        if (!event.addNewEvent(newEvent)) {
@@ -61,19 +61,15 @@ public class EventServlet extends HttpServlet {
 	        }
 	        System.out.println("new event added");
 	        
-	        // print ball arsenal to check
-	        for(Event event : event.getEvents()) {
-	        	System.out.println(event.getName() + " - " + event.getLocation());
-	        }
 
 	    } else if ("delete".equals(action)) {
 	    	// Check that it has entered delete action
 	    	System.out.println("delete action");
 	    	
-	        // Deleting a selected ball
+	        // Deleting a selected event
 	        String[] eventData = request.getParameter("selectedEventDelete").split(",");
 	        
-	        // Partial Constructor for now to compare temp argument against arsenal list
+	        // Constructor to compare temp argument against event list
 	        Event eventToDelete = event.makeEvent(eventData[0], eventData[1], eventData[2], eventData[3], Double.parseDouble(eventData[4]), Integer.parseInt(eventData[5]));
 	        event.deleteEvent(eventToDelete);
 	        System.out.println("Event deleted");
