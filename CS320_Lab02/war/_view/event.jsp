@@ -73,8 +73,8 @@
             <label for="selectedEventDelete">Select a Ball:</label>
             <select name="selectedEventDelete" id="selectedEventDelete">
                 <c:forEach var="event" items="${events}">
-                    <option value="${event.name},${event.type},${event.location}">
-                        ${event.name} - ${event.type} - ${event.location}
+                    <option value="${event.name},${event.type},${event.location},${event.session},${event.eventStats},${event.standings}">
+                        ${event.name} - ${event.type} - ${event.location} - ${event.session} - ${event.eventStats} - ${event.standings}
                     </option>
                 </c:forEach>
             </select>
