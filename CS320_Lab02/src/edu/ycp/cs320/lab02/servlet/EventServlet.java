@@ -52,7 +52,7 @@ public class EventServlet extends HttpServlet {
 	        double eventStats = Double.parseDouble(request.getParameter("eventStats"));
 	        int standings = Integer.parseInt(request.getParameter("standings"));
 
-	        // New event cnstructor
+	        // New event constructor
 	        Event newEvent = event.makeEvent(name, type, location, session, eventStats, standings);
 	        
 	        if (!event.addNewEvent(newEvent)) {
