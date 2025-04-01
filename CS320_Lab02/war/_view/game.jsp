@@ -89,7 +89,6 @@
     </form>
 
 	<!-- Shot entry button -->
-    
     <button id="shotButton" onclick="location.href= 'http://localhost:8081/lab02/shot' ">Shot Entry</button>
     <!--a href="shot">Go to Shot Entry</a-->
     <!-- Index button -->
