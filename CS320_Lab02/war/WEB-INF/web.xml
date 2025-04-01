@@ -90,7 +90,7 @@
 
   </servlet-mapping><!--Server Config-->
 
-	<session-config>0</session-config><!--  AJAX servlet mappings. -->
+<!--  AJAX servlet mappings. -->
   <servlet-mapping>
     <servlet-name>AddNumbersAjaxServlet</servlet-name>
     <url-pattern>/ajax/addNumbers</url-pattern>
