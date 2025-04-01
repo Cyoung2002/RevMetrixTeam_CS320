@@ -24,7 +24,7 @@ public class EventServlet extends HttpServlet {
 		if(event.getEvents().isEmpty()) {
 			event.addNewEvent(event.makeEvent("Bowling Blitz", "League", "York, PA", "A", 178.4, 2));
 			event.addNewEvent(event.makeEvent("Strikes and Spares", "Practice", "Hanover, PA", "Monday, March 31st", 156.9, 1));
-			event.addNewEvent(event.makeEvent("Only 300s", "Tornament", "York, PA", "B.2", 300.0, 3));
+			event.addNewEvent(event.makeEvent("Only 300s", "Tournament", "York, PA", "B.2", 300.0, 3));
 		}
 		
 		request.setAttribute("events", event.getEvents()); 
