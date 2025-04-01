@@ -66,12 +66,14 @@ public class Frame {
     
     
     public boolean addShot(ShotObject shot) {
-    	shots.add(shot);
-    	
-    	// temporary frame score 
-    	pinScore += shot.getPinsKnockedDown().size();
-    	shotNum++;
-    	return true;
+    	if(shotNum <= 2) {
+    		shots.add(shot);
+        	// temporary frame score 
+        	pinScore += shot.getPinsKnockedDown().size();
+        	shotNum++;
+        	return true;
+    	}
+    	return false;
     }
     // Method to cancel (clear) a frame. Clears the shot and sets the result of the frame to a blank String.
     public boolean cancelFrame(String result, int shotNum) {

@@ -23,6 +23,7 @@ public class Game {
 		this.currentFrame = 1;
 		this.score = 0;
 		frames = new ArrayList<Frame>();
+		newFrame();
 		
 		if(startingLane%2 == 0) {
 			this.laneSwitch = false;
@@ -65,10 +66,11 @@ public class Game {
 	public Frame newFrame() {
 		Frame newFrame = new Frame();
 		frames.add(newFrame);
-		if(currentFrame != 0) {
+		if(currentFrame != 1) {
 			switchLanes();
+			updateScore(frames.get(currentFrame - 1).getPinScore());
+			currentFrame++;
 		}
-		currentFrame++;
 		return newFrame;
 	}
 	public void switchLanes() {
