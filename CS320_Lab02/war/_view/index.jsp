@@ -165,6 +165,8 @@ button:hover {
 			<button id="establishmentbutton" onclick="location.href= 'http://localhost:8081/lab02/establishment' ">Establishments</button>
 			</>
 			<button id="eventbutton" onclick="location.href= 'http://localhost:8081/lab02/event' ">Events</button>
+			</>
+			<button id="sessionbutton" onclick="location.href= 'http://localhost:8081/lab02/session' ">Sessions</button>
 		</div>
 	</body>
 </html>
