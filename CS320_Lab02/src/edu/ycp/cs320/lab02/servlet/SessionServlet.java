@@ -7,105 +7,73 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.lab02.controller.NumbersController;
-import edu.ycp.cs320.lab02.model.GuessingGame;
-import edu.ycp.cs320.lab02.model.Numbers;
+import java.util.ArrayList;
+
+import edu.ycp.cs320.lab02.model.Session;
+import edu.ycp.cs320.lab02.model.Game;
 
 public class SessionServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-
-		System.out.println("AddNumbers Servlet: doGet");	
-		
-		// call JSP to generate empty form
-		req.getRequestDispatcher("/_view/session.jsp").forward(req, resp);
-	}
+	ArrayList<Game> games = new ArrayList<Game>();
+	Session session = new Session("Demo", "Demoo", "Demooo", "Demoooo", "Demo", 3);
+	
 	
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("AddNumbers Servlet: doPost");
+		System.out.println("Session Servlet: doGet");	
 		
-		Numbers model = new Numbers();
-		NumbersController controller = new NumbersController();
-		controller.setModel(model);
-		
+		request.setAttribute("sessions", session.getSessions()); 
+	    request.getRequestDispatcher("/_view/session.jsp").forward(request, response);
+	}
+	
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    // check action
+		String action = request.getParameter("action");
+		System.out.println(action);
+	    
+	    System.out.println("Session Servlet: doPost");
 
-		// holds the error message text, if there is any
-		String errorMessage = null;
+	    if ("addNew".equals(action)) {
+	    	// check that it has entered addNew action
+	    	System.out.println("addNew action");
+	    	
+	        // Adding a new Establishment
+	        String establishment = request.getParameter("establishment");
+	        String date = request.getParameter("date");
+	        String time = request.getParameter("time");
+	        String oppoTeam = request.getParameter("oppoTeam");
+	        String oppoPlayer = request.getParameter("oppoPlayer");
+	        int gameNum = Integer.parseInt(request.getParameter("numGames"));
 
+	        // Partial constructor for now
+	        Session newSession = session.makeSession(establishment, date, time, oppoTeam, oppoPlayer, gameNum);
+	        
+	        if (!session.addNewSession(newSession)) {
+	            response.getWriter().println("<html><body><h3>Error: This session is already in your session list!</h3></body></html>");
+	            return;
+	        }
+	        System.out.println("new session added");
+	        
 
-		
-		
-		// decode POSTed form parameters and dispatch to controller
-		try {
-			
-			try {
-				
-				Double first = getDoubleFromParameter(req.getParameter("first"));
-				Double second = getDoubleFromParameter(req.getParameter("second"));
-				Double third = getDoubleFromParameter(req.getParameter("third"));
-		
-				
-				
-				// check for errors in the form data before using is in a calculation
-					controller.setAddNum(first, second, third);
-					controller.add();
-				
-			
-			
-			}catch (NullPointerException e){
-				
-				errorMessage = "Please specify three numbers";
-			}
-			// otherwise, data is good, do the calculation
-			// must create the controller each time, since it doesn't persist between POSTs
-			// the view does not alter data, only controller methods should be used for that
-			// thus, always call a controller method to operate on the data
-
-			
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
-			
-		}
-		
-		
-		String firstStr = req.getParameter("first");
-		String secondStr = req.getParameter("second");
-		String thirdStr = req.getParameter("third");
-//		String resultStr = req.getParameter("result");
-		
-		controller.setAddNumStr(firstStr,secondStr,thirdStr);
-		
-		req.setAttribute("numbers", model);
-		
-		// Add parameters as request attributes
-		// this creates attributes named "first" and "second for the response, and grabs the
-		// values that were originally assigned to the request attributes, also named "first" and "second"
-		// they don't have to be named the same, but in this case, since we are passing them back
-		// and forth, it's a good idea
-		
-		// add result objects as attributes
-		// this adds the errorMessage text and the result to the response
-		req.setAttribute("errorMessage", errorMessage);
-	//	req.setAttribute("result", result);
-		//same thing "numbers",model
-
-		
-		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/session.jsp").forward(req, resp);
+	    } else if ("delete".equals(action)) {
+	    	// Check that it has entered delete action
+	    	System.out.println("delete action");
+	    	
+	        // Deleting a selected ball
+	        String[] sessionData = request.getParameter("selectedSessionDelete").split(",");
+	        
+	        // Partial Constructor for now to compare temp argument against arsenal list
+	        Session sessionToDelete = session.makeSession(sessionData[0], sessionData[1], sessionData[2], sessionData[3], sessionData[4], Integer.parseInt(sessionData[5]));
+	        session.deleteSession(sessionToDelete);
+	        System.out.println("Session deleted");
+	    }
+	    
+	    System.out.println("Sending redirect");	   
+	    response.sendRedirect(request.getContextPath() + "/session");
 	}
 
-	// gets double from the request with attribute named s
-	private Double getDoubleFromParameter(String s) {
-		if (s == null || s.equals("")) {
-			return null;
-		} else {
-			return Double.parseDouble(s);
-		}
-	}
 }
