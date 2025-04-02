@@ -14,22 +14,24 @@
     <style>
 body {
     font-family: 'Orbitron', sans-serif;
-    background-color: #0a0a2a;
+    background-color: #0a0a2a; /* Background for side margins */
     color: #00ffcc;
     margin: 0;
     padding: 0;
     text-align: center;
 }
 
-/* Container for form and content */
-.container {
-    width: 70%; /* Adjusted width for better margins */
-    max-width: 800px; /* Ensures it doesn't get too wide on larger screens */
-    margin: 20px auto;
-    background: #1a0033;
+/* Wrapper to center content and add side margins */
+.wrapper {
+    width: 80%;
+    max-width: 1000px; /* Keeps content from getting too wide */
+    margin: 30px auto;
     padding: 20px;
-    box-shadow: 0 0 15px #ff6600;
-    border-radius: 8px;
+    background: #1a0033; /* Main content background */
+    border-left: 10px solid #ff6600;  /* Left border */
+    border-right: 10px solid #ff6600; /* Right border */
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.8); /* Glowing effect */
+    border-radius: 10px;
 }
 
 /* Main title */
@@ -64,8 +66,8 @@ h1, h2 {
 
 /* Form section */
 .form-container {
-    width: 60%; /* Adjusted width for better margins */
-    max-width: 500px; /* Prevents it from stretching too much */
+    width: 60%;
+    max-width: 500px;
     margin: 20px auto;
     padding: 15px;
     background: #330066;
@@ -83,15 +85,15 @@ label {
 }
 
 input, select {
-    padding: 8px; /* Reduced padding */
+    padding: 8px;
     margin: 5px 0;
-    width: 90%; /* Adjusted so they aren't too long */
-    max-width: 400px; /* Caps max length */
+    width: 90%;
+    max-width: 400px;
     border: 1px solid #00ffcc;
     border-radius: 5px;
     background: #220066;
     color: #00ffcc;
-    font-size: 14px; /* Slightly smaller text */
+    font-size: 14px;
 }
 
 /* Dropdowns */
@@ -125,11 +127,6 @@ button:hover {
     font-weight: bold;
 }
 
-/* Hide initially hidden form sections */
-#newEstablishmentFields, #existingEstablishmentDropdownDupe, #existingEstablishmentDropdownDelete {
-    display: none;
-}
-
 
     
     
@@ -155,60 +152,62 @@ button:hover {
     </script>
 </head>
 <body>
-    <h2>Manage Your Establishments</h2>
+    <div class="wrapper">
+        <h2>Manage Your Establishments</h2>
 
-    <!-- Action Selection -->
-    <label for="action">Choose an action:</label>
-    
-    <select id="action" name="actionSelect" onchange="updateForm()">
-        <option value="addNew" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Add New Establishment</option>
-        <option value="delete" ${param.actionSelect == 'delete' ? 'selected' : ''}>Delete Existing Establishment</option>
-    </select>
+        <!-- Action Selection -->
+        <label for="action">Choose an action:</label>
+        <select id="action" name="actionSelect" onchange="updateForm()">
+            <option value="addNew" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Add New Establishment</option>
+            <option value="delete" ${param.actionSelect == 'delete' ? 'selected' : ''}>Delete Existing Establishment</option>
+        </select>
 
-    <br><br>
+        <br><br>
 
-    <!-- Form -->
-    <form action="${pageContext.servletContext.contextPath}/establishment" method="post">
+        <!-- Form -->
+        <form action="${pageContext.servletContext.contextPath}/establishment" method="post">
 
-		<!-- Add New Establishment Fields -->
-        <div id="newEstablishmentFields">
-        
-        	<c:forEach var="establishment" items="${establishments}">
-        		<label>${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}<br></label>
-        	</c:forEach>
-        	<br>
-        	
-            <label>Name:</label>
-            <input type="text" name="name">
-            <label>Location:</label>
-            <input type="text" name="location">
-            <label>Phone Number:</label>
-            <input type="text" name="phoneNumber">
-            <label>Hours:</label>
-            <input type="text" name="hours">
-            
-            <br><br>
-        	<button type="submit" name="action" value="addNew">Submit</button>
-        </div>
-
-
-        <!-- Existing Establishment Drop-down for Deleting-->
-        <div id="existingEstablishmentDropdownDelete">
-            <label for="selectedEstablishmentDelete">Select a Establishment:</label>
-            <select name="selectedEstablishmentDelete" id="selectedEstablishmentDelete">
+            <!-- Add New Establishment Fields -->
+            <div id="newEstablishmentFields">
                 <c:forEach var="establishment" items="${establishments}">
-                    <option value="${establishment.name},${establishment.location},${establishment.phoneNumber},${establishment.hours}">
-                        ${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}
-                    </option>
+                    <label>${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}</label><br>
                 </c:forEach>
-            </select>
-            <br><br>
-        	<button type="submit" name="action" value="delete">Submit</button>
-        </div>
-        
-    </form>
-    <!-- Index button -->
-    <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
+                <br>
 
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name">
+                
+                <label for="location">Location:</label>
+                <input type="text" name="location" id="location">
+                
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" name="phoneNumber" id="phoneNumber">
+                
+                <label for="hours">Hours:</label>
+                <input type="text" name="hours" id="hours">
+                
+                <br><br>
+                <button type="submit" name="action" value="addNew">Submit</button>
+            </div>
+
+            <!-- Existing Establishment Drop-down for Deleting -->
+            <div id="existingEstablishmentDropdownDelete">
+                <label for="selectedEstablishmentDelete">Select an Establishment:</label>
+                <select name="selectedEstablishmentDelete" id="selectedEstablishmentDelete">
+                    <c:forEach var="establishment" items="${establishments}">
+                        <option value="${establishment.name},${establishment.location},${establishment.phoneNumber},${establishment.hours}">
+                            ${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}
+                        </option>
+                    </c:forEach>
+                </select>
+                <br><br>
+                <button type="submit" name="action" value="delete">Submit</button>
+            </div>
+        </form>
+
+        <!-- Index Button -->
+        <button id="indexButton" onclick="location.href='http://localhost:8081/lab02/index'">Index</button>
+    </div>
 </body>
+
 </html>
