@@ -145,27 +145,83 @@ button:hover {
     </script>
 </head>
 <body>
-    <div class="wrapper">
-        <h2>Manage Your Bowling Ball Arsenal</h2>
-        <label for="action">Choose an action:</label>
-        <select id="action" name="actionSelect" onchange="updateForm()">
-            <option value="addNew">Add New Ball</option>
-            <option value="addDuplicate">Duplicate Existing Ball</option>
-            <option value="delete">Delete Existing Ball</option>
-        </select>
-        <br><br>
-        <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
-            <div id="newBallFields">
-                <label>Brand:</label><input type="text" name="brand">
-                <label>Name:</label><input type="text" name="name">
-                <label>Color:</label><input type="text" name="color">
-                <label>Core:</label><input type="text" name="core">
-                <label>Weight:</label><input type="number" name="weight" step="0.1">
-                <label>Diameter:</label><input type="number" name="diameter" step="0.1">
-                <br><br><button type="submit" name="action" value="addNew">Submit</button>
-            </div>
-        </form>
-        <button id="indexButton" onclick="location.href='http://localhost:8081/lab02/index'">Index</button>
-    </div>
-</body>
+    <h2>Manage Your Bowling Ball Arsenal</h2>
+
+    <!-- Action Selection -->
+    <label for="action">Choose an action:</label>
+    
+    <select id="action" name="actionSelect" onchange="updateForm()">
+        <option value="addNew" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Add New Ball</option>
+        <option value="addDuplicate" ${param.actionSelect == 'addDuplicate' ? 'selected' : ''}>Duplicate Existing Ball</option>
+        <option value="delete" ${param.actionSelect == 'delete' ? 'selected' : ''}>Delete Existing Ball</option>
+    </select>
+
+    <br><br>
+
+    <!-- Form -->
+    <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
+
+		<!-- Add New Ball Fields -->
+        <div id="newBallFields">
+        
+        	<c:forEach var="ball" items="${balls}">
+        		<label>${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in<br></label>
+        	</c:forEach>
+        	<br>
+        	
+        	<label>Brand:</label>
+            <input type="text" name="brand">
+            <label>Name:</label>
+            <input type="text" name="name">
+            <label>Color:</label>
+            <input type="text" name="color">
+            <label>Core:</label>
+            <input type="text" name="core">
+            <label>Weight:</label>
+            <input type="number" name="weight" step="0.1">
+            <label>Diameter:</label>
+            <input type="number" name="diameter" step="0.1">
+            
+            <br><br>
+        	<button type="submit" name="action" value="addNew">Submit</button>
+        </div>
+
+        <!-- Existing Ball Drop-down for Duplicating-->
+        <div id="existingBallDropdownDupe">
+            <label for="selectedBallDupe">Select a Ball:</label>
+            <select name="selectedBallDupe" id="selectedBallDupe">
+                <c:forEach var="ball" items="${balls}">
+                    <option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
+                    </option>
+                </c:forEach>
+            </select>
+            <br><br>
+            
+            <label>Add a nickname to your duplicate ball:</label>
+            <input type="text" name="nickname">
+            
+            <br><br>
+        	<button type="submit" name="action" value="addDuplicate">Submit</button>
+        </div>
+        
+        <!-- Existing Ball Drop-down for Deleting-->
+        <div id="existingBallDropdownDelete">
+            <label for="selectedBallDelete">Select a Ball:</label>
+            <select name="selectedBallDelete" id="selectedBallDelete">
+                <c:forEach var="ball" items="${balls}">
+                    <option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
+                    </option>
+                </c:forEach>
+            </select>
+            <br><br>
+        	<button type="submit" name="action" value="delete">Submit</button>
+        </div>
+        
+    </form>
+    <!-- Index button -->
+    <br>
+    <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
+    </body>
 </html>

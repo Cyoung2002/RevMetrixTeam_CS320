@@ -134,7 +134,28 @@ button:hover {
     color: #00ffcc;
     text-shadow: 2px 2px 10px #0a0a2a;
     font-size: 2.5em;
+    
 }
+
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 300px;
+  height: 300px;
+  float: right;
+  margin-right: 300px;
+}
+
+.text h2 {
+    color: #00ffcc;
+    text-shadow: 2px 2px 10px #0a0a2a;
+    font-size: 1em;
+    text-align: left;
+    margin-left: 300px;
+}
+
+
 		</style>
 		
 		<script
@@ -159,20 +180,31 @@ button:hover {
 			<button id="guessingGameButton" onclick="location.href= 'http://localhost:8081/lab02/guessingGame' ">Guessing Game</button> -->
 			</>
 			<button id="arsenalbutton" onclick="location.href= 'http://localhost:8081/lab02/arsenal' ">Arsenal</button>
-           <br><br>
 			</>
 			<button id="gamebutton" onclick="location.href= 'http://localhost:8081/lab02/game' ">Game</button>
-			<br><br>
 			</>
 			<button id="shotbutton" onclick="location.href= 'http://localhost:8081/lab02/shot' ">Log a Shot</button>
-			<br><br>
 			</>
 			<button id="establishmentbutton" onclick="location.href= 'http://localhost:8081/lab02/establishment' ">Establishments</button>
-			<br><br>
 			</>
 			<button id="eventbutton" onclick="location.href= 'http://localhost:8081/lab02/event' ">Events</button>
 			</>
 			<button id="sessionbutton" onclick="location.href= 'http://localhost:8081/lab02/session' ">Sessions</button>
-		</div>
+			
+			<br><br>
+			<br><br>
+			<br><br>
+			<img src="Rev-Metrix-Bowling-Ball.jpg" alt="Rev Metrix Ball">
+			
+			
+</div>
+
+	<div class = "text">
+		<h2>Blurb about Rev Metrix</h2>
+	</div>
+			
+		
+		
+
 	</body>
 </html>
