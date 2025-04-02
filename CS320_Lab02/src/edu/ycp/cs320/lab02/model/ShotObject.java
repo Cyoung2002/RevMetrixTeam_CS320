@@ -19,6 +19,9 @@ public class ShotObject {
     private String specialMark;
     
     private Frame shotFrame;
+    //game
+    //session
+    private Ball selectBall;
 
     public ShotObject(int shotNumber) {
         setShotNumber(shotNumber);
@@ -142,5 +145,13 @@ public class ShotObject {
 
 	public void setShotFrame(Frame shotFrame) {
 		this.shotFrame = shotFrame;
+	}
+
+	public Ball getSelectBall() {
+		return selectBall;
+	}
+
+	public void setSelectBall(Ball selectBall) {
+		this.selectBall = selectBall;
 	}
 }
