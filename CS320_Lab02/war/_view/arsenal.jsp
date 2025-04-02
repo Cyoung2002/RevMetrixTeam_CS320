@@ -116,6 +116,14 @@ button:hover {
     font-weight: bold;
 }
 
+            #submit {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+                #indexbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+
     </style>
     <script>
         function updateForm() {
@@ -150,7 +158,7 @@ button:hover {
     <!-- Action Selection -->
     <label for="action">Choose an action:</label>
     
-    <select id="action" name="actionSelect" onchange="updateForm()">
+    <select id="action" name="actionSelect" onchange="updateForm()" style= "font-family: 'Orbitron', sans-serif;" >
         <option value="addNew" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Add New Ball</option>
         <option value="addDuplicate" ${param.actionSelect == 'addDuplicate' ? 'selected' : ''}>Duplicate Existing Ball</option>
         <option value="delete" ${param.actionSelect == 'delete' ? 'selected' : ''}>Delete Existing Ball</option>
@@ -183,13 +191,13 @@ button:hover {
             <input type="number" name="diameter" step="0.1">
             
             <br><br>
-        	<button type="submit" name="action" value="addNew">Submit</button>
+        	<button type="submit" name="action" value="addNew" style= "font-family: 'Orbitron', sans-serif;" >Submit</button>
         </div>
 
         <!-- Existing Ball Drop-down for Duplicating-->
         <div id="existingBallDropdownDupe">
             <label for="selectedBallDupe">Select a Ball:</label>
-            <select name="selectedBallDupe" id="selectedBallDupe">
+            <select name="selectedBallDupe" id="selectedBallDupe" style= "font-family: 'Orbitron', sans-serif;" >
                 <c:forEach var="ball" items="${balls}">
                     <option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
                         ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
@@ -202,13 +210,13 @@ button:hover {
             <input type="text" name="nickname">
             
             <br><br>
-        	<button type="submit" name="action" value="addDuplicate">Submit</button>
+        	<button type="submit" name="action" value="addDuplicate" style= "font-family: 'Orbitron', sans-serif;" >Submit</button>
         </div>
         
         <!-- Existing Ball Drop-down for Deleting-->
         <div id="existingBallDropdownDelete">
             <label for="selectedBallDelete">Select a Ball:</label>
-            <select name="selectedBallDelete" id="selectedBallDelete">
+            <select name="selectedBallDelete" id="selectedBallDelete" style= "font-family: 'Orbitron', sans-serif;" >
                 <c:forEach var="ball" items="${balls}">
                     <option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
                         ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
@@ -216,12 +224,12 @@ button:hover {
                 </c:forEach>
             </select>
             <br><br>
-        	<button type="submit" name="action" value="delete">Submit</button>
+        	<button type="submit" name="action" value="delete" style= "font-family: 'Orbitron', sans-serif;" >Submit</button>
         </div>
         
     </form>
     <!-- Index button -->
     <br>
-    <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
+    <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' "    style= "font-family: 'Orbitron', sans-serif;">Index</button>
     </body>
 </html>

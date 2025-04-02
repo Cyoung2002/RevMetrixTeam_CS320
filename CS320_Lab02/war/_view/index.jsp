@@ -144,7 +144,8 @@ img {
   width: 300px;
   height: 300px;
   float: right;
-  margin-right: 300px;
+  margin-right: 250px;
+  margin-left: 50px;
 }
 
 .text h2 {
@@ -152,8 +153,34 @@ img {
     text-shadow: 2px 2px 10px #0a0a2a;
     font-size: 1em;
     text-align: left;
-    margin-left: 300px;
+    margin-left: 250px;
+    margin-right: 50px;
 }
+
+
+    #arsenalbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+        #gamebutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+        #shotbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+        #establishmentbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+        #eventbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+            #sessionbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
 
 
 		</style>
@@ -196,11 +223,10 @@ img {
 			<br><br>
 			<img src="Rev-Metrix-Bowling-Ball.jpg" alt="Rev Metrix Ball">
 			
-			
 </div>
 
 	<div class = "text">
-		<h2>Blurb about Rev Metrix</h2>
+		<h2> RevMetrix is your ultimate performance-tracking tool to elevate your game. Record scores at the shot level, automatically calculate game and session totals, gain real-time insights into your performance, and so much more with RevMetrix. Track Events, Sessions, Games, Frames, Shots, etc. all while analyzing trends and refining your skills with detailed graphical feedback.</h2>
 	</div>
 			
 		

@@ -108,7 +108,7 @@ button:hover {
     <div class="wrapper">
         <h2>Manage Your Events</h2>
         <label for="action">Choose an action:</label>
-        <select id="action" name="actionSelect" onchange="updateForm()">
+        <select id="action" name="actionSelect" onchange="updateForm()" style= "font-family: 'Orbitron', sans-serif;">
             <option value="addNew">Add New Event</option>
             <option value="delete">Delete Existing Event</option>
         </select>
@@ -121,21 +121,21 @@ button:hover {
                 <label>Session:</label><input type="text" name="session">
                 <label>Statistics:</label><input type="number" name="eventStats" step="0.1">
                 <label>Standings:</label><input type="number" name="standings" step="0.1">
-                <br><br><button type="submit" name="action" value="addNew">Submit</button>
+                <br><br><button type="submit" name="action" value="addNew" style= "font-family: 'Orbitron', sans-serif;">Submit</button>
             </div>
             <div id="existingEventDropdownDelete">
                 <label for="selectedEventDelete">Select an Event:</label>
-                <select name="selectedEventDelete" id="selectedEventDelete">
+                <select name="selectedEventDelete" id="selectedEventDelete" style= "font-family: 'Orbitron', sans-serif;">
                     <c:forEach var="event" items="${events}">
                         <option value="${event.name},${event.type},${event.location},${event.session},${event.eventStats},${event.standings}">
                             ${event.name} - ${event.type} - ${event.location} - ${event.session} - ${event.eventStats} - ${event.standings}
                         </option>
                     </c:forEach>
                 </select>
-                <br><br><button type="submit" name="action" value="delete">Submit</button>
+                <br><br><button type="submit" name="action" value="delete" style="font-family: 'Orbitron', sans-serif;">Submit</button>
             </div>
         </form>
-        <button id="indexButton" onclick="location.href='http://localhost:8081/lab02/index'">Index</button>
+        <button id="indexButton" onclick="location.href='http://localhost:8081/lab02/index'" style= "font-family: 'Orbitron', sans-serif;">Index</button>
     </div>
 </body>
 </html>

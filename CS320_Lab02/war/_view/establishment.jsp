@@ -157,7 +157,7 @@ button:hover {
 
         <!-- Action Selection -->
         <label for="action">Choose an action:</label>
-        <select id="action" name="actionSelect" onchange="updateForm()">
+        <select id="action" name="actionSelect" onchange="updateForm()" style= "font-family: 'Orbitron', sans-serif;">
             <option value="addNew" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Add New Establishment</option>
             <option value="delete" ${param.actionSelect == 'delete' ? 'selected' : ''}>Delete Existing Establishment</option>
         </select>
@@ -187,13 +187,13 @@ button:hover {
                 <input type="text" name="hours" id="hours">
                 
                 <br><br>
-                <button type="submit" name="action" value="addNew">Submit</button>
+                <button type="submit" name="action" value="addNew" style= "font-family: 'Orbitron', sans-serif;">Submit</button>
             </div>
 
             <!-- Existing Establishment Drop-down for Deleting -->
             <div id="existingEstablishmentDropdownDelete">
                 <label for="selectedEstablishmentDelete">Select an Establishment:</label>
-                <select name="selectedEstablishmentDelete" id="selectedEstablishmentDelete">
+                <select name="selectedEstablishmentDelete" id="selectedEstablishmentDelete" style= "font-family: 'Orbitron', sans-serif;">
                     <c:forEach var="establishment" items="${establishments}">
                         <option value="${establishment.name},${establishment.location},${establishment.phoneNumber},${establishment.hours}">
                             ${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}
@@ -201,12 +201,12 @@ button:hover {
                     </c:forEach>
                 </select>
                 <br><br>
-                <button type="submit" name="action" value="delete">Submit</button>
+                <button type="submit" name="action" value="delete" style= "font-family: 'Orbitron', sans-serif;">Submit</button>
             </div>
         </form>
 
         <!-- Index Button -->
-        <button id="indexButton" onclick="location.href='http://localhost:8081/lab02/index'">Index</button>
+        <button id="indexButton" onclick="location.href='http://localhost:8081/lab02/index'"style= "font-family: 'Orbitron', sans-serif;">Index</button>
     </div>
 </body>
 
