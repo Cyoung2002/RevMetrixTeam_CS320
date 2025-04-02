@@ -6,26 +6,29 @@
 <head>
     <meta charset="UTF-8">
     <title>Bowling Ball Arsenal</title>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
 body {
-    font-family: Arial, sans-serif;
-    background-color: #0a0a2a;
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0a0a2a; /* Background for side margins */
     color: #00ffcc;
     margin: 0;
     padding: 0;
     text-align: center;
 }
 
-/* Container for form and content */
-.container {
+/* Wrapper to center content and add side margins */
+.wrapper {
     width: 80%;
-    margin: 20px auto;
-    background: #1a0033;
+    max-width: 1000px; /* Keeps content from getting too wide */
+    margin: 30px auto;
     padding: 20px;
-    box-shadow: 0 0 15px #ff6600;
-    border-radius: 8px;
+    background: #1a0033; /* Main content background */
+    border-left: 10px solid #ff6600;  /* Left border */
+    border-right: 10px solid #ff6600; /* Right border */
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.8); /* Glowing effect */
+    border-radius: 10px;
 }
 
 /* Main title */
@@ -60,12 +63,13 @@ h1, h2 {
 
 /* Form section */
 .form-container {
+    width: 60%;
+    max-width: 500px;
     margin: 20px auto;
     padding: 15px;
     background: #330066;
     border-radius: 5px;
     box-shadow: 0 0 10px #00ffcc;
-    width: 50%;
     text-align: left;
 }
 
@@ -78,14 +82,15 @@ label {
 }
 
 input, select {
-    padding: 10px;
+    padding: 8px;
     margin: 5px 0;
-    width: 100%;
+    width: 90%;
+    max-width: 400px;
     border: 1px solid #00ffcc;
     border-radius: 5px;
     background: #220066;
     color: #00ffcc;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 /* Dropdowns */
@@ -119,13 +124,14 @@ button:hover {
     font-weight: bold;
 }
 
-/* Hide initially hidden form sections */
-#newBallFields, #existingBallDropdownDupe, #existingBallDropdownDelete {
-    display: none;
-}
+            #submit {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+                #indexbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
 
-    
-    
     </style>
     <script>
         function updateForm() {
@@ -143,25 +149,25 @@ button:hover {
                 existingBallDropdownDupe.style.display = "block";
                 existingBallDropdownDelete.style.display = "none";
             } else {
-            	newBallFields.style.display = "none";
+                newBallFields.style.display = "none";
                 existingBallDropdownDupe.style.display = "none";
                 existingBallDropdownDelete.style.display = "block";
             }
         }
 
         window.onload = function() {
-            updateForm(); // Set correct form state on page load
+            updateForm();
         };
-
     </script>
 </head>
 <body>
+    <div class="wrapper"> <!-- Added wrapper div here -->
     <h2>Manage Your Bowling Ball Arsenal</h2>
 
     <!-- Action Selection -->
     <label for="action">Choose an action:</label>
     
-    <select id="action" name="actionSelect" onchange="updateForm()">
+    <select id="action" name="actionSelect" onchange="updateForm()" style= "font-family: 'Orbitron', sans-serif;" >
         <option value="addNew" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Add New Ball</option>
         <option value="addDuplicate" ${param.actionSelect == 'addDuplicate' ? 'selected' : ''}>Duplicate Existing Ball</option>
         <option value="delete" ${param.actionSelect == 'delete' ? 'selected' : ''}>Delete Existing Ball</option>
@@ -194,13 +200,13 @@ button:hover {
             <input type="number" name="diameter" step="0.1">
             
             <br><br>
-        	<button type="submit" name="action" value="addNew">Submit</button>
+        	<button type="submit" name="action" value="addNew" style= "font-family: 'Orbitron', sans-serif;" >Submit</button>
         </div>
 
         <!-- Existing Ball Drop-down for Duplicating-->
         <div id="existingBallDropdownDupe">
             <label for="selectedBallDupe">Select a Ball:</label>
-            <select name="selectedBallDupe" id="selectedBallDupe">
+            <select name="selectedBallDupe" id="selectedBallDupe" style= "font-family: 'Orbitron', sans-serif;" >
                 <c:forEach var="ball" items="${balls}">
                     <option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
                         ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
@@ -213,13 +219,13 @@ button:hover {
             <input type="text" name="nickname">
             
             <br><br>
-        	<button type="submit" name="action" value="addDuplicate">Submit</button>
+        	<button type="submit" name="action" value="addDuplicate" style= "font-family: 'Orbitron', sans-serif;" >Submit</button>
         </div>
         
         <!-- Existing Ball Drop-down for Deleting-->
         <div id="existingBallDropdownDelete">
             <label for="selectedBallDelete">Select a Ball:</label>
-            <select name="selectedBallDelete" id="selectedBallDelete">
+            <select name="selectedBallDelete" id="selectedBallDelete" style= "font-family: 'Orbitron', sans-serif;" >
                 <c:forEach var="ball" items="${balls}">
                     <option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
                         ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
@@ -227,12 +233,13 @@ button:hover {
                 </c:forEach>
             </select>
             <br><br>
-        	<button type="submit" name="action" value="delete">Submit</button>
+        	<button type="submit" name="action" value="delete" style= "font-family: 'Orbitron', sans-serif;" >Submit</button>
         </div>
         
     </form>
     <!-- Index button -->
     <br>
-    <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
-</body>
+    <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' "    style= "font-family: 'Orbitron', sans-serif;">Index</button>
+     </div>
+    </body>
 </html>

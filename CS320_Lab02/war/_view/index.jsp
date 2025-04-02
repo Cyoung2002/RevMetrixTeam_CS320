@@ -4,13 +4,15 @@
 <html lang="en">
 
 	<head>
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+	
 	    <meta charset="UTF-8">
 	   <title>RevMetrix</title>
 		
 		 <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Orbitron', sans-serif;
     background-color: #0a0a2a;
     color: #00ffcc;
     margin: 0;
@@ -132,7 +134,55 @@ button:hover {
     color: #00ffcc;
     text-shadow: 2px 2px 10px #0a0a2a;
     font-size: 2.5em;
+    
 }
+
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 300px;
+  height: 300px;
+  float: right;
+  margin-right: 250px;
+  margin-left: 50px;
+}
+
+.text h2 {
+    color: #00ffcc;
+    text-shadow: 2px 2px 10px #0a0a2a;
+    font-size: 1em;
+    text-align: left;
+    margin-left: 250px;
+    margin-right: 50px;
+}
+
+
+    #arsenalbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+        #gamebutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+        #shotbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+        #establishmentbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+        #eventbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+    
+            #sessionbutton {
+    font-family: 'Orbitron', sans-serif;
+    }
+
+
 		</style>
 		
 		<script
@@ -167,6 +217,20 @@ button:hover {
 			<button id="eventbutton" onclick="location.href= 'http://localhost:8081/lab02/event' ">Events</button>
 			</>
 			<button id="sessionbutton" onclick="location.href= 'http://localhost:8081/lab02/session' ">Sessions</button>
-		</div>
+			
+			<br><br>
+			<br><br>
+			<br><br>
+			<img src="${pageContext.request.contextPath}/_view/ball.png" alt="Rev Metrix Ball">
+			
+</div>
+
+	<div class = "text">
+		<h2> RevMetrix is your ultimate performance-tracking tool to elevate your game. Record scores at the shot level, automatically calculate game and session totals, gain real-time insights into your performance, and so much more with RevMetrix. Track Events, Sessions, Games, Frames, Shots, etc. all while analyzing trends and refining your skills with detailed graphical feedback.</h2>
+	</div>
+			
+		
+		
+
 	</body>
 </html>

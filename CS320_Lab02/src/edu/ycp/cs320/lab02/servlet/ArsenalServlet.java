@@ -74,6 +74,7 @@ public class ArsenalServlet extends HttpServlet {
 	        // Duplicating an existing ball
 	        String[] ballData = request.getParameter("selectedBallDupe").split(",");
 	        String nickname = request.getParameter("nickname");
+	        System.out.println(nickname);
 	        
 	        // Parse string from user selection
 	        System.out.println(ballData[0]);						// brand
