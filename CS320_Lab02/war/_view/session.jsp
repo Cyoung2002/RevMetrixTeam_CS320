@@ -65,9 +65,9 @@
         	<label for="action1">Choose an Establishment:</label>
     
     		<select id="action1" name="establishment">
-        		<option value="establishment1" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Bowlerama</option>
-        		<option value="establishment2" ${param.actionSelect == 'delete' ? 'selected' : ''}>BowlyBowly</option>
-        		<option value="establishment3" ${param.actionSelect == 'delete' ? 'selected' : ''}>BowlingFun</option>
+        		<option value="Bowlerama" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Bowlerama</option>
+        		<option value="BowlyBowly" ${param.actionSelect == 'delete' ? 'selected' : ''}>BowlyBowly</option>
+        		<option value="BowlingFun" ${param.actionSelect == 'delete' ? 'selected' : ''}>BowlingFun</option>
     		</select>
             
             <label>Date:</label>
@@ -78,18 +78,18 @@
             <label for="action2">Choose an Opposing Team:</label>
     
     		<select id="action2" name="oppoTeam">
-        		<option value="Team1" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Lucky Strikes</option>
-        		<option value="Team2" ${param.actionSelect == 'delete' ? 'selected' : ''}>Spare Change</option>
-        		<option value="Team3" ${param.actionSelect == 'delete' ? 'selected' : ''}>Gutter Gang</option>
+        		<option value="Lucky Strikes" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Lucky Strikes</option>
+        		<option value="Spare Change" ${param.actionSelect == 'delete' ? 'selected' : ''}>Spare Change</option>
+        		<option value="Gutter Gang" ${param.actionSelect == 'delete' ? 'selected' : ''}>Gutter Gang</option>
     		</select>
     		
     		<label for="action3">Choose an Opposing Player:</label>
     
     		<select id="action3" name="oppoPlayer">
-        		<option value="Player1" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Caroline</option>
-        		<option value="Player2" ${param.actionSelect == 'delete' ? 'selected' : ''}>Olivia</option>
-        		<option value="Player3" ${param.actionSelect == 'delete' ? 'selected' : ''}>Tanner</option>
-        		<option value="Player4" ${param.actionSelect == 'delete' ? 'selected' : ''}>Collin</option>
+        		<option value="Caroline" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Caroline</option>
+        		<option value="Olivia" ${param.actionSelect == 'delete' ? 'selected' : ''}>Olivia</option>
+        		<option value="Tanner" ${param.actionSelect == 'delete' ? 'selected' : ''}>Tanner</option>
+        		<option value="Collin" ${param.actionSelect == 'delete' ? 'selected' : ''}>Collin</option>
     		</select>
     		
     		<label>Number of Games:</label>
