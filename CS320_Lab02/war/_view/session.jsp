@@ -12,9 +12,17 @@
     <script>
     function updateForm() {
         let action = document.getElementById("action").value;
+        //let action1 = document.getElementById("action1").value;
+        //let action2 = document.getElementById("action2").value;
+        //let action3 = document.getElementById("action3").value;
+        //let action4 = document.getElementById("action4").value;
         let newSessionFields = document.getElementById("newSessionFields");
         let existingSessionDropdownDelete = document.getElementById("existingSessionDropdownDelete");
-
+		
+     	// Hide both sections first
+        newSessionFields.style.display = "none";
+        existingSessionDropdownDelete.style.display = "none";
+        
         if (action === "addNew") {
             newSessionFields.style.display = "block";
             existingSessionDropdownDelete.style.display = "none";
@@ -39,7 +47,7 @@
         <option value="addNew" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Add New Session</option>
         <option value="delete" ${param.actionSelect == 'delete' ? 'selected' : ''}>Delete Existing Session</option>
     </select>
-
+	
     <br><br>
 
     <!-- Form -->
@@ -47,20 +55,45 @@
 
 		<!-- Add New Establishment Fields -->
         <div id="newSessionFields">
-        
+        	
+			<label>Session List:</label><br>
         	<c:forEach var="session" items="${sessions}">
-        		<label>${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}<br></label>
+        		<label>${session.establishment} - ${session.date} - ${session.time} - ${session.oppoTeam} - ${session.oppoPlayer} - ${session.numGames}<br></label>
         	</c:forEach>
         	<br>
         	
-            <label>Name:</label>
-            <input type="text" name="name">
-            <label>Location:</label>
-            <input type="text" name="location">
-            <label>Phone Number:</label>
-            <input type="text" name="phoneNumber">
-            <label>Hours:</label>
-            <input type="text" name="hours">
+        	<label for="action1">Choose an Establishment:</label>
+    
+    		<select id="action1" name="establishment">
+        		<option value="establishment1" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Bowlerama</option>
+        		<option value="establishment2" ${param.actionSelect == 'delete' ? 'selected' : ''}>BowlyBowly</option>
+        		<option value="establishment3" ${param.actionSelect == 'delete' ? 'selected' : ''}>BowlingFun</option>
+    		</select>
+            
+            <label>Date:</label>
+            <input type="text" name="date">
+            <label>Time:</label>
+            <input type="text" name="time">
+            
+            <label for="action2">Choose an Opposing Team:</label>
+    
+    		<select id="action2" name="oppoTeam">
+        		<option value="Team1" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Lucky Strikes</option>
+        		<option value="Team2" ${param.actionSelect == 'delete' ? 'selected' : ''}>Spare Change</option>
+        		<option value="Team3" ${param.actionSelect == 'delete' ? 'selected' : ''}>Gutter Gang</option>
+    		</select>
+    		
+    		<label for="action3">Choose an Opposing Player:</label>
+    
+    		<select id="action3" name="oppoPlayer">
+        		<option value="Player1" ${param.actionSelect == 'addNew' ? 'selected' : ''}>Caroline</option>
+        		<option value="Player2" ${param.actionSelect == 'delete' ? 'selected' : ''}>Olivia</option>
+        		<option value="Player3" ${param.actionSelect == 'delete' ? 'selected' : ''}>Tanner</option>
+        		<option value="Player4" ${param.actionSelect == 'delete' ? 'selected' : ''}>Collin</option>
+    		</select>
+    		
+    		<label>Number of Games:</label>
+            <input type="number" name="numGames">
             
             <br><br>
         	<button type="submit" name="action" value="addNew">Submit</button>
@@ -68,12 +101,12 @@
 
 
         <!-- Existing Establishment Drop-down for Deleting-->
-        <div id="existingEstablishmentDropdownDelete">
-            <label for="selectedEstablishmentDelete">Select a Establishment:</label>
-            <select name="selectedEstablishmentDelete" id="selectedEstablishmentDelete">
-                <c:forEach var="establishment" items="${establishments}">
-                    <option value="${establishment.name},${establishment.location},${establishment.phoneNumber},${establishment.hours}">
-                        ${establishment.name} - ${establishment.location} - ${establishment.phoneNumber} - ${establishment.hours}
+        <div id="existingSessionDropdownDelete">
+            <label for="selectedSessionDelete">Select a Session:</label>
+            <select name="selectedSessionDelete" id="selectedSessionDelete">
+                <c:forEach var="session" items="${sessions}">
+                    <option value="${session.establishment},${session.date},${session.time},${session.oppoTeam},${session.oppoPlayer},${session.numGames}">
+                        ${session.establishment} - ${session.date} - ${session.time} - ${session.oppoTeam} - ${session.oppoPlayer} - ${session.numGames}
                     </option>
                 </c:forEach>
             </select>
@@ -84,6 +117,6 @@
     </form>
     <!-- Index button -->
     <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' ">Index</button>
-
+	<button id="shotButton" onclick="location.href= 'http://localhost:8081/lab02/shot' ">Begin Session</button>
 </body>
 </html>

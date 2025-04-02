@@ -9,19 +9,19 @@ public class Session {
 	private String time;
 	private String oppoTeam;
 	private String oppoPlayer;
-	private ArrayList<Game> games;
+	private int numGames;
 	private ArrayList<Session> sessions;
 	
 	public Session(){
 	}
 	
-	public Session(String establishement, String date, String time, String oppoTeam, String oppoPlayer, ArrayList<Game> games) {
+	public Session(String establishement, String date, String time, String oppoTeam, String oppoPlayer, int games) {
 		this.establishment = establishment;
 		this.date = date;
 		this.time = time;
 		this.oppoTeam = oppoTeam;
 		this.oppoPlayer = oppoPlayer;
-		this.games = games;
+		this.numGames = games;
 		
 		sessions = new ArrayList<Session>();
 		
@@ -32,40 +32,33 @@ public class Session {
 	}
 	
 	// Pick up HERE *********************
-	public Session makeEstablishment(String name, String location, String phoneNumber, String hours) {
-		Session establish = new Session();
+	public Session makeSession(String establishment, String date, String time, String oppoTeam, String oppoPlayer, int games) {
+		Session session = new Session();
 		
-		establish.setName(name);
-		establish.setLocation(location);
-		establish.setphoneNumber(phoneNumber);
-		establish.setHours(hours);
+		session.setEstablishment(establishment);
+		session.setDate(date);
+		session.setTime(time);
+		session.setOppoTeam(oppoTeam);
+		session.setOppoPlayer(oppoPlayer);
+		session.setNumGames(games);
 		
-		return establish;
+		return session;
 	}
 	
-	public boolean addNewEstablishment(Session establishment) {
-		if(this.establishments.contains(establishment)) {
+	public boolean addNewSession(Session session) {
+		if(this.sessions.contains(session)) {
 			return false;
 		}
 		else {
-			this.establishments.add(establishment);
+			this.sessions.add(session);
 			return true;
 		}
 	}
 	
-	public boolean duplicateEstablishment(Session dupe) {
-		for(Session establishment : establishments) {
-			if(dupe.getName().equals(establishment.getName())) {
-				establishments.add(establishment);
-				return true;
-			}
-		}
-		return false;
-	}
-	public boolean deleteEstablishment(Session dupe) {
-		for(Session establishment : establishments) {
-			if(dupe.getName().equals(establishment.getName())) {
-				establishments.remove(establishment);
+	public boolean deleteSession(Session dupe) {
+		for(Session session : sessions) {
+			if(dupe.getEstablishment().equals(session.getEstablishment())) {
+				sessions.remove(session);
 				return true;
 			}
 		}
@@ -75,37 +68,52 @@ public class Session {
 	
 	//getters and setters
 	
-	public String getName(){
-		return name;
+	public String getEstablishment(){
+		return establishment;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setEstablishment(String establishment) {
+		this.establishment = establishment;
 	}
 	
-	public String getLocation() {
-		return location;
+	public String getDate() {
+		return date;
 	}
 	
-	public void setLocation(String location) {
-		this.location = location;
+	public void setDate(String date) {
+		this.date = date;
 	}
 	
-	public String getphoneNumber() {
-		return phoneNumber;
+	public String getTime() {
+		return time;
 	}
 	
-	public void setphoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setTime(String time) {
+		this.time = time;
 	}
 	
-	public String getHours() {
-		return hours;
+	public String getOppoTeam() {
+		return oppoTeam;
 	}
 	
-	public void setHours(String hours) {
-		this.hours = hours;
+	public void setOppoTeam(String oppoTeam) {
+		this.oppoTeam = oppoTeam;
 	}
 	
+	public String getOppoPlayer() {
+		return oppoPlayer;
+	}
+	
+	public void setOppoPlayer(String oppoPlayer) {
+		this.oppoPlayer = oppoPlayer;
+	}
+	
+	public int getNumGames() {
+		return numGames;
+	}
+	
+	public void setNumGames(int games) {
+		this.numGames = games;
+	}
 }
 
