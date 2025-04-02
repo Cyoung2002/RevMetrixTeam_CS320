@@ -11,31 +11,34 @@
     <style>
 body {
     font-family: 'Orbitron', sans-serif;
-    background-color: #0a0a2a;
+    background-color: #0a0a2a; /* Background for side margins */
     color: #00ffcc;
     margin: 0;
     padding: 0;
     text-align: center;
 }
 
+/* Wrapper to center content and add side margins */
 .wrapper {
     width: 80%;
-    max-width: 1000px;
+    max-width: 1000px; /* Keeps content from getting too wide */
     margin: 30px auto;
     padding: 20px;
-    background: #1a0033;
-    border-left: 10px solid #ff6600;
-    border-right: 10px solid #ff6600;
-    box-shadow: 0 0 15px rgba(255, 102, 0, 0.8);
+    background: #1a0033; /* Main content background */
+    border-left: 10px solid #ff6600;  /* Left border */
+    border-right: 10px solid #ff6600; /* Right border */
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.8); /* Glowing effect */
     border-radius: 10px;
 }
 
+/* Main title */
 h1, h2 {
     text-align: center;
     color: #ff00ff;
     text-shadow: 2px 2px 10px #ff6600;
 }
 
+/* Ball list styling */
 .ball-list {
     list-style: none;
     padding: 0;
@@ -58,6 +61,7 @@ h1, h2 {
     color: #ff00ff;
 }
 
+/* Form section */
 .form-container {
     width: 60%;
     max-width: 500px;
@@ -69,6 +73,7 @@ h1, h2 {
     text-align: left;
 }
 
+/* Labels and inputs */
 label {
     font-weight: bold;
     color: #ff00ff;
@@ -88,10 +93,12 @@ input, select {
     font-size: 14px;
 }
 
+/* Dropdowns */
 select {
     cursor: pointer;
 }
 
+/* Buttons */
 button {
     background: #ff6600;
     color: white;
@@ -111,6 +118,7 @@ button:hover {
     box-shadow: 0 0 15px #ff00ff;
 }
 
+/* Error messages */
 .error {
     color: red;
     font-weight: bold;
@@ -153,6 +161,7 @@ button:hover {
     </script>
 </head>
 <body>
+    <div class="wrapper"> <!-- Added wrapper div here -->
     <h2>Manage Your Bowling Ball Arsenal</h2>
 
     <!-- Action Selection -->
@@ -231,5 +240,6 @@ button:hover {
     <!-- Index button -->
     <br>
     <button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' "    style= "font-family: 'Orbitron', sans-serif;">Index</button>
+     </div>
     </body>
 </html>
