@@ -221,7 +221,7 @@ img {
 			<br><br>
 			<br><br>
 			<br><br>
-			<img src="Rev-Metrix-Bowling-Ball.jpg" alt="Rev Metrix Ball">
+			<img src="${pageContext.request.contextPath}/_view/ball.png" alt="Rev Metrix Ball">
 			
 </div>
 
