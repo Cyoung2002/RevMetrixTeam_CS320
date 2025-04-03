@@ -17,6 +17,7 @@ body {
     text-align: center;
 }
 
+
 /* Wrapper to center content and add side margins */
 .wrapper {
     width: 80%;
@@ -136,10 +137,6 @@ button:hover {
     <script>
     function updateForm() {
         let action = document.getElementById("action").value;
-        //let action1 = document.getElementById("action1").value;
-        //let action2 = document.getElementById("action2").value;
-        //let action3 = document.getElementById("action3").value;
-        //let action4 = document.getElementById("action4").value;
         let newSessionFields = document.getElementById("newSessionFields");
         let existingSessionDropdownDelete = document.getElementById("existingSessionDropdownDelete");
 		
@@ -155,9 +152,11 @@ button:hover {
             existingSessionDropdownDelete.style.display = "block";
         }
     }
-        window.onload = function() {
-            updateForm(); // Set correct form state on page load
-        };
+    
+    window.onload = function() {
+        updateForm(); // Apply visibility settings
+    };
+   
 
     </script>
 </head>
