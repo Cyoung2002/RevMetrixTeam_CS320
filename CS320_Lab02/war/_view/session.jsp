@@ -182,7 +182,7 @@ button:hover {
         	
 			<label>Session List:</label><br>
         	<c:forEach var="session" items="${sessions}">
-        		<label>${session.establishment} - ${session.date} - ${session.time} - ${session.oppoTeam} - ${session.oppoPlayer} - ${session.numGames}<br></label>
+        		<label>${session.establishment} - ${session.date} - ${session.time} - ${session.oppoTeam} - ${session.oppoPlayer} - ${session.numGames} - ${session.startLane}<br></label>
         	</c:forEach>
         	<br>
         	
@@ -218,6 +218,20 @@ button:hover {
     		
     		<label>Number of Games:</label>
             <input type="number" name="numGames">
+            <label>Starting Lane Number:</label>
+            <input type="number" name="startLane">
+            
+            <div class="ball-selection">
+	        	<div class="shot-label">Select Starting Ball</div>
+	        	<select name="ball" class="ball-dropdown">
+	            	<option value="">Select Ball</option>
+	            	<c:forEach items="${arsenalBalls}" var="ball">
+	                	<option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
+                    </option>
+	            	</c:forEach>
+	        	</select>
+	    	</div>
             
             <br><br>
         	<button type="submit" name="action" value="addNew">Submit</button>
@@ -229,8 +243,8 @@ button:hover {
             <label for="selectedSessionDelete">Select a Session:</label>
             <select name="selectedSessionDelete" id="selectedSessionDelete">
                 <c:forEach var="session" items="${sessions}">
-                    <option value="${session.establishment},${session.date},${session.time},${session.oppoTeam},${session.oppoPlayer},${session.numGames}">
-                        ${session.establishment} - ${session.date} - ${session.time} - ${session.oppoTeam} - ${session.oppoPlayer} - ${session.numGames}
+                    <option value="${session.establishment},${session.date},${session.time},${session.oppoTeam},${session.oppoPlayer},${session.numGames},${session.startLane}">
+                        ${session.establishment} - ${session.date} - ${session.time} - ${session.oppoTeam} - ${session.oppoPlayer} - ${session.numGames} - ${session.startLane}
                     </option>
                 </c:forEach>
             </select>
