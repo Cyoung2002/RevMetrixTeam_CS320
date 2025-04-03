@@ -16,7 +16,7 @@ public class Session {
 	public Session(){
 	}
 	
-	public Session(String establishement, String date, String time, String oppoTeam, String oppoPlayer, int games, int startLane) {
+	public Session(String establishment, String date, String time, String oppoTeam, String oppoPlayer, int games, int startLane) {
 		this.establishment = establishment;
 		this.date = date;
 		this.time = time;
