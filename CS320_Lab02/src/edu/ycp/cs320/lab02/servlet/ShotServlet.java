@@ -5,6 +5,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
+import edu.ycp.cs320.lab02.model.*;
 
 public class ShotServlet extends HttpServlet {
     
@@ -13,6 +14,10 @@ public class ShotServlet extends HttpServlet {
             throws ServletException, IOException {
         
         HttpSession session = req.getSession(true);
+        
+        Arsenal arsenal = (Arsenal) session.getAttribute("arsenal");
+        
+        req.setAttribute("arsenalBalls", arsenal.getBalls());
         
         // Initialize new shot if needed
         if (session.getAttribute("currentShot") == null) {
@@ -39,30 +44,41 @@ public class ShotServlet extends HttpServlet {
             List<Integer> standingAfterFirstShot = firstShot.getStandingPins();
             req.setAttribute("standingPins", standingAfterFirstShot);
             
-            // Convert current selections to string for JS
-            StringBuilder sb = new StringBuilder();
-            for (Integer pin : currentShot.getStandingPins()) {
-                if (sb.length() > 0) sb.append(",");
-                sb.append(pin);
-            }
-            req.setAttribute("standingPinsString", sb.toString());
+            // Initialize currentShot's standing pins with first shot's standing pins
+            currentShot.setStandingPins(new HashSet<>(standingAfterFirstShot));
+            
+            // Convert to string for JS
+            req.setAttribute("standingPinsString", String.join(",", 
+                standingAfterFirstShot.stream().map(String::valueOf).toArray(String[]::new)));
         }
+        
+        req.setAttribute("arsenalBalls", Arsenal.getBalls());
         
         req.getRequestDispatcher("/_view/shot.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
-            throws ServletException, IOException {
-        
-        HttpSession session = req.getSession();
-        ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
-        
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    	String selectedBallName = req.getParameter("ball");
+        if (selectedBallName != null && !selectedBallName.isEmpty()) {
+            HttpSession session = req.getSession();
+            ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
+            
+            // Get the actual ball object from arsenal
+            Arsenal arsenal = (Arsenal) session.getAttribute("arsenal");
+            for (Ball ball : arsenal.getBalls()) {
+                if (ball.getName().equals(selectedBallName)) {
+                    currentShot.setSelectBall(ball); // You'll need to add this method
+                    break;
+                }
+            }
+        }
         // Process STANDING pins selection
-        String standingPinsParam = req.getParameter("standingPins");
         Set<Integer> standingPins = new HashSet<>();
+        String standingPinsParam = req.getParameter("standingPins");
         if (standingPinsParam != null && !standingPinsParam.isEmpty()) {
-            for (String pinStr : standingPinsParam.split(",")) {
+            String[] pinStrings = standingPinsParam.split(",");
+            for (String pinStr : pinStrings) {
                 standingPins.add(Integer.parseInt(pinStr));
             }
         }
@@ -78,17 +94,27 @@ public class ShotServlet extends HttpServlet {
         if (currentShot.getShotNumber() == 1) {
             // Store first shot and prepare second
             session.setAttribute("firstShot", currentShot);
-            currentShot.setShotNumber(2);
-            // Reset standing pins for second shot
-            currentShot.setStandingPins(new HashSet<>());
+            
+            // Create new shot for second attempt
+            ShotObject secondShot = new ShotObject(2);
+            // Carry over the standing pins from first shot
+            secondShot.setStandingPins(new HashSet<Integer>(standingPins));
+            session.setAttribute("currentShot", secondShot);
         } else {
             // Frame complete - reset for new frame
-            int frameNum = (int) session.getAttribute("frameNumber");
+            int frameNum = (Integer) session.getAttribute("frameNumber");
             session.setAttribute("frameNumber", frameNum < 10 ? frameNum + 1 : 1);
             resetSession(session);
         }
         
         resp.sendRedirect("shot");
+    }
+
+    private Set<Integer> parseStandingPins(String param) {
+        if (param == null || param.isEmpty()) return new HashSet<>();
+        return Arrays.stream(param.split(","))
+                     .map(Integer::parseInt)
+                     .collect(Collectors.toSet());
     }
 
     private void resetSession(HttpSession session) {

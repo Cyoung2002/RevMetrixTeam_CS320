@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Arsenal {
 	
 	private String arsenalName;
-	private ArrayList<Ball> balls;
+	private static ArrayList<Ball> balls;
 	
 	
 	public Arsenal(){
@@ -22,7 +22,7 @@ public class Arsenal {
 	public String getArsenalName() {
 		return arsenalName;
 	}
-	public ArrayList<Ball> getBalls() {
+	public static ArrayList<Ball> getBalls() {
 		return balls;
 	}
 	

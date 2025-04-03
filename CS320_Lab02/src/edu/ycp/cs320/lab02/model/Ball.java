@@ -70,5 +70,6 @@ public class Ball {
 		this.core = core;
 	}
 	
+	
 }
 

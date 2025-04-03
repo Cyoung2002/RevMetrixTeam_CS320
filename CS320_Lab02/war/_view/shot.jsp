@@ -60,28 +60,36 @@
             background-color: white;
             font-size: 0.7em;
         }
-        /* First shot - selected pins (standing) are black */
-        .pin.first-shot.selected {
-            background-color: black;
-            color: white;
-        }
-        /* Second shot - pins knocked down in first shot */
-        .pin.second-shot.knocked-down {
-            background-color: #cccccc;
-            color: #666666;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        /* Second shot - pins standing after first shot */
-        .pin.second-shot.standing {
-            background-color: black;
-            color: white;
-        }
-        /* Second shot - pins selected in current shot */
-        .pin.second-shot.selected {
-            background-color: #ff4444;
-            color: white;
-        }
+        /* First shot - pins start white, turn black when selected (standing) */
+		.pin.first-shot {
+		    background-color: white;
+		    color: black;
+		}
+		.pin.first-shot.selected {
+		    background-color: black;
+		    color: white;
+		}
+		
+		/* Second shot - pins knocked down in first shot (grayed out) */
+		.pin.second-shot.knocked-down {
+		    background-color: #cccccc;
+		    color: #666666;
+		    cursor: not-allowed;
+		    pointer-events: none;
+		}
+		
+		/* Second shot - pins standing after first shot (selectable) */
+		.pin.second-shot.standing {
+		    background-color: black;
+		    color: white;
+		    cursor: pointer;
+		}
+		
+		/* Second shot - pins selected in current shot (will remain standing) */
+		.pin.second-shot.selected {
+		    background-color: #ff4444;
+		    color: white;
+		}
         .options {
             display: flex;
             flex-direction: column;
@@ -112,6 +120,24 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        .ball-selection {
+	    margin-right: 30px;
+	    text-align: center;
+		}
+	
+		.shot-label {
+		    font-weight: bold;
+		    margin-bottom: 5px;
+		    font-size: 1.2em;
+		}
+		
+		.ball-dropdown {
+		    padding: 8px 12px;
+		    font-size: 16px;
+		    border: 1px solid #333;
+		    border-radius: 4px;
+		    min-width: 150px;
+		}
     </style>
 </head>
 <body>
@@ -131,52 +157,60 @@
         <input type="hidden" name="frameNumber" value="${frameNumber}">
         
         <div class="content">
+        
+	        <div class="ball-selection">
+	        	<div class="shot-label">1st</div>
+	        	<select name="ball" class="ball-dropdown">
+	            	<option value="">Select Ball</option>
+	            	<c:forEach items="${arsenalBalls}" var="ball">
+	                	<option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
+                    </option>
+	            	</c:forEach>
+	        	</select>
+	        	<div class="shot-label">2nd</div>	
+	        	<select name="ball" class="ball-dropdown">
+	            	<option value="">Select Ball</option>
+	            	<c:forEach items="${arsenalBalls}" var="ball">
+	                	<option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
+                    </option>
+	            	</c:forEach>
+	        	</select>
+	    	</div>
             <div class="pin-layout">
                 <!-- Row 1 (Pins 7-8-9-10) -->
                 <div class="pin-row">
                     <c:forEach var="pin" items="7,8,9,10">
-                        <div class="pin ${shotNumber == 1 ? 'first-shot' : 
-                            (standingPins.contains(pin) ? 'second-shot standing' : 'second-shot knocked-down')}
-                            ${(shotNumber == 2 && standingPins.contains(pin) && 
-                               (empty standingPinsString ? false : standingPinsString.contains(pin.toString()))) ? 
-                               'selected' : ''}"
-                            data-pin="${pin}">${pin}
-                        </div>
+                        <div class="pin ${shotNumber == 1 ? 'first-shot' : standingPins.contains(pin) ? 'second-shot standing' : 'second-shot knocked-down'}"
+						     data-pin="${pin}">
+						     ${pin}
+						</div>
                     </c:forEach>
                 </div>
                 <!-- Row 2 (Pins 4-5-6) -->
                 <div class="pin-row">
                     <c:forEach var="pin" items="4,5,6">
-                        <div class="pin ${shotNumber == 1 ? 'first-shot' : 
-                            (standingPins.contains(pin) ? 'second-shot standing' : 'second-shot knocked-down')}
-                            ${(shotNumber == 2 && standingPins.contains(pin) && 
-                               (empty standingPinsString ? false : standingPinsString.contains(pin.toString()))) ? 
-                               'selected' : ''}"
-                            data-pin="${pin}">${pin}
-                        </div>
+                        <div class="pin ${shotNumber == 1 ? 'first-shot' : standingPins.contains(pin) ? 'second-shot standing' : 'second-shot knocked-down'}"
+						     data-pin="${pin}">
+						     ${pin}
+						</div>
                     </c:forEach>
                 </div>
                 <!-- Row 3 (Pins 2-3) -->
                 <div class="pin-row">
                     <c:forEach var="pin" items="2,3">
-                        <div class="pin ${shotNumber == 1 ? 'first-shot' : 
-                            (standingPins.contains(pin) ? 'second-shot standing' : 'second-shot knocked-down')}
-                            ${(shotNumber == 2 && standingPins.contains(pin) && 
-                               (empty standingPinsString ? false : standingPinsString.contains(pin.toString()))) ? 
-                               'selected' : ''}"
-                            data-pin="${pin}">${pin}
-                        </div>
+                        <div class="pin ${shotNumber == 1 ? 'first-shot' : standingPins.contains(pin) ? 'second-shot standing' : 'second-shot knocked-down'}"
+						     data-pin="${pin}">
+						     ${pin}
+						</div>
                     </c:forEach>
                 </div>
                 <!-- Row 4 (Pin 1) -->
                 <div class="pin-row">
-                    <div class="pin ${shotNumber == 1 ? 'first-shot' : 
-                        (standingPins.contains(1) ? 'second-shot standing' : 'second-shot knocked-down')}
-                        ${(shotNumber == 2 && standingPins.contains(1) && 
-                           (empty standingPinsString ? false : standingPinsString.contains('1'))) ? 
-                           'selected' : ''}"
-                        data-pin="1">1
-                    </div>
+                    <div class="pin ${shotNumber == 1 ? 'first-shot' : standingPins.contains(pin) ? 'second-shot standing' : 'second-shot knocked-down'}"
+					     data-pin="1">1
+					</div>
                 </div>
                 
                 <button type="submit" class="submit-btn">Submit Shot</button>
@@ -198,34 +232,44 @@
     </form>
 
     <script>
-        // Track STANDING pins (selected pins) for current shot
-        let currentShotPins = new Set();
-        
-        // Initialize from server if available
-        <c:if test="${not empty standingPinsString}">
-            "${standingPinsString}".split(',').forEach(pin => {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize from server data
+        var standingPinsInput = document.getElementById('standingPins');
+        var currentShotPins = new Set();
+        if (standingPinsInput.value) {
+            standingPinsInput.value.split(',').forEach(function(pin) {
                 if (pin) currentShotPins.add(pin);
             });
-        </c:if>
+        }
         
         // Set up pin click handlers
-        document.querySelectorAll('.pin.first-shot, .pin.second-shot.standing').forEach(pin => {
-            pin.addEventListener('click', function() {
-                const pinNum = this.getAttribute('data-pin');
+        document.querySelectorAll('.pin').forEach(function(pin) {
+            // Only make standing pins clickable
+            if (pin.classList.contains('first-shot') || 
+                (pin.classList.contains('second-shot') && pin.classList.contains('standing'))) {
                 
-                if (currentShotPins.has(pinNum)) {
-                    currentShotPins.delete(pinNum);
-                    this.classList.remove('selected');
-                } else {
-                    currentShotPins.add(pinNum);
-                    this.classList.add('selected');
+                pin.addEventListener('click', function() {
+                    var pinNum = this.getAttribute('data-pin');
+                    
+                    if (currentShotPins.has(pinNum)) {
+                        currentShotPins.delete(pinNum);
+                        this.classList.remove('selected');
+                    } else {
+                        currentShotPins.add(pinNum);
+                        this.classList.add('selected');
+                    }
+                    
+                    // Update hidden input
+                    standingPinsInput.value = Array.from(currentShotPins).join(',');
+                });
+                
+                // Initialize selected state if needed
+                if (currentShotPins.has(pin.getAttribute('data-pin'))) {
+                    pin.classList.add('selected');
                 }
-                
-                // Update hidden input
-                document.getElementById('standingPins').value = 
-                    Array.from(currentShotPins).join(',');
-            });
+            }
         });
-    </script>
+    });
+</script>
 </body>
 </html>
