@@ -10,12 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
 import edu.ycp.cs320.lab02.model.Session;
-import edu.ycp.cs320.lab02.model.Game;
 
 public class SessionServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	ArrayList<Game> games = new ArrayList<Game>();
 	Session session = new Session("Demo", "Demoo", "Demooo", "Demoooo", "Demo", 3);
 	
 	
