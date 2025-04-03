@@ -15,6 +15,7 @@ public class ShotObject {
     // Properties
     private int shotNumber;
     private Set<Integer> pinsKnockedDown = new HashSet<>();
+    private Set<Integer> pinsStanding = new HashSet<>();
     private boolean isFoul;
     private String specialMark;
     
@@ -68,11 +69,11 @@ public class ShotObject {
                    .collect(Collectors.toList());
     }
 
-    public void setStandingPins(Set<Integer> standingPins) {
+    public void setStandingPins(Set<Integer> pinsStanding) {
         this.pinsKnockedDown.clear();
         for (int pin = 1; pin <= TOTAL_PINS; pin++) {
-            if (!standingPins.contains(pin)) {
-                this.pinsKnockedDown.add(pin);
+            if (!pinsStanding.contains(pin)) {
+                this.pinsStanding.add(pin);
             }
         }
         updateSpecialMark();
