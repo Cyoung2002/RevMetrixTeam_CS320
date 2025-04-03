@@ -10,18 +10,20 @@ public class Session {
 	private String oppoTeam;
 	private String oppoPlayer;
 	private int numGames;
+	private int startLane;
 	private ArrayList<Session> sessions;
 	
 	public Session(){
 	}
 	
-	public Session(String establishement, String date, String time, String oppoTeam, String oppoPlayer, int games) {
+	public Session(String establishement, String date, String time, String oppoTeam, String oppoPlayer, int games, int startLane) {
 		this.establishment = establishment;
 		this.date = date;
 		this.time = time;
 		this.oppoTeam = oppoTeam;
 		this.oppoPlayer = oppoPlayer;
 		this.numGames = games;
+		this.startLane = startLane;
 		
 		sessions = new ArrayList<Session>();
 		
@@ -31,8 +33,7 @@ public class Session {
 		return sessions;
 	}
 	
-	// Pick up HERE *********************
-	public Session makeSession(String establishment, String date, String time, String oppoTeam, String oppoPlayer, int games) {
+	public Session makeSession(String establishment, String date, String time, String oppoTeam, String oppoPlayer, int games, int startLane) {
 		Session session = new Session();
 		
 		session.setEstablishment(establishment);
@@ -41,6 +42,7 @@ public class Session {
 		session.setOppoTeam(oppoTeam);
 		session.setOppoPlayer(oppoPlayer);
 		session.setNumGames(games);
+		session.setStartLane(startLane);
 		
 		return session;
 	}
@@ -114,6 +116,14 @@ public class Session {
 	
 	public void setNumGames(int games) {
 		this.numGames = games;
+	}
+	
+	public int getStartLane () {
+		return startLane;
+	}
+	
+	public void setStartLane(int startLane) {
+		this.startLane = startLane;
 	}
 }
 

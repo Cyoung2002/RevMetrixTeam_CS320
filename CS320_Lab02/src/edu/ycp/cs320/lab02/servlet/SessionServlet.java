@@ -14,7 +14,7 @@ import edu.ycp.cs320.lab02.model.Session;
 public class SessionServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	Session session = new Session("Demo", "Demoo", "Demooo", "Demoooo", "Demo", 3);
+	Session session = new Session("Demo", "Demoo", "Demooo", "Demoooo", "Demo", 3, 2);
 	
 	
 	@Override
@@ -46,9 +46,10 @@ public class SessionServlet extends HttpServlet {
 	        String oppoTeam = request.getParameter("oppoTeam");
 	        String oppoPlayer = request.getParameter("oppoPlayer");
 	        int gameNum = Integer.parseInt(request.getParameter("numGames"));
+	        int startLane = Integer.parseInt(request.getParameter("startLane"));
 
 	        // Partial constructor for now
-	        Session newSession = session.makeSession(establishment, date, time, oppoTeam, oppoPlayer, gameNum);
+	        Session newSession = session.makeSession(establishment, date, time, oppoTeam, oppoPlayer, gameNum, startLane);
 	        
 	        if (!session.addNewSession(newSession)) {
 	            response.getWriter().println("<html><body><h3>Error: This session is already in your session list!</h3></body></html>");
@@ -65,7 +66,7 @@ public class SessionServlet extends HttpServlet {
 	        String[] sessionData = request.getParameter("selectedSessionDelete").split(",");
 	        
 	        // Partial Constructor for now to compare temp argument against arsenal list
-	        Session sessionToDelete = session.makeSession(sessionData[0], sessionData[1], sessionData[2], sessionData[3], sessionData[4], Integer.parseInt(sessionData[5]));
+	        Session sessionToDelete = session.makeSession(sessionData[0], sessionData[1], sessionData[2], sessionData[3], sessionData[4], Integer.parseInt(sessionData[5]), Integer.parseInt(sessionData[6]));
 	        session.deleteSession(sessionToDelete);
 	        System.out.println("Session deleted");
 	    }
