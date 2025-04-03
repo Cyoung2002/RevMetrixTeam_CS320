@@ -142,6 +142,25 @@
         .second-ball-dropdown {
             margin-top: 10px;
         }
+        
+        /*attempted to fix to the css buttons */
+        button {
+		    background: #ff6600;
+		    color: white;
+		    border: none;
+		    padding: 12px 20px;
+		    border-radius: 5px;
+		    cursor: pointer;
+		    transition: background 0.3s ease, box-shadow 0.3s ease;
+		    text-shadow: 1px 1px 5px #000;
+		    box-shadow: 0 0 10px #ff6600;
+		    font-size: 16px;
+		    margin: 10px;
+		}
+		#indexbutton {
+	    	font-family: 'Orbitron', sans-serif;
+	    }
+        
     </style>
 </head>
 <body>
@@ -151,8 +170,7 @@
             <div>${eventType}</div>
         </div>
         <div class="game-info">
-            <div>Game ${gameNumber}</div>
-            <div>Frame ${frameNumber} - Shot ${shotNumber}</div>
+            <div>Game: ${gameNumber} - Frame: ${frameNumber} - Shot: ${shotNumber}</div>
         </div>
     </div>
 
