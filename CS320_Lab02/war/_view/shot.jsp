@@ -138,6 +138,10 @@
 		    border-radius: 4px;
 		    min-width: 150px;
 		}
+		/* Add this new style for the second ball dropdown */
+        .second-ball-dropdown {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -159,26 +163,31 @@
         <div class="content">
         
 	        <div class="ball-selection">
-	        	<div class="shot-label">1st</div>
-	        	<select name="ball" class="ball-dropdown">
-	            	<option value="">Select Ball</option>
-	            	<c:forEach items="${arsenalBalls}" var="ball">
-	                	<option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
-                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
-                    </option>
-	            	</c:forEach>
-	        	</select>
-	        	<div class="shot-label">2nd</div>	
-	        	<select name="ball" class="ball-dropdown">
-	            	<option value="">Select Ball</option>
-	            	<c:forEach items="${arsenalBalls}" var="ball">
-	                	<option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
-                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
-                    </option>
-	            	</c:forEach>
-	        	</select>
-	    	</div>
-            <div class="pin-layout">
+			    <div class="shot-label">1st</div>
+			    <select name="firstBall" id="firstBall" class="ball-dropdown">
+			        <option value="">Select Ball</option>
+			        <c:forEach items="${arsenalBalls}" var="ball">
+			            <c:set var="ballValue" value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}"/>
+			            <option value="${ballValue}" 
+			                <c:if test="${not empty firstBall and firstBall eq ballValue}">selected</c:if>>
+			                ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
+			            </option>
+			        </c:forEach>
+			    </select>
+			    
+			    <div class="shot-label second-ball-dropdown">2nd</div>    
+			    <select name="secondBall" id="secondBall" class="ball-dropdown">
+			        <option value="">Select Ball</option>
+			        <c:forEach items="${arsenalBalls}" var="ball">
+			            <c:set var="ballValue" value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}"/>
+			            <option value="${ballValue}" 
+			                <c:if test="${not empty secondBall and secondBall eq ballValue}">selected</c:if>>
+			                ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
+			            </option>
+			        </c:forEach>
+			    </select>
+	    	</div>            
+	    	<div class="pin-layout">
                 <!-- Row 1 (Pins 7-8-9-10) -->
                 <div class="pin-row">
                     <c:forEach var="pin" items="7,8,9,10">
@@ -236,7 +245,7 @@
 	<button id="gamebutton" onclick="location.href= 'http://localhost:8081/lab02/game' ">Game</button>
 	    
 
-    <script>
+     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize from server data
         var standingPinsInput = document.getElementById('standingPins');
@@ -274,7 +283,23 @@
                 }
             }
         });
+
+        // Ball selection logic
+        const firstBallSelect = document.getElementById('firstBall');
+        const secondBallSelect = document.getElementById('secondBall');
+
+        // When first ball changes, update second ball if it's empty
+        firstBallSelect.addEventListener('change', function() {
+            if (this.value && secondBallSelect.value === '') {
+                secondBallSelect.value = this.value;
+            }
+        });
+
+        // Initialize the second ball if we're on the second shot and first ball is set
+        if (${shotNumber == 2} && firstBallSelect.value) {
+            secondBallSelect.value = firstBallSelect.value;
+        }
     });
-</script>
+    </script>
 </body>
 </html>
