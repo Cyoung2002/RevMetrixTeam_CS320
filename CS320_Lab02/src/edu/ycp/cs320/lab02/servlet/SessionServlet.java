@@ -6,19 +6,28 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 
 import edu.ycp.cs320.lab02.model.Session;
+import edu.ycp.cs320.lab02.model.ShotObject;
+import edu.ycp.cs320.lab02.model.Arsenal;
+import edu.ycp.cs320.lab02.model.Ball;
 
 public class SessionServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	Session session = new Session("Demo", "Demoo", "Demooo", "Demoooo", "Demo", 3, 2);
-	
+	Arsenal arsenal = new Arsenal("Demo");
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession httpSession = request.getSession();
+		Arsenal arsenal = (Arsenal) httpSession.getAttribute("arsenal");
+
+		request.setAttribute("arsenalBalls", arsenal.getBalls());
 		
 		System.out.println("Session Servlet: doGet");	
 		
@@ -38,6 +47,19 @@ public class SessionServlet extends HttpServlet {
 	    if ("addNew".equals(action)) {
 	    	// check that it has entered addNew action
 	    	System.out.println("addNew action");
+	    	
+	    	String selectedBallName = request.getParameter("ball");
+	        if (selectedBallName != null && !selectedBallName.isEmpty()) {
+	            HttpSession session = request.getSession();
+	            ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
+	    	Arsenal arsenal = (Arsenal) session.getAttribute("arsenal");
+            for (Ball ball : arsenal.getBalls()) {
+                if (ball.getName().equals(selectedBallName)) {
+                    currentShot.setSelectBall(ball); // You'll need to add this method
+                    break;
+                }
+            }
+	        }
 	    	
 	        // Adding a new Establishment
 	        String establishment = request.getParameter("establishment");

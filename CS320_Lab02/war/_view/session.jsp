@@ -221,6 +221,18 @@ button:hover {
             <label>Starting Lane Number:</label>
             <input type="number" name="startLane">
             
+            <div class="ball-selection">
+	        	<div class="shot-label">Select Starting Ball</div>
+	        	<select name="ball" class="ball-dropdown">
+	            	<option value="">Select Ball</option>
+	            	<c:forEach items="${arsenalBalls}" var="ball">
+	                	<option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
+                    </option>
+	            	</c:forEach>
+	        	</select>
+	    	</div>
+            
             <br><br>
         	<button type="submit" name="action" value="addNew">Submit</button>
         </div>
