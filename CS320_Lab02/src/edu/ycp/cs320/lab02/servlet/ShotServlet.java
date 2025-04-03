@@ -15,8 +15,8 @@ public class ShotServlet extends HttpServlet {
         
         HttpSession session = req.getSession(true);
         
+        //Arsenal Dropdown stuff
         Arsenal arsenal = (Arsenal) session.getAttribute("arsenal");
-        
         req.setAttribute("arsenalBalls", arsenal.getBalls());
         
         // Initialize new shot if needed
@@ -51,7 +51,7 @@ public class ShotServlet extends HttpServlet {
             req.setAttribute("standingPinsString", String.join(",", 
                 standingAfterFirstShot.stream().map(String::valueOf).toArray(String[]::new)));
         }
-        
+        //Arsenal dropdown
         req.setAttribute("arsenalBalls", Arsenal.getBalls());
         
         req.getRequestDispatcher("/_view/shot.jsp").forward(req, resp);
