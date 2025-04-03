@@ -9,10 +9,12 @@ import org.junit.Test;
 
 public class EventTest {
     private Event event;
+    private Event model;
 
     @Before
     public void setUp() {
         event = new Event();
+        model = new Event();
     }
 
     @Test
@@ -45,5 +47,78 @@ public class EventTest {
         assertEquals("Event should have the correct session.", "A", event.getSession());
         assertEquals("Event should have the correct stats.", 178.4, event.getEventStats(), 0.01);
         assertEquals("Event should have the correct standings.", 2, event.getStandings(), 0.01);
+    }
+    
+    // Getters and Setters Tests
+    @Test
+    public void testGetEventName() {
+        model.setName("Bowling Blitz");
+        assertEquals("Bowling Blitz", model.getName());
+    }
+    
+    @Test
+    public void testSetEventName() {
+        model.setName("Only 300s");
+        assertEquals("Only 300s", model.getName());
+    }
+    
+    @Test
+    public void testGetEventType() {
+        model.setType("Practice");
+        assertEquals("Practice", model.getType());
+    }
+    
+    @Test
+    public void testSetEventType() {
+        model.setType("League");
+        assertEquals("League", model.getType());
+    }
+    
+    @Test
+    public void testGetEventLocation() {
+        model.setLocation("York, PA");
+        assertEquals("York, PA", model.getLocation());
+    }
+    
+    @Test
+    public void testSetEventLocation() {
+        model.setLocation("Hanover");
+        assertEquals("Hanover", model.getLocation());
+    }
+    
+    @Test
+    public void testGetEventSession() {
+        model.setSession("April 10th");
+        assertEquals("April 10th", model.getSession());
+    }
+    
+    @Test
+    public void testSetEventSession() {
+        model.setSession("B");
+        assertEquals("B", model.getSession());
+    }
+    
+    @Test
+    public void testGetEventStats() {
+        model.setEventStats(218.0);
+        assertEquals(218.0, model.getEventStats(), 0.01);
+    }
+    
+    @Test
+    public void testSetEventStats() {
+        model.setEventStats(165.0);
+        assertEquals(165, model.getEventStats(), 0.01);
+    }
+    
+    @Test
+    public void testGetEventStandings() {
+        model.setStandings(1);
+        assertEquals(1, model.getStandings());
+    }
+    
+    @Test
+    public void testSetEventStandings() {
+        model.setStandings(3);
+        assertEquals(3, model.getStandings());
     }
 }

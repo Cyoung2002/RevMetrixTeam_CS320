@@ -50,7 +50,7 @@ public class Event {
 	}
 	
 	public void setLocation(String Location) {
-		this.location = location;
+		this.location = Location;
 	}
 	
 	public String getSession() {
