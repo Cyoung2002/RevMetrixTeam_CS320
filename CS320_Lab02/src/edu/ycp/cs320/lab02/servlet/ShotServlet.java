@@ -17,10 +17,6 @@ public class ShotServlet extends HttpServlet {
         
         HttpSession session = req.getSession(true);
         
-        //Arsenal Dropdown stuff
-        Arsenal arsenal = (Arsenal) session.getAttribute("arsenal");
-        req.setAttribute("arsenalBalls", arsenal.getBalls());
-        
         // Initialize new shot if needed
         if (session.getAttribute("currentShot") == null) {
             resetSession(session);
@@ -36,13 +32,29 @@ public class ShotServlet extends HttpServlet {
         req.setAttribute("eventType", "Practice");
         req.setAttribute("gameNumber", 1);
         
+        // Get arsenal balls for dropdown
+        Arsenal arsenal = (Arsenal) session.getAttribute("arsenal");
+        req.setAttribute("arsenalBalls", arsenal.getBalls());
+        
+        // Set ball values for the view
         if (shotNumber == 1) {
-            // First shot - all pins start standing
+            // First shot - get first ball if set
+            req.setAttribute("firstBall", currentShot.getSelectBall() != null ? 
+                ballToString(currentShot.getSelectBall()) : "");
+            req.setAttribute("secondBall", "");
+            
+            // All pins start standing for first shot
             req.setAttribute("standingPins", Arrays.asList(7,8,9,10,4,5,6,2,3,1));
             req.setAttribute("standingPinsString", "");
         } else {
-            // Second shot - get standing pins from first shot
+            // Second shot - get both balls
             ShotObject firstShot = (ShotObject) session.getAttribute("firstShot");
+            req.setAttribute("firstBall", firstShot.getSelectBall() != null ? 
+                ballToString(firstShot.getSelectBall()) : "");
+            req.setAttribute("secondBall", currentShot.getSelectBall() != null ? 
+                ballToString(currentShot.getSelectBall()) : "");
+            
+            // Get standing pins from first shot
             List<Integer> standingAfterFirstShot = firstShot.getStandingPins();
             req.setAttribute("standingPins", standingAfterFirstShot);
             
@@ -53,29 +65,36 @@ public class ShotServlet extends HttpServlet {
             req.setAttribute("standingPinsString", String.join(",", 
                 standingAfterFirstShot.stream().map(String::valueOf).toArray(String[]::new)));
         }
-        //Arsenal dropdown
-        req.setAttribute("arsenalBalls", Arsenal.getBalls());
         
         req.getRequestDispatcher("/_view/shot.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	String selectedBallName = req.getParameter("ball");
-    	HttpSession session = req.getSession();
+        HttpSession session = req.getSession();
         ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
-        if (selectedBallName != null && !selectedBallName.isEmpty()) {
-            
-            
-            // Get the actual ball object from arsenal
-            Arsenal arsenal = (Arsenal) session.getAttribute("arsenal");
-            for (Ball ball : arsenal.getBalls()) {
-                if (ball.getName().equals(selectedBallName)) {
-                    currentShot.setSelectBall(ball); 
-                    break;
-                }
+        int shotNumber = currentShot.getShotNumber();
+        
+        // Process ball selections
+        String firstBallStr = req.getParameter("firstBall");
+        String secondBallStr = req.getParameter("secondBall");
+        
+        Arsenal arsenal = (Arsenal) session.getAttribute("arsenal");
+        
+        if (shotNumber == 1) {
+            // First shot - only process first ball selection
+            if (firstBallStr != null && !firstBallStr.isEmpty()) {
+                Ball selectedBall = parseBall(firstBallStr, arsenal);
+                currentShot.setSelectBall(selectedBall);
+            }
+        } else {
+            // Second shot - process second ball selection
+            if (secondBallStr != null && !secondBallStr.isEmpty()) {
+                Ball selectedBall = parseBall(secondBallStr, arsenal);
+                currentShot.setSelectBall(selectedBall);
             }
         }
+
         // Process STANDING pins selection
         Set<Integer> standingPins = new HashSet<>();
         String standingPinsParam = req.getParameter("standingPins");
@@ -101,7 +120,7 @@ public class ShotServlet extends HttpServlet {
             // Create new shot for second attempt
             ShotObject secondShot = new ShotObject(2);
             // Carry over the standing pins from first shot
-            secondShot.setStandingPins(new HashSet<Integer>(standingPins));
+            secondShot.setStandingPins(new HashSet<>(standingPins));
             session.setAttribute("currentShot", secondShot);
         } else {
             // Frame complete - reset for new frame
@@ -111,6 +130,28 @@ public class ShotServlet extends HttpServlet {
         }
         
         resp.sendRedirect("shot");
+    }
+
+    private Ball parseBall(String ballStr, Arsenal arsenal) {
+        String[] parts = ballStr.split(",");
+        if (parts.length != 6) return null;
+        
+        for (Ball ball : arsenal.getBalls()) {
+            if (ball.getBrand().equals(parts[0]) && 
+                ball.getName().equals(parts[1]) && 
+                ball.getColor().equals(parts[2]) && 
+                ball.getCore().equals(parts[3]) && 
+                ball.getWeight() == Double.parseDouble(parts[4]) && 
+                ball.getDiameter() == Double.parseDouble(parts[5])) {
+                return ball;
+            }
+        }
+        return null;
+    }
+
+    private String ballToString(Ball ball) {
+        return ball.getBrand() + "," + ball.getName() + "," + ball.getColor() + "," + 
+               ball.getCore() + "," + ball.getWeight() + "," + ball.getDiameter();
     }
 
     private Set<Integer> parseStandingPins(String param) {
@@ -128,6 +169,3 @@ public class ShotServlet extends HttpServlet {
         }
     }
 }
-
-//FUTURE DEVELOPMENT IDEA: In arsenal have a method that uses a int value to select that ball to be the primary ball and shift its position within 
-//the array list. Should then be the same first ball in all sections of website.
