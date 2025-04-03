@@ -5,6 +5,8 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import edu.ycp.cs320.lab02.model.*;
 
 public class ShotServlet extends HttpServlet {
@@ -60,15 +62,16 @@ public class ShotServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     	String selectedBallName = req.getParameter("ball");
+    	HttpSession session = req.getSession();
+        ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
         if (selectedBallName != null && !selectedBallName.isEmpty()) {
-            HttpSession session = req.getSession();
-            ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
+            
             
             // Get the actual ball object from arsenal
             Arsenal arsenal = (Arsenal) session.getAttribute("arsenal");
             for (Ball ball : arsenal.getBalls()) {
                 if (ball.getName().equals(selectedBallName)) {
-                    currentShot.setSelectBall(ball); // You'll need to add this method
+                    currentShot.setSelectBall(ball); 
                     break;
                 }
             }
@@ -125,3 +128,6 @@ public class ShotServlet extends HttpServlet {
         }
     }
 }
+
+//FUTURE DEVELOPMENT IDEA: In arsenal have a method that uses a int value to select that ball to be the primary ball and shift its position within 
+//the array list. Should then be the same first ball in all sections of website.

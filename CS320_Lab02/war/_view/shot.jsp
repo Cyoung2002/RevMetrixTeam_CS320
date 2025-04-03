@@ -230,6 +230,11 @@
 
         <input type="hidden" name="standingPins" id="standingPins" value="${standingPinsString}">
     </form>
+        <!-- Index button -->
+	<br>
+	<button id="indexButton" onclick="location.href= 'http://localhost:8081/lab02/index' "    style= "font-family: 'Orbitron', sans-serif;">Index</button>
+	<button id="gamebutton" onclick="location.href= 'http://localhost:8081/lab02/game' ">Game</button>
+	    
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
