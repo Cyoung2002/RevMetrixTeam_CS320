@@ -163,14 +163,18 @@
 	        	<select name="ball" class="ball-dropdown">
 	            	<option value="">Select Ball</option>
 	            	<c:forEach items="${arsenalBalls}" var="ball">
-	                	<option value="${ball.id}">${ball.name} (${ball.weight}lbs)</option>
+	                	<option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
+                    </option>
 	            	</c:forEach>
 	        	</select>
 	        	<div class="shot-label">2nd</div>	
 	        	<select name="ball" class="ball-dropdown">
 	            	<option value="">Select Ball</option>
 	            	<c:forEach items="${arsenalBalls}" var="ball">
-	                	<option value="${ball.id}">${ball.name} (${ball.weight}lbs)</option>
+	                	<option value="${ball.brand},${ball.name},${ball.color},${ball.core},${ball.weight},${ball.diameter}">
+                        ${ball.brand} - ${ball.name} - ${ball.color} - ${ball.core} - ${ball.weight} lbs - ${ball.diameter} in
+                    </option>
 	            	</c:forEach>
 	        	</select>
 	    	</div>

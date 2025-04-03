@@ -59,9 +59,20 @@ public class ShotServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
-        
+    	String selectedBallName = req.getParameter("ball");
+        if (selectedBallName != null && !selectedBallName.isEmpty()) {
+            HttpSession session = req.getSession();
+            ShotObject currentShot = (ShotObject) session.getAttribute("currentShot");
+            
+            // Get the actual ball object from arsenal
+            Arsenal arsenal = (Arsenal) session.getAttribute("arsenal");
+            for (Ball ball : arsenal.getBalls()) {
+                if (ball.getName().equals(selectedBallName)) {
+                    currentShot.setSelectBall(ball); // You'll need to add this method
+                    break;
+                }
+            }
+        }
         // Process STANDING pins selection
         Set<Integer> standingPins = new HashSet<>();
         String standingPinsParam = req.getParameter("standingPins");
