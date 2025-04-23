@@ -96,19 +96,37 @@ public class ShotServlet extends HttpServlet {
         }
 
         // Process STANDING pins selection
-        Set<Integer> standingPins = new HashSet<>();
         String standingPinsParam = req.getParameter("standingPins");
-        if (standingPinsParam != null && !standingPinsParam.isEmpty()) {
-            String[] pinStrings = standingPinsParam.split(",");
-            for (String pinStr : pinStrings) {
-                standingPins.add(Integer.parseInt(pinStr));
-            }
-        }
+        Set<Integer> standingPins = parseStandingPins(standingPinsParam);
+        
+        // For first shot, standingPins represents the pins that REMAIN standing after the shot
+        // For second shot, standingPins represents the pins that were left standing after both shots
         currentShot.setStandingPins(standingPins);
 
         // Process special marks
         String specialMark = req.getParameter("specialMark");
-        if ("X".equals(specialMark)) currentShot.setAsStrike();
+     // In your doPost method:
+        if ("X".equals(specialMark)) {
+            currentShot.setAsStrike();
+            if (currentShot.isStrike()) {  // Use the new method
+                // Handle strike - skip second shot
+                session.setAttribute("firstShot", currentShot);
+                int frameNum = (Integer) session.getAttribute("frameNumber");
+                
+                // Special handling for 10th frame (3 shots possible)
+                if (frameNum == 10) {
+                    // In 10th frame, you get bonus shots after strike
+                    ShotObject secondShot = new ShotObject(2);
+                    session.setAttribute("currentShot", secondShot);
+                } else {
+                    // Normal frame - move to next frame
+                    session.setAttribute("frameNumber", frameNum + 1);
+                    resetSession(session);
+                }
+                resp.sendRedirect("shot");
+                return;
+            }
+        }
         else if ("/".equals(specialMark)) currentShot.setAsSpare();
         else if ("F".equals(specialMark)) currentShot.setAsFoul();
         else if ("-".equals(specialMark)) currentShot.setAsGutter();
@@ -119,8 +137,16 @@ public class ShotServlet extends HttpServlet {
             
             // Create new shot for second attempt
             ShotObject secondShot = new ShotObject(2);
-            // Carry over the standing pins from first shot
-            secondShot.setStandingPins(new HashSet<>(standingPins));
+            
+            // The standing pins from first shot become the starting pins for second shot
+            // If it was a strike, no pins remain standing
+            if (currentShot.isStrike()) {
+                secondShot.setStandingPins(new HashSet<>());
+            } else {
+                // Use the standing pins from the first shot
+                secondShot.setStandingPins(new HashSet<>(standingPins));
+            }
+            
             session.setAttribute("currentShot", secondShot);
         } else {
             // Frame complete - reset for new frame

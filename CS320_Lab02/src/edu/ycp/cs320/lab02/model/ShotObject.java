@@ -40,13 +40,30 @@ public class ShotObject {
         updateSpecialMark();
     }
 
-    // Special Mark Setters
+    // Special Mark Button Code
+    
+    //Strike
+    public boolean isStrike() {
+        // A strike is when all pins are knocked down on first shot
+        return shotNumber == 1 && pinsKnockedDown.size() == TOTAL_PINS;
+    }
     public void setAsStrike() {
-        if (shotNumber == 2) throw new IllegalStateException("Cannot have strike on second shot");
-        pinsKnockedDown.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        if (shotNumber == 2) {
+            throw new IllegalStateException("Cannot have strike on second shot");
+        }
+        // Clear any existing pins and knock down all
+        pinsKnockedDown.clear();
+        for (int i = 1; i <= TOTAL_PINS; i++) {
+            pinsKnockedDown.add(i);
+        }
         specialMark = "X";
     }
 
+    //Spare
+    public boolean isSpare() {
+        // A spare is when all remaining pins are knocked down on second shot
+        return shotNumber == 2 && pinsKnockedDown.size() == TOTAL_PINS;
+    }
     public void setAsSpare() {
         if (shotNumber == 1) throw new IllegalStateException("Cannot have spare on first shot");
         specialMark = "/";
@@ -73,7 +90,7 @@ public class ShotObject {
         this.pinsKnockedDown.clear();
         for (int pin = 1; pin <= TOTAL_PINS; pin++) {
             if (!pinsStanding.contains(pin)) {
-                this.pinsStanding.add(pin);
+                this.pinsKnockedDown.add(pin);  // Add to knocked down if not standing
             }
         }
         updateSpecialMark();
@@ -154,5 +171,15 @@ public class ShotObject {
 
 	public void setSelectBall(Ball selectBall) {
 		this.selectBall = selectBall;
+	}
+	
+	public boolean isValidPinState() {
+	    if (isStrike()) {
+	        return pinsKnockedDown.size() == TOTAL_PINS;
+	    }
+	    if (isSpare()) {
+	        return pinsKnockedDown.size() == TOTAL_PINS;
+	    }
+	    return true; // Normal shot
 	}
 }

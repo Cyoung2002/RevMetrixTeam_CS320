@@ -48,8 +48,8 @@
             justify-content: center;
         }
         .pin {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             border: 1px solid #333;
             display: flex;
@@ -58,7 +58,7 @@
             margin: 0 3px;
             cursor: pointer;
             background-color: white;
-            font-size: 0.7em;
+            font-size: 1.0em;
         }
         /* First shot - pins start white, turn black when selected (standing) */
 		.pin.first-shot {
