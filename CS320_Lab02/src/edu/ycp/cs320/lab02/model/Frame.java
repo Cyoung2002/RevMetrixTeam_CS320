@@ -23,7 +23,7 @@ public class Frame {
 		this.result = result;
 		this.shotNum = 1;
 		this.pinScore = 0;
-		shots = new ArrayList<ShotObject>();
+		this.shots = new ArrayList<ShotObject>();
 	}
 	
 	
@@ -52,7 +52,7 @@ public class Frame {
         return shotNum;
     }
     public void setShot(ShotObject shoot) {
-    	shots.set(shotNum, shoot);
+    	shots.set(shotNum - 1, shoot);
     }
     public ShotObject getShot(int shootNum) {
     	return shots.get(shootNum - 1);
@@ -62,6 +62,9 @@ public class Frame {
     }
     public int getPinScore() {
     	return pinScore;
+    }
+    public ArrayList<ShotObject> getShots(){
+    	return shots;
     }
     
     
@@ -73,6 +76,7 @@ public class Frame {
         	shotNum++;
         	return true;
     	}
+    	// shotNum = 1;
     	return false;
     }
     // Method to cancel (clear) a frame. Clears the shot and sets the result of the frame to a blank String.

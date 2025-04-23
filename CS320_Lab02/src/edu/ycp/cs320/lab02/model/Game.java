@@ -20,6 +20,7 @@ public class Game {
 	public Game(int gameNum, int startLane) {
 		this.gameNumber = gameNum;
 		this.startingLane = startLane;
+		this.lane = startLane;
 		this.currentFrame = 1;
 		this.score = 0;
 		frames = new ArrayList<Frame>();
@@ -64,13 +65,19 @@ public class Game {
 	
 	
 	public Frame newFrame() {
-		Frame newFrame = new Frame();
-		frames.add(newFrame);
+		Frame newFrame;
+		
 		if(currentFrame != 1) {
 			switchLanes();
 			updateScore(frames.get(currentFrame - 1).getPinScore());
 			currentFrame++;
+			newFrame = new Frame(currentFrame, lane, "xyz");
+			frames.add(newFrame);
+		} else {
+			newFrame = new Frame(currentFrame, lane, "xyz");
 		}
+		
+		frames.add(newFrame);
 		return newFrame;
 	}
 	public void switchLanes() {

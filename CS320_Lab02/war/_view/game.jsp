@@ -30,64 +30,77 @@
             border: none;
             cursor: pointer;
         }
+        table { 
+        	width: 100%; 
+        	border-collapse: collapse; 
+        	text-align: center; 
+        }
+        .frame { 
+        	width: 10%; 
+        }
     </style>
 </head>
-<body>
-    <h1>Bowling Game Scoreboard</h1>
 
-    <%
+<body>
+	<%
         Game game = (Game) session.getAttribute("game");
         if (game == null) {
             game = new Game(1, 1);
             session.setAttribute("game", game);
         }
-        ArrayList<Frame> frames = game.getFrames();
+        // ArrayList<Frame> frames = game.getFrames();
     %>
-
-    <h1>Game Information</h1>
+	<h1>Game Information</h1>
     <p>Game Number: <%= game.getGameNumber() %></p>
     <p>Total Score: <%= game.getScore() %></p>
+    
+    <h2>Bowling Game Scoreboard</h2>
 
-    <h2>Frames</h2>
-    <table border="1">
+    <table>
         <tr>
-            <th>Frame Number</th>
-            <th>Lane</th>
-            <th>Shots</th>
-            <th>Frame Score</th>
+            <%-- Frame Numbers --%>
+            <th class="frame">Frame 1</th>
+            <th class="frame">Frame 2</th>
+            <th class="frame">Frame 3</th>
+            <th class="frame">Frame 4</th>
+            <th class="frame">Frame 5</th>
+            <th class="frame">Frame 6</th>
+            <th class="frame">Frame 7</th>
+            <th class="frame">Frame 8</th>
+            <th class="frame">Frame 9</th>
+            <th class="frame">Frame 10</th>
         </tr>
+        <tr>
+            <%-- Frame Shots --%>
+            <%
+                ArrayList<Frame> frames = game.getFrames();
 
-        <%
-            for (Frame frame : frames) {
-                if (frame.getShotNum() > 1) { // Ensure frame has at least one shot
-        %>
-                <tr>
-                    <td><%= frame.getFrameNum() %></td>
-                    <td><%= frame.getLaneNum() %></td>
-                    <td>
-                        <%
-                            for (int i = 1; i <= frame.getShotNum(); i++) {
-                                ShotObject shot = frame.getShot(i);
-                                if (shot != null) {
-                        %>
-                            Shot <%= i %>: Pins Knocked Down: <%= shot.getPinsKnockedDown() %> | Special Mark: <%= shot.getSpecialMark() != null ? shot.getSpecialMark() : "None" %><br>
-                        <%
-                                }
-                            }
-                        %>
-                    </td>
-                    <td><%= frame.getPinScore() %></td>
-                </tr>
-        <%
+                for (int i = 0; i < 10; i++) {
+                    if (i < frames.size()) {
+                        Frame frame = frames.get(i);
+                        ArrayList<ShotObject> shots = frame.getShots();
+                    	if(!(shots == null) && shots.size() >= 1) {   
+            %>		
+	                        <td>
+	                           	<%= shots.get(0).getPinsKnockedDown().size() %> <!-- Pins knocked down -->
+
+	                        </td>
+            <%
+                    	} else {
+            %>
+                        	<td> - </td> <!-- Empty Frame -->
+            <%
+                    	}
+                    } else {   
+              		%>
+                    	<td> - </td> <!-- Empty Frame -->
+        			<%
+                    }
                 }
-            }
-        %>
+            %>
+        </tr>
     </table>
-
-    <form action="game" method="post">
-        <button type="submit" name="newFrame" class="button">Add New Frame</button>
-    </form>
-
+    
 	<!-- Shot entry button -->
     <button id="shotButton" onclick="location.href= 'http://localhost:8081/lab02/shot' ">Shot Entry</button>
     <!--a href="shot">Go to Shot Entry</a-->
