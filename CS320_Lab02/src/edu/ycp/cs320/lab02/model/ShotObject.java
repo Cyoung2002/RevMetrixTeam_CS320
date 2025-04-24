@@ -65,16 +65,26 @@ public class ShotObject {
         return shotNumber == 2 && pinsKnockedDown.size() == TOTAL_PINS;
     }
     public void setAsSpare() {
-        if (shotNumber == 1) throw new IllegalStateException("Cannot have spare on first shot");
+        if (shotNumber != 2) {
+            throw new IllegalStateException("Spare can only be on second shot");
+        }
+        if (pinsKnockedDown.size() != TOTAL_PINS) {
+            throw new IllegalStateException("Not all pins were knocked down");
+        }
         specialMark = "/";
     }
 
     public void setAsFoul() {
         this.isFoul = true;
         specialMark = "F";
+        // Foul means no pins count, even if some were physically knocked down
+        pinsKnockedDown.clear();
     }
 
     public void setAsGutter() {
+        if (!pinsKnockedDown.isEmpty()) {
+            throw new IllegalStateException("Gutter ball must have no pins knocked down");
+        }
         specialMark = "-";
     }
 
@@ -117,13 +127,26 @@ public class ShotObject {
             return;
         }
         
-        if (pinsKnockedDown.size() == TOTAL_PINS) {
-            specialMark = (shotNumber == 1) ? "X" : "/";
-        } else if (pinsKnockedDown.isEmpty()) {
-            specialMark = "-";
-        } else {
-            specialMark = null;
+        // Strike has highest priority
+        if (isStrike()) {
+            specialMark = "X";
+            return;
         }
+        
+        // Spare comes next
+        if (isSpare()) {
+            specialMark = "/";
+            return;
+        }
+        
+        // Then gutter ball
+        if (pinsKnockedDown.isEmpty() && !isFoul) {
+            specialMark = "-";
+            return;
+        }
+        
+        // Normal shot with no special mark
+        specialMark = null;
     }
 
     // Getters and Setters
