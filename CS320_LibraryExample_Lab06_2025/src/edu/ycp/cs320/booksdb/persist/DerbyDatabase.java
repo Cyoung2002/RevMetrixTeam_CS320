@@ -676,7 +676,7 @@ public class DerbyDatabase implements IDatabase {
 							"create table events (" +
 									"	event_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
-									"	establishmentId integer, " +
+									"	establishment_id integer, " +
 									"	longname varchar(60), " +
 									"	shortname varchar(30), " +
 									"	weeknight varchar(10), " +
@@ -779,7 +779,7 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Establishment table populated");
 					
 					// must completely populate Establishment table before events
-					insertEvent = conn.prepareStatement("insert into events (establishmentId, longname, shortname, weeknight, startDate, endDate, gamesPerSession) values (?, ?, ?, ?, ?, ?, ?)");
+					insertEvent = conn.prepareStatement("insert into events (establishment_id, longname, shortname, weeknight, startDate, endDate, gamesPerSession) values (?, ?, ?, ?, ?, ?, ?)");
 					for (Event event : eventList) {
 						insertEvent.setInt(1, event.getEstablishmentId());
 						insertEvent.setString(2, event.getLongname());
