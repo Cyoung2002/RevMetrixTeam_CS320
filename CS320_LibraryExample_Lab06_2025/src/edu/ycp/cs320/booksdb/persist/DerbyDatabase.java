@@ -13,6 +13,8 @@ import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.BookAuthor;
 import edu.ycp.cs320.booksdb.model.Pair;
+import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.model.Establishment;
 
 public class DerbyDatabase implements IDatabase {
 	static {
@@ -617,7 +619,9 @@ public class DerbyDatabase implements IDatabase {
 			public Boolean execute(Connection conn) throws SQLException {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;				
+				PreparedStatement stmt3 = null;	
+				PreparedStatement stmt4 = null;	
+				PreparedStatement stmt5 = null;	
 			
 				try {
 					stmt1 = conn.prepareStatement(
@@ -654,12 +658,43 @@ public class DerbyDatabase implements IDatabase {
 					);
 					stmt3.executeUpdate();
 					
-					System.out.println("BookAuthors table created");					
+					System.out.println("BookAuthors table created");	
+					
+					stmt4 = conn.prepareStatement(
+							"create table establishments (" +
+									"	establishment_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +
+									"	longname varchar(60), " +
+									"	shortname varchar(30), " +
+									"	address varchar(60) " +
+							")"
+					);	
+					stmt4.executeUpdate();
+					System.out.println("Establishment table created");
+					
+					stmt5 = conn.prepareStatement(
+							"create table events (" +
+									"	event_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +
+									//"	establishment_id integer, " +
+									"	longname varchar(60), " +
+									"	shortname varchar(30), " +
+									"	establishment varchar(30), " +
+									"	weeknight varchar(10), " +
+									"	start_date varchar(10), " +
+									"	end_date varchar(10), " +
+									"	games_per_session integer " +
+							")"
+					);	
+					stmt5.executeUpdate();
+					System.out.println("Events table created");
 										
 					return true;
 				} finally {
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
 				}
 			}
 		});
@@ -673,11 +708,15 @@ public class DerbyDatabase implements IDatabase {
 				List<Author> authorList;
 				List<Book> bookList;
 				List<BookAuthor> bookAuthorList;
+				List<Establishment> establishmentList;		// new
+				List<Event> eventList;						// new
 				
 				try {
 					authorList     = InitialData.getAuthors();
 					bookList       = InitialData.getBooks();
-					bookAuthorList = InitialData.getBookAuthors();					
+					bookAuthorList = InitialData.getBookAuthors();	
+					establishmentList = InitialData.getEstablishments();
+					eventList 	   = InitialData.getEvents();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -685,6 +724,9 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertAuthor     = null;
 				PreparedStatement insertBook       = null;
 				PreparedStatement insertBookAuthor = null;
+				
+				PreparedStatement insertEstablishment = null;	// new
+				PreparedStatement insertEvent       = null;		// new
 
 				try {
 					// must completely populate Authors table before populating BookAuthors table because of primary keys
@@ -723,13 +765,44 @@ public class DerbyDatabase implements IDatabase {
 					}
 					insertBookAuthor.executeBatch();	
 					
-					System.out.println("BookAuthors table populated");					
+					System.out.println("BookAuthors table populated");	
+					
+					// must completely populate Establishment table before events
+					insertEstablishment = conn.prepareStatement("insert into establishments (longname, shortname, address) values (?, ?, ?)");
+					for (Establishment establishment : establishmentList) {
+						insertEstablishment.setString(1, establishment.getLongname());
+						insertEstablishment.setString(2, establishment.getShortname());
+						insertEstablishment.setString(3, establishment.getAddress());
+						insertEstablishment.addBatch();
+					}
+					insertEstablishment.executeBatch();
+					
+					System.out.println("Establishment table populated");
+					
+					// must completely populate Establishment table before events
+					insertEvent = conn.prepareStatement("insert into events (longname, shortname, establishment, weeknight, start_date, end_date, games_per_session) values (?, ?, ?, ?, ?, ?, ?)");
+					for (Event event : eventList) {
+						//insertEvent.setInt(1, event.getEstablishmentId());
+						insertEvent.setString(1, event.getLongname());
+						insertEvent.setString(2, event.getShortname());
+						insertEvent.setString(3, event.getEstablishmentShort());
+						insertEvent.setString(4, event.getWeeknight());
+						insertEvent.setString(5, event.getStart());
+						insertEvent.setString(6, event.getEnd());
+						insertEvent.setInt(7, event.getGamesPerSession());
+						insertEvent.addBatch();
+					}
+					insertEvent.executeBatch();
+					
+					System.out.println("Event table populated");
 					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertBook);
 					DBUtil.closeQuietly(insertAuthor);
-					DBUtil.closeQuietly(insertBookAuthor);					
+					DBUtil.closeQuietly(insertBookAuthor);	
+					DBUtil.closeQuietly(insertEstablishment);
+					DBUtil.closeQuietly(insertEvent);	
 				}
 			}
 		});
