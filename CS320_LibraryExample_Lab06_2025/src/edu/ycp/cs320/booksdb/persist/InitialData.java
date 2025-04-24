@@ -152,10 +152,11 @@ public class InitialData {
 				// when setting up the BookAuthors CSV file
 				// Integer.parseInt(i.next());
 				// auto-generate book ID, instead
-				event.setEstablishmentId(Integer.parseInt(i.next()));				
+				//event.setEstablishmentId(Integer.parseInt(i.next()));				
 //				book.setAuthorId(Integer.parseInt(i.next()));  // no longer in books table
 				event.setLongname(i.next());
 				event.setShortname(i.next());
+				event.setEstablishmentShort(i.next());
 				event.setWeeknight(i.next());
 				event.setStart(i.next());
 				event.setEnd(i.next());

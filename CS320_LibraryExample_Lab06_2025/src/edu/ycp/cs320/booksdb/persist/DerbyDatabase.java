@@ -676,13 +676,14 @@ public class DerbyDatabase implements IDatabase {
 							"create table events (" +
 									"	event_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
-									"	establishment_id integer, " +
+									//"	establishment_id integer, " +
 									"	longname varchar(60), " +
 									"	shortname varchar(30), " +
+									"	establishment varchar(30), " +
 									"	weeknight varchar(10), " +
-									"	startDate varchar(10), " +
-									"	endDate varchar(10), " +
-									"	gamesPerSession integer " +
+									"	start_date varchar(10), " +
+									"	end_date varchar(10), " +
+									"	games_per_session integer " +
 							")"
 					);	
 					stmt5.executeUpdate();
@@ -779,11 +780,12 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Establishment table populated");
 					
 					// must completely populate Establishment table before events
-					insertEvent = conn.prepareStatement("insert into events (establishment_id, longname, shortname, weeknight, startDate, endDate, gamesPerSession) values (?, ?, ?, ?, ?, ?, ?)");
+					insertEvent = conn.prepareStatement("insert into events (longname, shortname, establishment, weeknight, start_date, end_date, games_per_session) values (?, ?, ?, ?, ?, ?, ?)");
 					for (Event event : eventList) {
-						insertEvent.setInt(1, event.getEstablishmentId());
-						insertEvent.setString(2, event.getLongname());
-						insertEvent.setString(3, event.getShortname());
+						//insertEvent.setInt(1, event.getEstablishmentId());
+						insertEvent.setString(1, event.getLongname());
+						insertEvent.setString(2, event.getShortname());
+						insertEvent.setString(3, event.getEstablishmentShort());
 						insertEvent.setString(4, event.getWeeknight());
 						insertEvent.setString(5, event.getStart());
 						insertEvent.setString(6, event.getEnd());

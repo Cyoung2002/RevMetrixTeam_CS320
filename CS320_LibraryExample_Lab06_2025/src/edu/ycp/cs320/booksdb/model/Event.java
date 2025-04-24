@@ -1,9 +1,10 @@
 package edu.ycp.cs320.booksdb.model;
 
 public class Event {
-	private int establishmentId;
+	//private int establishmentId;
 	private String longname;
 	private String shortname;
+	private String establishmentShort;
 	private String weeknight;
 	private String start;
 	private String end;
@@ -14,14 +15,14 @@ public class Event {
 		
 	}
 
-
+	/*
 	public int getEstablishmentId() {
 		return establishmentId;
 	}
 	public void setEstablishmentId(int establishmentId) {
 		this.establishmentId = establishmentId;
 	}
-
+	*/
 
 	public String getLongname() {
 		return longname;
@@ -36,6 +37,14 @@ public class Event {
 	}
 	public void setShortname(String shortname) {
 		this.shortname = shortname;
+	}
+	
+	
+	public String getEstablishmentShort() {
+		return establishmentShort;
+	}
+	public void setEstablishmentShort(String estabShort) {
+		this.establishmentShort = estabShort;
 	}
 
 
