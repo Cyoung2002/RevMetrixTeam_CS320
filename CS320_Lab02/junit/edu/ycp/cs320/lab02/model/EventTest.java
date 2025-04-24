@@ -37,7 +37,7 @@ public class EventTest {
     }
 
     @Test
-    public void testMakeBall() {
+    public void testMakeEvent() {
         Event event = new Event("Bowling Blitz", "League", "York, PA", "A", 178.4, 2);
         event.addNewEvent(event);
         
