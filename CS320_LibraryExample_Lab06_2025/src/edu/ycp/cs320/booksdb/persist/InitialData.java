@@ -8,6 +8,8 @@ import java.util.List;
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.BookAuthor;
+import edu.ycp.cs320.booksdb.model.Establishment;
+import edu.ycp.cs320.booksdb.model.Event;
 
 public class InitialData {
 
@@ -98,6 +100,73 @@ public class InitialData {
 			return bookAuthorList;
 		} finally {
 			readBookAuthors.close();
+		}
+	}
+	
+	// reads initial Author data from CSV file and returns a List of Authors
+	public static List<Establishment> getEstablishments() throws IOException {
+		List<Establishment> establishmentList = new ArrayList<Establishment>();
+		ReadCSV readEstablishments = new ReadCSV("establishments.csv");
+		try {	
+			while (true) {
+				List<String> tuple = readEstablishments.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				Establishment establishment = new Establishment();
+
+				// read author ID from CSV file, but don't use it
+				// it's there for reference purposes, just make sure that it is correct
+				// when setting up the BookAuthors CSV file				
+				// Integer.parseInt(i.next());
+				// auto-generate author ID, instead
+				establishment.setLongname(i.next());				
+				establishment.setShortname(i.next());
+				establishment.setAddress(i.next());
+				establishmentList.add(establishment);
+			}
+			System.out.println("establishmentList loaded from CSV file");
+			return establishmentList;
+		} finally {
+			readEstablishments.close();
+		}
+	}
+	
+	public static List<Event> getEvents() throws IOException {
+		List<Event> eventList = new ArrayList<Event>();
+		ReadCSV readEvents = new ReadCSV("events.csv");
+		try {
+			// auto-generated primary key for table books
+			// Integer bookId = 1;
+			while (true) {
+				List<String> tuple = readEvents.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				Event event = new Event();
+				
+				// read book ID from CSV file, but don't use it
+				// it's there for reference purposes, just make sure that it is correct
+				// when setting up the BookAuthors CSV file
+				// Integer.parseInt(i.next());
+				// auto-generate book ID, instead
+				event.setEstablishmentId(Integer.parseInt(i.next()));				
+//				book.setAuthorId(Integer.parseInt(i.next()));  // no longer in books table
+				event.setLongname(i.next());
+				event.setShortname(i.next());
+				event.setWeeknight(i.next());
+				event.setStart(i.next());
+				event.setEnd(i.next());
+				event.setGamesPerSession(Integer.parseInt(i.next()));
+				
+				eventList.add(event);
+			}
+			System.out.println("eventList loaded from CSV file");			
+			return eventList;
+		} finally {
+			readEvents.close();
 		}
 	}
 }
