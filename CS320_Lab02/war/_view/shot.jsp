@@ -70,11 +70,10 @@
 		    color: white;
 		}
 		
-		/* Second shot - pins knocked down in first shot (grayed out) */
+		/* Second shot - pins knocked down in first shot (stay white ) */
 		.pin.second-shot.knocked-down {
-		    background-color: #cccccc;
-		    color: #666666;
-		    cursor: not-allowed;
+		    background-color: white;
+		    color: black;
 		    pointer-events: none;
 		}
 		
@@ -87,8 +86,8 @@
 		
 		/* Second shot - pins selected in current shot (will remain standing) */
 		.pin.second-shot.selected {
-		    background-color: #ff4444;
-		    color: white;
+		    background-color: red;
+		    color: black;
 		}
         .options {
             display: flex;

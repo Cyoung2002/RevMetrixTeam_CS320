@@ -205,4 +205,21 @@ public class ShotObject {
 	    }
 	    return true; // Normal shot
 	}
+	public void validateShot() {
+	    if (isFoul && !pinsKnockedDown.isEmpty()) {
+	        throw new IllegalStateException("Foul shots cannot have pins knocked down");
+	    }
+	    
+	    if (isStrike() && shotNumber != 1) {
+	        throw new IllegalStateException("Strike must be on first shot");
+	    }
+	    
+	    if (isSpare() && shotNumber != 2) {
+	        throw new IllegalStateException("Spare must be on second shot");
+	    }
+	    
+	    if ("/".equals(specialMark) && !isSpare()) {
+	        throw new IllegalStateException("Spare requires all remaining pins knocked down");
+	    }
+	}
 }
