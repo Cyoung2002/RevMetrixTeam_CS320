@@ -662,6 +662,8 @@ public class DerbyDatabase implements IDatabase {
 					
 					stmt4 = conn.prepareStatement(
 							"create table establishments (" +
+									"	establishment_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +
 									"	longname varchar(60), " +
 									"	shortname varchar(30), " +
 									"	address varchar(60) " +
@@ -672,6 +674,8 @@ public class DerbyDatabase implements IDatabase {
 					
 					stmt5 = conn.prepareStatement(
 							"create table events (" +
+									"	event_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +
 									"	establishmentId integer, " +
 									"	longname varchar(60), " +
 									"	shortname varchar(30), " +
