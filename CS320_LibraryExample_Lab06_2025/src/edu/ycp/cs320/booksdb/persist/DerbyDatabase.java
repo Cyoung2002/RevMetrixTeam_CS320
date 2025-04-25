@@ -584,11 +584,11 @@ public class DerbyDatabase implements IDatabase {
 		String dbPath;
 		switch (OsCheck.getOperatingSystemType()) {
 			case Windows:
-				dbPath = System.getProperty("user.home") + "\\CS320-LibraryExample-DB\\library.db";
+				dbPath = System.getProperty("user.home") + "C:/CS320-2025-LibraryExample-DB/library.db";
 				break;
 			case MacOS:
 			case Linux:
-				dbPath = System.getProperty("user.home") + "/CS320-LibraryExample-DB/library.db";
+				dbPath = System.getProperty("user.home") + "/Users/caroline/Desktop/CS320-LibraryExample-DB/library.db";
 				break;
 			default:
 				throw new UnsupportedOperationException("Unsupported OS");
