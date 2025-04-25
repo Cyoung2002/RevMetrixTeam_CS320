@@ -41,19 +41,35 @@ public class SQLDemo {
 	// TODO: Change it here and in DerbyDatabase.java under CS320_LibraryExample_Lab06->edu.ycp.cs320.booksdb.persist
 	// TODO: DO NOT PUT THE DB IN THE SAME FOLDER AS YOUR PROJECT - that will cause conflicts later w/Git
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		Connection conn = null;
-		try {
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-			conn = DriverManager.getConnection("jdbc:derby:C:/CS320-2025-LibraryExample-DB/library.db;create=true");
-			conn.setAutoCommit(true);
-	
-			queryLoop(conn);
-		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
-		} finally {
-			DBUtil.closeQuietly(conn);
-		}
-}
+	    Connection conn = null;
+	    try {
+	        Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+
+	        // Determine OS and set DB path
+	        String dbPath;
+	        switch (OsCheck.getOperatingSystemType()) {
+	            case Windows:
+	                dbPath = System.getProperty("user.home") + "\\CS320-LibraryExample-DB\\library.db";
+	                break;
+	            case MacOS:
+	            case Linux:
+	                dbPath = System.getProperty("user.home") + "/CS320-LibraryExample-DB/library.db";
+	                break;
+	            default:
+	                throw new UnsupportedOperationException("Unsupported OS");
+	        }
+
+	        conn = DriverManager.getConnection("jdbc:derby:" + dbPath + ";create=true");
+	        conn.setAutoCommit(true);
+
+	        queryLoop(conn);
+	    } catch (SQLException e) {
+	        System.out.println("Error: " + e.getMessage());
+	    } finally {
+	        DBUtil.closeQuietly(conn);
+	    }
+	}
+
 
 	private static void queryLoop(Connection conn) throws IOException {
 		StatementReader stmtReader = new StatementReader(new InputStreamReader(System.in));
