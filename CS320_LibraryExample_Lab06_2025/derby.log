@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Apr 25 13:11:31 EDT 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0196-6dee-d500-000007979d00 
+on database directory /Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProject_CS320/CS320_LibraryExample_Lab06_2025/C:/CS320-2025-LibraryExample-DB/library.db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@1e2e2406 
+Loaded from file:/Users/caroline/Desktop/CS320_Derby/lib/derby.jar
+java.vendor=Eclipse Adoptium
+java.runtime.version=21.0.5+11-LTS
+user.dir=/Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProject_CS320/CS320_LibraryExample_Lab06_2025
+os.name=Mac OS X
+os.arch=x86_64
+os.version=13.2
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

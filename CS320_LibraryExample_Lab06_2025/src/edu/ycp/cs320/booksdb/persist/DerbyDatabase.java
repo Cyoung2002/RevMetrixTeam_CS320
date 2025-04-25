@@ -581,14 +581,25 @@ public class DerbyDatabase implements IDatabase {
 	// TODO: Change it here and in SQLDemo.java under CS320_LibraryExample_Lab06->edu.ycp.cs320.sqldemo
 	// TODO: DO NOT PUT THE DB IN THE SAME FOLDER AS YOUR PROJECT - that will cause conflicts later w/Git
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:C:/CS320-2025-LibraryExample-DB/library.db;create=true");		
-		
-		// Set autocommit() to false to allow the execution of
-		// multiple queries/statements as part of the same transaction.
+		String dbPath;
+		switch (OsCheck.getOperatingSystemType()) {
+			case Windows:
+				dbPath = System.getProperty("user.home") + "\\CS320-LibraryExample-DB\\library.db";
+				break;
+			case MacOS:
+			case Linux:
+				dbPath = System.getProperty("user.home") + "/CS320-LibraryExample-DB/library.db";
+				break;
+			default:
+				throw new UnsupportedOperationException("Unsupported OS");
+		}
+
+		Connection conn = DriverManager.getConnection("jdbc:derby:" + dbPath + ";create=true");
 		conn.setAutoCommit(false);
-		
+
 		return conn;
 	}
+
 	
 	// retrieves Author information from query result set
 	private void loadAuthor(Author author, ResultSet resultSet, int index) throws SQLException {
