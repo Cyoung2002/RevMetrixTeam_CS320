@@ -756,7 +756,7 @@ public class DerbyDatabase implements IDatabase {
 							// prepare SQL insert statement to add Establishment to Establishments table
 							stmt2 = conn.prepareStatement(
 									"insert into establishments (longname, shortname, address) " +
-									"  values(?, ?, ?, ?, ?, ?, ?) "
+									"  values(?, ?, ?) "
 							);
 							stmt2.setString(1, longname);
 							stmt2.setString(2, shortname);
