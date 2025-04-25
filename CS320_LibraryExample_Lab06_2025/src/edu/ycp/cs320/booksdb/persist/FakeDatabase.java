@@ -153,6 +153,9 @@ public class FakeDatabase implements IDatabase {
 		return authors;
 	}
 	
+	public Integer insertBallIntoArsenal(final String longname, final String shortname, final String brand, final String type, final String core, final String cover, final String color, final String surface, final String Year, final String serialNumber, final String weight, final String mapping) {
+		return 2;
+	}
 
 	// query that retrieves an Author based on author_id
 	private Author findAuthorByAuthorId(int authorId) {

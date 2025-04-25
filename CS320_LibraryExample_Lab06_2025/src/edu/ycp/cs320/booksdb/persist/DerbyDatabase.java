@@ -15,6 +15,7 @@ import edu.ycp.cs320.booksdb.model.BookAuthor;
 import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.booksdb.model.Establishment;
+import edu.ycp.cs320.booksdb.model.Ball;
 
 public class DerbyDatabase implements IDatabase {
 	static {
@@ -386,6 +387,109 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	
+	@Override
+	public Integer insertBallIntoArsenal(final String longname, final String shortname, final String brand, final String type, final String core, final String cover, final String color, final String surface, final String year, final String serialNumber, final String weight, final String mapping) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
+				PreparedStatement stmt5 = null;
+				PreparedStatement stmt6 = null;				
+				
+				ResultSet resultSet1 = null;
+				ResultSet resultSet3 = null;
+				ResultSet resultSet5 = null;				
+				
+				// for saving ball_id
+				Integer ball_id   = -1;
+
+				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
+				try {
+					// now insert new ball into Arsenal table
+					// prepare SQL insert statement to add new Book to Books table
+					stmt4 = conn.prepareStatement(
+							"insert into arsenal (long_name, short_name, brand, type, core, cover, color, surface, ball_year, serial_number, weight, mapping) " +
+							"  values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+					);
+					stmt4.setString(1, longname);
+					stmt4.setString(2, shortname);
+					stmt4.setString(3, brand);
+					stmt4.setString(3, type);
+					stmt4.setString(3, core);
+					stmt4.setString(3, cover);
+					stmt4.setString(3, color);
+					stmt4.setString(3, surface);
+					stmt4.setString(3, year);
+					stmt4.setString(3, serialNumber);
+					
+					
+					// execute the update
+					stmt4.executeUpdate();
+					
+					System.out.println("New ball <" + longname + "> inserted into Books table");					
+
+					// now retrieve book_id for new Book, so that we can set up BookAuthor entry
+					// and return the book_id, which the DB auto-generates
+					// prepare SQL statement to retrieve book_id for new Book
+					stmt5 = conn.prepareStatement(
+							"select ball_id from arsenal " +
+							"  where short_name = ? and serial_number = ? "
+									
+					);
+					stmt5.setString(1, shortname);
+					stmt5.setString(2, serialNumber);
+
+					// execute the query
+					resultSet5 = stmt5.executeQuery();
+					
+					// get the result - there had better be one
+					if (resultSet5.next())
+					{
+						ball_id = resultSet5.getInt(1);
+						System.out.println("New book (shortname)< " + shortname + "> ID: " + ball_id);						
+					}
+					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
+					{
+						System.out.println("New ball <" + shortname + "> not found in Books table (ID: " + ball_id);
+					}
+					
+					// now that we have all the information, insert entry into BookAuthors table
+					// which is the junction table for Books and Authors
+					// prepare SQL insert statement to add new Book to Books table
+					/*stmt6 = conn.prepareStatement(
+							"insert into bookAuthors (book_id, author_id) " +
+							"  values(?, ?) "
+					);
+					stmt6.setInt(1, book_id);
+					stmt6.setInt(2, author_id);
+					
+					// execute the update
+					stmt6.executeUpdate();
+					
+					System.out.println("New entry for book ID <" + book_id + "> and author ID <" + author_id + "> inserted into BookAuthors junction table");						
+					
+					System.out.println("New book <" + title + "> inserted into Books table");					
+					*/
+					return ball_id;
+				} finally {
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);					
+					DBUtil.closeQuietly(resultSet3);
+					DBUtil.closeQuietly(stmt3);					
+					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(resultSet5);
+					DBUtil.closeQuietly(stmt5);
+					DBUtil.closeQuietly(stmt6);
+				}
+			}
+		});
+	}
+	
+	
 	// transaction that deletes Book (and possibly its Author) from Library
 	@Override
 	public List<Author> removeBookByTitle(final String title) {
@@ -612,18 +716,38 @@ public class DerbyDatabase implements IDatabase {
 		bookAuthor.setAuthorId(resultSet.getInt(index++));
 	}
 	
+	private void loadBall(Ball ball, ResultSet resultSet, int index) throws SQLException {
+		
+		ball.setLongname(resultSet.getString(index++));
+		ball.setShortname(resultSet.getString(index++));
+		ball.setBrand(resultSet.getString(index++));
+		ball.setType(resultSet.getString(index++));
+		ball.setCore(resultSet.getString(index++));
+		ball.setCover(resultSet.getString(index++));
+		ball.setColor(resultSet.getString(index++));
+		ball.setSurface(resultSet.getString(index++));
+		ball.setYear(resultSet.getString(index++));
+		ball.setSerialNumber(resultSet.getString(index++));
+		ball.setWeight(resultSet.getString(index++));
+		ball.setMapping(resultSet.getString(index++));
+	}
+	
 	//  creates the Authors and Books tables
 	public void createTables() {
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
+				
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;	
 				PreparedStatement stmt4 = null;	
 				PreparedStatement stmt5 = null;	
+				PreparedStatement stmt6 = null;	
+				
 			
 				try {
+					
 					stmt1 = conn.prepareStatement(
 						"create table authors (" +
 						"	author_id integer primary key " +
@@ -632,9 +756,9 @@ public class DerbyDatabase implements IDatabase {
 						"	firstname varchar(40)" +
 						")"
 					);	
-					stmt1.executeUpdate();
-					
+					stmt1.executeUpdate();					
 					System.out.println("Authors table created");
+					
 					
 					stmt2 = conn.prepareStatement(
 							"create table books (" +
@@ -646,9 +770,9 @@ public class DerbyDatabase implements IDatabase {
 							"   published integer" +
 							")"
 					);
-					stmt2.executeUpdate();
-					
+					stmt2.executeUpdate();					
 					System.out.println("Books table created");					
+					
 					
 					stmt3 = conn.prepareStatement(
 							"create table bookAuthors (" +
@@ -657,8 +781,8 @@ public class DerbyDatabase implements IDatabase {
 							")"
 					);
 					stmt3.executeUpdate();
-					
 					System.out.println("BookAuthors table created");	
+					
 					
 					stmt4 = conn.prepareStatement(
 							"create table establishments (" +
@@ -671,6 +795,7 @@ public class DerbyDatabase implements IDatabase {
 					);	
 					stmt4.executeUpdate();
 					System.out.println("Establishment table created");
+					
 					
 					stmt5 = conn.prepareStatement(
 							"create table events (" +
@@ -688,6 +813,28 @@ public class DerbyDatabase implements IDatabase {
 					);	
 					stmt5.executeUpdate();
 					System.out.println("Events table created");
+					
+					
+					stmt6 = conn.prepareStatement(
+							"create table arsenal (" +
+									"	ball_id integer primary key " +
+									"		generated always as identity (start with 1, increment by 1), " +
+									"	long_name varchar(60), " +
+									"	short_name varchar(30), " +
+									"	brand varchar(30), " +
+									"	type varchar(30), " +
+									"	core varchar(30), " +
+									"	cover varchar(30), " +
+									"	color varchar(30), " +
+									"	surface varchar(30), " +
+									"	ball_year varchar(10), " +
+									"	serial_number varchar(20), " +
+									"	weight varchar(10), " +
+									"	mapping varchar(30) " +
+							")"
+					);	
+					stmt6.executeUpdate();
+					System.out.println("Arsenal table created");
 										
 					return true;
 				} finally {
@@ -695,6 +842,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt2);
 					DBUtil.closeQuietly(stmt3);
 					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(stmt5);
 				}
 			}
 		});
@@ -710,6 +858,7 @@ public class DerbyDatabase implements IDatabase {
 				List<BookAuthor> bookAuthorList;
 				List<Establishment> establishmentList;		// new
 				List<Event> eventList;						// new
+				List<Ball> arsenal;
 				
 				try {
 					authorList     = InitialData.getAuthors();
@@ -717,6 +866,7 @@ public class DerbyDatabase implements IDatabase {
 					bookAuthorList = InitialData.getBookAuthors();	
 					establishmentList = InitialData.getEstablishments();
 					eventList 	   = InitialData.getEvents();
+					arsenal 	   = InitialData.getArsenal();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -725,8 +875,9 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertBook       = null;
 				PreparedStatement insertBookAuthor = null;
 				
-				PreparedStatement insertEstablishment = null;	// new
-				PreparedStatement insertEvent       = null;		// new
+				PreparedStatement insertEstablishment 	= null;		// new
+				PreparedStatement insertEvent       	= null;		// new
+				PreparedStatement insertBall       		= null;		// new
 
 				try {
 					// must completely populate Authors table before populating BookAuthors table because of primary keys
@@ -738,8 +889,8 @@ public class DerbyDatabase implements IDatabase {
 						insertAuthor.addBatch();
 					}
 					insertAuthor.executeBatch();
-					
 					System.out.println("Authors table populated");
+					
 					
 					// must completely populate Books table before populating BookAuthors table because of primary keys
 					insertBook = conn.prepareStatement("insert into books (title, isbn, published) values (?, ?, ?)");
@@ -752,8 +903,8 @@ public class DerbyDatabase implements IDatabase {
 						insertBook.addBatch();
 					}
 					insertBook.executeBatch();
-					
 					System.out.println("Books table populated");					
+					
 					
 					// must wait until all Books and all Authors are inserted into tables before creating BookAuthor table
 					// since this table consists entirely of foreign keys, with constraints applied
@@ -764,8 +915,8 @@ public class DerbyDatabase implements IDatabase {
 						insertBookAuthor.addBatch();
 					}
 					insertBookAuthor.executeBatch();	
-					
 					System.out.println("BookAuthors table populated");	
+					
 					
 					// must completely populate Establishment table before events
 					insertEstablishment = conn.prepareStatement("insert into establishments (longname, shortname, address) values (?, ?, ?)");
@@ -776,8 +927,8 @@ public class DerbyDatabase implements IDatabase {
 						insertEstablishment.addBatch();
 					}
 					insertEstablishment.executeBatch();
-					
 					System.out.println("Establishment table populated");
+					
 					
 					// must completely populate Establishment table before events
 					insertEvent = conn.prepareStatement("insert into events (longname, shortname, establishment, weeknight, start_date, end_date, games_per_session) values (?, ?, ?, ?, ?, ?, ?)");
@@ -793,8 +944,29 @@ public class DerbyDatabase implements IDatabase {
 						insertEvent.addBatch();
 					}
 					insertEvent.executeBatch();
-					
 					System.out.println("Event table populated");
+					
+					
+					// must completely populate Establishment table before events
+					insertBall = conn.prepareStatement("insert into arsenal (long_name, short_name, brand, type, core, cover, color, surface, ball_year, serial_number, weight, mapping) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					for (Ball ball : arsenal) {
+						//insertEvent.setInt(1, event.getEstablishmentId());
+						insertBall.setString(1, ball.getLongname());
+						insertBall.setString(2, ball.getShortname());
+						insertBall.setString(3, ball.getBrand());
+						insertBall.setString(4, ball.getType());
+						insertBall.setString(5, ball.getCore());
+						insertBall.setString(6, ball.getCover());
+						insertBall.setString(7, ball.getColor());
+						insertBall.setString(8, ball.getSurface());
+						insertBall.setString(9, ball.getYear());
+						insertBall.setString(10, ball.getSerialNumber());
+						insertBall.setString(11, ball.getWeight());
+						insertBall.setString(12, ball.getMapping());
+						insertBall.addBatch();
+					}
+					insertBall.executeBatch();
+					System.out.println("Arsenal table populated");
 					
 					return true;
 				} finally {
@@ -803,6 +975,7 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(insertBookAuthor);	
 					DBUtil.closeQuietly(insertEstablishment);
 					DBUtil.closeQuietly(insertEvent);	
+					DBUtil.closeQuietly(insertBall);	
 				}
 			}
 		});

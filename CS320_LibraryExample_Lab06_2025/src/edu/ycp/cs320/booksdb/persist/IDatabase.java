@@ -10,6 +10,7 @@ public interface IDatabase {
 	public List<Pair<Author, Book>> findAuthorAndBookByTitle(String title);
 	public List<Pair<Author, Book>> findAuthorAndBookByAuthorLastName(String lastName);
 	public Integer insertBookIntoBooksTable(String title, String isbn, int published, String lastName, String firstName);
+	public Integer insertBallIntoArsenal(final String longname, final String shortname, final String brand, final String type, final String core, final String cover, final String color, final String surface, final String Year, final String serialNumber, final String weight, final String mapping);
 	public List<Pair<Author, Book>> findAllBooksWithAuthors();
 	public List<Author> findAllAuthors();
 	public List<Author> removeBookByTitle(String title);		
