@@ -15,6 +15,13 @@ public class Frame {
 	
 	// Generic frame constructor
 	public Frame() {
+		
+	}
+	public Frame(int frame) {
+		this.frameNum = frame;
+		this.shotNum = 1;
+		this.pinScore = 0;
+		shots = new ArrayList<ShotObject>();
 	}
 	// Complete frame constructor
 	public Frame(int frame, int lane, String result){

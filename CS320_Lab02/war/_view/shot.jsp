@@ -62,12 +62,12 @@
         }
         /* First shot - pins start white, turn black when selected (standing) */
 		.pin.first-shot {
-		    background-color: white;
-		    color: black;
-		}
-		.pin.first-shot.selected {
 		    background-color: black;
 		    color: white;
+		}
+		.pin.first-shot.selected {
+		    background-color: white;
+		    color: black;
 		}
 		
 		/* Second shot - pins knocked down in first shot (stay white ) */
@@ -87,7 +87,7 @@
 		/* Second shot - pins selected in current shot (will remain standing) */
 		.pin.second-shot.selected {
 		    background-color: red;
-		    color: black;
+		    color: white;
 		}
         .options {
             display: flex;
@@ -169,7 +169,12 @@
             <div>${eventType}</div>
         </div>
         <div class="game-info">
-            <div>Game: ${gameNumber} - Frame: ${frameNumber} - Shot: ${shotNumber}</div>
+        	<label>Game: </label>
+        	<input type = "text" id="gameNum" readonly size = "2" />
+        	<label>Frame: </label>
+        	<input type = "text" id="frameNum" readonly size = "2"/>
+        	<label>Shot: </label>
+        	<input type = "text" id="shotNum" readonly size = "2"/>
         </div>
     </div>
 
@@ -262,7 +267,35 @@
 	<button id="gamebutton" onclick="location.href= 'http://localhost:8081/lab02/game' ">Game</button>
 	    
 
-     <script>
+    <script>
+ 	// constants for shot variable
+	const FIRST_SHOT  = 1;
+	const SECOND_SHOT = 2;
+	
+	// constants for NO and ALL pins kocked down
+	const NO_PINS  = 0;
+	const ALL_PINS = 10; 
+	
+	// constants for frame limits
+	const MIN_FRAMES = 1;
+	const MAX_FRAMES = 12;
+	
+	// declare and initialize global variables
+	let pinCount        = NO_PINS;		// intermediate pin count
+	let firstShotCount  = NO_PINS;		// count of pins knocked down on first shot
+	let secondShotCount = NO_PINS;		// count of pins knocked down on second shot
+	let shot 			= FIRST_SHOT;	// start with first shot
+	
+	// TODO: when there is a server/application setting these, remove this
+	// setting these here until they are sent down by the server
+	
+	let frameNumber = ${frameNumber};
+	let gameNumber = ${gameNumber};
+	
+	document.getElementById('frameNum').value = frameNumber;
+	document.getElementById('gameNum').value = gameNumber;	
+
+	
     document.addEventListener('DOMContentLoaded', function() {
         // Initialize from server data
         var standingPinsInput = document.getElementById('standingPins');
