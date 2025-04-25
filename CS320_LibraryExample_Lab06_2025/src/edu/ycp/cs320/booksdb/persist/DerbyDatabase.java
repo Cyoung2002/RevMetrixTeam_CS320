@@ -227,6 +227,51 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	
+	@Override
+	public List<Ball> findAllBalls() {
+		return executeTransaction(new Transaction<List<Ball>>() {
+			@Override
+			public List<Ball> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from arsenal " +
+							" order by short_name"
+					);
+					
+					List<Ball> result = new ArrayList<Ball>();
+					
+					resultSet = stmt.executeQuery();
+					
+					// for testing that a result was returned
+					Boolean found = false;
+					
+					while (resultSet.next()) {
+						found = true;
+						
+						Ball ball = new Ball();
+						loadBall(ball, resultSet, 1);
+						
+						result.add(ball);
+					}
+					
+					// check if any authors were found
+					if (!found) {
+						System.out.println("No balls were found in the database");
+					}
+					
+					return result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	
 	// transaction that inserts new Book into the Books table
 	// also first inserts new Author into Authors table, if necessary
 	// and then inserts entry into BookAuthors junction table
