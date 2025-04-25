@@ -10,6 +10,7 @@ import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.BookAuthor;
 import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.model.Ball;
 
 public class InitialData {
 
@@ -44,6 +45,7 @@ public class InitialData {
 			readAuthors.close();
 		}
 	}
+	
 	
 	// reads initial Book data from CSV file and returns a List of Books
 	public static List<Book> getBooks() throws IOException {
@@ -80,6 +82,7 @@ public class InitialData {
 		}
 	}
 	
+	
 	// reads initial BookAuthor data from CSV file and returns a List of BookAuthors
 	public static List<BookAuthor> getBookAuthors() throws IOException {
 		List<BookAuthor> bookAuthorList = new ArrayList<BookAuthor>();
@@ -102,6 +105,7 @@ public class InitialData {
 			readBookAuthors.close();
 		}
 	}
+	
 	
 	// reads initial Author data from CSV file and returns a List of Authors
 	public static List<Establishment> getEstablishments() throws IOException {
@@ -132,6 +136,7 @@ public class InitialData {
 			readEstablishments.close();
 		}
 	}
+	
 	
 	public static List<Event> getEvents() throws IOException {
 		List<Event> eventList = new ArrayList<Event>();
@@ -170,4 +175,41 @@ public class InitialData {
 			readEvents.close();
 		}
 	}
+	
+	
+	public static List<Ball> getArsenal() throws IOException {
+		List<Ball> arsenal = new ArrayList<Ball>();
+		ReadCSV readArsenal = new ReadCSV("Arsenal.csv");
+		try {
+
+			while (true) {
+				List<String> tuple = readArsenal.next();
+				if (tuple == null) {
+					break;
+				}
+				Iterator<String> i = tuple.iterator();
+				Ball ball = new Ball();
+				
+				ball.setLongname(i.next());
+				ball.setShortname(i.next());
+				ball.setBrand(i.next());
+				ball.setType(i.next());
+				ball.setCore(i.next());
+				ball.setCover(i.next());
+				ball.setColor(i.next());
+				ball.setSurface(i.next());
+				ball.setYear(i.next());
+				ball.setSerialNumber(i.next());
+				ball.setWeight(i.next());
+				ball.setMapping(i.next());
+				
+				arsenal.add(ball);
+			}
+			System.out.println("Arsenal loaded from CSV file");			
+			return arsenal;
+		} finally {
+			readArsenal.close();
+		}
+	}
+	
 }
