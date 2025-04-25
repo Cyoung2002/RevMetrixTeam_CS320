@@ -6,6 +6,8 @@ import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.booksdb.model.Ball;
+import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.model.Establishment;
 
 public interface IDatabase {
 	public List<Pair<Author, Book>> findAuthorAndBookByTitle(String title);
@@ -15,5 +17,7 @@ public interface IDatabase {
 	public List<Pair<Author, Book>> findAllBooksWithAuthors();
 	public List<Author> findAllAuthors();
 	public List<Ball> findAllBalls();
+	public List<Event> findAllEvents();
+	public List<Establishment> findAllEstablishments();
 	public List<Author> removeBookByTitle(String title);		
 }

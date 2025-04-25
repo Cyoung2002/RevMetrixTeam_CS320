@@ -271,6 +271,91 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
+	public List<Event> findAllEvents() {
+		return executeTransaction(new Transaction<List<Event>>() {
+			@Override
+			public List<Event> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from events "
+					);
+					
+					List<Event> result = new ArrayList<Event>();
+					
+					resultSet = stmt.executeQuery();
+					
+					// for testing that a result was returned
+					Boolean found = false;
+					
+					while (resultSet.next()) {
+						found = true;
+						
+						Event event = new Event();
+						loadEvent(event, resultSet, 1);
+						
+						result.add(event);
+					}
+					
+					// check if any events were found
+					if (!found) {
+						System.out.println("No events were found in the database");
+					}
+					
+					return result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public List<Establishment> findAllEstablishments() {
+		return executeTransaction(new Transaction<List<Establishment>>() {
+			@Override
+			public List<Establishment> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from establishments "
+					);
+					
+					List<Establishment> result = new ArrayList<Establishment>();
+					
+					resultSet = stmt.executeQuery();
+					
+					// for testing that a result was returned
+					Boolean found = false;
+					
+					while (resultSet.next()) {
+						found = true;
+						
+						Establishment establishment = new Establishment();
+						loadEstablishment(establishment, resultSet, 1);
+						
+						result.add(establishment);
+					}
+					
+					// check if any events were found
+					if (!found) {
+						System.out.println("No establishments were found in the database");
+					}
+					
+					return result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
 	
 	// transaction that inserts new Book into the Books table
 	// also first inserts new Author into Authors table, if necessary
@@ -775,6 +860,22 @@ public class DerbyDatabase implements IDatabase {
 		ball.setSerialNumber(resultSet.getString(index++));
 		ball.setWeight(resultSet.getString(index++));
 		ball.setMapping(resultSet.getString(index++));
+	}
+	
+	private void loadEvent(Event event, ResultSet resultSet, int index) throws SQLException {
+		event.setLongname(resultSet.getString(index++));
+		event.setShortname(resultSet.getString(index++));
+		event.setEstablishmentShort(resultSet.getString(index++));
+		event.setWeeknight(resultSet.getString(index++));
+		event.setStart(resultSet.getString(index++));
+		event.setEnd(resultSet.getString(index++));
+		event.setGamesPerSession(resultSet.getInt(index++));
+	}
+	
+	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
+		establishment.setLongname(resultSet.getString(index++));
+		establishment.setShortname(resultSet.getString(index++));
+		establishment.setAddress(resultSet.getString(index++));
 	}
 	
 	//  creates the Authors and Books tables
