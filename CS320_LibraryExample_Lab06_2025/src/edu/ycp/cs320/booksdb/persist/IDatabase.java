@@ -15,6 +15,7 @@ public interface IDatabase {
 	public Integer insertBookIntoBooksTable(String title, String isbn, int published, String lastName, String firstName);
 	public Integer insertBallIntoArsenal(final String longname, final String shortname, final String brand, final String type, final String core, final String cover, final String color, final String surface, final String Year, final String serialNumber, final String weight, final String mapping);
 	public Integer insertEvent(final String longname, final String shortname, final String establishmentShort, final String weeknight, final String start, final String end, final Integer gamesPerSession);
+	public Integer insertEstablishment(final String longname, final String shortname, final String address);
 	public List<Pair<Author, Book>> findAllBooksWithAuthors();
 	public List<Author> findAllAuthors();
 	public List<Ball> findAllBalls();

@@ -713,6 +713,96 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
+	public Integer insertEstablishment(final String longname, final String shortname, final String address) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;				
+				
+				ResultSet resultSet1 = null;
+				ResultSet resultSet3 = null;				
+				
+				// for saving establishment ID
+				Integer establishment_id = -1;
+
+				// try to retrieve establishment_id (if it exists) from DB, for Establishment's long and short names
+				try {
+					stmt1 = conn.prepareStatement(
+							"select establishment_id from establishments " +
+							"  where longname = ? and shortname = ? "
+					);
+					stmt1.setString(1, longname);
+					stmt1.setString(2, shortname);
+					
+					// execute the query, get the result
+					resultSet1 = stmt1.executeQuery();
+
+					
+					// if Establishment was found then save establishment_id					
+					if (resultSet1.next())
+					{
+						establishment_id = resultSet1.getInt(1);
+						System.out.println("Establishment <" + longname + ", " + shortname + "> found with ID: " + establishment_id);						
+					}
+					else
+					{
+						System.out.println("Establishment <" + longname + ", " + shortname + "> not found");
+				
+						// if the Establishment is new, insert new Establishment into Establishments table
+						if (establishment_id <= 0) {
+							// prepare SQL insert statement to add Establishment to Establishments table
+							stmt2 = conn.prepareStatement(
+									"insert into establishments (longname, shortname, address) " +
+									"  values(?, ?, ?, ?, ?, ?, ?) "
+							);
+							stmt2.setString(1, longname);
+							stmt2.setString(2, shortname);
+							stmt2.setString(3, address);
+							
+							// execute the update
+							stmt2.executeUpdate();
+							
+							System.out.println("New Establishment <" + longname + ", " + shortname + "> inserted in Establishments table");						
+						
+							// try to retrieve establishment_id for new Establishment - DB auto-generates establishment_id
+							stmt3 = conn.prepareStatement(
+									"select establishment_id from establishments " +
+									"  where longname = ? and shortname = ? "
+							);
+							stmt3.setString(1, longname);
+							stmt3.setString(2, shortname);
+							
+							// execute the query							
+							resultSet3 = stmt3.executeQuery();
+							
+							// get the result - there had better be one							
+							if (resultSet3.next())
+							{
+								establishment_id = resultSet3.getInt(1);
+								System.out.println("New Establishment <" + longname + ", " + shortname + "> ID: " + establishment_id);						
+							}
+							else	// really should throw an exception here - the new establishment should have been inserted, but we didn't find them
+							{
+								System.out.println("New establishment <" + longname + ", " + shortname + "> not found in Establishments table (ID: " + establishment_id);
+							}
+						}
+					}				
+					
+					return establishment_id;
+				} finally {
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);					
+					DBUtil.closeQuietly(resultSet3);
+					DBUtil.closeQuietly(stmt3);					
+				}
+			}
+		});
+	}
+	
 	// transaction that deletes Book (and possibly its Author) from Library
 	@Override
 	public List<Author> removeBookByTitle(final String title) {
