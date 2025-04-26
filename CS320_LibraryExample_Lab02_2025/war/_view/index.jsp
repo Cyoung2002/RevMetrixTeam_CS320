@@ -44,5 +44,9 @@
 			<input type="Submit" name="submitarsenal" value="View Arsenal">
 		</form>	
 		<br>
+		<form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
+			<input type="Submit" name="submitinsertnewball" value="Add New Ball to Library">
+		</form>	
+		<br>
 	</body>
 </html>
