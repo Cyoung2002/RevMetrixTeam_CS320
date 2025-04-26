@@ -1,9 +1,11 @@
 package edu.ycp.cs320.booksdb.persist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
+import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.booksdb.model.Ball;
 
@@ -15,5 +17,6 @@ public interface IDatabase {
 	public List<Pair<Author, Book>> findAllBooksWithAuthors();
 	public List<Author> findAllAuthors();
 	public List<Ball> findAllBalls();
-	public List<Author> removeBookByTitle(String title);		
+	public List<Author> removeBookByTitle(String title);
+	public ArrayList<Establishment> findAllEstablishments();		
 }

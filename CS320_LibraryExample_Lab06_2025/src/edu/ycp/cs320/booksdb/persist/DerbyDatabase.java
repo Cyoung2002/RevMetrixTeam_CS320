@@ -226,7 +226,59 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	// transaction that retrieves all Establishments in Library
+	@Override
+	public ArrayList<Establishment> findAllEstablishments() {
+		return executeTransaction(new Transaction<ArrayList<Establishment>>() {
+			@Override
+			public ArrayList<Establishment> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from establishments " +
+							" order by longname asc, shortname asc"
+					);
+					
+					ArrayList<Establishment> result = new ArrayList<Establishment>();
+					
+					resultSet = stmt.executeQuery();
+					
+					// for testing that a result was returned
+					Boolean found = false;
+					
+					while (resultSet.next()) {
+						found = true;
+						
+						Establishment establishment = new Establishment();
+						loadEstablishment(establishment, resultSet, 1);
+						
+						result.add(establishment);
+					}
+					
+					// check if any establishments were found
+					if (!found) {
+						System.out.println("No establishments were found in the database");
+					}
+					
+					return (ArrayList<Establishment>) result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
 	
+	
+	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
+		establishment.setLongname(resultSet.getString(index++));
+		establishment.setShortname(resultSet.getString(index++));
+		establishment.setAddress(resultSet.getString(index++));
+	}
+
+
 	@Override
 	public List<Ball> findAllBalls() {
 		return executeTransaction(new Transaction<List<Ball>>() {
