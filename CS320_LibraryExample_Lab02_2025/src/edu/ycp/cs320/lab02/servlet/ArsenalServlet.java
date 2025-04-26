@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Ball;
+import edu.ycp.cs320.lab02.controller.AllAuthorsController;
 import edu.ycp.cs320.lab02.controller.ArsenalController;
 
 public class ArsenalServlet extends HttpServlet {
@@ -44,7 +45,7 @@ public class ArsenalServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("\nAllAuthorsServlet: doPost");		
+		System.out.println("\nArsenalServlet: doPost");		
 
 		ArrayList<Ball> arsenal = null;
 		String errorMessage       = null;
@@ -52,16 +53,20 @@ public class ArsenalServlet extends HttpServlet {
 		controller = new ArsenalController();
 
 		// get list of authors returned from query
-		arsenal = controller.getArsenal();
+		arsenal = controller.getAllBalls();
 
 		// any authors found?
 		if (arsenal == null) {
-			errorMessage = "No Authors were found in the Library";
+			errorMessage = "No Balls found in Arsenal";
 		}
 
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("authors", arsenal);
+		req.setAttribute("arsenal", arsenal);
+		
+		for(Ball ball: arsenal) {
+			System.out.println(ball.getShortname());
+		}
 
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/arsenal.jsp").forward(req, resp);

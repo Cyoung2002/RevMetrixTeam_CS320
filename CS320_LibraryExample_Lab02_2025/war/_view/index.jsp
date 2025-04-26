@@ -40,5 +40,9 @@
 			<input type="Submit" name="submitinsertnewbook" value="Add New Book To Library">
 		</form>
 		<br>
+		<form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
+			<input type="Submit" name="submitarsenal" value="View Arsenal">
+		</form>	
+		<br>
 	</body>
 </html>
