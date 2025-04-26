@@ -41,11 +41,6 @@
     <servlet-class>edu.ycp.cs320.lab02.servlet.LoginServlet</servlet-class>
   </servlet>
   
-  <servlet>
-    <servlet-name>ArsenalServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.lab02.servlet.ArsenalServlet</servlet-class>
-  </servlet>
-  
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
@@ -80,11 +75,6 @@
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
-  </servlet-mapping>
-  
-  <servlet-mapping>
-    <servlet-name>ArsenalServlet</servlet-name>
-    <url-pattern>/arsenal</url-pattern>
   </servlet-mapping>
   
 </web-app>
