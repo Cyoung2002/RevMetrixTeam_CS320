@@ -213,7 +213,7 @@ public class InitialData {
 		}
 	}
 	
-	// reads initial Book data from CSV file and returns a List of Books
+	// reads initial session data from CSV file and returns a List of Books
 		public static List<Session> getSessions() throws IOException {
 			List<Session> sessionList = new ArrayList<Session>();
 			ReadCSV readSessions = new ReadCSV("sessions.csv");
