@@ -58,6 +58,9 @@
 		<br>
 		<form action="${pageContext.servletContext.contextPath}/index" method="post">
 			<input type="Submit" name="submithome" value="Home">
-		</form>		
+		</form>	
+		<form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
+			<input type="Submit" name="submitallestablishments" value="View Establishments">
+		</form>	
 	</body>
 </html>

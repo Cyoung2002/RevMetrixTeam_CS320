@@ -97,5 +97,8 @@
 
 			<input type="Submit" name="submithome" value="Home">
 		</form>
+		<form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="post">
+			<input type="Submit" name="submitinsertnewestablishment" value="Add New Establishment To Library">
+		</form>
 	</body>
 </html>
