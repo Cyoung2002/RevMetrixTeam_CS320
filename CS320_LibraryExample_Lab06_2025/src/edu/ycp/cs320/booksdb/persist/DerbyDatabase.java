@@ -13,6 +13,7 @@ import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.BookAuthor;
 import edu.ycp.cs320.booksdb.model.Pair;
+import edu.ycp.cs320.booksdb.model.Session;
 import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Ball;
@@ -1061,6 +1062,13 @@ public class DerbyDatabase implements IDatabase {
 		establishment.setAddress(resultSet.getString(index++));
 	}
 	
+	private void loadSession(Session session, ResultSet resultSet, int index) throws SQLException{
+		session.setLeague(resultSet.getString(index++));
+		session.setBowled(resultSet.getString(index++));
+		session.setWeek(resultSet.getInt(index++));
+		session.setSeries(resultSet.getInt(index++));
+	}
+	
 	//  creates the Authors and Books tables
 	public void createTables() {
 		executeTransaction(new Transaction<Boolean>() {
@@ -1073,6 +1081,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt4 = null;	
 				PreparedStatement stmt5 = null;	
 				PreparedStatement stmt6 = null;	
+				PreparedStatement stmt7 = null;
 				
 			
 				try {
@@ -1164,6 +1173,19 @@ public class DerbyDatabase implements IDatabase {
 					);	
 					stmt6.executeUpdate();
 					System.out.println("Arsenal table created");
+					
+					stmt7 = conn.prepareStatement(
+							"create table session (" +
+									"	session_id integer primary key " +
+									"		generated always as identity (starts with 1, increment by 1), " +
+									"	league varchar(30), " +
+									"	date_bowled varchar(10), " +
+									"	week integer, " +
+									"	series integer " +
+									")"
+					);
+					stmt7.executeUpdate();
+					System.out.println("Session table created");
 										
 					return true;
 				} finally {
@@ -1188,6 +1210,7 @@ public class DerbyDatabase implements IDatabase {
 				List<Establishment> establishmentList;		// new
 				List<Event> eventList;						// new
 				List<Ball> arsenal;
+				List<Session> sessionList;						// new
 				
 				try {
 					authorList     = InitialData.getAuthors();
@@ -1196,6 +1219,7 @@ public class DerbyDatabase implements IDatabase {
 					establishmentList = InitialData.getEstablishments();
 					eventList 	   = InitialData.getEvents();
 					arsenal 	   = InitialData.getArsenal();
+					sessionList		   = InitialData.getSessions();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -1207,6 +1231,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertEstablishment 	= null;		// new
 				PreparedStatement insertEvent       	= null;		// new
 				PreparedStatement insertBall       		= null;		// new
+				PreparedStatement insertSession 		= null;
 
 				try {
 					// must completely populate Authors table before populating BookAuthors table because of primary keys
@@ -1297,6 +1322,18 @@ public class DerbyDatabase implements IDatabase {
 					insertBall.executeBatch();
 					System.out.println("Arsenal table populated");
 					
+					insertSession = conn.prepareStatement("insert into session (league, date_bowled, week, series) values (?, ?, ?, ?)");
+					for(Session session : sessionList) {
+						insertSession.setString(1, session.getLeague());
+						insertSession.setString(2, session.getBowled());
+						insertSession.setInt(3, session.getWeek());
+						insertSession.setInt(4, session.getSeries());
+						insertSession.addBatch();
+					}
+					insertSession.executeBatch();
+					System.out.println("Session table populated!");
+					//YIPPEE
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertBook);
@@ -1304,7 +1341,8 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(insertBookAuthor);	
 					DBUtil.closeQuietly(insertEstablishment);
 					DBUtil.closeQuietly(insertEvent);	
-					DBUtil.closeQuietly(insertBall);	
+					DBUtil.closeQuietly(insertBall);
+					DBUtil.closeQuietly(insertSession);
 				}
 			}
 		});
