@@ -1,6 +1,6 @@
 package edu.ycp.cs320.booksdb.model;
 
-public class Game {
+public class Session {
 	
 	private String league;
 	private String season;
@@ -63,7 +63,7 @@ public class Game {
 	private int opens;
 	
 	
-	public Game() {
+	public Session() {
 		
 	}
 
