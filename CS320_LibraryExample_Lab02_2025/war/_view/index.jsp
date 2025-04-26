@@ -43,6 +43,10 @@
 		<form action="${pageContext.servletContext.contextPath}/arsenal" method="get">
 			<input type="Submit" name="submitinsertnewbook" value="View Arsenal">
 		</form>
+		<br>			
+		<form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
+			<input type="Submit" name="submitinsertnewbook" value="View All Events">
+		</form>
 		<br>
 	</body>
 </html>

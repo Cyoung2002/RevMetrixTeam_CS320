@@ -272,10 +272,10 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
-	public List<Event> findAllEvents() {
-		return executeTransaction(new Transaction<List<Event>>() {
+	public ArrayList<Event> findAllEvents() {
+		return executeTransaction(new Transaction<ArrayList<Event>>() {
 			@Override
-			public List<Event> execute(Connection conn) throws SQLException {
+			public ArrayList<Event> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 				
@@ -284,7 +284,7 @@ public class DerbyDatabase implements IDatabase {
 							"select * from events "
 					);
 					
-					List<Event> result = new ArrayList<Event>();
+					ArrayList<Event> result = new ArrayList<Event>();
 					
 					resultSet = stmt.executeQuery();
 					

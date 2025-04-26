@@ -7,6 +7,7 @@ import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
+import edu.ycp.cs320.booksdb.model.Event;
 
 public class AllEventsController {
 
@@ -19,26 +20,26 @@ public class AllEventsController {
 		db = DatabaseProvider.getInstance();		
 	}
 
-	public ArrayList<Author> getAllAuthors() {
+	public ArrayList<Event> getEvents() {
 		
 		// get the list of (Author, Book) pairs from DB
-		List<Author> authorList = db.findAllAuthors();
-		ArrayList<Author> authors = null;
+		ArrayList<Event> eventList = db.findAllEvents();
+		ArrayList<Event> events = null;
 		
-		if (authorList.isEmpty()) {
-			System.out.println("No authors found in library");
+		if (eventList.isEmpty()) {
+			System.out.println("No events found in library");
 			return null;
 		}
 		else {
-			authors = new ArrayList<Author>();
-			for (Author author : authorList) {
-				authors.add(author);
-				System.out.println(author.getLastname() + ", " + author.getFirstname());
+			events = new ArrayList<Event>();
+			for (Event event : eventList) {
+				events.add(event);
+				System.out.println(event.getLongname() + ", " + event.getShortname());
 			}			
 		}
 		
 		// return authors for this title
-		return authors;
+		return events;
 	}
 }
 
