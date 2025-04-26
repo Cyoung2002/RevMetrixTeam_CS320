@@ -26,7 +26,7 @@ public class AllEstablishmentsQuery {
 		}
 		else {
 			for (Author establishment : establishmentList) {
-				System.out.println(establishment.getlongname() + ", " + establishment.getShortname());
+				System.out.println(establishment.getLongname() + ", " + establishment.getShortname());
 			}
 		}
 	}

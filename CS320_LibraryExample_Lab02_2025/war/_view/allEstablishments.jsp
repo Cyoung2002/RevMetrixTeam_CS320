@@ -86,11 +86,11 @@
        				<td class="addressColHeading">Address</td>
 			    </tr>
 			        
-			    <c:forEach items="${establishments}" var="pair">
+			    <c:forEach items="${establishments}" var="establishment">
 			        <tr class="establishmentRow">
-			            <td class="longNameCol">${pair.right.longname}</td>
-			            <td class="shortNameCol">${pair.right.shortname}</td>
-			            <td class="addressCol">${pair.right.address}</td>	            
+			            <td class="longNameCol">${establishment.longname}</td>
+			            <td class="shortNameCol">${establishment.shortname}</td>
+			            <td class="addressCol">${establishment.address}</td>	            
 			        </tr>
 			    </c:forEach>
 			</table>

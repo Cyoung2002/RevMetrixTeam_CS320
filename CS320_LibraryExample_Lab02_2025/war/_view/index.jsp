@@ -44,7 +44,7 @@
 			<input type="Submit" name="submitinsertnewbook" value="View Arsenal">
 		</form>
 		<br>
-		<form action="${pageContext.servletContext.contextPath}/allEstablishments" method="get">
+		<form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
 			<input type="Submit" name="submitallestablishments" value="View Establishments">
 		</form>
 		<br>

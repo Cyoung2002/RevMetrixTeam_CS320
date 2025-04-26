@@ -55,7 +55,7 @@ public class AllEstablishmentServlet extends HttpServlet {
 		// get list of authors returned from query
 		establishments = controller.getAllEstablishments();
 
-		// any authors found?
+		// any establishments found?
 		if (establishments == null) {
 			errorMessage = "No Establishments were found in the Library";
 		}

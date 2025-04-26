@@ -38,7 +38,7 @@ public class AllEstablishmentsController {
 			}			
 		}
 		
-		// return authors for this title
+		// return establishments for this title
 		return establishments;
 	}
 }

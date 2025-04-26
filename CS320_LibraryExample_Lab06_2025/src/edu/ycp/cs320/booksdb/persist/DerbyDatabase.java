@@ -237,8 +237,7 @@ public class DerbyDatabase implements IDatabase {
 				
 				try {
 					stmt = conn.prepareStatement(
-							"select * from establishments " +
-							" order by longname asc, shortname asc"
+							"select * from establishments"
 					);
 					
 					ArrayList<Establishment> result = new ArrayList<Establishment>();
