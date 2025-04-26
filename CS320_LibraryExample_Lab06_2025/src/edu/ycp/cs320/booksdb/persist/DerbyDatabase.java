@@ -730,14 +730,29 @@ public class DerbyDatabase implements IDatabase {
 	// TODO: Change it here and in SQLDemo.java under CS320_LibraryExample_Lab06->edu.ycp.cs320.sqldemo
 	// TODO: DO NOT PUT THE DB IN THE SAME FOLDER AS YOUR PROJECT - that will cause conflicts later w/Git
 	private Connection connect() throws SQLException {
-		Connection conn = DriverManager.getConnection("jdbc:derby:C:/CS320-2025-LibraryExample-DB/library.db;create=true");		
-		
-		// Set autocommit() to false to allow the execution of
-		// multiple queries/statements as part of the same transaction.
-		conn.setAutoCommit(false);
-		
-		return conn;
+	    Connection conn = null;
+
+	    String os_name = System.getProperty("os.name").toLowerCase();
+
+	    try {
+	        Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+
+	        if (!os_name.startsWith("mac os")) {
+	            System.out.println("Not a Mac, using Windows path");
+	            conn = DriverManager.getConnection("jdbc:derby:C:/CS320-2025-LibraryExample-DB/library;create=true");
+	        } else {
+	            System.out.println("Running on Mac, using Mac path");
+	            conn = DriverManager.getConnection("jdbc:derby:/Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProject_CS320/CS320_LibraryExample_Lab06_2025/CS320-2025-LibraryExample-DB/library;create=true");
+	        }
+
+	        conn.setAutoCommit(false); // as you originally intended
+	    } catch (ClassNotFoundException e) {
+	        System.out.println("Error loading Derby driver: " + e.getMessage());
+	    }
+
+	    return conn;
 	}
+
 	
 	// retrieves Author information from query result set
 	private void loadAuthor(Author author, ResultSet resultSet, int index) throws SQLException {
