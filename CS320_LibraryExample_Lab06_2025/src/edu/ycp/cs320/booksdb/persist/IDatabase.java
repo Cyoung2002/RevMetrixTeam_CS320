@@ -18,5 +18,6 @@ public interface IDatabase {
 	public List<Author> findAllAuthors();
 	public List<Ball> findAllBalls();
 	public List<Author> removeBookByTitle(String title);
-	public ArrayList<Establishment> findAllEstablishments();		
+	public ArrayList<Establishment> findAllEstablishments();
+	public Integer insertEstablishmentIntoEstablishmentsTable(String longName, String shortName, String address);		
 }

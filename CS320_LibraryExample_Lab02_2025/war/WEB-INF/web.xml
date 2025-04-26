@@ -52,6 +52,12 @@
     <servlet-class>edu.ycp.cs320.lab02.servlet.AllEstablishmentServlet</servlet-class>
   </servlet>
   
+  
+   <servlet>
+    <servlet-name>InsertEstablishmentServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.InsertEstablishmentServlet</servlet-class>
+  </servlet>
+  
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
@@ -97,5 +103,11 @@
     <servlet-name>AllEstablishmentServlet</servlet-name>
     <url-pattern>/allEstablishments</url-pattern>
   </servlet-mapping>
+  
+    <servlet-mapping>
+    <servlet-name>InsertEstablishmentServlet</servlet-name>
+    <url-pattern>/insertEstablishment</url-pattern>
+  </servlet-mapping>
+  
   
 </web-app>
