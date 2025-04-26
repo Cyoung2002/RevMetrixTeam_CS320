@@ -39,9 +39,17 @@
 		<form action="${pageContext.servletContext.contextPath}/insertBook" method="get">
 			<input type="Submit" name="submitinsertnewbook" value="Add New Book To Library">
 		</form>
-		<br>			
+		<br>		
 		<form action="${pageContext.servletContext.contextPath}/arsenal" method="get">
 			<input type="Submit" name="submitinsertnewbook" value="View Arsenal">
+		</form>
+		<br>
+		<form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
+			<input type="Submit" name="submitallestablishments" value="View Establishments">
+		</form>
+		<br>
+		<form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="get">
+			<input type="Submit" name="submitinsertnewestablishment" value="Add New Establishment To Library">
 		</form>
 		<br>
 	</body>
