@@ -60,7 +60,7 @@ public class InsertBallServlet extends HttpServlet {
 		String mapping	  = null;
 		
 		// Decode form parameters and dispatch to controller
-		longname    = req.getParameter("longnamae");
+		longname    = req.getParameter("longname");
 		shortname     = req.getParameter("shortname");
 		brand        = req.getParameter("brand");
 		type         = req.getParameter("type");
@@ -76,37 +76,37 @@ public class InsertBallServlet extends HttpServlet {
 		if(longname == null || longname == "") {
 			longname = "?";
 		}
-		else if(shortname == null || shortname == "") {
+		if(shortname == null || shortname == "") {
 			shortname = "?";
 		}
-		else if(brand == null || brand == "") {
+		if(brand == null || brand == "") {
 			brand = "?";
 		}
-		else if(type == null || type == "") {
+		if(type == null || type == "") {
 			type = "?";
 		}
-		else if(core == null || core == "") {
+		if(core == null || core == "") {
 			core = "?";
 		}
-		else if(cover == null || cover == "") {
+		if(cover == null || cover == "") {
 			cover = "?";
 		}
-		else if(color == null || color == "") {
+		if(color == null || color == "") {
 			color = "?";
 		}
-		else if(surface == null || surface == "") {
+		if(surface == null || surface == "") {
 			surface = "?";
 		}
-		else if(year == null || year == "") {
+		if(year == null || year == "") {
 			year = "?";
 		}
-		else if(serialNumber == null || serialNumber == "") {
+		if(serialNumber == null || serialNumber == "") {
 			serialNumber = "?";
 		}
-		else if(weight == null || weight == "") {
+		if(weight == null || weight == "") {
 			weight = "?";
 		}
-		else if(mapping == null || mapping == "") {
+		if(mapping == null || mapping == "") {
 			mapping = "?";
 		}
 		
@@ -133,7 +133,7 @@ public class InsertBallServlet extends HttpServlet {
 		
 		
 		// Add parameters as request attributes
-		req.setAttribute("longnamae", longname);
+		req.setAttribute("longname", longname);
 		req.setAttribute("shortname", shortname);
 		req.setAttribute("brand", brand);
 		req.setAttribute("type", type);

@@ -49,7 +49,7 @@
 				</tr>
 				<tr>
 					<td class="label">Brand:</td>
-					<td><input type="text" name="brand" size="50" value="${brand}" /></td>
+					<td><input type="text" name="brand" size="20" value="${brand}" /></td>
 				</tr>
 				<tr>
 					<td class="label">Type:</td>
