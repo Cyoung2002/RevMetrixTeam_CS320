@@ -272,6 +272,7 @@ public class DerbyDatabase implements IDatabase {
 	
 	
 	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
+		resultSet.getString(index++);
 		establishment.setLongname(resultSet.getString(index++));
 		establishment.setShortname(resultSet.getString(index++));
 		establishment.setAddress(resultSet.getString(index++));
