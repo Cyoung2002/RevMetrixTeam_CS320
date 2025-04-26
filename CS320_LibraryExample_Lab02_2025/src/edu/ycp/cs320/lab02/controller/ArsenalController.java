@@ -3,7 +3,10 @@ package edu.ycp.cs320.lab02.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Ball;
+import edu.ycp.cs320.booksdb.model.Book;
+import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
@@ -19,25 +22,26 @@ public class ArsenalController {
 		db = DatabaseProvider.getInstance();		
 	}
 
-	public ArrayList< Ball> getArsenal() {
+	public ArrayList<Ball> getAllBalls() {
 		
-		// get the list of (Author, Book) pairs from DB
-		List<Ball> authorList = db.findAllBalls();
-		ArrayList<Ball> arsenal = null;
+		// get the list balls from arsenal db
+		ArrayList<Ball> arsenal = db.findAllBalls();
 		
-		if (authorList.isEmpty()) {
-			System.out.println("No authors found in library");
+		if (arsenal.isEmpty()) {
+			System.out.println("No balls in arsenal");
 			return null;
 		}
 		else {
-			arsenal = new ArrayList<Ball>();
+			//books = new ArrayList<Book>();
 			for (Ball ball : arsenal) {
-				arsenal.add(ball);
+				//Author author = authorBook.getLeft();
+				//Book book = authorBook.getRight();
+				//books.add(book);
 				System.out.println(ball.getLongname() + ", " + ball.getShortname());
 			}			
 		}
 		
-		// return arsenal for this title
+		// return arsenal of balls
 		return arsenal;
 	}
 }

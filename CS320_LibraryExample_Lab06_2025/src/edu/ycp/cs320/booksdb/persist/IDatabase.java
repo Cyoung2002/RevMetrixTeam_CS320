@@ -1,5 +1,6 @@
 package edu.ycp.cs320.booksdb.persist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.ycp.cs320.booksdb.model.Author;
@@ -14,6 +15,6 @@ public interface IDatabase {
 	public Integer insertBallIntoArsenal(final String longname, final String shortname, final String brand, final String type, final String core, final String cover, final String color, final String surface, final String Year, final String serialNumber, final String weight, final String mapping);
 	public List<Pair<Author, Book>> findAllBooksWithAuthors();
 	public List<Author> findAllAuthors();
-	public List<Ball> findAllBalls();
+	public ArrayList<Ball> findAllBalls();
 	public List<Author> removeBookByTitle(String title);		
 }

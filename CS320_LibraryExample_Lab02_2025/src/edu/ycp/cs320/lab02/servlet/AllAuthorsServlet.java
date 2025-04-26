@@ -9,18 +9,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.booksdb.model.Author;
-import edu.ycp.cs320.lab02.controller.AllAuthorsController;
+import edu.ycp.cs320.booksdb.model.Ball;
+import edu.ycp.cs320.lab02.controller.ArsenalController;
 
 public class AllAuthorsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private AllAuthorsController controller = null;	
+	//private AllAuthorsController controller = null;	
+	private ArsenalController controller = null;	
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("\nAllAuthorsServlet: doGet");
+		System.out.println("\nAllAuthorsBallsServlet: doGet");
 
 		String user = (String) req.getSession().getAttribute("user");
 		if (user == null) {
@@ -43,24 +45,26 @@ public class AllAuthorsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("\nAllAuthorsServlet: doPost");		
+		System.out.println("\nAllAuthorsBallsServlet: doPost");		
 
-		ArrayList<Author> authors = null;
+		//ArrayList<Author> authors = null;
+		ArrayList<Ball> arsenal = null;
 		String errorMessage       = null;
 
-		controller = new AllAuthorsController();
+		controller = new ArsenalController();
 
 		// get list of authors returned from query
-		authors = controller.getAllAuthors();
+		//authors = controller.getAllAuthors();
+		arsenal = controller.getAllBalls();
 
 		// any authors found?
-		if (authors == null) {
-			errorMessage = "No Authors were found in the Library";
+		if (arsenal == null) {
+			errorMessage = "No Balls found in arsenal";
 		}
 
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("authors", authors);
+		req.setAttribute("arsenal", arsenal);
 
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/allAuthors.jsp").forward(req, resp);

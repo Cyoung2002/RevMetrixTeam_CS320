@@ -157,8 +157,8 @@ public class FakeDatabase implements IDatabase {
 	public Integer insertBallIntoArsenal(final String longname, final String shortname, final String brand, final String type, final String core, final String cover, final String color, final String surface, final String Year, final String serialNumber, final String weight, final String mapping) {
 		return 2;
 	}
-	public List<Ball> findAllBalls(){
-		List<Ball> balls = new ArrayList<Ball>();
+	public ArrayList<Ball> findAllBalls(){
+		ArrayList<Ball> balls = new ArrayList<Ball>();
 		return balls;
 	}
 

@@ -228,10 +228,10 @@ public class DerbyDatabase implements IDatabase {
 	
 	
 	@Override
-	public List<Ball> findAllBalls() {
-		return executeTransaction(new Transaction<List<Ball>>() {
+	public ArrayList<Ball> findAllBalls() {
+		return executeTransaction(new Transaction<ArrayList<Ball>>() {
 			@Override
-			public List<Ball> execute(Connection conn) throws SQLException {
+			public ArrayList<Ball> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 				
@@ -241,7 +241,7 @@ public class DerbyDatabase implements IDatabase {
 							" order by short_name"
 					);
 					
-					List<Ball> result = new ArrayList<Ball>();
+					ArrayList<Ball> result = new ArrayList<Ball>();
 					
 					resultSet = stmt.executeQuery();
 					

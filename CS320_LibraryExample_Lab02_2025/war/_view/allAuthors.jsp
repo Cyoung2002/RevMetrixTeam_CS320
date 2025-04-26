@@ -46,14 +46,16 @@
 		<form action="${pageContext.servletContext.contextPath}/index" method="post">
 			<table>
 			    <tr>
-       				<td class="nameColHeading">Last Name</td>
-       				<td class="nameColHeading">First Name</td>       				
+       				<td class="nameColHeading">Long Name</td>
+       				<td class="nameColHeading">Short Name</td>
+					<td class="nameColHeading">Type</td>        				
 			    </tr>
 			        
-			    <c:forEach items="${authors}" var="author">
+			    <c:forEach items="${arsenal}" var="ball">
 			        <tr class="authorRow">
-			            <td class="nameCol">${author.lastname}</td>
-			            <td class="nameCol">${author.firstname}</td>			            
+			            <td class="nameCol">${ball.longname}</td>
+			            <td class="nameCol">${ball.shortname}</td>	
+						<td class="nameCol">${ball.type}</td>		            
 			        </tr>
 			    </c:forEach>
 			</table>
