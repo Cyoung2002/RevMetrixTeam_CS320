@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: caroline
+Built-By: tanne
 Build-Jdk: 21.0.5
 Specification-Title: Apache Standard Taglib Build Tools
 Specification-Version: 1.2.5
