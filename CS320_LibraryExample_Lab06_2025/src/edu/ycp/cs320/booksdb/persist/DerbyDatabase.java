@@ -226,10 +226,8 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-<<<<<<< HEAD
-	
+
 	// transaction that retrieves all Establishments in Library
-=======
 	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
 		resultSet.getString(index++);
 		establishment.setLongname(resultSet.getString(index++));
@@ -237,8 +235,7 @@ public class DerbyDatabase implements IDatabase {
 		establishment.setAddress(resultSet.getString(index++));
 	}
 
-	
->>>>>>> DevelopmentDB
+
 	@Override
 	public ArrayList<Establishment> findAllEstablishments() {
 		return executeTransaction(new Transaction<ArrayList<Establishment>>() {
@@ -281,18 +278,6 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-<<<<<<< HEAD
-	
-	
-	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
-		resultSet.getString(index++);
-		establishment.setLongname(resultSet.getString(index++));
-		establishment.setShortname(resultSet.getString(index++));
-		establishment.setAddress(resultSet.getString(index++));
-	}
-
-=======
->>>>>>> DevelopmentDB
 
 	@Override
 	public ArrayList<Ball> findAllBalls() {
@@ -380,52 +365,6 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-<<<<<<< HEAD
-	
-	@Override
-	public List<Establishment> findAllEstablishments() {
-		return executeTransaction(new Transaction<List<Establishment>>() {
-			@Override
-			public List<Establishment> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-				
-				try {
-					stmt = conn.prepareStatement(
-							"select * from establishments "
-					);
-					
-					List<Establishment> result = new ArrayList<Establishment>();
-					
-					resultSet = stmt.executeQuery();
-					
-					// for testing that a result was returned
-					Boolean found = false;
-					
-					while (resultSet.next()) {
-						found = true;
-						
-						Establishment establishment = new Establishment();
-						loadEstablishment(establishment, resultSet, 1);
-						
-						result.add(establishment);
-					}
-					
-					// check if any events were found
-					if (!found) {
-						System.out.println("No establishments were found in the database");
-					}
-					
-					return result;
-				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-				}
-			}
-		});
-	}
-=======
->>>>>>> DevelopmentDB
 	
 	// transaction that inserts new Book into the Books table
 	// also first inserts new Author into Authors table, if necessary
@@ -1372,16 +1311,7 @@ public class DerbyDatabase implements IDatabase {
 		event.setEnd(resultSet.getString(index++));
 		event.setGamesPerSession(Integer.parseInt(resultSet.getString(index++)));
 	}
-<<<<<<< HEAD
-	
-	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
-		establishment.setLongname(resultSet.getString(index++));
-		establishment.setShortname(resultSet.getString(index++));
-		establishment.setAddress(resultSet.getString(index++));
-	}
-	
-=======
->>>>>>> DevelopmentDB
+
 	private void loadSession(Session session, ResultSet resultSet, int index) throws SQLException{
 		session.setLeague(resultSet.getString(index++));
 		session.setBowled(resultSet.getString(index++));
