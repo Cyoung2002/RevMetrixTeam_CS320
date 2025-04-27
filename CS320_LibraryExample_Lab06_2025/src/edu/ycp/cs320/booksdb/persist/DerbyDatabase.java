@@ -226,13 +226,62 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
-	
+	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
+		resultSet.getString(index++);
+		establishment.setLongname(resultSet.getString(index++));
+		establishment.setShortname(resultSet.getString(index++));
+		establishment.setAddress(resultSet.getString(index++));
+	}
+
 	
 	@Override
-	public List<Ball> findAllBalls() {
-		return executeTransaction(new Transaction<List<Ball>>() {
+	public ArrayList<Establishment> findAllEstablishments() {
+		return executeTransaction(new Transaction<ArrayList<Establishment>>() {
 			@Override
-			public List<Ball> execute(Connection conn) throws SQLException {
+			public ArrayList<Establishment> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from establishments"
+					);
+					
+					ArrayList<Establishment> result = new ArrayList<Establishment>();
+					
+					resultSet = stmt.executeQuery();
+					
+					// for testing that a result was returned
+					Boolean found = false;
+					
+					while (resultSet.next()) {
+						found = true;
+						
+						Establishment establishment = new Establishment();
+						loadEstablishment(establishment, resultSet, 1);
+						
+						result.add(establishment);
+					}
+					
+					// check if any establishments were found
+					if (!found) {
+						System.out.println("No establishments were found in the database");
+					}
+					
+					return (ArrayList<Establishment>) result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+	@Override
+	public ArrayList<Ball> findAllBalls() {
+		return executeTransaction(new Transaction<ArrayList<Ball>>() {
+			@Override
+			public ArrayList<Ball> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 				
@@ -242,7 +291,7 @@ public class DerbyDatabase implements IDatabase {
 							" order by short_name"
 					);
 					
-					List<Ball> result = new ArrayList<Ball>();
+					ArrayList<Ball> result = new ArrayList<Ball>();
 					
 					resultSet = stmt.executeQuery();
 					
@@ -304,49 +353,6 @@ public class DerbyDatabase implements IDatabase {
 					// check if any events were found
 					if (!found) {
 						System.out.println("No events were found in the database");
-					}
-					
-					return result;
-				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-				}
-			}
-		});
-	}
-	
-	@Override
-	public List<Establishment> findAllEstablishments() {
-		return executeTransaction(new Transaction<List<Establishment>>() {
-			@Override
-			public List<Establishment> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-				
-				try {
-					stmt = conn.prepareStatement(
-							"select * from establishments "
-					);
-					
-					List<Establishment> result = new ArrayList<Establishment>();
-					
-					resultSet = stmt.executeQuery();
-					
-					// for testing that a result was returned
-					Boolean found = false;
-					
-					while (resultSet.next()) {
-						found = true;
-						
-						Establishment establishment = new Establishment();
-						loadEstablishment(establishment, resultSet, 1);
-						
-						result.add(establishment);
-					}
-					
-					// check if any events were found
-					if (!found) {
-						System.out.println("No establishments were found in the database");
 					}
 					
 					return result;
@@ -517,6 +523,87 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
+	public Integer insertEstablishmentIntoEstablishmentsTable(final String longName, final String shortName, final String address) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt4 = null;
+				PreparedStatement stmt5 = null;
+				PreparedStatement stmt6 = null;				
+				
+				ResultSet resultSet5 = null;				
+				
+				Integer establishment_id = -1;
+				try {
+					
+					// now insert new Establishment into Establishments table
+					// prepare SQL insert statement to add new Establishment to Establishments table
+					stmt4 = conn.prepareStatement(
+							"insert into establishments (longname, shortname, address) " +
+							"  values(?, ?, ?) "
+					);
+					stmt4.setString(1, longName);
+					stmt4.setString(2, shortName);
+					stmt4.setString(3, address);
+					
+					// execute the update
+					stmt4.executeUpdate();
+					
+					System.out.println("New establishment <" + longName + "> inserted into Establishments table");					
+
+					// now retrieve establishment_id for new Establishment, so that we can set up Establishment entry
+					// and return the establishment_id, which the DB auto-generates
+					// prepare SQL statement to retrieve establishment_id for new Book
+					stmt5 = conn.prepareStatement(
+							"select establishment_id from establishments " +
+							"  where longName = ? and shortName = ? and address = ? "
+									
+					);
+					stmt5.setString(1, longName);
+					stmt5.setString(2, shortName);
+					stmt5.setString(3, address);
+
+					// execute the query
+					resultSet5 = stmt5.executeQuery();
+					
+					// get the result - there had better be one
+					if (resultSet5.next())
+					{
+						establishment_id = resultSet5.getInt(1);
+						System.out.println("New establishment <" + longName + "> ID: " + establishment_id);						
+					}
+					else	// really should throw an exception here - the new establishment should have been inserted, but we didn't find it
+					{
+						System.out.println("New establishment <" + longName + "> not found in Establishments table (ID: " + establishment_id);
+					}
+					
+//					// now that we have all the information, insert entry into Establishments table
+//					// prepare SQL insert statement to add new establishment to Establishments table
+//					stmt6 = conn.prepareStatement(
+//							"insert into establishments (establishment_id) " +
+//							"  values(?) "
+//					);
+//					stmt6.setInt(1, establishment_id);
+//					
+//					// execute the update
+//					stmt6.executeUpdate();
+//					
+//					System.out.println("New entry for establishment ID <" + establishment_id + "> inserted into Establishments table");						
+//					
+//					System.out.println("New establishment <" + longName + "> inserted into Establishments table");					
+					
+					return establishment_id;
+				} finally {				
+					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(resultSet5);
+					DBUtil.closeQuietly(stmt5);
+					DBUtil.closeQuietly(stmt6);
+				}
+			}
+		});
+	}
+	
 	
 	@Override
 	public Integer insertBallIntoArsenal(final String longname, final String shortname, final String brand, final String type, final String core, final String cover, final String color, final String surface, final String year, final String serialNumber, final String weight, final String mapping) {
@@ -548,19 +635,21 @@ public class DerbyDatabase implements IDatabase {
 					stmt4.setString(1, longname);
 					stmt4.setString(2, shortname);
 					stmt4.setString(3, brand);
-					stmt4.setString(3, type);
-					stmt4.setString(3, core);
-					stmt4.setString(3, cover);
-					stmt4.setString(3, color);
-					stmt4.setString(3, surface);
-					stmt4.setString(3, year);
-					stmt4.setString(3, serialNumber);
+					stmt4.setString(4, type);
+					stmt4.setString(5, core);
+					stmt4.setString(6, cover);
+					stmt4.setString(7, color);
+					stmt4.setString(8, surface);
+					stmt4.setString(9, year);
+					stmt4.setString(10, serialNumber);
+					stmt4.setString(11, weight);
+					stmt4.setString(12, mapping);
 					
 					
 					// execute the update
 					stmt4.executeUpdate();
 					
-					System.out.println("New ball <" + longname + "> inserted into Books table");					
+					System.out.println("New ball <" + longname + "> inserted into Arsenal table");					
 
 					// now retrieve book_id for new Book, so that we can set up BookAuthor entry
 					// and return the book_id, which the DB auto-generates
@@ -580,11 +669,11 @@ public class DerbyDatabase implements IDatabase {
 					if (resultSet5.next())
 					{
 						ball_id = resultSet5.getInt(1);
-						System.out.println("New book (shortname)< " + shortname + "> ID: " + ball_id);						
+						System.out.println("New ball (shortname)< " + shortname + "> ID: " + ball_id);						
 					}
 					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
 					{
-						System.out.println("New ball <" + shortname + "> not found in Books table (ID: " + ball_id);
+						System.out.println("New ball <" + shortname + "> not found in Arsenal table (ID: " + ball_id);
 					}
 					
 					// now that we have all the information, insert entry into BookAuthors table
@@ -1180,6 +1269,7 @@ public class DerbyDatabase implements IDatabase {
 	
 	private void loadBall(Ball ball, ResultSet resultSet, int index) throws SQLException {
 		
+		resultSet.getString(index++);
 		ball.setLongname(resultSet.getString(index++));
 		ball.setShortname(resultSet.getString(index++));
 		ball.setBrand(resultSet.getString(index++));
@@ -1204,11 +1294,11 @@ public class DerbyDatabase implements IDatabase {
 		event.setEnd(resultSet.getString(index++));
 		event.setGamesPerSession(Integer.parseInt(resultSet.getString(index++)));
 	}
-	
-	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
-		establishment.setLongname(resultSet.getString(index++));
-		establishment.setShortname(resultSet.getString(index++));
-		establishment.setAddress(resultSet.getString(index++));
+	private void loadSession(Session session, ResultSet resultSet, int index) throws SQLException{
+		session.setLeague(resultSet.getString(index++));
+		session.setBowled(resultSet.getString(index++));
+		session.setWeek(resultSet.getInt(index++));
+		session.setSeries(resultSet.getInt(index++));
 	}
 	
 	private void loadSession(Session session, ResultSet resultSet, int index) throws SQLException{

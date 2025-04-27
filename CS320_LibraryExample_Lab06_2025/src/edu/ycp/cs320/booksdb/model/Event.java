@@ -78,5 +78,4 @@ public class Event {
 	public void setGamesPerSession(int gamesPerSession) {
 		this.gamesPerSession = gamesPerSession;
 	}
-	
 }
