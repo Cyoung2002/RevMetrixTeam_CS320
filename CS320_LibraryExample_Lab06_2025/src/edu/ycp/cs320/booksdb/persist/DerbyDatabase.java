@@ -1046,13 +1046,14 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	private void loadEvent(Event event, ResultSet resultSet, int index) throws SQLException {
+		event.setEventID(resultSet.getString(index++));
 		event.setLongname(resultSet.getString(index++));
 		event.setShortname(resultSet.getString(index++));
 		event.setEstablishmentShort(resultSet.getString(index++));
 		event.setWeeknight(resultSet.getString(index++));
 		event.setStart(resultSet.getString(index++));
 		event.setEnd(resultSet.getString(index++));
-		event.setGamesPerSession(resultSet.getInt(index++));
+		event.setGamesPerSession(Integer.parseInt(resultSet.getString(index++)));
 	}
 	
 	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
