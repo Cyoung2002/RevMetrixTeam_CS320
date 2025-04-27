@@ -60,13 +60,5 @@
 			<input type="Submit" name="submitinsertnewball" value="Add New Ball to Library">
 		</form>
 		<br>
-		<form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
-			<input type="Submit" name="submitallestablishments" value="View Establishments">
-		</form>
-		<br>
-		<form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="get">
-			<input type="Submit" name="submitinsertnewestablishment" value="Add New Establishment To Library">
-		</form>
-		<br>
 	</body>
 </html>
