@@ -13,6 +13,7 @@ import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.BookAuthor;
 import edu.ycp.cs320.booksdb.model.Pair;
+import edu.ycp.cs320.booksdb.model.Session;
 import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Ball;
@@ -802,6 +803,169 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	@Override
+	public Integer insertSession(final String league, final String bowled, final int week, final int series) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
+				PreparedStatement stmt5 = null;
+				PreparedStatement stmt6 = null;				
+				
+				ResultSet resultSet1 = null;
+				ResultSet resultSet3 = null;
+				ResultSet resultSet5 = null;				
+				
+				// for saving author ID and book ID
+				//do event id and session id instead
+				Integer session_id = -1;
+				Integer event_id   = -1;
+
+				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
+				try {
+					stmt1 = conn.prepareStatement(
+							"select event_id from events " +
+							"  where league = ? "
+					);
+					stmt1.setString(1, league);
+					
+					// execute the query, get the result
+					resultSet1 = stmt1.executeQuery();
+
+					
+					// if event was found then save event_id					
+					if (resultSet1.next())
+					{
+						event_id = resultSet1.getInt(1);
+						System.out.println("Event/League <" + league +  "> found with ID: " + event_id);						
+					}
+					else
+					{
+						System.out.println("Event/League <" + league +  "> not found");
+						//Kinda unsure what to do if the event/league isnt found. Simple solution
+						//for while I was working was to just print that they should first insert the new event
+						//and return to this page later, should probably be another way.
+						System.out.println("Please insert the new event from the events page, then try again.");
+						/*
+						// if the Author is new, insert new Author into Authors table
+						if (event_id <= 0) {
+							// prepare SQL insert statement to add Author to Authors table
+							stmt2 = conn.prepareStatement(
+									"insert into events (lastname, firstname) " +
+									"  values(?, ?) "
+							);
+							stmt2.setString(1, lastName);
+							stmt2.setString(2, firstName);
+							
+							// execute the update
+							stmt2.executeUpdate();
+							
+							System.out.println("New author <" + lastName + ", " + firstName + "> inserted in Authors table");						
+						
+							// try to retrieve author_id for new Author - DB auto-generates author_id
+							stmt3 = conn.prepareStatement(
+									"select author_id from authors " +
+									"  where lastname = ? and firstname = ? "
+							);
+							stmt3.setString(1, lastName);
+							stmt3.setString(2, firstName);
+							
+							// execute the query							
+							resultSet3 = stmt3.executeQuery();
+							
+							// get the result - there had better be one							
+							if (resultSet3.next())
+							{
+								author_id = resultSet3.getInt(1);
+								System.out.println("New author <" + lastName + ", " + firstName + "> ID: " + author_id);						
+							}
+							else	// really should throw an exception here - the new author should have been inserted, but we didn't find them
+							{
+								System.out.println("New author <" + lastName + ", " + firstName + "> not found in Authors table (ID: " + author_id);
+							}
+						}
+						*/
+						return session_id; //(?) not sure if I should do this but temp idea
+					}
+					
+					
+					// now insert new Session into Sessions table
+					// prepare SQL insert statement to add new Session to Sessions table
+					stmt4 = conn.prepareStatement(
+							"insert into sessions (bowled, week, series) " +
+							"  values(?, ?, ?) "
+					);
+					stmt4.setString(1, bowled);
+					stmt4.setInt(2, week);
+					stmt4.setInt(3, series);
+					
+					// execute the update
+					stmt4.executeUpdate();
+					
+					System.out.println("New session <" + week + "> inserted into Sessions table");					
+
+					// now retrieve session_id for new Session, so that we can set up SessionEvent entry
+					// and return the session_id, which the DB SHOULD NOT-auto-generate. THE REASON-
+					// User entered the week, so can't have two id's for the same thing
+					// prepare SQL statement to retrieve book_id for new Book
+					stmt5 = conn.prepareStatement(
+							"select session from sessions " +
+							"  where bowled = ? and week = ? and series = ? "
+									
+					);
+					stmt5.setString(1, bowled);
+					stmt5.setInt(2, week);
+					stmt5.setInt(3, series);
+
+					// execute the query
+					resultSet5 = stmt5.executeQuery();
+					
+					// get the result - there had better be one
+					if (resultSet5.next())
+					{
+						session_id = resultSet5.getInt(1);
+						System.out.println("New book <" + title + "> ID: " + book_id);						
+					}
+					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
+					{
+						System.out.println("New book <" + title + "> not found in Books table (ID: " + book_id);
+					}
+					
+					// now that we have all the information, insert entry into BookAuthors table
+					// which is the junction table for Books and Authors
+					// prepare SQL insert statement to add new Book to Books table
+					stmt6 = conn.prepareStatement(
+							"insert into bookAuthors (book_id, author_id) " +
+							"  values(?, ?) "
+					);
+					stmt6.setInt(1, book_id);
+					stmt6.setInt(2, author_id);
+					
+					// execute the update
+					stmt6.executeUpdate();
+					
+					System.out.println("New entry for book ID <" + book_id + "> and author ID <" + author_id + "> inserted into BookAuthors junction table");						
+					
+					System.out.println("New book <" + title + "> inserted into Books table");					
+					
+					return book_id;
+				} finally {
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);					
+					DBUtil.closeQuietly(resultSet3);
+					DBUtil.closeQuietly(stmt3);					
+					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(resultSet5);
+					DBUtil.closeQuietly(stmt5);
+					DBUtil.closeQuietly(stmt6);
+				}
+			}
+		});
+	}
 	
 	// transaction that deletes Book (and possibly its Author) from Library
 	@Override
@@ -1062,6 +1226,13 @@ public class DerbyDatabase implements IDatabase {
 		establishment.setAddress(resultSet.getString(index++));
 	}
 	
+	private void loadSession(Session session, ResultSet resultSet, int index) throws SQLException{
+		session.setLeague(resultSet.getString(index++));
+		session.setBowled(resultSet.getString(index++));
+		session.setWeek(resultSet.getInt(index++));
+		session.setSeries(resultSet.getInt(index++));
+	}
+	
 	//  creates the Authors and Books tables
 	public void createTables() {
 		executeTransaction(new Transaction<Boolean>() {
@@ -1074,6 +1245,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt4 = null;	
 				PreparedStatement stmt5 = null;	
 				PreparedStatement stmt6 = null;	
+				PreparedStatement stmt7 = null;
 				
 			
 				try {
@@ -1165,6 +1337,19 @@ public class DerbyDatabase implements IDatabase {
 					);	
 					stmt6.executeUpdate();
 					System.out.println("Arsenal table created");
+					
+					stmt7 = conn.prepareStatement(
+							"create table session (" +
+									"	session_id integer primary key " +
+									"		generated always as identity (starts with 1, increment by 1), " +
+									"	league varchar(30), " +
+									"	date_bowled varchar(10), " +
+									"	week integer, " +
+									"	series integer " +
+									")"
+					);
+					stmt7.executeUpdate();
+					System.out.println("Session table created");
 										
 					return true;
 				} finally {
@@ -1189,6 +1374,7 @@ public class DerbyDatabase implements IDatabase {
 				List<Establishment> establishmentList;		// new
 				List<Event> eventList;						// new
 				List<Ball> arsenal;
+				List<Session> sessionList;						// new
 				
 				try {
 					authorList     = InitialData.getAuthors();
@@ -1197,6 +1383,7 @@ public class DerbyDatabase implements IDatabase {
 					establishmentList = InitialData.getEstablishments();
 					eventList 	   = InitialData.getEvents();
 					arsenal 	   = InitialData.getArsenal();
+					sessionList		   = InitialData.getSessions();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
@@ -1208,6 +1395,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement insertEstablishment 	= null;		// new
 				PreparedStatement insertEvent       	= null;		// new
 				PreparedStatement insertBall       		= null;		// new
+				PreparedStatement insertSession 		= null;
 
 				try {
 					// must completely populate Authors table before populating BookAuthors table because of primary keys
@@ -1298,6 +1486,18 @@ public class DerbyDatabase implements IDatabase {
 					insertBall.executeBatch();
 					System.out.println("Arsenal table populated");
 					
+					insertSession = conn.prepareStatement("insert into session (league, date_bowled, week, series) values (?, ?, ?, ?)");
+					for(Session session : sessionList) {
+						insertSession.setString(1, session.getLeague());
+						insertSession.setString(2, session.getBowled());
+						insertSession.setInt(3, session.getWeek());
+						insertSession.setInt(4, session.getSeries());
+						insertSession.addBatch();
+					}
+					insertSession.executeBatch();
+					System.out.println("Session table populated!");
+					//YIPPEE
+					
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertBook);
@@ -1305,7 +1505,8 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(insertBookAuthor);	
 					DBUtil.closeQuietly(insertEstablishment);
 					DBUtil.closeQuietly(insertEvent);	
-					DBUtil.closeQuietly(insertBall);	
+					DBUtil.closeQuietly(insertBall);
+					DBUtil.closeQuietly(insertSession);
 				}
 			}
 		});
