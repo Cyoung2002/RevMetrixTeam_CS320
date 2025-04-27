@@ -43,7 +43,7 @@
 			<div class="error">${errorMessage}</div>
 		</c:if>
 	
-		<form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
+		<form action="${pageContext.servletContext.contextPath}/index" method="post">
 			<table>
 			    <tr>
        				<td class="nameColHeading">Long Name</td>
@@ -59,8 +59,14 @@
 			        </tr>
 			    </c:forEach>
 			</table>
-
+			
+			<br>
 			<input type="Submit" name="submithome" value="Home">
+		</form>
+		
+		<br>
+		<form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
+			<input type="Submit" name="submitinsertnewball" value="Add New Ball to Library">
 		</form>
 	</body>
 </html>

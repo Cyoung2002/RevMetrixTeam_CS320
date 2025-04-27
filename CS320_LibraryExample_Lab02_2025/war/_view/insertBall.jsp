@@ -89,11 +89,16 @@
 				</tr>	
 			</table>
 			
+			<br>
 			<input type="Submit" name="submitinsertball" value="Add Ball to Arsenal">
 		</form>
 		<br>
 		<form action="${pageContext.servletContext.contextPath}/index" method="post">
 			<input type="Submit" name="submithome" value="Home">
-		</form>		
+		</form>	
+		<br>	
+		<form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
+			<input type="Submit" name="submitarsenal" value="View Arsenal">
+		</form>	
 	</body>
 </html>
