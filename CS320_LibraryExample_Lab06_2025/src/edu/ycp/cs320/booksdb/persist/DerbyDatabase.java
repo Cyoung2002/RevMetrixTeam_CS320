@@ -1210,7 +1210,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	private void loadEvent(Event event, ResultSet resultSet, int index) throws SQLException {
-		event.setEventID(resultSet.getString(index++));
+		resultSet.getString(index++);
 		event.setLongname(resultSet.getString(index++));
 		event.setShortname(resultSet.getString(index++));
 		event.setEstablishmentShort(resultSet.getString(index++));
