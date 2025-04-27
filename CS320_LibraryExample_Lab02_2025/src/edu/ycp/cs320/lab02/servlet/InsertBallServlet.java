@@ -73,40 +73,40 @@ public class InsertBallServlet extends HttpServlet {
 		weight = req.getParameter("weight");
 		mapping = req.getParameter("mapping");
 		
-		if(longname == null || longname == "") {
+		if(longname == null || longname.equals("")) {
 			longname = "?";
 		}
-		if(shortname == null || shortname == "") {
+		if(shortname == null || shortname.equals("")) {
 			shortname = "?";
 		}
-		if(brand == null || brand == "") {
+		if(brand == null || brand.equals("")) {
 			brand = "?";
 		}
-		if(type == null || type == "") {
+		if(type == null || type.equals("")) {
 			type = "?";
 		}
-		if(core == null || core == "") {
+		if(core == null || core.equals("")) {
 			core = "?";
 		}
-		if(cover == null || cover == "") {
+		if(cover == null || cover.equals("")) {
 			cover = "?";
 		}
-		if(color == null || color == "") {
+		if(color == null || color.equals("")) {
 			color = "?";
 		}
-		if(surface == null || surface == "") {
+		if(surface == null || surface.equals("")) {
 			surface = "?";
 		}
-		if(year == null || year == "") {
+		if(year == null || year.equals("")) {
 			year = "?";
 		}
-		if(serialNumber == null || serialNumber == "") {
+		if(serialNumber == null || serialNumber.equals("")) {
 			serialNumber = "?";
 		}
-		if(weight == null || weight == "") {
+		if(weight == null || weight.equals("")) {
 			weight = "?";
 		}
-		if(mapping == null || mapping == "") {
+		if(mapping == null || mapping.equals("")) {
 			mapping = "?";
 		}
 		

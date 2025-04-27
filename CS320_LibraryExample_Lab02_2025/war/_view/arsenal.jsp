@@ -48,14 +48,24 @@
 			    <tr>
        				<td class="nameColHeading">Long Name</td>
        				<td class="nameColHeading">Short Name</td>
-					<td class="nameColHeading">Type</td>       				
+					<td class="nameColHeading">Brand</td> 
+					<td class="nameColHeading">Type</td> 
+					<td class="nameColHeading">Core</td> 
+					<td class="nameColHeading">Color</td>   
+					<td class="nameColHeading">Weight</td>   
+					<td class="nameColHeading">Serial #</td>  				
 			    </tr>
 			        
 			    <c:forEach items="${arsenal}" var="ball">
 			        <tr class="authorRow">
 			            <td class="nameCol">${ball.longname}</td>
 			            <td class="nameCol">${ball.shortname}</td>
-						<td class="nameCol">${ball.type}</td>				            
+						<td class="nameCol">${ball.brand}</td>
+						<td class="nameCol">${ball.type}</td>	
+						<td class="nameCol">${ball.core}</td>
+						<td class="nameCol">${ball.color}</td>			 
+						<td class="nameCol">${ball.weight}</td>      
+						<td class="nameCol">${ball.serialNumber}</td>     
 			        </tr>
 			    </c:forEach>
 			</table>
