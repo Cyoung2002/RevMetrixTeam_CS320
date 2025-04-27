@@ -1,10 +1,12 @@
 package edu.ycp.cs320.booksdb.persist;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
 
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
+import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.booksdb.model.Ball;
 import edu.ycp.cs320.booksdb.model.Event;
@@ -20,7 +22,10 @@ public interface IDatabase {
 	public List<Pair<Author, Book>> findAllBooksWithAuthors();
 	public List<Author> findAllAuthors();
 	public List<Ball> findAllBalls();
+
 	public ArrayList<Event> findAllEvents();
-	public List<Establishment> findAllEstablishments();
 	public List<Author> removeBookByTitle(String title);		
+
+	public ArrayList<Establishment> findAllEstablishments();
+	public Integer insertEstablishmentIntoEstablishmentsTable(String longName, String shortName, String address);		
 }

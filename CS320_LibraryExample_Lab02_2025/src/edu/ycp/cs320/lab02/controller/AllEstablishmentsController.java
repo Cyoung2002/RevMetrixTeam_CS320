@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ycp.cs320.booksdb.model.Author;
+import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
@@ -19,26 +20,26 @@ public class AllEstablishmentsController {
 		db = DatabaseProvider.getInstance();		
 	}
 
-	public ArrayList<Author> getAllAuthors() {
+	public ArrayList<Establishment> getAllEstablishments() {
 		
-		// get the list of (Author, Book) pairs from DB
-		List<Author> authorList = db.findAllAuthors();
-		ArrayList<Author> authors = null;
+		// get the list of establishments from DB
+		ArrayList<Establishment> establishmentList = db.findAllEstablishments();
+		ArrayList<Establishment> establishments = null;
 		
-		if (authorList.isEmpty()) {
-			System.out.println("No authors found in library");
+		if (establishmentList.isEmpty()) {
+			System.out.println("No establishments found in library");
 			return null;
 		}
 		else {
-			authors = new ArrayList<Author>();
-			for (Author author : authorList) {
-				authors.add(author);
-				System.out.println(author.getLastname() + ", " + author.getFirstname());
+			establishments = new ArrayList<Establishment>();
+			for (Establishment establishment : establishmentList) {
+				establishments.add(establishment);
+				System.out.println(establishment.getLongname() + ", " + establishment.getShortname() + ", " + establishment.getAddress());
 			}			
 		}
 		
-		// return authors for this title
-		return authors;
+		// return establishments for this title
+		return establishments;
 	}
 }
 

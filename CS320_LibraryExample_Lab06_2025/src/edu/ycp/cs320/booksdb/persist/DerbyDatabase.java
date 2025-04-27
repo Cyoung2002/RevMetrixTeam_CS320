@@ -227,7 +227,59 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	// transaction that retrieves all Establishments in Library
+	@Override
+	public ArrayList<Establishment> findAllEstablishments() {
+		return executeTransaction(new Transaction<ArrayList<Establishment>>() {
+			@Override
+			public ArrayList<Establishment> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from establishments"
+					);
+					
+					ArrayList<Establishment> result = new ArrayList<Establishment>();
+					
+					resultSet = stmt.executeQuery();
+					
+					// for testing that a result was returned
+					Boolean found = false;
+					
+					while (resultSet.next()) {
+						found = true;
+						
+						Establishment establishment = new Establishment();
+						loadEstablishment(establishment, resultSet, 1);
+						
+						result.add(establishment);
+					}
+					
+					// check if any establishments were found
+					if (!found) {
+						System.out.println("No establishments were found in the database");
+					}
+					
+					return (ArrayList<Establishment>) result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
 	
+	
+	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
+		resultSet.getString(index++);
+		establishment.setLongname(resultSet.getString(index++));
+		establishment.setShortname(resultSet.getString(index++));
+		establishment.setAddress(resultSet.getString(index++));
+	}
+
+
 	@Override
 	public List<Ball> findAllBalls() {
 		return executeTransaction(new Transaction<List<Ball>>() {
@@ -508,6 +560,87 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(stmt2);					
 					DBUtil.closeQuietly(resultSet3);
 					DBUtil.closeQuietly(stmt3);					
+					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(resultSet5);
+					DBUtil.closeQuietly(stmt5);
+					DBUtil.closeQuietly(stmt6);
+				}
+			}
+		});
+	}
+	
+	@Override
+	public Integer insertEstablishmentIntoEstablishmentsTable(final String longName, final String shortName, final String address) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt4 = null;
+				PreparedStatement stmt5 = null;
+				PreparedStatement stmt6 = null;				
+				
+				ResultSet resultSet5 = null;				
+				
+				Integer establishment_id = -1;
+				try {
+					
+					// now insert new Establishment into Establishments table
+					// prepare SQL insert statement to add new Establishment to Establishments table
+					stmt4 = conn.prepareStatement(
+							"insert into establishments (longname, shortname, address) " +
+							"  values(?, ?, ?) "
+					);
+					stmt4.setString(1, longName);
+					stmt4.setString(2, shortName);
+					stmt4.setString(3, address);
+					
+					// execute the update
+					stmt4.executeUpdate();
+					
+					System.out.println("New establishment <" + longName + "> inserted into Establishments table");					
+
+					// now retrieve establishment_id for new Establishment, so that we can set up Establishment entry
+					// and return the establishment_id, which the DB auto-generates
+					// prepare SQL statement to retrieve establishment_id for new Book
+					stmt5 = conn.prepareStatement(
+							"select establishment_id from establishments " +
+							"  where longName = ? and shortName = ? and address = ? "
+									
+					);
+					stmt5.setString(1, longName);
+					stmt5.setString(2, shortName);
+					stmt5.setString(3, address);
+
+					// execute the query
+					resultSet5 = stmt5.executeQuery();
+					
+					// get the result - there had better be one
+					if (resultSet5.next())
+					{
+						establishment_id = resultSet5.getInt(1);
+						System.out.println("New establishment <" + longName + "> ID: " + establishment_id);						
+					}
+					else	// really should throw an exception here - the new establishment should have been inserted, but we didn't find it
+					{
+						System.out.println("New establishment <" + longName + "> not found in Establishments table (ID: " + establishment_id);
+					}
+					
+//					// now that we have all the information, insert entry into Establishments table
+//					// prepare SQL insert statement to add new establishment to Establishments table
+//					stmt6 = conn.prepareStatement(
+//							"insert into establishments (establishment_id) " +
+//							"  values(?) "
+//					);
+//					stmt6.setInt(1, establishment_id);
+//					
+//					// execute the update
+//					stmt6.executeUpdate();
+//					
+//					System.out.println("New entry for establishment ID <" + establishment_id + "> inserted into Establishments table");						
+//					
+//					System.out.println("New establishment <" + longName + "> inserted into Establishments table");					
+					
+					return establishment_id;
+				} finally {				
 					DBUtil.closeQuietly(stmt4);
 					DBUtil.closeQuietly(resultSet5);
 					DBUtil.closeQuietly(stmt5);
