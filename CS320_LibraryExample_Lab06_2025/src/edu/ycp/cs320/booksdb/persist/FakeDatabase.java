@@ -6,6 +6,8 @@ import java.util.List;
 
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Ball;
+import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.Pair;
 
@@ -157,9 +159,27 @@ public class FakeDatabase implements IDatabase {
 	public Integer insertBallIntoArsenal(final String longname, final String shortname, final String brand, final String type, final String core, final String cover, final String color, final String surface, final String Year, final String serialNumber, final String weight, final String mapping) {
 		return 2;
 	}
-	public List<Ball> findAllBalls(){
-		List<Ball> balls = new ArrayList<Ball>();
+	public ArrayList<Ball> findAllBalls(){
+		ArrayList<Ball> balls = new ArrayList<Ball>();
 		return balls;
+	}
+	
+	public List<Event> findAllEvents(){
+		List<Event> events = new ArrayList<Event>();
+		return events;
+	}
+	
+	public Integer insertEvent(final String longname, final String shortname, final String establishmentShort, final String weeknight, final String start, final String end, final Integer gamesPerSession) {
+		return 1;
+	}
+	
+	public List<Establishment> findAllEstablishments(){
+		List<Establishment> establishments = new ArrayList<Establishment>();
+		return establishments;
+	}
+	
+	public Integer insertEstablishment(final String longname, final String shortname, final String address) {
+		return 1;
 	}
 
 	// query that retrieves an Author based on author_id
