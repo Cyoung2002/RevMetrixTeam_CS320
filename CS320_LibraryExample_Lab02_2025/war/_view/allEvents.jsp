@@ -21,13 +21,13 @@
 				font-weight: bold;
 			}
 			
-			td.bookColHeading {
+			td.longnameColHeading {
 				text-align: center;
 				font-weight: bold;
 				max-width: 500px;
 			}
 			
-			td.isbnColHeading {
+			td.ShortnameColHeading {
 				text-align: center;
 				font-weight: bold;
 				max-width: 200px;
@@ -41,7 +41,28 @@
 				padding-left: 20px;
 			}
 
-			td.nameColHeading {
+			td.WeeknightColHeading {
+				text-align: center;
+				font-weight: bold;
+				max-width: 300px;
+				padding-left: 20px;
+			}
+			
+			td.StartColHeading {
+				text-align: center;
+				font-weight: bold;
+				max-width: 300px;
+				padding-left: 20px;
+			}
+			
+			td.EndColHeading {
+				text-align: center;
+				font-weight: bold;
+				max-width: 300px;
+				padding-left: 20px;
+			}
+			
+			td.GamesPerSessionColHeading {
 				text-align: center;
 				font-weight: bold;
 				max-width: 300px;
