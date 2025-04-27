@@ -10,6 +10,7 @@ import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.BookAuthor;
 import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.model.Session;
 import edu.ycp.cs320.booksdb.model.Ball;
 
 public class InitialData {
@@ -178,8 +179,11 @@ public class InitialData {
 	
 	
 	public static List<Ball> getArsenal() throws IOException {
+		
 		List<Ball> arsenal = new ArrayList<Ball>();
 		ReadCSV readArsenal = new ReadCSV("Arsenal.csv");
+		//readArsenal.next();
+		
 		try {
 
 			while (true) {
@@ -211,5 +215,37 @@ public class InitialData {
 			readArsenal.close();
 		}
 	}
+	
+	// reads initial session data from CSV file and returns a List of Books
+		public static List<Session> getSessions() throws IOException {
+			List<Session> sessionList = new ArrayList<Session>();
+			ReadCSV readSessions = new ReadCSV("sessions.csv");
+			try {
+				while (true) {
+					List<String> tuple = readSessions.next();
+					if (tuple == null) {
+						break;
+					}
+					Iterator<String> i = tuple.iterator();
+					Session session = new Session();
+					
+					//WE WILL NEED TO ADD MORE OF THE SETTERS HERE JUST WANTED A BASIS
+					
+					//set the type of event (/league)
+					session.setLeague(i.next());
+					//set the date it was bowled
+					session.setBowled(i.next());
+					session.setWeek(Integer.parseInt(i.next()));
+					//something will put here for setting the games...eventually
+					//session.setGames(getGames);
+					session.setSeries(Integer.parseInt(i.next()));
+					sessionList.add(session);
+				}
+				System.out.println("sessionList loaded from CSV file");			
+				return sessionList;
+			} finally {
+				readSessions.close();
+			}
+		}
 	
 }

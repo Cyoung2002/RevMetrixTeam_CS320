@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,7 +20,7 @@ import java.util.regex.Pattern;
 /**
  * An interactive query tool for SQLite.
  */
-public class SQLDemo{
+public class SQLDemo {
 	static class RowList extends ArrayList<List<String>> {
 		private static final long serialVersionUID = 1L;
 	}
@@ -43,46 +42,18 @@ public class SQLDemo{
 	// TODO: DO NOT PUT THE DB IN THE SAME FOLDER AS YOUR PROJECT - that will cause conflicts later w/Git
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		Connection conn = null;
-		
-		System.getProperty("os.name");
-		System.out.println(System.getProperty("os.name"));
-		String os_name = System.getProperty("os.name");
-		System.out.println(System.getProperty("os.name").getClass().getName());
-		
-
-		
-		if(!os_name.toLowerCase().startsWith("mac os")) {
-			System.out.println("This is not a mac");
-			try {
-				Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-			
-				conn = DriverManager.getConnection("jdbc:derby:C:/CS320-2025-LibraryExample-DB/library.db;create=true");
-				conn.setAutoCommit(true);
-			
-				queryLoop(conn);
-			} catch (SQLException e) {
-				System.out.println("Error: " + e.getMessage());
-			} finally {
-				DBUtil.closeQuietly(conn);
-			}
-		}
-		else {
-			System.out.println("This is a mac");
-			try {
-				Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-				conn = DriverManager.getConnection("jdbc:derby:/Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProject_CS320/CS320_LibraryExample_Lab06_2025/CS320-2025-LibraryExample-DB/library;create=true");
-
-				conn.setAutoCommit(true);
+		try {
+			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+			conn = DriverManager.getConnection("jdbc:derby:C:/CS320-2025-LibraryExample-DB/library.db;create=true");
+			conn.setAutoCommit(true);
 	
-				queryLoop(conn);
-			} catch (SQLException e) {
-					System.out.println("Error: " + e.getMessage());
-			} finally {
-					DBUtil.closeQuietly(conn);
-			}
+			queryLoop(conn);
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		} finally {
+			DBUtil.closeQuietly(conn);
 		}
 }
-	
 
 	private static void queryLoop(Connection conn) throws IOException {
 		StatementReader stmtReader = new StatementReader(new InputStreamReader(System.in));

@@ -7,10 +7,6 @@
 		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
 		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
-			<item value="C:\CS320\RevMetrixTeam_CS320\CS320_Lab02"/>
-			<item value="C:\CS320\RevMetrix Fix\CS320_Jetty9"/>
-			<item value="C:\CS320\RevMetrix Fix\CS320_Derby"/>
-			<item value="C:\CS320\RevMetrixTeam_CS320"/>
 			<item value="/Users/caroline/Desktop/cs320-Spring2025/Archives/Archive/CS320_Jetty9"/>
 			<item value="/Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProject_CS320/CS320_Lab02"/>
 		</list>
@@ -18,11 +14,11 @@
 			<item value=""/>
 		</list>
 		<section name="ExternalProjectImportWizard.dialogBounds">
-			<item key="DIALOG_X_ORIGIN" value="706"/>
-			<item key="DIALOG_Y_ORIGIN" value="187"/>
-			<item key="DIALOG_WIDTH" value="525"/>
-			<item key="DIALOG_HEIGHT" value="710"/>
-			<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+			<item key="DIALOG_X_ORIGIN" value="219"/>
+			<item key="DIALOG_Y_ORIGIN" value="61"/>
+			<item key="DIALOG_WIDTH" value="586"/>
+			<item key="DIALOG_HEIGHT" value="703"/>
+			<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
 		</section>
 	</section>
 </section>

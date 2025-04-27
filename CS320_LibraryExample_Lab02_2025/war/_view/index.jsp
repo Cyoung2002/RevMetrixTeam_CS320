@@ -39,9 +39,9 @@
 		<form action="${pageContext.servletContext.contextPath}/insertBook" method="get">
 			<input type="Submit" name="submitinsertnewbook" value="Add New Book To Library">
 		</form>
-		<br>		
-		<form action="${pageContext.servletContext.contextPath}/arsenal" method="get">
-			<input type="Submit" name="submitinsertnewbook" value="View Arsenal">
+		<br>			
+		<form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
+			<input type="Submit" name="submitinsertnewbook" value="View All Events">
 		</form>
 		<br>
 		<form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
@@ -50,6 +50,14 @@
 		<br>
 		<form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="get">
 			<input type="Submit" name="submitinsertnewestablishment" value="Add New Establishment To Library">
+		</form>
+		<br>
+		<form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
+			<input type="Submit" name="submitarsenal" value="View Arsenal">
+		</form>	
+		<br>
+		<form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
+			<input type="Submit" name="submitinsertnewball" value="Add New Ball to Library">
 		</form>
 		<br>
 	</body>
