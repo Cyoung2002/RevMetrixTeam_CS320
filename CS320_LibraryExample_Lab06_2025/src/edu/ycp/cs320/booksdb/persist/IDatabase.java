@@ -24,6 +24,7 @@ public interface IDatabase {
 	public ArrayList<Event> findAllEvents();
 	public ArrayList<Ball> findAllBalls();
 	public List<Author> removeBookByTitle(String title);
+	public Integer insertSession(final String league, final String bowled, final int week, final int series);
 	public ArrayList<Establishment> findAllEstablishments();
 	public Integer insertEstablishmentIntoEstablishmentsTable(String longName, String shortName, String address);		
 }

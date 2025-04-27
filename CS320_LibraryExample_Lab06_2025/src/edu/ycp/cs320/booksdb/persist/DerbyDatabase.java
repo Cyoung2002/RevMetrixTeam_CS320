@@ -1018,31 +1018,31 @@ public class DerbyDatabase implements IDatabase {
 					if (resultSet5.next())
 					{
 						session_id = resultSet5.getInt(1);
-						System.out.println("New book <" + title + "> ID: " + book_id);						
+						System.out.println("New session <" + week + "> ID: " + session_id);						
 					}
 					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
 					{
-						System.out.println("New book <" + title + "> not found in Books table (ID: " + book_id);
+						System.out.println("New session <" + week + "> not found in Books table (ID: " + session_id);
 					}
 					
 					// now that we have all the information, insert entry into BookAuthors table
 					// which is the junction table for Books and Authors
 					// prepare SQL insert statement to add new Book to Books table
 					stmt6 = conn.prepareStatement(
-							"insert into bookAuthors (book_id, author_id) " +
+							"insert into sessionEvents (session_id, event_id) " +
 							"  values(?, ?) "
 					);
-					stmt6.setInt(1, book_id);
-					stmt6.setInt(2, author_id);
+					stmt6.setInt(1, session_id);
+					stmt6.setInt(2, event_id);
 					
 					// execute the update
 					stmt6.executeUpdate();
 					
-					System.out.println("New entry for book ID <" + book_id + "> and author ID <" + author_id + "> inserted into BookAuthors junction table");						
+					System.out.println("New entry for session ID <" + session_id + "> and event ID <" + event_id + "> inserted into BookAuthors junction table");						
 					
-					System.out.println("New book <" + title + "> inserted into Books table");					
+					System.out.println("New session for week <" + week + "> inserted into session table");					
 					
-					return book_id;
+					return session_id;
 				} finally {
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
