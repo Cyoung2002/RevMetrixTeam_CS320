@@ -235,10 +235,10 @@ public class InitialData {
 					session.setLeague(i.next());
 					//set the date it was bowled
 					session.setBowled(i.next());
-					session.setWeek(Integer.parseInt(i.next()));
+					session.setWeek(i.next());
 					//something will put here for setting the games...eventually
 					//session.setGames(getGames);
-					session.setSeries(Integer.parseInt(i.next()));
+					session.setSeries(i.next());
 					sessionList.add(session);
 				}
 				System.out.println("sessionList loaded from CSV file");			

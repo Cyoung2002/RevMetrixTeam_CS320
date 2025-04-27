@@ -9,7 +9,7 @@ public class Session {
 	private String house;
 	
 	//this is the session ID 
-	private int week;
+	private String week;
 	private String scheduled;
 	private String bowled;
 	//this may be boolean if applicable
@@ -23,7 +23,7 @@ public class Session {
 	private int gameOneScore;
 	private int gameTwoScore;
 	private int gameThreeScore;
-	private int series;
+	private String series;
 	//make the games;
 	/*
 	private Game gameOne;
@@ -109,12 +109,12 @@ public class Session {
 	}
 
 
-	public int getWeek() {
+	public String getWeek() {
 		return week;
 	}
 
 
-	public void setWeek(int week) {
+	public void setWeek(String week) {
 		this.week = week;
 	}
 
@@ -189,12 +189,12 @@ public class Session {
 	}
 
 
-	public int getSeries() {
+	public String getSeries() {
 		return series;
 	}
 
 
-	public void setSeries(int series) {
+	public void setSeries(String series) {
 		this.series = series;
 	}
 
