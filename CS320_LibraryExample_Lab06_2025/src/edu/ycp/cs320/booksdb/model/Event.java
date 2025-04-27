@@ -7,7 +7,7 @@ public class Event {
 	private String establishmentShort;
 	private String weeknight;
 	private String start;
-	private String end;
+	private String end_date;
 	private int gamesPerSession;
 	
 	
@@ -65,10 +65,10 @@ public class Event {
 
 
 	public String getEnd() {
-		return end;
+		return end_date;
 	}
 	public void setEnd(String end) {
-		this.end = end;
+		this.end_date = end;
 	}
 
 

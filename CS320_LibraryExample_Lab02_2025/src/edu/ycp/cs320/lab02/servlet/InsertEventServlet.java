@@ -50,7 +50,7 @@ public class InsertEventServlet extends HttpServlet {
 		String establishmentShort = null;
 		String weeknight = null;
 		String start = null;
-		String end = null;
+		String end_date = null;
 		int gamesPerSession = 0;
 		
 		// Decode form parameters and dispatch to controller
@@ -59,7 +59,7 @@ public class InsertEventServlet extends HttpServlet {
 		establishmentShort = req.getParameter("event_establishmentShort");
 		weeknight = req.getParameter("event_weeknight");
 		start = req.getParameter("event_start");
-		end = req.getParameter("event_end");
+		end_date = req.getParameter("event_end");
 		gamesPerSession = Integer.parseInt(req.getParameter("event_gamesPerSession"));
 		
 		if (longname == null || longname.equals("") ||
@@ -67,7 +67,7 @@ public class InsertEventServlet extends HttpServlet {
 			establishmentShort == null || establishmentShort.equals("") ||
 			weeknight == null || weeknight.equals("") ||
 			start == null || start.equals("") ||
-			end == null || end.equals("") ||
+			end_date == null || end_date.equals("") ||
 			gamesPerSession == 0) {
 			
 			errorMessage = "Please fill in all of the required fields";
@@ -75,7 +75,7 @@ public class InsertEventServlet extends HttpServlet {
 			controller = new InsertEventController();
 			
 			// get list of books returned from query			
-			if (controller.insertEvent(longname, shortname, establishmentShort, weeknight, start, end, gamesPerSession)) {
+			if (controller.insertEvent(longname, shortname, establishmentShort, weeknight, start, end_date, gamesPerSession)) {
 				successMessage = longname;
 			}
 			else {
@@ -89,7 +89,7 @@ public class InsertEventServlet extends HttpServlet {
 		req.setAttribute("event_establishmentShort", establishmentShort);
 		req.setAttribute("event_weeknight", weeknight);
 		req.setAttribute("event_start", start);
-		req.setAttribute("event_end", end);
+		req.setAttribute("event_end", end_date);
 		req.setAttribute("event_gamesPerSession", gamesPerSession);
 		
 		// Add result objects as request attributes

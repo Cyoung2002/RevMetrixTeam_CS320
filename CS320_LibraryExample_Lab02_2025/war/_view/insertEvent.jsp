@@ -49,7 +49,7 @@
 				</tr>
 				<tr>
 					<td class="label">Establishment:</td>
-					<td><input type="text" name="event_establishmentShort" size="50" value="${event_establishmentShort}" /></td>
+					<td><input type="text" name="event_establishmentShort" size="20" value="${event_establishmentShort}" /></td>
 				</tr>	
 				<tr>
 					<td class="label">Weeknight:</td>
@@ -65,7 +65,7 @@
 				</tr>
 				<tr>
 					<td class="label">Games Per Session:</td>
-					<td><input type="text" name="event_gamesPerSession" size="20" value="${event_gamesPerSession}" /></td>
+					<td><input type="number" name="event_gamesPerSession" size="20" value="${event_gamesPerSession}" /></td>
 				</tr>										
 			</table>
 			

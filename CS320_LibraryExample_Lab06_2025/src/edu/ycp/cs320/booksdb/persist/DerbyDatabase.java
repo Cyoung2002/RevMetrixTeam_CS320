@@ -621,7 +621,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
-	public Integer insertEvent(final String longname, final String shortname, final String establishmentShort, final String weeknight, final String start, final String end, final Integer gamesPerSession) {
+	public Integer insertEvent(final String longname, final String shortname, final String establishmentShort, final String weeknight, final String start, final String end_date, final Integer gamesPerSession) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -641,7 +641,7 @@ public class DerbyDatabase implements IDatabase {
 					// now insert new Establishment into Establishments table
 					// prepare SQL insert statement to add new Establishment to Establishments table
 					stmt1 = conn.prepareStatement(
-							"insert into events (longname, shortname, establishmentShort, weeknight, start, end, gamesPerSession) " +
+							"insert into events (longname, shortname, establishment, weeknight, start_date, end_date, games_per_session) " +
 							"  values(?, ?, ?, ?, ?, ?, ?) "
 					);
 					stmt1.setString(1, longname);
@@ -649,7 +649,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt1.setString(3, establishmentShort);
 					stmt1.setString(4, weeknight);
 					stmt1.setString(5, start);
-					stmt1.setString(6, end);
+					stmt1.setString(6, end_date);
 					stmt1.setInt(7, gamesPerSession);
 					
 					// execute the update
@@ -662,12 +662,17 @@ public class DerbyDatabase implements IDatabase {
 					// prepare SQL statement to retrieve establishment_id for new Book
 					stmt2 = conn.prepareStatement(
 							"select event_id from events " +
-							"  where longname = ? and shortname = ? "
+							"  where longname = ? and shortname = ? and establishment = ? and weeknight = ? and start_date = ? and end_date = ? and games_per_session = ? "
 									
 					);
 					stmt2.setString(1, longname);
 					stmt2.setString(2, shortname);
-
+					stmt2.setString(3, establishmentShort);
+					stmt2.setString(4, weeknight);
+					stmt2.setString(5, start);
+					stmt2.setString(6, end_date);
+					stmt2.setInt(7, gamesPerSession);
+					
 					// execute the query
 					resultSet1 = stmt2.executeQuery();
 					
@@ -679,7 +684,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 					else	// really should throw an exception here - the new establishment should have been inserted, but we didn't find it
 					{
-						System.out.println("New event <" + longname + "> not found in Events table (ID: " + event_id);
+						System.out.println("New event <" + longname + "> not found in Events table (ID: " + event_id + ")");
 					}				
 					
 					return event_id;
