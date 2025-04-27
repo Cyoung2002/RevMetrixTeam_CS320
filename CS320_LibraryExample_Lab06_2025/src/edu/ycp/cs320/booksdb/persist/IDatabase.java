@@ -20,11 +20,7 @@ public interface IDatabase {
 	public Integer insertEvent(final String longname, final String shortname, final String establishmentShort, final String weeknight, final String start, final String end_date, final Integer gamesPerSession);
 	public Integer insertEstablishment(final String longname, final String shortname, final String address);
 	public List<Pair<Author, Book>> findAllBooksWithAuthors();
-	public List<Author> findAllAuthors();
-	public List<Ball> findAllBalls();
-	public ArrayList<Event> findAllEvents();
-	public List<Establishment> findAllEstablishments();
-	public List<Author> removeBookByTitle(String title);		
+	public List<Author> findAllAuthors();		
 	
 	public ArrayList<Event> findAllEvents();
 	public ArrayList<Ball> findAllBalls();
