@@ -48,5 +48,9 @@
 			<input type="Submit" name="submitinsertnewbook" value="View All Events">
 		</form>
 		<br>
+		<form action="${pageContext.servletContext.contextPath}/insertEvent" method="get">
+			<input type="Submit" name="submitinsertnewbook" value="Insert Event">
+		</form>
+		<br>
 	</body>
 </html>
