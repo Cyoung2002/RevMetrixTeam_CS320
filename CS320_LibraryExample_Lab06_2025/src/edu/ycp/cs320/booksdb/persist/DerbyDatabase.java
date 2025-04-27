@@ -281,10 +281,10 @@ public class DerbyDatabase implements IDatabase {
 
 
 	@Override
-	public List<Ball> findAllBalls() {
-		return executeTransaction(new Transaction<List<Ball>>() {
+	public ArrayList<Ball> findAllBalls() {
+		return executeTransaction(new Transaction<ArrayList<Ball>>() {
 			@Override
-			public List<Ball> execute(Connection conn) throws SQLException {
+			public ArrayList<Ball> execute(Connection conn) throws SQLException {
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 				
@@ -294,7 +294,7 @@ public class DerbyDatabase implements IDatabase {
 							" order by short_name"
 					);
 					
-					List<Ball> result = new ArrayList<Ball>();
+					ArrayList<Ball> result = new ArrayList<Ball>();
 					
 					resultSet = stmt.executeQuery();
 					
@@ -681,19 +681,21 @@ public class DerbyDatabase implements IDatabase {
 					stmt4.setString(1, longname);
 					stmt4.setString(2, shortname);
 					stmt4.setString(3, brand);
-					stmt4.setString(3, type);
-					stmt4.setString(3, core);
-					stmt4.setString(3, cover);
-					stmt4.setString(3, color);
-					stmt4.setString(3, surface);
-					stmt4.setString(3, year);
-					stmt4.setString(3, serialNumber);
+					stmt4.setString(4, type);
+					stmt4.setString(5, core);
+					stmt4.setString(6, cover);
+					stmt4.setString(7, color);
+					stmt4.setString(8, surface);
+					stmt4.setString(9, year);
+					stmt4.setString(10, serialNumber);
+					stmt4.setString(11, weight);
+					stmt4.setString(12, mapping);
 					
 					
 					// execute the update
 					stmt4.executeUpdate();
 					
-					System.out.println("New ball <" + longname + "> inserted into Books table");					
+					System.out.println("New ball <" + longname + "> inserted into Arsenal table");					
 
 					// now retrieve book_id for new Book, so that we can set up BookAuthor entry
 					// and return the book_id, which the DB auto-generates
@@ -713,11 +715,11 @@ public class DerbyDatabase implements IDatabase {
 					if (resultSet5.next())
 					{
 						ball_id = resultSet5.getInt(1);
-						System.out.println("New book (shortname)< " + shortname + "> ID: " + ball_id);						
+						System.out.println("New ball (shortname)< " + shortname + "> ID: " + ball_id);						
 					}
 					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
 					{
-						System.out.println("New ball <" + shortname + "> not found in Books table (ID: " + ball_id);
+						System.out.println("New ball <" + shortname + "> not found in Arsenal table (ID: " + ball_id);
 					}
 					
 					// now that we have all the information, insert entry into BookAuthors table
@@ -1328,6 +1330,7 @@ public class DerbyDatabase implements IDatabase {
 	
 	private void loadBall(Ball ball, ResultSet resultSet, int index) throws SQLException {
 		
+		resultSet.getString(index++);
 		ball.setLongname(resultSet.getString(index++));
 		ball.setShortname(resultSet.getString(index++));
 		ball.setBrand(resultSet.getString(index++));

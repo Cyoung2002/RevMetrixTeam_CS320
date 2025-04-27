@@ -21,10 +21,10 @@ public interface IDatabase {
 	public Integer insertEstablishment(final String longname, final String shortname, final String address);
 	public List<Pair<Author, Book>> findAllBooksWithAuthors();
 	public List<Author> findAllAuthors();
-	public List<Ball> findAllBalls();
-
+	
 	public ArrayList<Event> findAllEvents();
-	public List<Author> removeBookByTitle(String title);		
+	public ArrayList<Ball> findAllBalls();
+	public List<Author> removeBookByTitle(String title);
 
 	public ArrayList<Establishment> findAllEstablishments();
 	public Integer insertEstablishmentIntoEstablishmentsTable(String longName, String shortName, String address);		

@@ -60,6 +60,12 @@
     <servlet-class>edu.ycp.cs320.lab02.servlet.InsertEstablishmentServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>InsertBallServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.InsertBallServlet</servlet-class>
+  </servlet>
+  
+  
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
@@ -114,6 +120,11 @@
   <servlet-mapping>
     <servlet-name>InsertEstablishmentServlet</servlet-name>
     <url-pattern>/insertEstablishment</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>InsertBallServlet</servlet-name>
+    <url-pattern>/insertBall</url-pattern>
   </servlet-mapping>
 
 </web-app>

@@ -179,8 +179,11 @@ public class InitialData {
 	
 	
 	public static List<Ball> getArsenal() throws IOException {
+		
 		List<Ball> arsenal = new ArrayList<Ball>();
 		ReadCSV readArsenal = new ReadCSV("Arsenal.csv");
+		//readArsenal.next();
+		
 		try {
 
 			while (true) {
