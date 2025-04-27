@@ -9,6 +9,7 @@ public class Event {
 	private String start;
 	private String end;
 	private int gamesPerSession;
+	private String eventID;
 	
 	
 	public Event() {
@@ -77,6 +78,10 @@ public class Event {
 	}
 	public void setGamesPerSession(int gamesPerSession) {
 		this.gamesPerSession = gamesPerSession;
+	}
+	
+	public void setEventID(String eventID) {
+		this.eventID = eventID;
 	}
 
 }
