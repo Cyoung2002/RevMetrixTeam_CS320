@@ -314,49 +314,6 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
-	@Override
-	public List<Establishment> findAllEstablishments() {
-		return executeTransaction(new Transaction<List<Establishment>>() {
-			@Override
-			public List<Establishment> execute(Connection conn) throws SQLException {
-				PreparedStatement stmt = null;
-				ResultSet resultSet = null;
-				
-				try {
-					stmt = conn.prepareStatement(
-							"select * from establishments "
-					);
-					
-					List<Establishment> result = new ArrayList<Establishment>();
-					
-					resultSet = stmt.executeQuery();
-					
-					// for testing that a result was returned
-					Boolean found = false;
-					
-					while (resultSet.next()) {
-						found = true;
-						
-						Establishment establishment = new Establishment();
-						loadEstablishment(establishment, resultSet, 1);
-						
-						result.add(establishment);
-					}
-					
-					// check if any events were found
-					if (!found) {
-						System.out.println("No establishments were found in the database");
-					}
-					
-					return result;
-				} finally {
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-				}
-			}
-		});
-	}
-	
 	// transaction that inserts new Book into the Books table
 	// also first inserts new Author into Authors table, if necessary
 	// and then inserts entry into BookAuthors junction table

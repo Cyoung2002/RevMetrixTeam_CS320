@@ -21,6 +21,5 @@ public interface IDatabase {
 	public List<Author> findAllAuthors();
 	public List<Ball> findAllBalls();
 	public ArrayList<Event> findAllEvents();
-	public List<Establishment> findAllEstablishments();
 	public List<Author> removeBookByTitle(String title);		
 }
