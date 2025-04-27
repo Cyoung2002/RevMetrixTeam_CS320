@@ -25,7 +25,11 @@ public interface IDatabase {
 	public ArrayList<Event> findAllEvents();
 	public ArrayList<Ball> findAllBalls();
 	public List<Author> removeBookByTitle(String title);
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> DevelopmentDB
 	public ArrayList<Establishment> findAllEstablishments();
 	public Integer insertEstablishmentIntoEstablishmentsTable(String longName, String shortName, String address);		
 }

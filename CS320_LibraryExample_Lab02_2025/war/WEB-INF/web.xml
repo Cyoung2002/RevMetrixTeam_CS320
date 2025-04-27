@@ -50,21 +50,24 @@
     <servlet-name>AllEventsServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab02.servlet.AllEventsServlet</servlet-class>
   </servlet>
-  <servlet>
-      <servlet-name>AllEstablishmentServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.lab02.servlet.AllEstablishmentServlet</servlet-class>
-  </servlet>
 
-   <servlet>
-    <servlet-name>InsertEstablishmentServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.lab02.servlet.InsertEstablishmentServlet</servlet-class>
-  </servlet>
-  
   <servlet>
     <servlet-name>InsertBallServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab02.servlet.InsertBallServlet</servlet-class>
   </servlet>
   
+  
+  
+   <servlet>
+      <servlet-name>AllEstablishmentServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.AllEstablishmentServlet</servlet-class>
+  </servlet>
+  
+  
+   <servlet>
+    <servlet-name>InsertEstablishmentServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.InsertEstablishmentServlet</servlet-class>
+  </servlet>
   
   <!-- Servlet mappings -->
   <servlet-mapping>
@@ -116,7 +119,12 @@
     <servlet-name>AllEstablishmentServlet</servlet-name>
     <url-pattern>/allEstablishments</url-pattern>
   </servlet-mapping>
-  
+
+  <servlet-mapping>
+    <servlet-name>InsertEstablishmentServlet</servlet-name>
+    <url-pattern>/insertEstablishment</url-pattern>
+  </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>InsertEstablishmentServlet</servlet-name>
     <url-pattern>/insertEstablishment</url-pattern>
@@ -126,5 +134,5 @@
     <servlet-name>InsertBallServlet</servlet-name>
     <url-pattern>/insertBall</url-pattern>
   </servlet-mapping>
-
+  
 </web-app>

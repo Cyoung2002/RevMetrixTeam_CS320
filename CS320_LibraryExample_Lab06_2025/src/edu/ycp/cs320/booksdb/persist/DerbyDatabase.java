@@ -226,8 +226,19 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+<<<<<<< HEAD
 	
 	// transaction that retrieves all Establishments in Library
+=======
+	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
+		resultSet.getString(index++);
+		establishment.setLongname(resultSet.getString(index++));
+		establishment.setShortname(resultSet.getString(index++));
+		establishment.setAddress(resultSet.getString(index++));
+	}
+
+	
+>>>>>>> DevelopmentDB
 	@Override
 	public ArrayList<Establishment> findAllEstablishments() {
 		return executeTransaction(new Transaction<ArrayList<Establishment>>() {
@@ -270,6 +281,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+<<<<<<< HEAD
 	
 	
 	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
@@ -279,6 +291,8 @@ public class DerbyDatabase implements IDatabase {
 		establishment.setAddress(resultSet.getString(index++));
 	}
 
+=======
+>>>>>>> DevelopmentDB
 
 	@Override
 	public ArrayList<Ball> findAllBalls() {
@@ -366,6 +380,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+<<<<<<< HEAD
 	
 	@Override
 	public List<Establishment> findAllEstablishments() {
@@ -409,6 +424,8 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+=======
+>>>>>>> DevelopmentDB
 	
 	// transaction that inserts new Book into the Books table
 	// also first inserts new Author into Authors table, if necessary
@@ -1355,6 +1372,7 @@ public class DerbyDatabase implements IDatabase {
 		event.setEnd(resultSet.getString(index++));
 		event.setGamesPerSession(Integer.parseInt(resultSet.getString(index++)));
 	}
+<<<<<<< HEAD
 	
 	private void loadEstablishment(Establishment establishment, ResultSet resultSet, int index) throws SQLException {
 		establishment.setLongname(resultSet.getString(index++));
@@ -1362,6 +1380,8 @@ public class DerbyDatabase implements IDatabase {
 		establishment.setAddress(resultSet.getString(index++));
 	}
 	
+=======
+>>>>>>> DevelopmentDB
 	private void loadSession(Session session, ResultSet resultSet, int index) throws SQLException{
 		session.setLeague(resultSet.getString(index++));
 		session.setBowled(resultSet.getString(index++));
