@@ -69,13 +69,20 @@
 				padding-left: 20px;
 			}
 			
-			tr.bookRow {
+			td.EstablishmentColHeading {
+				text-align: center;
+				font-weight: bold;
+				max-width: 300px;
+				padding-left: 20px;
+			}
+			
+			tr.eventRow {
 				text-align: left;
 				color: blue;
 				font-weight: bold;
 			}
 			
-			td.bookCol {
+			td.eventLongnameCol {
 				text-align: left;
 				color: blue;
 				font-weight: bold;
@@ -83,7 +90,7 @@
 				padding-left: 20px;				
 			}
 			
-			td.isbnCol {
+			td.eventShortnameCol {
 				text-align: left;
 				color: blue;
 				font-weight: bold;
@@ -91,7 +98,7 @@
 				padding-left: 20px;
 			}
 			
-			td.publishedCol {
+			td.establishmentCol {
 				text-align: left;
 				color: blue;
 				font-weight: bold;
@@ -99,13 +106,39 @@
 				padding-left: 40px;
 			}
 						
-			td.nameCol {
+			td.weeknightCol {
 				text-align: left;
 				color: blue;
 				font-weight: bold;
 				max-width: 400px;
 				padding-left: 20px;				
-			}						
+			}	
+			
+			td.startCol {
+				text-align: left;
+				color: blue;
+				font-weight: bold;
+				max-width: 400px;
+				padding-left: 20px;				
+			}
+			
+			
+			td.endCol {
+				text-align: left;
+				color: blue;
+				font-weight: bold;
+				max-width: 400px;
+				padding-left: 20px;				
+			}	
+			
+			
+			td.gamesPerSessionCol {
+				text-align: left;
+				color: blue;
+				font-weight: bold;
+				max-width: 400px;
+				padding-left: 20px;				
+			}				
 		</style>
 	</head>
 
