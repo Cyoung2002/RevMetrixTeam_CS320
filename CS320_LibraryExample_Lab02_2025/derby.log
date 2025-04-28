@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Sun Apr 27 19:50:49 EDT 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0196-79a9-2100-0000063ef160 
-on database directory C:\CS320-2025-LibraryExample-DB\library.db with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
+Sun Apr 27 20:48:10 EDT 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0196-79dd-a116-0000061accd0 
+on database directory C:\CS320-2025-LibraryExample-DB\library with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
 Loaded from file:/C:/cs320-spring2025/CS320_Derby/lib/derby.jar
 java.vendor=Temurin
 java.runtime.version=1.8.0_442-b06
