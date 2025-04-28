@@ -116,7 +116,7 @@
         </c:if>
 
         <c:if test="${! empty successMessage}">
-            <div class="success">Successfully added week<span class="success_title">${successMessage}</span> Session</div>
+            <div class="success">Successfully added Session: <span class="success_title">${successMessage}</span></div>
         </c:if>
 
         <form action="${pageContext.servletContext.contextPath}/insertSession" method="post">
@@ -134,8 +134,36 @@
 				    </td>
 				</tr>
                 <tr>
-                    <td class="label">Bowled:</td>
+                    <td class="label">Date Bowled:</td>
                     <td><input type="text" name="bowled" size="20" value="${bowled}" /></td>
+                </tr>
+				<tr>
+				    <td class="label">Strike Ball:</td>
+				    <td>
+				        <select name="strikeBall">
+				            <c:forEach items="${arsenal}" var="ball">
+				                <option value="${ball.shortname}">
+				                    ${ball.shortname}
+				                </option>
+				            </c:forEach>
+				        </select>
+				    </td>
+				</tr>
+				<tr>
+				    <td class="label">Spare Ball:</td>
+				    <td>
+				        <select name="spareBall">
+				            <c:forEach items="${arsenal}" var="ball">
+				                <option value="${ball.shortname}">
+				                    ${ball.shortname}
+				                </option>
+				            </c:forEach>
+				        </select>
+				    </td>
+				</tr>
+				<tr>
+                    <td class="label">Start Lane:</td>
+                    <td><input type="text" name="startLane" size="20" value="${startLane}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Week:</td>

@@ -8,17 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.booksdb.model.Ball;
 import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.lab02.controller.AllEventsController;
 import edu.ycp.cs320.lab02.controller.InsertBallController;
 import edu.ycp.cs320.lab02.controller.InsertBookController;
 import edu.ycp.cs320.lab02.controller.InsertSessionController;
+import edu.ycp.cs320.lab02.controller.ArsenalController;
 
 public class InsertSessionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private InsertSessionController controller = null;	
 	private AllEventsController eventsController = null;
+	private ArsenalController arsenalController = null;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -44,6 +47,11 @@ public class InsertSessionServlet extends HttpServlet {
 		eventsController = new AllEventsController();
 		events = eventsController.getEvents();
 		req.setAttribute("events",  events);
+		
+		ArrayList<Ball> arsenal = null;
+		arsenalController = new ArsenalController();
+		arsenal = arsenalController.getAllBalls();
+		req.setAttribute("arsenal",  arsenal);
 
 		req.getRequestDispatcher("/_view/insertSession.jsp").forward(req, resp);
 	}
@@ -57,42 +65,65 @@ public class InsertSessionServlet extends HttpServlet {
 		
 		String errorMessage   = null;
 		String successMessage = null;
-		String league      = null;
-		String bowled       = null;
-		String week      = null;
-		String series       = null;
+		String league      	  = null;
+		String bowled         = null;
+		String week      	  = null;
+		String strikeBall     = null;
+		String spareBall      = null;
+		String ball      	  = null;
+		String startLane      = null;
+		String series         = null;
 
 		
 		// Decode form parameters and dispatch to controller
 		league    = req.getParameter("league");
 		bowled     = req.getParameter("bowled");
+		strikeBall        = req.getParameter("strikeBall");
+		spareBall        = req.getParameter("spareBall");
+		startLane        = req.getParameter("startLane");
 		week        = req.getParameter("week");
 		series         = req.getParameter("series");
 		
 		if (league     		== null || league.equals("")  ||
 			bowled     		== null || bowled.equals("")  ||
 			week        	== null || week.equals("")    ||
+			strikeBall      == null || strikeBall.equals("")    ||
+			spareBall       == null || spareBall.equals("")     ||
+			startLane       == null || startLane.equals("")     ||
 			series          == null || series.equals("")) {
 			
 			errorMessage = "Please fill in all of the required fields";
 		} else {
-		controller = new InsertSessionController();
+			controller = new InsertSessionController();
+			if(strikeBall.equals(spareBall)) {
+				ball = strikeBall;
+			}
+			else {
+				ball = strikeBall + "/" + spareBall;
+			}
 		}
+		
+		
 		// convert published to integer now that it is valid
 		// published = Integer.parseInt(strPublished);
 		
 		// get list of books returned from query			
-		if (controller.insertSession(league, bowled, week, series)) {
-			successMessage = week;
+		if (controller.insertSession(league, bowled, ball, startLane, week, series)) {
+			successMessage = "League: " + league + " - Bowled: " + bowled+ " - Ball: " + ball+ " - Start Lane: " + startLane+ " - Week: " + week+ " - Series: " + series;
 		}
 		else {
 			errorMessage = "Failed to insert Session - week: " + week;					
 		}
 		
-		/*ArrayList<Event> events = null;
+		ArrayList<Event> events = null;
 		eventsController = new AllEventsController();
 		events = eventsController.getEvents();
-		req.setAttribute("events",  events);*/
+		req.setAttribute("events",  events);
+		
+		ArrayList<Ball> arsenal = null;
+		arsenalController = new ArsenalController();
+		arsenal = arsenalController.getAllBalls();
+		req.setAttribute("arsenal",  arsenal);
 		
 		// Add parameters as request attributes
 		req.setAttribute("league", league);

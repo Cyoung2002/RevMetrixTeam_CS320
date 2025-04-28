@@ -878,10 +878,11 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	@Override
-	public Integer insertSession(final String league, final String bowled, final String week, final String series) {
+	public Integer insertSession(final String league, final String bowled, final String startLane,final String ball, final String week, final String series) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
 				PreparedStatement stmt3 = null;
@@ -889,6 +890,7 @@ public class DerbyDatabase implements IDatabase {
 				PreparedStatement stmt5 = null;
 				PreparedStatement stmt6 = null;				
 				
+				ResultSet resultSet = null;
 				ResultSet resultSet1 = null;
 				ResultSet resultSet3 = null;
 				ResultSet resultSet5 = null;				
@@ -897,12 +899,36 @@ public class DerbyDatabase implements IDatabase {
 				//do event id and session id instead
 				Integer session_id = -1;
 				Integer event_id   = -1;
+				Integer newWeek = -1;
 
 				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
 				try {
+					/*stmt = conn.prepareStatement(
+							"select * from events " +
+							"  where shortname = ? " +
+							"  order by session_id desc " +
+							"  limit 1 " 
+					);*/
+					/*stmt = conn.prepareStatement(
+							"select session.* from session " +
+							"  where session.league = ? " +
+							"  order by session.session_id desc "					);
+					stmt.setString(1, league);
+					
+					// execute the query, get the result
+					resultSet = stmt.executeQuery();
+
+					
+					// if event was found then save event_id					
+					if (resultSet.next()) {
+						newWeek = resultSet.getInt(1) + 1;
+					}	*/
+						
+						
+					
 					stmt1 = conn.prepareStatement(
 							"select event_id from events " +
-							"  where league = ? "
+							"  where shortname = ? "
 					);
 					stmt1.setString(1, league);
 					
@@ -969,23 +995,27 @@ public class DerbyDatabase implements IDatabase {
 					// now insert new Session into Sessions table
 					// prepare SQL insert statement to add new Session to Sessions table
 					stmt4 = conn.prepareStatement(
-							"insert into sessions (bowled, week, series) " +
-							"  values(?, ?, ?) "
+							"insert into session (league, date_bowled, ball, start_lane, week, series) " +
+							"  values(?, ?, ?, ?, ?, ?) "
 					);
-					stmt4.setString(1, bowled);
-					stmt4.setString(2, week);
-					stmt4.setString(3, series);
+					stmt4.setString(1, league);
+					stmt4.setString(2, bowled);
+					stmt4.setString(3, ball);
+					stmt4.setString(4, startLane);
+					//stmt4.setString(5, String.valueOf(newWeek));
+					stmt4.setString(5, week);
+					stmt4.setString(6, series);
 					
 					// execute the update
 					stmt4.executeUpdate();
 					
-					System.out.println("New session <" + week + "> inserted into Sessions table");					
+					System.out.println("New session week<" + week + "> inserted into Sessions table");					
 
 					// now retrieve session_id for new Session, so that we can set up SessionEvent entry
 					// and return the session_id, which the DB SHOULD NOT-auto-generate. THE REASON-
 					// User entered the week, so can't have two id's for the same thing
 					// prepare SQL statement to retrieve book_id for new Book
-					stmt5 = conn.prepareStatement(
+					/*stmt5 = conn.prepareStatement(
 							"select session from sessions " +
 							"  where bowled = ? and week = ? and series = ? "
 									
@@ -1019,14 +1049,16 @@ public class DerbyDatabase implements IDatabase {
 					stmt6.setInt(2, event_id);
 					
 					// execute the update
-					stmt6.executeUpdate();
+					stmt6.executeUpdate();*/
 					
-					System.out.println("New entry for session ID <" + session_id + "> and event ID <" + event_id + "> inserted into BookAuthors junction table");						
+					/*System.out.println("New entry for session ID <" + session_id + "> and event ID <" + event_id + "> inserted into BookAuthors junction table");						
 					
-					System.out.println("New session for week <" + week + "> inserted into session table");					
+					System.out.println("New session for week <" + newWeek + "> inserted into session table");	*/				
 					
-					return session_id;
+					return Integer.valueOf(week);
 				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);					
@@ -1426,6 +1458,8 @@ public class DerbyDatabase implements IDatabase {
 									"		generated always as identity (start with 1, increment by 1), " +
 									"	league varchar(30), " +
 									"	date_bowled varchar(10), " +
+									"	ball varchar(10), " +
+									"	start_lane varchar(10), " +
 									"	week varchar(10), " +
 									"	series varchar(10) " +
 									")"
@@ -1568,12 +1602,14 @@ public class DerbyDatabase implements IDatabase {
 					insertBall.executeBatch();
 					System.out.println("Arsenal table populated");
 					
-					insertSession = conn.prepareStatement("insert into session (league, date_bowled, week, series) values (?, ?, ?, ?)");
+					insertSession = conn.prepareStatement("insert into session (league, date_bowled, ball, start_lane, week, series) values (?, ?, ?, ?, ?, ?)");
 					for(Session session : sessionList) {
 						insertSession.setString(1, session.getLeague());
 						insertSession.setString(2, session.getBowled());
-						insertSession.setString(3, session.getWeek());
-						insertSession.setString(4, session.getSeries());
+						insertSession.setString(3, session.getBall());
+						insertSession.setString(4, session.getStart());
+						insertSession.setString(5, session.getWeek());
+						insertSession.setString(6, session.getSeries());
 						insertSession.addBatch();
 					}
 					insertSession.executeBatch();
