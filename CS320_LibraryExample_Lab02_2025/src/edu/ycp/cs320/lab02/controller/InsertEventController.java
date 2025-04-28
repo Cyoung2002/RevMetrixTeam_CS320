@@ -15,21 +15,21 @@ public class InsertEventController {
 		db = DatabaseProvider.getInstance();		
 	}
 
-	public boolean insertBookIntoLibrary(String title, String isbn, int published, String lastName, String firstName) {
+	public boolean insertEvent(String longname, String shortname, String establishmentShort, String weeknight, String start, String end_date, Integer gamesPerSession) {
 		
 		// insert new book (and possibly new author) into DB
-		Integer book_id = db.insertBookIntoBooksTable(title, isbn, published, lastName, firstName);
+		Integer event_id = db.insertEvent(longname, shortname, establishmentShort, weeknight, start, end_date, gamesPerSession);
 
 		// check if the insertion succeeded
-		if (book_id > 0)
+		if (event_id > 0)
 		{
-			System.out.println("New book (ID: " + book_id + ") successfully added to Books table: <" + title + ">");
+			System.out.println("New Event (ID: " + event_id + ") successfully added to Events table: <" + longname + ">");
 			
 			return true;
 		}
 		else
 		{
-			System.out.println("Failed to insert new book (ID: " + book_id + ") into Books table: <" + title + ">");
+			System.out.println("Failed to insert new Event (ID: " + event_id + ") into Events table: <" + longname + ">");
 			
 			return false;
 		}

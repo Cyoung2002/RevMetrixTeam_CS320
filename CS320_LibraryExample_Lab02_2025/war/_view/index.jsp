@@ -167,6 +167,10 @@
             <form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="get">
                 <button type="submit" name="submitinsertnewestablishment">Add New Establishment</button>
             </form>
+            
+            <form action="${pageContext.servletContext.contextPath}/insertEvent" method="get">
+                <button type="submit" name="submitinsertnewestablishment">Add New Event</button>
+            </form>
 
             <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
                 <button type="submit" name="submitarsenal">View Arsenal</button>
