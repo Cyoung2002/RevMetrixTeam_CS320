@@ -1,12 +1,15 @@
 package edu.ycp.cs320.lab02.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.lab02.controller.AllEventsController;
 import edu.ycp.cs320.lab02.controller.InsertBallController;
 import edu.ycp.cs320.lab02.controller.InsertBookController;
 import edu.ycp.cs320.lab02.controller.InsertSessionController;
@@ -15,6 +18,7 @@ public class InsertSessionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private InsertSessionController controller = null;	
+	private AllEventsController eventsController = null;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -80,6 +84,10 @@ public class InsertSessionServlet extends HttpServlet {
 			errorMessage = "Failed to insert Session - week: " + week;					
 		}
 		
+		ArrayList<Event> events = null;
+		eventsController = new AllEventsController();
+		events = eventsController.getEvents();
+		req.setAttribute("events",  events);
 		
 		// Add parameters as request attributes
 		req.setAttribute("league", league);
