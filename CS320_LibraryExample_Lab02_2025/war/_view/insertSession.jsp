@@ -124,8 +124,8 @@
 				<tr>
 				    <td class="label">League:</td>
 				    <td>
-				        <select name="shortname">
-				            <c:forEach var="event" items="${events}">
+				        <select name="league">
+				            <c:forEach items="${events}" var="event">
 				                <option value="${event.shortname}">
 				                    ${event.shortname}
 				                </option>
@@ -135,15 +135,15 @@
 				</tr>
                 <tr>
                     <td class="label">Bowled:</td>
-                    <td><input type="text" name="shortname" size="20" value="${bowled}" /></td>
+                    <td><input type="text" name="bowled" size="20" value="${bowled}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Week:</td>
-                    <td><input type="text" name="brand" size="20" value="${week}" /></td>
+                    <td><input type="text" name="week" size="20" value="${week}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Series:</td>
-                    <td><input type="text" name="type" size="20" value="${series}" /></td>
+                    <td><input type="text" name="series" size="20" value="${series}" /></td>
                 </tr>
 				
             </table>

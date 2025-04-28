@@ -74,6 +74,11 @@
     <servlet-class>edu.ycp.cs320.lab02.servlet.InsertEventServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>InsertSessionServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.InsertSessionServlet</servlet-class>
+  </servlet>
+  
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
@@ -143,6 +148,11 @@
   <servlet-mapping>
     <servlet-name>InsertEventServlet</servlet-name>
     <url-pattern>/insertEvent</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>InsertSessionServlet</servlet-name>
+    <url-pattern>/insertSession</url-pattern>
   </servlet-mapping>
   
 </web-app>

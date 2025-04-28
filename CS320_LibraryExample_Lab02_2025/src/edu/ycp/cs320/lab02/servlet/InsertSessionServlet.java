@@ -39,6 +39,11 @@ public class InsertSessionServlet extends HttpServlet {
 		// proceed to handle request...
 		
 		System.out.println("   User: <" + user + "> logged in");
+		
+		ArrayList<Event> events = null;
+		eventsController = new AllEventsController();
+		events = eventsController.getEvents();
+		req.setAttribute("events",  events);
 
 		req.getRequestDispatcher("/_view/insertSession.jsp").forward(req, resp);
 	}
@@ -84,17 +89,16 @@ public class InsertSessionServlet extends HttpServlet {
 			errorMessage = "Failed to insert Session - week: " + week;					
 		}
 		
-		ArrayList<Event> events = null;
+		/*ArrayList<Event> events = null;
 		eventsController = new AllEventsController();
 		events = eventsController.getEvents();
-		req.setAttribute("events",  events);
+		req.setAttribute("events",  events);*/
 		
 		// Add parameters as request attributes
 		req.setAttribute("league", league);
 		req.setAttribute("bowled", bowled);
 		req.setAttribute("week", week);
 		req.setAttribute("series", series);
-		
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage",   errorMessage);
