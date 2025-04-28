@@ -12,7 +12,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.ycp.cs320.booksdb.model.Author;
+import edu.ycp.cs320.booksdb.model.Ball;
 import edu.ycp.cs320.booksdb.model.Book;
+import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Pair;
 
 public class DerbyDatabaseTests {
@@ -23,6 +25,9 @@ public class DerbyDatabaseTests {
 	ArrayList<Book>   books   = null;
 	List<Pair<Author, Book>> bookAuthorList = null;
 	List<Pair<Author, Book>> authorBookList = null;	
+	
+	ArrayList<Ball> arsenal = null;
+	ArrayList<Establishment> establishments = null;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -188,6 +193,98 @@ public class DerbyDatabaseTests {
 			fail("Failed to insert new book <" + title + "> into Library DB");
 		}
 	}
+	
+	//test was created on 4/27/25 @ 10pm, this test shows a new establishment being added
+	@Test
+	public void testInsertEstablishmentIntoEstablishmentsTable() {
+		System.out.println("\n*** Testing insertEstablishmentIntoEstablishmentsTable ***");
+
+		String longname    	= "Laser Lanes";
+		String shortname    = "LA";
+		String address 		= "3905 E. Market St  York  PA  17402";
+  
+				
+		// insert new book (and possibly new author) into DB
+		Integer establishment_id = db.insertEstablishmentIntoEstablishmentsTable(longname, shortname, address);
+
+		// check the return value - should be a book_id > 0
+		if (establishment_id > 0)
+		{
+			// try to retrieve the book and author from the DB
+			// get the list of (Author, Book) pairs from DB
+			establishments = db.findAllEstablishments();
+			
+			if (establishments.isEmpty()) {
+				System.out.println("No establishments found within establishments table <" + establishment_id + ">");
+				fail("Failed to insert new establishment <" + longname + "> into DB");
+			}
+			// otherwise, the test was successful.  Now remove the book just inserted to return the DB
+			// to it's original state, except for using an author_id and a book_id
+			else {
+				System.out.println("New establishment: " + longname + ") successfully added to establishments table: <" + establishment_id + ">");
+				
+				// now delete establishment from DB
+				// leaving the DB in its previous state - except that an author_id, and a book_id have been used
+				//we do not have this function implemented yet
+			}
+		}
+		else
+		{
+			System.out.println("Failed to insert new establishment: " + longname + ") into establishments table: <" + establishment_id + ">");
+			fail("Failed to insert new establishment <" + longname + "> into DB");
+		}
+	}
+	
+	//test was created on 4/27/25 @ 10pm, this test shows a new establishment being added
+	@Test
+	public void testInsertBallIntoArsenal() {
+		System.out.println("\n*** Testing insertBallIntoArsenal ***");
+		
+		String longname 	= "Blue Pearl Hammer";
+		String shortname 	= "BPH"; 
+		String brand 		= "Hammer";
+		String type 		= "Urethane";
+		String core 		= "Symmetric";
+		String cover 		= "Solid";
+		String color 		= "Blue";
+		String surface 		= "?";
+		String year 		= "2025";
+		String serialNumber = "1BVJ9KL0O";
+		String weight 		= "15";
+		String mapping 		= "?";
+  
+					
+		// insert new book (and possibly new author) into DB
+		Integer ball_id = db.insertBallIntoArsenal(longname, shortname, brand, type, core, cover, color, surface, year, serialNumber, weight, mapping);
+
+		// check the return value - should be a book_id > 0
+		if (ball_id > 0)
+		{
+			// try to retrieve the book and author from the DB
+			// get the list of (Author, Book) pairs from DB
+			arsenal = db.findAllBalls();
+				
+			if (arsenal.isEmpty()) {
+				System.out.println("No balls found within arsenal with ID: <" + ball_id + ">");
+				fail("Failed to insert new ball <" + longname + "> into DB");
+			}
+			// otherwise, the test was successful.  Now remove the book just inserted to return the DB
+			// to it's original state, except for using an author_id and a book_id
+			else {
+				System.out.println("New ball: " + longname + ") successfully added to arsenal with this ID: <" + ball_id + ">");
+					
+				// now delete establishment from DB
+				// leaving the DB in its previous state - except that an author_id, and a book_id have been used
+				//we do not have this function implemented yet
+			}
+		}
+		else
+		{
+			System.out.println("Failed to insert new ball: " + longname + ") into arsenal with ID: <" + ball_id + ">");
+			fail("Failed to insert new ball <" + longname + "> into DB");
+		}
+	}
+	
 	
 
 	@Test
