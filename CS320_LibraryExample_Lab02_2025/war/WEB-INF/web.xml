@@ -71,7 +71,7 @@
   
   <servlet>
     <servlet-name>InsertEventServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.lab02.servlet.InsertEventtServlet</servlet-class>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.InsertEventServlet</servlet-class>
   </servlet>
   
   <!-- Servlet mappings -->
