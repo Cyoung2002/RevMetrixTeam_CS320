@@ -310,7 +310,7 @@ public class DerbyDatabaseTests {
 			// get the list of (Author, Book) pairs from DB
 			event = db.findAllEvents();
 		
-			if (establishments.isEmpty()) {
+			if (event.isEmpty()) {
 				System.out.println("No events found within event table <" + event_id + ">");
 				fail("Failed to insert new event <" + longname + "> into DB");
 			}
