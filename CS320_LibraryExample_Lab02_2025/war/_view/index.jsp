@@ -123,6 +123,7 @@
             font-size: 1em;
             text-align: left;
             margin-right: 20px;
+            margin-left: 200px;
             flex: 1;
         }
 
@@ -133,6 +134,7 @@
             width: 300px;
             height: 300px;
             margin-left: 20px;
+            margin-right: 200px;
         }
     </style>
     
