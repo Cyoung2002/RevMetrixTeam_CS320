@@ -710,85 +710,70 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
-	public Integer insertEvent(final String longname, final String shortname, final String establishmentShort, final String weeknight, final String start, final String end, final Integer gamesPerSession) {
+	public Integer insertEvent(final String longname, final String shortname, final String establishmentShort, final String weeknight, final String start, final String end_date, final Integer gamesPerSession) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
-				PreparedStatement stmt3 = null;				
+				//PreparedStatement stmt3 = null;				
 				
 				ResultSet resultSet1 = null;
-				ResultSet resultSet3 = null;				
+				//ResultSet resultSet3 = null;				
 				
 				// for saving event ID
 				Integer event_id = -1;
 
 				// try to retrieve event_id (if it exists) from DB, for Event's long and short names
 				try {
+
+					// now insert new Establishment into Establishments table
+					// prepare SQL insert statement to add new Establishment to Establishments table
 					stmt1 = conn.prepareStatement(
-							"select event_id from events " +
-							"  where longname = ? and shortname = ? "
+							"insert into events (longname, shortname, establishment, weeknight, start_date, end_date, games_per_session) " +
+							"  values(?, ?, ?, ?, ?, ?, ?) "
 					);
 					stmt1.setString(1, longname);
 					stmt1.setString(2, shortname);
+					stmt1.setString(3, establishmentShort);
+					stmt1.setString(4, weeknight);
+					stmt1.setString(5, start);
+					stmt1.setString(6, end_date);
+					stmt1.setInt(7, gamesPerSession);
 					
-					// execute the query, get the result
-					resultSet1 = stmt1.executeQuery();
+					// execute the update
+					stmt1.executeUpdate();
+					
+					System.out.println("New event <" + longname + "> inserted into Events table");					
 
+					// now retrieve establishment_id for new Establishment, so that we can set up Establishment entry
+					// and return the establishment_id, which the DB auto-generates
+					// prepare SQL statement to retrieve establishment_id for new Book
+					stmt2 = conn.prepareStatement(
+							"select event_id from events " +
+							"  where longname = ? and shortname = ? and establishment = ? and weeknight = ? and start_date = ? and end_date = ? and games_per_session = ? "
+									
+					);
+					stmt2.setString(1, longname);
+					stmt2.setString(2, shortname);
+					stmt2.setString(3, establishmentShort);
+					stmt2.setString(4, weeknight);
+					stmt2.setString(5, start);
+					stmt2.setString(6, end_date);
+					stmt2.setInt(7, gamesPerSession);
 					
-					// if Event was found then save event_id					
+					// execute the query
+					resultSet1 = stmt2.executeQuery();
+					
+					// get the result - there had better be one
 					if (resultSet1.next())
 					{
 						event_id = resultSet1.getInt(1);
-						System.out.println("Event <" + longname + ", " + shortname + "> found with ID: " + event_id);						
+						System.out.println("New event <" + longname + "> ID: " + event_id);						
 					}
-					else
+					else	// really should throw an exception here - the new establishment should have been inserted, but we didn't find it
 					{
-						System.out.println("Event <" + longname + ", " + shortname + "> not found");
-				
-						// if the Event is new, insert new Event into Events table
-						if (event_id <= 0) {
-							// prepare SQL insert statement to add Event to Events table
-							stmt2 = conn.prepareStatement(
-									"insert into events (longname, shortname, establishmentShort, weeknight, start, end, gamesPerSession) " +
-									"  values(?, ?, ?, ?, ?, ?, ?) "
-							);
-							stmt2.setString(1, longname);
-							stmt2.setString(2, shortname);
-							stmt2.setString(3, establishmentShort);
-							stmt2.setString(4, weeknight);
-							stmt2.setString(5, start);
-							stmt2.setString(6, end);
-							stmt2.setInt(7, gamesPerSession);
-							
-							// execute the update
-							stmt2.executeUpdate();
-							
-							System.out.println("New Event <" + longname + ", " + shortname + "> inserted in Events table");						
-						
-							// try to retrieve event_id for new Event - DB auto-generates event_id
-							stmt3 = conn.prepareStatement(
-									"select event_id from events " +
-									"  where longname = ? and shortname = ? "
-							);
-							stmt3.setString(1, longname);
-							stmt3.setString(2, shortname);
-							
-							// execute the query							
-							resultSet3 = stmt3.executeQuery();
-							
-							// get the result - there had better be one							
-							if (resultSet3.next())
-							{
-								event_id = resultSet3.getInt(1);
-								System.out.println("New Event <" + longname + ", " + shortname + "> ID: " + event_id);						
-							}
-							else	// really should throw an exception here - the new event should have been inserted, but we didn't find them
-							{
-								System.out.println("New event <" + longname + ", " + shortname + "> not found in Events table (ID: " + event_id);
-							}
-						}
+						System.out.println("New event <" + longname + "> not found in Events table (ID: " + event_id + ")");
 					}				
 					
 					return event_id;
@@ -796,8 +781,8 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);					
-					DBUtil.closeQuietly(resultSet3);
-					DBUtil.closeQuietly(stmt3);					
+					//DBUtil.closeQuietly(resultSet3);
+					//DBUtil.closeQuietly(stmt3);					
 				}
 			}
 		});
