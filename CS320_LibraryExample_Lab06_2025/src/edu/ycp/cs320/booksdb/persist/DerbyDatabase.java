@@ -893,7 +893,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	@Override
-	public Integer insertSession(final String league, final String bowled, final int week, final int series) {
+	public Integer insertSession(final String league, final String bowled, final String week, final String series) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -988,8 +988,8 @@ public class DerbyDatabase implements IDatabase {
 							"  values(?, ?, ?) "
 					);
 					stmt4.setString(1, bowled);
-					stmt4.setInt(2, week);
-					stmt4.setInt(3, series);
+					stmt4.setString(2, week);
+					stmt4.setString(3, series);
 					
 					// execute the update
 					stmt4.executeUpdate();
@@ -1006,8 +1006,8 @@ public class DerbyDatabase implements IDatabase {
 									
 					);
 					stmt5.setString(1, bowled);
-					stmt5.setInt(2, week);
-					stmt5.setInt(3, series);
+					stmt5.setString(2, week);
+					stmt5.setString(3, series);
 
 					// execute the query
 					resultSet5 = stmt5.executeQuery();
@@ -1016,31 +1016,31 @@ public class DerbyDatabase implements IDatabase {
 					if (resultSet5.next())
 					{
 						session_id = resultSet5.getInt(1);
-						System.out.println("New book <" + title + "> ID: " + book_id);						
+						System.out.println("New session <" + week + "> ID: " + session_id);						
 					}
 					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
 					{
-						System.out.println("New book <" + title + "> not found in Books table (ID: " + book_id);
+						System.out.println("New session <" + week + "> not found in Books table (ID: " + session_id);
 					}
 					
 					// now that we have all the information, insert entry into BookAuthors table
 					// which is the junction table for Books and Authors
 					// prepare SQL insert statement to add new Book to Books table
 					stmt6 = conn.prepareStatement(
-							"insert into bookAuthors (book_id, author_id) " +
+							"insert into sessionEvents (session_id, event_id) " +
 							"  values(?, ?) "
 					);
-					stmt6.setInt(1, book_id);
-					stmt6.setInt(2, author_id);
+					stmt6.setInt(1, session_id);
+					stmt6.setInt(2, event_id);
 					
 					// execute the update
 					stmt6.executeUpdate();
 					
-					System.out.println("New entry for book ID <" + book_id + "> and author ID <" + author_id + "> inserted into BookAuthors junction table");						
+					System.out.println("New entry for session ID <" + session_id + "> and event ID <" + event_id + "> inserted into BookAuthors junction table");						
 					
-					System.out.println("New book <" + title + "> inserted into Books table");					
+					System.out.println("New session for week <" + week + "> inserted into session table");					
 					
-					return book_id;
+					return session_id;
 				} finally {
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
@@ -1326,8 +1326,8 @@ public class DerbyDatabase implements IDatabase {
 	private void loadSession(Session session, ResultSet resultSet, int index) throws SQLException{
 		session.setLeague(resultSet.getString(index++));
 		session.setBowled(resultSet.getString(index++));
-		session.setWeek(resultSet.getInt(index++));
-		session.setSeries(resultSet.getInt(index++));
+		session.setWeek(resultSet.getString(index++));
+		session.setSeries(resultSet.getString(index++));
 	}
 	
 	//  creates the Authors and Books tables
@@ -1438,11 +1438,11 @@ public class DerbyDatabase implements IDatabase {
 					stmt7 = conn.prepareStatement(
 							"create table session (" +
 									"	session_id integer primary key " +
-									"		generated always as identity (starts with 1, increment by 1), " +
+									"		generated always as identity (start with 1, increment by 1), " +
 									"	league varchar(30), " +
 									"	date_bowled varchar(10), " +
-									"	week integer, " +
-									"	series integer " +
+									"	week varchar(10), " +
+									"	series varchar(10) " +
 									")"
 					);
 					stmt7.executeUpdate();
@@ -1587,8 +1587,8 @@ public class DerbyDatabase implements IDatabase {
 					for(Session session : sessionList) {
 						insertSession.setString(1, session.getLeague());
 						insertSession.setString(2, session.getBowled());
-						insertSession.setInt(3, session.getWeek());
-						insertSession.setInt(4, session.getSeries());
+						insertSession.setString(3, session.getWeek());
+						insertSession.setString(4, session.getSeries());
 						insertSession.addBatch();
 					}
 					insertSession.executeBatch();

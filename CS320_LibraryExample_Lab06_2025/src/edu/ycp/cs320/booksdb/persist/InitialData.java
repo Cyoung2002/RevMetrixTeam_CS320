@@ -216,7 +216,7 @@ public class InitialData {
 		}
 	}
 	
-	// reads initial session data from CSV file and returns a List of Books
+// reads initial session data from CSV file and returns a List of Books
 		public static List<Session> getSessions() throws IOException {
 			List<Session> sessionList = new ArrayList<Session>();
 			ReadCSV readSessions = new ReadCSV("sessions.csv");
@@ -235,10 +235,10 @@ public class InitialData {
 					session.setLeague(i.next());
 					//set the date it was bowled
 					session.setBowled(i.next());
-					session.setWeek(Integer.parseInt(i.next()));
+					session.setWeek(i.next());
 					//something will put here for setting the games...eventually
 					//session.setGames(getGames);
-					session.setSeries(Integer.parseInt(i.next()));
+					session.setSeries(i.next());
 					sessionList.add(session);
 				}
 				System.out.println("sessionList loaded from CSV file");			
@@ -247,5 +247,4 @@ public class InitialData {
 				readSessions.close();
 			}
 		}
-	
 }
