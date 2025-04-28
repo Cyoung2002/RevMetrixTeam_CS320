@@ -6,173 +6,150 @@
 	<head>
 		<title>CS320 All Events</title>
 		<style type="text/css">
-			.error {
-				color: red;
-				font-weight: bold;				
-			}
-			
-			td.label {
-				text-align: right;
-			}
-			
-			td.book {
-				text-align: center;
-				color: blue;
-				font-weight: bold;
-			}
-			
-			td.longnameColHeading {
-				text-align: center;
-				font-weight: bold;
-				max-width: 500px;
-			}
-			
-			td.ShortnameColHeading {
-				text-align: center;
-				font-weight: bold;
-				max-width: 200px;
-				padding-left: 20px;
-			}
-			
-			td.publishedColHeading {
-				text-align: center;
-				font-weight: bold;
-				max-width: 100px;
-				padding-left: 20px;
-			}
+       body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #0a0a2a;
+            color: #00ffcc;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            min-height: 100vh;
+        }
 
-			td.WeeknightColHeading {
-				text-align: center;
-				font-weight: bold;
-				max-width: 300px;
-				padding-left: 20px;
-			}
-			
-			td.StartColHeading {
-				text-align: center;
-				font-weight: bold;
-				max-width: 300px;
-				padding-left: 20px;
-			}
-			
-			td.EndColHeading {
-				text-align: center;
-				font-weight: bold;
-				max-width: 300px;
-				padding-left: 20px;
-			}
-			
-			td.GamesPerSessionColHeading {
-				text-align: center;
-				font-weight: bold;
-				max-width: 300px;
-				padding-left: 20px;
-			}
-			
-			td.EstablishmentColHeading {
-				text-align: center;
-				font-weight: bold;
-				max-width: 300px;
-				padding-left: 20px;
-			}
-			
-			tr.eventRow {
-				text-align: left;
-				color: blue;
-				font-weight: bold;
-			}
-			
-			td.eventLongnameCol {
-				text-align: left;
-				color: blue;
-				font-weight: bold;
-				max-width: 500px;
-				padding-left: 20px;				
-			}
-			
-			td.eventShortnameCol {
-				text-align: left;
-				color: blue;
-				font-weight: bold;
-				max-width: 200px;
-				padding-left: 20px;
-			}
-			
-			td.establishmentCol {
-				text-align: left;
-				color: blue;
-				font-weight: bold;
-				max-width: 100px;
-				padding-left: 40px;
-			}
-						
-			td.weeknightCol {
-				text-align: left;
-				color: blue;
-				font-weight: bold;
-				max-width: 400px;
-				padding-left: 20px;				
-			}	
-			
-			td.startCol {
-				text-align: left;
-				color: blue;
-				font-weight: bold;
-				max-width: 400px;
-				padding-left: 20px;				
-			}
-			
-			
-			td.endCol {
-				text-align: left;
-				color: blue;
-				font-weight: bold;
-				max-width: 400px;
-				padding-left: 20px;				
-			}	
-			
-			
-			td.gamesPerSessionCol {
-				text-align: left;
-				color: blue;
-				font-weight: bold;
-				max-width: 400px;
-				padding-left: 20px;				
-			}				
-		</style>
-	</head>
+        .wrapper {
+            width: 80%;
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #1a0033;
+            border-left: 10px solid #ff6600;
+            border-right: 10px solid #ff6600;
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.8);
+            border-radius: 10px;
+        }
 
-	<body>
-		<c:if test="${! empty errorMessage}">
-			<div class="error">${errorMessage}</div>
-		</c:if>
-	
-		<form action="${pageContext.servletContext.contextPath}/index" method="post">
-			<table>
-			    <tr>
-					<td class="longnameColHeading">Longname</td>
-       				<td class="ShortnameColHeading">Shortname</td>
-       				<td class="EstablishmentColHeading">Establishment</td>
-					<td class="WeeknightColHeading">Weeknight</td>
-       				<td class="StartColHeading">Start</td>
-       				<td class="EndColHeading">End</td>
-       				<td class="GamesPerSessionColHeading">Games Per Session</td>
-			    </tr>
-			        
-			    <c:forEach items="${events}" var="event">
-			        <tr class="eventRow">
-			            <td class="eventLongnameCol">${event.longname}</td>
-			            <td class="eventShortnameCol">${event.shortname}</td>
-			            <td class="establishmentCol">${event.establishmentShort}</td>
-			            <td class="weeknightCol">${event.weeknight}</td>
-			            <td class="startCol">${event.start}</td>
-			            <td class="endCol">${event.end}</td>	
-			            <td class="gamesPerSessionCol">${event.gamesPerSession}</td>		            
-			        </tr>
-			    </c:forEach>
-			</table>
+        h1, h2 {
+            color: #ff00ff;
+            text-shadow: 1px 1px 5px #ff6600;
+        }
 
-			<input type="Submit" name="submithome" value="Home">
-		</form>
-	</body>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #1a0033;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00ffcc;
+            margin-top: 20px;
+        }
+
+        td.longnameColHeading,
+        td.ShortnameColHeading,
+        td.EstablishmentColHeading,
+        td.WeeknightColHeading,
+        td.StartColHeading,
+        td.EndColHeading,
+        td.GamesPerSessionColHeading {
+            text-align: center;
+            font-weight: bold;
+            color: #ff00ff;
+            background: #1a0033;
+            padding: 10px;
+            border-bottom: 2px solid #ff6600;
+            text-shadow: none;
+        }
+
+        td.eventLongnameCol,
+        td.eventShortnameCol,
+        td.establishmentCol,
+        td.weeknightCol,
+        td.startCol,
+        td.endCol,
+        td.gamesPerSessionCol {
+            text-align: left;
+            color: #00ffcc;
+            background: #1a0033;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-bottom: 1px solid #00ffcc;
+        }
+
+        tr.eventRow {
+            transition: background 0.3s ease;
+        }
+
+        tr.eventRow:hover {
+            background: #220066;
+        }
+
+        button {
+            background: #ff6600;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            text-shadow: 1px 1px 5px #000;
+            box-shadow: 0 0 10px #ff6600;
+            font-size: 16px;
+            margin: 20px 10px 0;
+        }
+
+        button:hover {
+            background: #ff3300;
+            box-shadow: 0 0 15px #ff00ff;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+				
+</style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+        <!-- Error message (show only if needed) -->
+        <c:if test="${! empty errorMessage}">
+            <div class="error">${errorMessage}</div>
+        </c:if>
+
+        <h1>Events</h1>
+
+        <form action="${pageContext.servletContext.contextPath}/index" method="post">
+            <table>
+                <tr>
+                    <td class="longnameColHeading">Longname</td>
+                    <td class="ShortnameColHeading">Shortname</td>
+                    <td class="EstablishmentColHeading">Establishment</td>
+                    <td class="WeeknightColHeading">Weeknight</td>
+                    <td class="StartColHeading">Start</td>
+                    <td class="EndColHeading">End</td>
+                    <td class="GamesPerSessionColHeading">Games Per Session</td>
+                </tr>
+
+                <c:forEach items="${events}" var="event">
+                    <tr class="eventRow">
+                        <td class="eventLongnameCol">${event.longname}</td>
+                        <td class="eventShortnameCol">${event.shortname}</td>
+                        <td class="establishmentCol">${event.establishmentShort}</td>
+                        <td class="weeknightCol">${event.weeknight}</td>
+                        <td class="startCol">${event.start}</td>
+                        <td class="endCol">${event.end}</td>
+                        <td class="gamesPerSessionCol">${event.gamesPerSession}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+
+            <button type="submit" name="submithome">Home</button>
+        </form>
+
+    </div>
+
+</body>
 </html>
