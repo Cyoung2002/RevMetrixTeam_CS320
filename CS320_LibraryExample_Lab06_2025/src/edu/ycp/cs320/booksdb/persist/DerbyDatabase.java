@@ -909,10 +909,10 @@ public class DerbyDatabase implements IDatabase {
 							"  order by session_id desc " +
 							"  limit 1 " 
 					);*/
-					/*stmt = conn.prepareStatement(
-							"select session.* from session " +
-							"  where session.league = ? " +
-							"  order by session.session_id desc "					);
+					stmt = conn.prepareStatement(
+							"select sessions.week from sessions " +
+							"  where sessions.league = ? " +
+							"  order by sessions.session_id desc "					);
 					stmt.setString(1, league);
 					
 					// execute the query, get the result
@@ -922,11 +922,11 @@ public class DerbyDatabase implements IDatabase {
 					// if event was found then save event_id					
 					if (resultSet.next()) {
 						newWeek = resultSet.getInt(1) + 1;
-					}	*/
+					}	
 						
 						
 					
-					stmt1 = conn.prepareStatement(
+					/*stmt1 = conn.prepareStatement(
 							"select event_id from events " +
 							"  where shortname = ? "
 					);
@@ -949,67 +949,29 @@ public class DerbyDatabase implements IDatabase {
 						//for while I was working was to just print that they should first insert the new event
 						//and return to this page later, should probably be another way.
 						System.out.println("Please insert the new event from the events page, then try again.");
-						/*
-						// if the Author is new, insert new Author into Authors table
-						if (event_id <= 0) {
-							// prepare SQL insert statement to add Author to Authors table
-							stmt2 = conn.prepareStatement(
-									"insert into events (lastname, firstname) " +
-									"  values(?, ?) "
-							);
-							stmt2.setString(1, lastName);
-							stmt2.setString(2, firstName);
-							
-							// execute the update
-							stmt2.executeUpdate();
-							
-							System.out.println("New author <" + lastName + ", " + firstName + "> inserted in Authors table");						
-						
-							// try to retrieve author_id for new Author - DB auto-generates author_id
-							stmt3 = conn.prepareStatement(
-									"select author_id from authors " +
-									"  where lastname = ? and firstname = ? "
-							);
-							stmt3.setString(1, lastName);
-							stmt3.setString(2, firstName);
-							
-							// execute the query							
-							resultSet3 = stmt3.executeQuery();
-							
-							// get the result - there had better be one							
-							if (resultSet3.next())
-							{
-								author_id = resultSet3.getInt(1);
-								System.out.println("New author <" + lastName + ", " + firstName + "> ID: " + author_id);						
-							}
-							else	// really should throw an exception here - the new author should have been inserted, but we didn't find them
-							{
-								System.out.println("New author <" + lastName + ", " + firstName + "> not found in Authors table (ID: " + author_id);
-							}
-						}
-						*/
+		
 						return session_id; //(?) not sure if I should do this but temp idea
-					}
+					}*/
 					
 					
 					// now insert new Session into Sessions table
 					// prepare SQL insert statement to add new Session to Sessions table
 					stmt4 = conn.prepareStatement(
-							"insert into session (league, date_bowled, ball, start_lane, week, series) " +
+							"insert into sessions (league, date_bowled, ball, start_lane, week, series) " +
 							"  values(?, ?, ?, ?, ?, ?) "
 					);
 					stmt4.setString(1, league);
 					stmt4.setString(2, bowled);
 					stmt4.setString(3, ball);
 					stmt4.setString(4, startLane);
-					//stmt4.setString(5, String.valueOf(newWeek));
-					stmt4.setString(5, week);
+					stmt4.setString(5, String.valueOf(newWeek));
+					//stmt4.setString(5, week);
 					stmt4.setString(6, series);
 					
 					// execute the update
 					stmt4.executeUpdate();
 					
-					System.out.println("New session week<" + week + "> inserted into Sessions table");					
+					System.out.println("New session week<" + newWeek + "> inserted into Sessions table");					
 
 					// now retrieve session_id for new Session, so that we can set up SessionEvent entry
 					// and return the session_id, which the DB SHOULD NOT-auto-generate. THE REASON-
@@ -1055,7 +1017,8 @@ public class DerbyDatabase implements IDatabase {
 					
 					System.out.println("New session for week <" + newWeek + "> inserted into session table");	*/				
 					
-					return Integer.valueOf(week);
+					//return Integer.valueOf(week);
+					return newWeek;
 				} finally {
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
@@ -1453,7 +1416,7 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Arsenal table created");
 					
 					stmt7 = conn.prepareStatement(
-							"create table session (" +
+							"create table sessions (" +
 									"	session_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
 									"	league varchar(30), " +
@@ -1465,7 +1428,7 @@ public class DerbyDatabase implements IDatabase {
 									")"
 					);
 					stmt7.executeUpdate();
-					System.out.println("Session table created");
+					System.out.println("Sessions table created");
 										
 					return true;
 				} finally {
@@ -1602,7 +1565,7 @@ public class DerbyDatabase implements IDatabase {
 					insertBall.executeBatch();
 					System.out.println("Arsenal table populated");
 					
-					insertSession = conn.prepareStatement("insert into session (league, date_bowled, ball, start_lane, week, series) values (?, ?, ?, ?, ?, ?)");
+					insertSession = conn.prepareStatement("insert into sessions (league, date_bowled, ball, start_lane, week, series) values (?, ?, ?, ?, ?, ?)");
 					for(Session session : sessionList) {
 						insertSession.setString(1, session.getLeague());
 						insertSession.setString(2, session.getBowled());
