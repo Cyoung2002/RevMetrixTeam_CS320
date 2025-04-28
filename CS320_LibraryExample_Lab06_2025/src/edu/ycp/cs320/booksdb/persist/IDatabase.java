@@ -28,5 +28,5 @@ public interface IDatabase {
 	public List<Author> removeBookByTitle(String title);
 	
 	public ArrayList<Establishment> findAllEstablishments();
-	public Integer insertEstablishmentIntoEstablishmentsTable(String longName, String shortName, String address);		
+	public Integer insertEstablishmentIntoEstablishmentsTable(String longName, String shortName, String address);	
 }
