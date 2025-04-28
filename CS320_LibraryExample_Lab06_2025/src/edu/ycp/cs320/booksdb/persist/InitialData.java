@@ -233,11 +233,24 @@ public class InitialData {
 					
 					//set the type of event (/league)
 					session.setLeague(i.next());
+					String skip = i.next();
+					skip = i.next();
+					session.setWeek(i.next());
+					System.out.println(session.getLeague() + " week: " + session.getWeek());	
 					//set the date it was bowled
 					session.setBowled(i.next());
-					session.setWeek(i.next());
+					skip = i.next();
+					skip = i.next();
+					skip = i.next();
+					skip = i.next();
+					session.setStart(i.next());
+					session.setBall(i.next());
+					System.out.println(session.getBowled() + " startlane: " + session.getStart() + " ball: " + session.getBall());
 					//something will put here for setting the games...eventually
 					//session.setGames(getGames);
+					skip = i.next();
+					skip = i.next();
+					skip = i.next();
 					session.setSeries(i.next());
 					sessionList.add(session);
 				}

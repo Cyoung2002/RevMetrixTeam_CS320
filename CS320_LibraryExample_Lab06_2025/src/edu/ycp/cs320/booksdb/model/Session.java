@@ -17,7 +17,7 @@ public class Session {
 	private String opponent;
 	private String lanes;
 	//start is the lane started on
-	private int start;
+	private String start;
 	private String ball;
 	//game scores
 	private int gameOneScore;
@@ -169,12 +169,12 @@ public class Session {
 	}
 
 
-	public int getStart() {
+	public String getStart() {
 		return start;
 	}
 
 
-	public void setStart(int start) {
+	public void setStart(String start) {
 		this.start = start;
 	}
 
