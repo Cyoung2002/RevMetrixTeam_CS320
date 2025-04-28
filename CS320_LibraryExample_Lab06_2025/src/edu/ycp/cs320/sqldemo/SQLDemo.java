@@ -48,7 +48,7 @@ public class SQLDemo {
 		String os_name = System.getProperty("os.name");
 		System.out.println(System.getProperty("os.name").getClass().getName());
 		
-
+		
 		
 		if(!os_name.toLowerCase().startsWith("mac os")) {
 			System.out.println("This is not a mac");
