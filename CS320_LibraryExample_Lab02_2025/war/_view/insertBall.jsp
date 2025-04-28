@@ -174,12 +174,12 @@
             <input type="submit" name="submitinsertball" value="Add Ball to Arsenal">
         </form>
 
-        <form action="${pageContext.servletContext.contextPath}/index" method="post">
-            <input type="submit" name="submithome" value="Home">
-        </form>
-
         <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
             <input type="submit" name="submitarsenal" value="View Arsenal">
+        </form>
+        
+         <form action="${pageContext.servletContext.contextPath}/index" method="post">
+            <input type="submit" name="submithome" value="Home">
         </form>
     </div>
 

@@ -85,7 +85,7 @@
             font-weight: bold;
         }
 
-        input[type="submit"] {
+        input[type="submit"], button {
             background: #ff6600;
             color: white;
             border: none;
@@ -99,7 +99,7 @@
             box-shadow: 0 0 10px #ff6600;
         }
 
-        input[type="submit"]:hover {
+        input[type="submit"]:hover, button:hover {
             background: #ff3300;
             box-shadow: 0 0 15px #ff00ff;
         }
@@ -135,9 +135,15 @@
                 </tr>							
             </table>
 
-            <input type="submit" name="submitinsertestablishment" value="Add Establishment to Library">
+            <input type="submit" name="submitinsertestablishment" value="Add Establishment">
+        </form>
+        
+
+        <form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
+            <button type="submit" name="submitallestablishments">View Establishments</button>
         </form>
 
+   
         <form action="${pageContext.servletContext.contextPath}/index" method="post">
             <input type="submit" name="submithome" value="Home">
         </form>

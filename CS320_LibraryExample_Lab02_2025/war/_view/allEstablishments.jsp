@@ -16,6 +16,9 @@
             padding: 0;
             text-align: center;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Ensure content is spaced out */
         }
 
         .wrapper {
@@ -28,6 +31,10 @@
             border-right: 10px solid #ff6600;
             box-shadow: 0 0 15px rgba(255, 102, 0, 0.8);
             border-radius: 10px;
+            flex-grow: 1; /* Allow the wrapper to take up available space */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Align content at the top */
         }
 
         h1 {
@@ -86,7 +93,7 @@
             text-shadow: 1px 1px 5px #000;
             box-shadow: 0 0 10px #ff6600;
             font-size: 16px;
-            margin: 20px 10px 0;
+            margin: 10px;
         }
 
         button:hover {
@@ -98,6 +105,14 @@
             color: red;
             font-weight: bold;
             margin-bottom: 20px;
+        }
+
+        /* Style for button container to align buttons side by side */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -127,9 +142,17 @@
                     </tr>
                 </c:forEach>
             </table>
-
-            <button type="submit" name="submithome">Home</button>
         </form>
+
+        <div class="button-container">
+            <form action="${pageContext.servletContext.contextPath}/index" method="post">
+                <button type="submit" name="submithome">Home</button>
+            </form>
+            
+            <form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="get">
+                <button type="submit" name="submitinsertnewestablishment">Add New Establishment</button>
+            </form>
+        </div>
     </div>
 
 </body>
