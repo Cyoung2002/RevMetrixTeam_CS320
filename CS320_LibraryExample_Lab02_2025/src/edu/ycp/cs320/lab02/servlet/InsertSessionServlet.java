@@ -67,7 +67,7 @@ public class InsertSessionServlet extends HttpServlet {
 		String successMessage = null;
 		String league      	  = null;
 		String bowled         = null;
-		String week      	  = null;
+		//String week      	  = null;
 		String strikeBall     = null;
 		String spareBall      = null;
 		String ball      	  = null;
@@ -81,12 +81,11 @@ public class InsertSessionServlet extends HttpServlet {
 		strikeBall        = req.getParameter("strikeBall");
 		spareBall        = req.getParameter("spareBall");
 		startLane        = req.getParameter("startLane");
-		week        = req.getParameter("week");
+		//week        = req.getParameter("week");
 		series         = req.getParameter("series");
 		
 		if (league     		== null || league.equals("")  ||
 			bowled     		== null || bowled.equals("")  ||
-			week        	== null || week.equals("")    ||
 			strikeBall      == null || strikeBall.equals("")    ||
 			spareBall       == null || spareBall.equals("")     ||
 			startLane       == null || startLane.equals("")     ||
@@ -106,13 +105,13 @@ public class InsertSessionServlet extends HttpServlet {
 		
 		// convert published to integer now that it is valid
 		// published = Integer.parseInt(strPublished);
-		
+		Integer weekID = controller.insertSession(league, bowled, ball, startLane, "week", series);
 		// get list of books returned from query			
-		if (controller.insertSession(league, bowled, ball, startLane, week, series)) {
-			successMessage = "League: " + league + " - Bowled: " + bowled+ " - Ball: " + ball+ " - Start Lane: " + startLane+ " - Week: " + week+ " - Series: " + series;
+		if (weekID > 1) {
+			successMessage = "League: " + league + " - Bowled: " + bowled+ " - Ball: " + ball+ " - Start Lane: " + startLane+ " - Week: " + weekID+ " - Series: " + series;
 		}
 		else {
-			errorMessage = "Failed to insert Session - week: " + week;					
+			errorMessage = "Failed to insert Session - week: " + weekID;					
 		}
 		
 		ArrayList<Event> events = null;
@@ -128,7 +127,8 @@ public class InsertSessionServlet extends HttpServlet {
 		// Add parameters as request attributes
 		req.setAttribute("league", league);
 		req.setAttribute("bowled", bowled);
-		req.setAttribute("week", week);
+		req.setAttribute("startLane",startLane);
+		req.setAttribute("week", weekID);
 		req.setAttribute("series", series);
 		
 		// Add result objects as request attributes

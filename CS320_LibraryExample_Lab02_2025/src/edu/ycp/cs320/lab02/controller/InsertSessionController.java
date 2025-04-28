@@ -15,7 +15,7 @@ public class InsertSessionController {
 		db = DatabaseProvider.getInstance();		
 	}
 
-	public boolean insertSession(String league, String bowled, String ball, String startLane, String week, String series) {
+	public Integer insertSession(String league, String bowled, String ball, String startLane, String week, String series) {
 		
 		// insert new book (and possibly new author) into DB
 		Integer weekID = db.insertSession(league, bowled, ball, startLane, week, series);
@@ -25,13 +25,13 @@ public class InsertSessionController {
 		{
 			System.out.println("New Session (ID: " + weekID + ") successfully added to Session table: <" + week + ">");
 			
-			return true;
+			return weekID;
 		}
 		else
 		{
 			System.out.println("Failed to insert new session (ID: " + weekID + ") into Sessions table: <" + week + ">");
 			
-			return false;
+			return weekID;
 		}
 	}
 }

@@ -977,47 +977,8 @@ public class DerbyDatabase implements IDatabase {
 					// and return the session_id, which the DB SHOULD NOT-auto-generate. THE REASON-
 					// User entered the week, so can't have two id's for the same thing
 					// prepare SQL statement to retrieve book_id for new Book
-					/*stmt5 = conn.prepareStatement(
-							"select session from sessions " +
-							"  where bowled = ? and week = ? and series = ? "
-									
-					);
-					stmt5.setString(1, bowled);
-					stmt5.setString(2, week);
-					stmt5.setString(3, series);
-
-					// execute the query
-					resultSet5 = stmt5.executeQuery();
 					
-					// get the result - there had better be one
-					if (resultSet5.next())
-					{
-						session_id = resultSet5.getInt(1);
-						System.out.println("New session <" + week + "> ID: " + session_id);						
-					}
-					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
-					{
-						System.out.println("New session <" + week + "> not found in Books table (ID: " + session_id);
-					}
-					
-					// now that we have all the information, insert entry into BookAuthors table
-					// which is the junction table for Books and Authors
-					// prepare SQL insert statement to add new Book to Books table
-					stmt6 = conn.prepareStatement(
-							"insert into sessionEvents (session_id, event_id) " +
-							"  values(?, ?) "
-					);
-					stmt6.setInt(1, session_id);
-					stmt6.setInt(2, event_id);
-					
-					// execute the update
-					stmt6.executeUpdate();*/
-					
-					/*System.out.println("New entry for session ID <" + session_id + "> and event ID <" + event_id + "> inserted into BookAuthors junction table");						
-					
-					System.out.println("New session for week <" + newWeek + "> inserted into session table");	*/				
-					
-					//return Integer.valueOf(week);
+				
 					return newWeek;
 				} finally {
 					DBUtil.closeQuietly(resultSet);

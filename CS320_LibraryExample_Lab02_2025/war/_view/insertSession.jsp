@@ -165,10 +165,10 @@
                     <td class="label">Start Lane:</td>
                     <td><input type="text" name="startLane" size="20" value="${startLane}" /></td>
                 </tr>
-                <tr>
+                <!--tr>
                     <td class="label">Week:</td>
                     <td><input type="text" name="week" size="20" value="${week}" /></td>
-                </tr>
+                </tr-->
                 <tr>
                     <td class="label">Series:</td>
                     <td><input type="text" name="series" size="20" value="${series}" /></td>
