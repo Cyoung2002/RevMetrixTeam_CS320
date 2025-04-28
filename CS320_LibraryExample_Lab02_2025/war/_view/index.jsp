@@ -69,7 +69,15 @@
             font-size: 16px;
         }
 
-        /* Buttons */
+        /* Buttons (adjust for side-by-side layout) */
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* To evenly distribute buttons */
+            flex-wrap: wrap; /* Wrap buttons if the screen is smaller */
+            gap: 10px; /* Space between buttons */
+            margin: 20px 0;
+        }
+
         button {
             background: #ff6600;
             color: white;
@@ -81,7 +89,6 @@
             text-shadow: 1px 1px 5px #000;
             box-shadow: 0 0 10px #ff6600;
             font-size: 16px;
-            margin: 10px;
         }
 
         button:hover {
@@ -148,25 +155,27 @@
 
     <div class="container">
 
-        <form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
-            <button type="submit" name="submitinsertnewbook">View All Events</button>
-        </form>
+        <div class="button-container">
+            <form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
+                <button type="submit" name="submitinsertnewbook">View All Events</button>
+            </form>
 
-        <form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
-            <button type="submit" name="submitallestablishments">View Establishments</button>
-        </form>
+            <form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
+                <button type="submit" name="submitallestablishments">View Establishments</button>
+            </form>
 
-        <form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="get">
-            <button type="submit" name="submitinsertnewestablishment">Add New Establishment To Library</button>
-        </form>
+            <form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="get">
+                <button type="submit" name="submitinsertnewestablishment">Add New Establishment To Library</button>
+            </form>
 
-        <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
-            <button type="submit" name="submitarsenal">View Arsenal</button>
-        </form>
+            <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
+                <button type="submit" name="submitarsenal">View Arsenal</button>
+            </form>
 
-        <form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
-            <button type="submit" name="submitinsertnewball">Add New Ball to Library</button>
-        </form>
+            <form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
+                <button type="submit" name="submitinsertnewball">Add New Ball to Library</button>
+            </form>
+        </div>
     </div>
 
     <div class="flex-container">
