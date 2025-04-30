@@ -10,6 +10,7 @@ import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.BookAuthor;
 import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.model.Game;
 import edu.ycp.cs320.booksdb.model.Session;
 import edu.ycp.cs320.booksdb.model.Ball;
 
@@ -276,30 +277,86 @@ public class InitialData {
 					Iterator<String> i = tuple.iterator();
 					Game game = new Game();
 					
+					String skip = i.next();
+					
 					//WE WILL NEED TO ADD MORE OF THE SETTERS HERE JUST WANTED A BASIS
 					
-					//set the type of event (/league)
-					session.setLeague(i.next());
-					String skip = i.next();
-					skip = i.next();
-					session.setWeek(i.next());
-					System.out.println(session.getLeague() + " week: " + session.getWeek());	
-					//set the date it was bowled
-					session.setBowled(i.next());
-					skip = i.next();
-					skip = i.next();
-					skip = i.next();
-					skip = i.next();
-					session.setStart(i.next());
-					session.setBall(i.next());
-					System.out.println(session.getBowled() + " startlane: " + session.getStart() + " ball: " + session.getBall());
-					//something will put here for setting the games...eventually
-					//session.setGames(getGames);
-					skip = i.next();
-					skip = i.next();
-					skip = i.next();
-					session.setSeries(i.next());
-					sessionList.add(session);
+					//skipping unneeded columns and rows
+					for (int j = 0; j < 33 ; j++) {
+						skip = i.next();
+					}
+					
+					//starts at row 2, column B
+					
+					
+					//have to start this at row 3, column B but still need information prior
+					
+					//also have to figure out how to skip the blank space between leave, score, etc.. and frames and shots
+					
+					
+					//games
+					for (int x = 0; x < 8; x++) {
+						game.setLeague(i.next());
+						game.setSeason(i.next());
+						game.setWeek(i.next());
+						game.setLane(i.next());
+						game.setStrikeball(i.next());
+						game.setSpareball(i.next());
+						
+						//frames
+						for (int y = 0; y < 11; y++) {
+							
+							game.setFrameone(i.next());
+							game.setFrametwo(i.next());
+							game.setFramethree(i.next());
+							game.setFramefour(i.next());
+							game.setFramefive(i.next());
+							game.setFramesix(i.next());
+							game.setFrameseven(i.next());
+							game.setFrameeight(i.next());
+							game.setFramenine(i.next());
+							game.setFrameten(i.next());
+							game.setFrameeleven(i.next());
+							game.setFrametwelve(i.next());
+							
+							//shots
+							for (int z = 0; z < 22; z++) {
+								
+								game.setShotone(i.next());
+								game.setShottwo(i.next());
+								game.setShotthree(i.next());
+								game.setShotfour(i.next());
+								game.setShotfive(i.next());
+								game.setShotsix(i.next());
+								game.setShotseven(i.next());
+								game.setShoteight(i.next());
+								game.setShotnine(i.next());
+								game.setShotten(i.next());
+								game.setShoteleven(i.next());
+								game.setShottwelve(i.next());
+								game.setShotthirteen(i.next());
+								game.setShotfourteen(i.next());
+								game.setShotfifteen(i.next());
+								game.setShotsixteen(i.next());
+								game.setShotseventeen(i.next());
+								game.setShoteighteen(i.next());
+								game.setShotnineteen(i.next());
+								game.setShottwenty(i.next());
+								game.setShottwentyone(i.next());
+								game.setShottwentytwo(i.next());
+								game.setShottwentythree(i.next());
+								
+							}
+								
+						}
+					}
+					
+					
+					
+					
+					
+					
+
 				}
 				System.out.println("gameList loaded from CSV file");			
 				return gameList;
