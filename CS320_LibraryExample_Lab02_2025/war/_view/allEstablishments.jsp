@@ -148,6 +148,7 @@
             <form action="${pageContext.servletContext.contextPath}/index" method="post">
                 <button type="submit" name="submithome">Home</button>
             </form>
+            <br>
             
             <form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="get">
                 <button type="submit" name="submitinsertnewestablishment">Add New Establishment</button>
