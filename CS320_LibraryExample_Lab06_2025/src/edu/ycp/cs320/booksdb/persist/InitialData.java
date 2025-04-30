@@ -261,3 +261,52 @@ public class InitialData {
 			}
 		}
 }
+
+
+//reads initial game data from CSV file and returns a List of Books
+		public static List<Game> getAllGames() throws IOException {
+			List<Game> gameList = new ArrayList<Game>();
+			ReadCSV readGames = new ReadCSV("games.csv");
+			try {
+				while (true) {
+					List<String> tuple = readGames.next();
+					if (tuple == null) {
+						break;
+					}
+					Iterator<String> i = tuple.iterator();
+					Game game = new Game();
+					
+					//WE WILL NEED TO ADD MORE OF THE SETTERS HERE JUST WANTED A BASIS
+					
+					//set the type of event (/league)
+					session.setLeague(i.next());
+					String skip = i.next();
+					skip = i.next();
+					session.setWeek(i.next());
+					System.out.println(session.getLeague() + " week: " + session.getWeek());	
+					//set the date it was bowled
+					session.setBowled(i.next());
+					skip = i.next();
+					skip = i.next();
+					skip = i.next();
+					skip = i.next();
+					session.setStart(i.next());
+					session.setBall(i.next());
+					System.out.println(session.getBowled() + " startlane: " + session.getStart() + " ball: " + session.getBall());
+					//something will put here for setting the games...eventually
+					//session.setGames(getGames);
+					skip = i.next();
+					skip = i.next();
+					skip = i.next();
+					session.setSeries(i.next());
+					sessionList.add(session);
+				}
+				System.out.println("gameList loaded from CSV file");			
+				return gameList;
+			} finally {
+				readGames.close();
+			}
+		}
+}
+
+

@@ -61,6 +61,24 @@
             transition: all 0.3s ease;
         }
 
+        td input[items="${events}"]:focus {
+            border-color: #00ffcc;
+            outline: none;
+            box-shadow: 0 0 8px #00ffcc;
+        }
+        
+        
+        td input[items="${events}"] {
+            width: 90%;
+            padding: 8px;
+            border: 2px solid #ff00ff;
+            border-radius: 5px;
+            background-color: #0a0a2a;
+            color: #00ffcc;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
         td input[type="text"]:focus {
             border-color: #00ffcc;
             outline: none;
