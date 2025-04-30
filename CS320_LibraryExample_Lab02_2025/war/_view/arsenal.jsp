@@ -141,6 +141,11 @@
         <form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
             <input type="submit" name="submitinsertnewball" value="Add New Ball to Library">
         </form>
+        <br>
+        
+             <form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
+                <button type="submit" name="submitinsertnewball">Add New Ball</button>
+            </form>
     </div>
 
 </body>
