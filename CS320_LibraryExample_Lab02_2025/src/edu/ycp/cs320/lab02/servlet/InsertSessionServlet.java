@@ -107,7 +107,7 @@ public class InsertSessionServlet extends HttpServlet {
 		// published = Integer.parseInt(strPublished);
 		Integer weekID = controller.insertSession(league, bowled, ball, startLane, "week", series);
 		// get list of books returned from query			
-		if (weekID > 1) {
+		if (weekID >= 1) {
 			successMessage = "League: " + league + " - Bowled: " + bowled+ " - Ball: " + ball+ " - Start Lane: " + startLane+ " - Week: " + weekID+ " - Series: " + series;
 		}
 		else {

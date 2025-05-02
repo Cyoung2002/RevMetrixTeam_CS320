@@ -1,6 +1,10 @@
 package edu.ycp.cs320.booksdb.persist;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -10,8 +14,10 @@ import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.BookAuthor;
 import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.model.Frame;
 import edu.ycp.cs320.booksdb.model.Game;
 import edu.ycp.cs320.booksdb.model.Session;
+import edu.ycp.cs320.booksdb.model.Shot;
 import edu.ycp.cs320.booksdb.model.Ball;
 
 public class InitialData {
@@ -261,13 +267,88 @@ public class InitialData {
 				readSessions.close();
 			}
 		}
-}
+
 
 
 //reads initial game data from CSV file and returns a List of Books
-		public static List<Game> getAllGames() throws IOException {
+		public static List<Object> getGames() throws IOException {
+			
+			List<Object> lists = new ArrayList<Object>();
+			
 			List<Game> gameList = new ArrayList<Game>();
+			List<Frame> frameList = new ArrayList<Frame>();
+			List<Shot> shotList = new ArrayList<Shot>();
+			
 			ReadCSV readGames = new ReadCSV("games.csv");
+	        ArrayList<ArrayList<String>> rows = readGames.allRows();	// New ReadCSV method
+	        
+	        
+	        for(int g = 0; g < rows.size(); g+=7) {
+	        	
+	        	int gameID = (g/7) + 1;
+	        	Game game = new Game();
+	        	
+	        	game.setLeague(rows.get(g).get(1));
+	        	game.setSeason(rows.get(g).get(2));
+	        	game.setWeek(rows.get(g).get(3));
+	        	game.setDate(rows.get(g).get(4));
+	        	game.setGame(rows.get(g).get(5));
+	        	game.setLane(rows.get(g).get(6));
+	        	gameList.add(game);
+	        	
+	        	
+	        	for(int f = 0; f < 12; f++) {
+	        		
+	        		Frame frame = new Frame();
+	        		frame.setGameID(gameID);
+	        		frame.setFrame(String.valueOf(f+1));
+	        		frameList.add(frame);
+	        	}
+	        	
+	        	
+	        	for(int s = 10; s < 33; s++) {
+	        		
+	        		if(s == 30 && ((rows.get(g).get(s) == null) || (rows.get(g).get(s).equals("")))) {
+	        			break;
+	        		}
+	        		else if(s == 32 && ((rows.get(g).get(s) == null) || (rows.get(g).get(s).equals("")))) {
+	        			break;
+	        		}
+	        		
+        			Shot shot = new Shot();
+        			shot.setFrameID(gameID);	// this attribute will be changed to game ID
+        			shot.setShotNumber(String.valueOf(s-9));
+        			
+        			shot.setCount(rows.get(g).get(s));
+    	        	shot.setLeave(rows.get(g+1).get(s));
+    	        	shot.setScore(rows.get(g+2).get(s));
+    	        	shot.setType(rows.get(g+3).get(s));
+    	        	shot.setBoard(rows.get(g+4).get(s));
+    	        	shot.setLane(rows.get(g+5).get(s));
+    	        	shot.setBall(rows.get(g+6).get(s));
+    	        	shotList.add(shot);
+    	        	
+    	        	if (s == 30 && (rows.get(g).get(s).equals("X")) && ((rows.get(g).get(32) == null) || (rows.get(g).get(32).equals("")))) {
+	        			break;
+	        		}
+    	        	else if (s == 30 && !(rows.get(g).get(s).equals("X")) && ((rows.get(g).get(31) == null) || (rows.get(g).get(31).equals("")))) {
+    	        		break;
+    	        	}
+        		}
+	        }
+	        
+	        System.out.println("gameList loaded from CSV file");	
+	        lists.add(gameList);
+	        System.out.println("frameList loaded from CSV file");
+	        lists.add(frameList);
+	        System.out.println("frameList loaded from CSV file");
+	        lists.add(shotList);
+	        
+	        readGames.close();
+	        
+	        return lists;
+			
+			/*ReadCSV readGames = new ReadCSV("games.csv");
 			try {
 				while (true) {
 					List<String> tuple = readGames.next();
@@ -350,19 +431,12 @@ public class InitialData {
 								
 						}
 					}
-					
-					
-					
-					
-					
-					
-
 				}
 				System.out.println("gameList loaded from CSV file");			
 				return gameList;
 			} finally {
 				readGames.close();
-			}
+			}*/
 		}
 }
 
