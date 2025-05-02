@@ -8,6 +8,7 @@ import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Pair;
+import edu.ycp.cs320.booksdb.model.Shot;
 import edu.ycp.cs320.booksdb.model.Ball;
 import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.booksdb.model.Establishment;
@@ -29,4 +30,5 @@ public interface IDatabase {
 	
 	public ArrayList<Establishment> findAllEstablishments();
 	public Integer insertEstablishmentIntoEstablishmentsTable(String longName, String shortName, String address);	
+	public ArrayList<Shot> findAllShotsInGame(String gameID);
 }
