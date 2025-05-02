@@ -951,10 +951,12 @@ public class DerbyDatabase implements IDatabase {
 					resultSet = stmt.executeQuery();
 
 					
-					// if event was found then save event_id					
+					// if last session was found then update newWeek for this session based on last					
 					if (resultSet.next()) {
 						newWeek = resultSet.getInt(1) + 1;
-					}	
+					} else {
+						newWeek = 1;
+					}
 						
 						
 					
