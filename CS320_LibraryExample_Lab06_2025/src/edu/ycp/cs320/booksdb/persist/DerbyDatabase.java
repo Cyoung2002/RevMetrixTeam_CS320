@@ -1476,16 +1476,21 @@ public class DerbyDatabase implements IDatabase {
 					stmt6.executeUpdate();
 					System.out.println("Arsenal table created");
 					
-					
 					stmt7 = conn.prepareStatement(
 							"create table sessions (" +
 									"	session_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
 									"	league varchar(30), " +
-									"	date_bowled varchar(10), " +
-									"	ball varchar(10), " +
-									"	start_lane varchar(10), " +
+									"	season varchar(30), " +
 									"	week varchar(10), " +
+									"	date_scheduled varchar(10), " +
+									"	reg_sub varchar(10), " +
+									"	opponenet varchar(30), " +
+									"	start_lane varchar(10), " +
+									"	ball varchar(10), " +
+									"	game_one varchar(10), " +
+									"	game_two varchar(10), " +
+									"	game_three varchar(10), " +
 									"	series varchar(10) " +
 									")"
 					);
