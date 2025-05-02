@@ -148,7 +148,11 @@
 
             <button type="submit" name="submithome">Home</button>
         </form>
+        <br>
 
+			<form action="${pageContext.servletContext.contextPath}/insertEvent" method="get">
+                <button type="submit" name="submitinsertnewestablishment">Add New Event</button>
+            </form>
     </div>
 
 </body>
