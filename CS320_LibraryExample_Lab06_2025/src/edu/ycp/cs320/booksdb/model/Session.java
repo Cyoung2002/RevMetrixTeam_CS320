@@ -20,9 +20,9 @@ public class Session {
 	private String start;
 	private String ball;
 	//game scores
-	private int gameOneScore;
-	private int gameTwoScore;
-	private int gameThreeScore;
+	private String gameOneScore;
+	private String gameTwoScore;
+	private String gameThreeScore;
 	private String series;
 	//make the games;
 	/*
@@ -540,32 +540,32 @@ public class Session {
 	}
 
 
-	public int getGameOneScore() {
+	public String getGameOneScore() {
 		return gameOneScore;
 	}
 
 
-	public void setGameOneScore(int gameOneScore) {
+	public void setGameOneScore(String gameOneScore) {
 		this.gameOneScore = gameOneScore;
 	}
 
 
-	public int getGameTwoScore() {
+	public String getGameTwoScore() {
 		return gameTwoScore;
 	}
 
 
-	public void setGameTwoScore(int gameTwoScore) {
+	public void setGameTwoScore(String gameTwoScore) {
 		this.gameTwoScore = gameTwoScore;
 	}
 
 
-	public int getGameThreeScore() {
+	public String getGameThreeScore() {
 		return gameThreeScore;
 	}
 
 
-	public void setGameThreeScore(int gameThreeScore) {
+	public void setGameThreeScore(String gameThreeScore) {
 		this.gameThreeScore = gameThreeScore;
 	}
 	
