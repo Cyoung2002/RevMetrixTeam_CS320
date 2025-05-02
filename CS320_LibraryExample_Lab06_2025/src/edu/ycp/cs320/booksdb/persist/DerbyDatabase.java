@@ -1690,14 +1690,20 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Arsenal table populated");
 					
 					
-					insertSession = conn.prepareStatement("insert into sessions (league, date_bowled, ball, start_lane, week, series) values (?, ?, ?, ?, ?, ?)");
+					insertSession = conn.prepareStatement("insert into sessions (league, season, week, date_scheduled, reg_sub, opponent, start_lane, ball, game_one, game_two, game_three, series) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					for(Session session : sessionList) {
 						insertSession.setString(1, session.getLeague());
-						insertSession.setString(2, session.getBowled());
-						insertSession.setString(3, session.getBall());
-						insertSession.setString(4, session.getStart());
-						insertSession.setString(5, session.getWeek());
-						insertSession.setString(6, session.getSeries());
+						insertSession.setString(2,  session.getSeason());
+						insertSession.setString(3, session.getWeek());
+						insertSession.setString(4, session.getScheduled());
+						insertSession.setString(5, session.getRegSub());
+						insertSession.setString(6, session.getOpponent());
+						insertSession.setString(7, session.getStart());
+						insertSession.setString(8, session.getBall());
+						insertSession.setString(9, session.getGameOneScore());
+						insertSession.setString(10, session.getGameTwoScore());
+						insertSession.setString(11, session.getGameThreeScore());
+						insertSession.setString(12, session.getSeries());
 						insertSession.addBatch();
 					}
 					insertSession.executeBatch();
