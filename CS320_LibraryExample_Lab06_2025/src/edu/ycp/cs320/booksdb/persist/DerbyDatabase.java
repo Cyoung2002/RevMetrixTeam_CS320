@@ -325,6 +325,49 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
+	public ArrayList<Session> findAllSessions() {
+		return executeTransaction(new Transaction<ArrayList<Session>>() {
+			@Override
+			public ArrayList<Session> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from session " +
+							" order by week"
+					);
+					
+					ArrayList<Session> result = new ArrayList<Session>();
+					
+					resultSet = stmt.executeQuery();
+					
+					// for testing that a result was returned
+					Boolean found = false;
+					
+					while (resultSet.next()) {
+						found = true;
+						
+						Session session = new Session();
+						loadSession(session, resultSet, 1);
+						
+						result.add(session);
+					}
+					
+					// check if any authors were found
+					if (!found) {
+						System.out.println("No sessions were found in the database");
+					}
+					
+					return result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	@Override
 	public ArrayList<Shot> findAllShotsInGame(String gameID) {
 		return executeTransaction(new Transaction<ArrayList<Shot>>() {
 			@Override
@@ -1307,6 +1350,8 @@ public class DerbyDatabase implements IDatabase {
 		
 		session.setLeague(resultSet.getString(index++));
 		session.setBowled(resultSet.getString(index++));
+		session.setBall(resultSet.getString(index++));
+		session.setStart(resultSet.getString(index++));
 		session.setWeek(resultSet.getString(index++));
 		session.setSeries(resultSet.getString(index++));
 	}
