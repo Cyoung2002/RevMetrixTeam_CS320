@@ -124,24 +124,38 @@
         <form action="${pageContext.servletContext.contextPath}/index" method="post">
             <table>
                 <tr>
-                    <td class="longnameColHeading">Longname</td>
-                    <td class="ShortnameColHeading">Shortname</td>
+                    <td class="longnameColHeading">Long Name</td>
+                    <td class="ShortnameColHeading">Short Name</td>
+                    <td class="TypeColHeading">Type</td>
                     <td class="EstablishmentColHeading">Establishment</td>
-                    <td class="WeeknightColHeading">Weeknight</td>
+                    <td class="SeasonColHeading">Season</td>
+                    <td class="TeamColHeading">Team</td>
+                    <td class="CompositionColHeading">Composition</td>
+                    <td class="DayColHeading">Day</td>
+                    <td class="TimeColHeading">Time</td>
                     <td class="StartColHeading">Start</td>
                     <td class="EndColHeading">End</td>
                     <td class="GamesPerSessionColHeading">Games Per Session</td>
+                    <td class="WeeksColHeading">Weeks</td>
+                    <td class="PlayoffsHeading">Playoffs</td>
                 </tr>
 
                 <c:forEach items="${events}" var="event">
                     <tr class="eventRow">
                         <td class="eventLongnameCol">${event.longname}</td>
                         <td class="eventShortnameCol">${event.shortname}</td>
-                        <td class="establishmentCol">${event.establishmentShort}</td>
-                        <td class="weeknightCol">${event.weeknight}</td>
-                        <td class="startCol">${event.start}</td>
-                        <td class="endCol">${event.end}</td>
-                        <td class="gamesPerSessionCol">${event.gamesPerSession}</td>
+                        <td class="eventTypeCol">${event.type}</td>
+                        <td class="eventEstablishmentCol">${event.establishment}</td>
+                        <td class="eventSeasonCol">${event.season}</td>
+                        <td class="eventTeamCol">${event.team}</td>
+                        <td class="eventCompositionCol">${event.composition}</td>
+                        <td class="eventDayCol">${event.day}</td>
+                        <td class="eventTimeCol">${event.time}</td>
+                        <td class="eventStartCol">${event.start}</td>
+                        <td class="eventEndCol">${event.end}</td>
+                        <td class="eventGamesPerSessionCol">${event.gamesPerSession}</td>
+                        <td class="eventWeeksCol">${event.weeks}</td>
+                        <td class="eventPlayoffsCol">${event.playoffs}</td>
                     </tr>
                 </c:forEach>
             </table>
