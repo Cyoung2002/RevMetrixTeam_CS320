@@ -109,7 +109,7 @@
 <body>
 
     <div class="wrapper">
-        <h1>Add Event to Arsenal</h1>
+        <h1>Add Event</h1>
 
         <c:if test="${! empty errorMessage}">
             <div class="error">${errorMessage}</div>
@@ -152,6 +152,10 @@
                 <tr>
                     <td class="label">Day:</td>
                     <td><input type="text" name="event_day" size="20" value="${event_day}" /></td>
+                </tr>
+                <tr>
+                    <td class="label">Time:</td>
+                    <td><input type="text" name="event_time" size="20" value="${event_time}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Start:</td>

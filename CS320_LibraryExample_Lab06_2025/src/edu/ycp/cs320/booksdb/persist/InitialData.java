@@ -148,7 +148,7 @@ public class InitialData {
 	
 	public static List<Event> getEvents() throws IOException {
 		List<Event> eventList = new ArrayList<Event>();
-		ReadCSV readEvents = new ReadCSV("events.csv");
+		ReadCSV readEvents = new ReadCSV("Events.csv");
 		try {
 			// auto-generated primary key for table books
 			// Integer bookId = 1;
@@ -160,20 +160,20 @@ public class InitialData {
 				Iterator<String> i = tuple.iterator();
 				Event event = new Event();
 				
-				// read book ID from CSV file, but don't use it
-				// it's there for reference purposes, just make sure that it is correct
-				// when setting up the BookAuthors CSV file
-				// Integer.parseInt(i.next());
-				// auto-generate book ID, instead
-				//event.setEstablishmentId(Integer.parseInt(i.next()));				
-//				book.setAuthorId(Integer.parseInt(i.next()));  // no longer in books table
 				event.setLongname(i.next());
 				event.setShortname(i.next());
-				event.setEstablishmentShort(i.next());
-				event.setWeeknight(i.next());
+				event.setType(i.next());
+				event.setEstablishment(i.next());
+				event.setSeason(i.next());
+				event.setTeam(Integer.parseInt(i.next()));
+				event.setComposition(i.next());
+				event.setDay(i.next());
+				event.setTime(i.next());
 				event.setStart(i.next());
 				event.setEnd(i.next());
 				event.setGamesPerSession(Integer.parseInt(i.next()));
+				event.setWeeks(Integer.parseInt(i.next()));
+				event.setPlayoffs(Integer.parseInt(i.next()));
 				
 				eventList.add(event);
 			}

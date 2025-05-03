@@ -785,7 +785,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
-	public Integer insertEvent(final String longname, final String shortname, final String establishmentShort, final String weeknight, final String start, final String end_date, final Integer gamesPerSession) {
+	public Integer insertEvent(final String longname, final String shortname, final String type, final String establishment, final String season, final Integer team, final String composition, final String day, final String time, final String start, final String end_date, final Integer gamesPerSession, final Integer weeks, final Integer playoffs) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -805,16 +805,23 @@ public class DerbyDatabase implements IDatabase {
 					// now insert new Establishment into Establishments table
 					// prepare SQL insert statement to add new Establishment to Establishments table
 					stmt1 = conn.prepareStatement(
-							"insert into events (longname, shortname, establishment, weeknight, start_date, end_date, games_per_session) " +
-							"  values(?, ?, ?, ?, ?, ?, ?) "
+							"insert into events (longname, shortname, type, establishment, season, team, composition, day, time, start_date, end_date, games_per_session, weeks, playoffs) " +
+							"  values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
 					);
 					stmt1.setString(1, longname);
 					stmt1.setString(2, shortname);
-					stmt1.setString(3, establishmentShort);
-					stmt1.setString(4, weeknight);
-					stmt1.setString(5, start);
-					stmt1.setString(6, end_date);
-					stmt1.setInt(7, gamesPerSession);
+					stmt1.setString(3, type);
+					stmt1.setString(4, establishment);
+					stmt1.setString(5, season);
+					stmt1.setInt(6, team);
+					stmt1.setString(7, composition);
+					stmt1.setString(8, day);
+					stmt1.setString(9, time);
+					stmt1.setString(10, start);
+					stmt1.setString(11, end_date);
+					stmt1.setInt(12, gamesPerSession);
+					stmt1.setInt(13, weeks);
+					stmt1.setInt(14, playoffs);
 					
 					// execute the update
 					stmt1.executeUpdate();
@@ -826,16 +833,23 @@ public class DerbyDatabase implements IDatabase {
 					// prepare SQL statement to retrieve establishment_id for new Book
 					stmt2 = conn.prepareStatement(
 							"select event_id from events " +
-							"  where longname = ? and shortname = ? and establishment = ? and weeknight = ? and start_date = ? and end_date = ? and games_per_session = ? "
+							"  where longname = ? and shortname = ? and type = ? and establishment = ? and season = ? and team = ? and composition = ? and day = ? and time = ? and start_date = ? and end_date = ? and games_per_session = ? and weeks = ? and playoffs = ? "
 									
 					);
 					stmt2.setString(1, longname);
 					stmt2.setString(2, shortname);
-					stmt2.setString(3, establishmentShort);
-					stmt2.setString(4, weeknight);
-					stmt2.setString(5, start);
-					stmt2.setString(6, end_date);
-					stmt2.setInt(7, gamesPerSession);
+					stmt2.setString(3, type);
+					stmt2.setString(4, establishment);
+					stmt2.setString(5, season);
+					stmt2.setInt(6, team);
+					stmt2.setString(7, composition);
+					stmt2.setString(8, day);
+					stmt2.setString(9, time);
+					stmt2.setString(10, start);
+					stmt2.setString(11, end_date);
+					stmt2.setInt(12, gamesPerSession);
+					stmt2.setInt(13, weeks);
+					stmt2.setInt(14, playoffs);
 					
 					// execute the query
 					resultSet1 = stmt2.executeQuery();
@@ -1336,14 +1350,21 @@ public class DerbyDatabase implements IDatabase {
 	
 	private void loadEvent(Event event, ResultSet resultSet, int index) throws SQLException {
 		
-		event.setEventID(resultSet.getString(index++));
+		resultSet.getString(index++);
 		event.setLongname(resultSet.getString(index++));
 		event.setShortname(resultSet.getString(index++));
-		event.setEstablishmentShort(resultSet.getString(index++));
-		event.setWeeknight(resultSet.getString(index++));
+		event.setType(resultSet.getString(index++));
+		event.setEstablishment(resultSet.getString(index++));
+		event.setSeason(resultSet.getString(index++));
+		event.setTeam(Integer.parseInt(resultSet.getString(index++)));
+		event.setComposition(resultSet.getString(index++));
+		event.setDay(resultSet.getString(index++));
+		event.setTime(resultSet.getString(index++));
 		event.setStart(resultSet.getString(index++));
 		event.setEnd(resultSet.getString(index++));
 		event.setGamesPerSession(Integer.parseInt(resultSet.getString(index++)));
+		event.setWeeks(Integer.parseInt(resultSet.getString(index++)));
+		event.setPlayoffs(Integer.parseInt(resultSet.getString(index++)));
 	}
 	
 	private void loadSession(Session session, ResultSet resultSet, int index) throws SQLException {
@@ -1441,14 +1462,20 @@ public class DerbyDatabase implements IDatabase {
 							"create table events (" +
 									"	event_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
-									//"	establishment_id integer, " +
 									"	longname varchar(60), " +
 									"	shortname varchar(30), " +
+									"   type varchar(30), " +
 									"	establishment varchar(30), " +
-									"	weeknight varchar(10), " +
+									"   season varchar(30), " +
+									"   team integer, " +
+									"   composition varchar(60), " +
+									"	day varchar(10), " +
+									"   time varchar(30), " +
 									"	start_date varchar(10), " +
 									"	end_date varchar(10), " +
-									"	games_per_session integer " +
+									"	games_per_session integer, " +
+									"   weeks integer, " +
+									"   playoffs integer " +
 							")"
 					);	
 					stmt5.executeUpdate();
@@ -1657,16 +1684,23 @@ public class DerbyDatabase implements IDatabase {
 					
 					
 					// must completely populate Establishment table before events
-					insertEvent = conn.prepareStatement("insert into events (longname, shortname, establishment, weeknight, start_date, end_date, games_per_session) values (?, ?, ?, ?, ?, ?, ?)");
+					insertEvent = conn.prepareStatement("insert into events (longname, shortname, type, establishment, season, team, composition, day, time, start_date, end_date, games_per_session, weeks, playoffs) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					for (Event event : eventList) {
 						//insertEvent.setInt(1, event.getEstablishmentId());
 						insertEvent.setString(1, event.getLongname());
 						insertEvent.setString(2, event.getShortname());
-						insertEvent.setString(3, event.getEstablishmentShort());
-						insertEvent.setString(4, event.getWeeknight());
-						insertEvent.setString(5, event.getStart());
-						insertEvent.setString(6, event.getEnd());
-						insertEvent.setInt(7, event.getGamesPerSession());
+						insertEvent.setString(3, event.getType());
+						insertEvent.setString(4, event.getEstablishment());
+						insertEvent.setString(5, event.getSeason());
+						insertEvent.setInt(6, event.getTeam());
+						insertEvent.setString(7,  event.getComposition());
+						insertEvent.setString(8, event.getDay());
+						insertEvent.setString(9,  event.getTime());
+						insertEvent.setString(10, event.getStart());
+						insertEvent.setString(11, event.getEnd());
+						insertEvent.setInt(12, event.getGamesPerSession());
+						insertEvent.setInt(13, event.getWeeks());
+						insertEvent.setInt(14,  event.getPlayoffs());
 						insertEvent.addBatch();
 					}
 					insertEvent.executeBatch();
