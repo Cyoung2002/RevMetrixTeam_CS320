@@ -183,7 +183,11 @@
         </form>
 
         <br>
-
+		
+		<form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
+            <input type="submit" name="submithome" value="View All Events">
+        </form>
+        <br>
         <form action="${pageContext.servletContext.contextPath}/index" method="post">
             <input type="submit" name="submithome" value="Home">
         </form>
