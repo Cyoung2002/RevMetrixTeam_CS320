@@ -325,6 +325,49 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
+	public ArrayList<Session> findAllSessions() {
+		return executeTransaction(new Transaction<ArrayList<Session>>() {
+			@Override
+			public ArrayList<Session> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+				
+				try {
+					stmt = conn.prepareStatement(
+							"select * from session " +
+							" order by week"
+					);
+					
+					ArrayList<Session> result = new ArrayList<Session>();
+					
+					resultSet = stmt.executeQuery();
+					
+					// for testing that a result was returned
+					Boolean found = false;
+					
+					while (resultSet.next()) {
+						found = true;
+						
+						Session session = new Session();
+						loadSession(session, resultSet, 1);
+						
+						result.add(session);
+					}
+					
+					// check if any authors were found
+					if (!found) {
+						System.out.println("No sessions were found in the database");
+					}
+					
+					return result;
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+	@Override
 	public ArrayList<Shot> findAllShotsInGame(String gameID) {
 		return executeTransaction(new Transaction<ArrayList<Shot>>() {
 			@Override
@@ -1307,6 +1350,8 @@ public class DerbyDatabase implements IDatabase {
 		
 		session.setLeague(resultSet.getString(index++));
 		session.setBowled(resultSet.getString(index++));
+		session.setBall(resultSet.getString(index++));
+		session.setStart(resultSet.getString(index++));
 		session.setWeek(resultSet.getString(index++));
 		session.setSeries(resultSet.getString(index++));
 	}
@@ -1431,16 +1476,21 @@ public class DerbyDatabase implements IDatabase {
 					stmt6.executeUpdate();
 					System.out.println("Arsenal table created");
 					
-					
 					stmt7 = conn.prepareStatement(
 							"create table sessions (" +
 									"	session_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
 									"	league varchar(30), " +
-									"	date_bowled varchar(10), " +
-									"	ball varchar(10), " +
-									"	start_lane varchar(10), " +
+									"	season varchar(30), " +
 									"	week varchar(10), " +
+									"	date_scheduled varchar(10), " +
+									"	reg_sub varchar(10), " +
+									"	opponent varchar(30), " +
+									"	start_lane varchar(10), " +
+									"	ball varchar(10), " +
+									"	game_one varchar(10), " +
+									"	game_two varchar(10), " +
+									"	game_three varchar(10), " +
 									"	series varchar(10) " +
 									")"
 					);
@@ -1645,14 +1695,20 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Arsenal table populated");
 					
 					
-					insertSession = conn.prepareStatement("insert into sessions (league, date_bowled, ball, start_lane, week, series) values (?, ?, ?, ?, ?, ?)");
+					insertSession = conn.prepareStatement("insert into sessions (league, season, week, date_scheduled, reg_sub, opponent, start_lane, ball, game_one, game_two, game_three, series) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					for(Session session : sessionList) {
 						insertSession.setString(1, session.getLeague());
-						insertSession.setString(2, session.getBowled());
-						insertSession.setString(3, session.getBall());
-						insertSession.setString(4, session.getStart());
-						insertSession.setString(5, session.getWeek());
-						insertSession.setString(6, session.getSeries());
+						insertSession.setString(2,  session.getSeason());
+						insertSession.setString(3, session.getWeek());
+						insertSession.setString(4, session.getScheduled());
+						insertSession.setString(5, session.getRegSub());
+						insertSession.setString(6, session.getOpponent());
+						insertSession.setString(7, session.getStart());
+						insertSession.setString(8, session.getBall());
+						insertSession.setString(9, session.getGameOneScore());
+						insertSession.setString(10, session.getGameTwoScore());
+						insertSession.setString(11, session.getGameThreeScore());
+						insertSession.setString(12, session.getSeries());
 						insertSession.addBatch();
 					}
 					insertSession.executeBatch();

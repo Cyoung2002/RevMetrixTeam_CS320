@@ -8,6 +8,7 @@ import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Pair;
+import edu.ycp.cs320.booksdb.model.Session;
 import edu.ycp.cs320.booksdb.model.Shot;
 import edu.ycp.cs320.booksdb.model.Ball;
 import edu.ycp.cs320.booksdb.model.Event;
@@ -23,6 +24,7 @@ public interface IDatabase {
 	public List<Pair<Author, Book>> findAllBooksWithAuthors();
 	public List<Author> findAllAuthors();
 	
+	public List<Session> findAllSessions();
 	public Integer insertSession(final String league, final String bowled, final String ball, final String startLane,final String week, final String series);
 	public ArrayList<Event> findAllEvents();
 	public ArrayList<Ball> findAllBalls();
