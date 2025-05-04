@@ -198,6 +198,11 @@ select:focus {
             <input type="submit" name="submitinsertsession" value="Add Session">
         </form>
         
+        <br>
+        <form action="${pageContext.servletContext.contextPath}/allSessions" method="post">
+            <input type="submit" name="submithome" value="View All Sessions">
+        </form>
+        <br>
          <form action="${pageContext.servletContext.contextPath}/index" method="post">
             <input type="submit" name="submithome" value="Home">
         </form>

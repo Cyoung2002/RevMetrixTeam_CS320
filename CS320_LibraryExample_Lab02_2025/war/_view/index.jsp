@@ -168,8 +168,8 @@
                 <button type="submit" name="submitarsenal">View Arsenal</button>
             </form>
 			
-			<form action="${pageContext.servletContext.contextPath}/insertSession" method="get">
-                <button type="submit" name="submitinsertsession">Add Session</button>
+			<form action="${pageContext.servletContext.contextPath}/allSessions" method="post">
+                <button type="submit" name="submitallsessions">View Sessions</button>
             </form>
         </div>
     </div>
