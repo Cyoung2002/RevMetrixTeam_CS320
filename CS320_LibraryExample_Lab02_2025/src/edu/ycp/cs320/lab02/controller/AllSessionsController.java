@@ -36,7 +36,7 @@ public class AllSessionsController {
 			sessions = new ArrayList<Session>();
 			for (Session session : sessionList) {
 				sessions.add(session);
-				System.out.println(session.getLeague() + ", " + session.getWeek());
+				System.out.println(session.getLeague() + ", " + session.getSeason() + ", " + session.getWeek() + session.getScheduled() + ", " + session.getRegSub() + ", " + session.getOpponent() + ", " + session.getStart() + ", " + session.getBall() + ", " + session.getGameOneScore() + ", " + session.getGameTwoScore() + ", " + session.getGameThreeScore() + ", " + session.getSeries() + ", ");
 			}			
 		}
 		
