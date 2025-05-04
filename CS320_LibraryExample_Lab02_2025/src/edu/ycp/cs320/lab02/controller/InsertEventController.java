@@ -15,10 +15,10 @@ public class InsertEventController {
 		db = DatabaseProvider.getInstance();		
 	}
 
-	public boolean insertEvent(String longname, String shortname, String establishmentShort, String weeknight, String start, String end_date, Integer gamesPerSession) {
+	public boolean insertEvent(String longname, String shortname, String type, String establishment, String season, Integer team, String composition, String day, String time, String start, String end, Integer gamesPerSession, Integer weeks, Integer playoffs) {
 		
 		// insert new book (and possibly new author) into DB
-		Integer event_id = db.insertEvent(longname, shortname, establishmentShort, weeknight, start, end_date, gamesPerSession);
+		Integer event_id = db.insertEvent(longname, shortname, type, establishment, season, team, composition, day, time, start, end, gamesPerSession, weeks, playoffs);
 
 		// check if the insertion succeeded
 		if (event_id > 0)

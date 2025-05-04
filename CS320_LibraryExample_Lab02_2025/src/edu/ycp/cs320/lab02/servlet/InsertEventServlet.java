@@ -47,35 +47,56 @@ public class InsertEventServlet extends HttpServlet {
 		String successMessage = null;
 		String longname = null;
 		String shortname = null;
-		String establishmentShort = null;
-		String weeknight = null;
+		String type = null;
+		String establishment = null;
+		String season = null;
+		int team = 0;
+		String composition = null;
+		String day = null;
+		String time = null;
 		String start = null;
-		String end_date = null;
+		String end = null;
 		int gamesPerSession = 0;
+		int weeks = 0;
+		int playoffs = 0;
 		
 		// Decode form parameters and dispatch to controller
 		longname = req.getParameter("event_longname");
 		shortname = req.getParameter("event_shortname");
-		establishmentShort = req.getParameter("event_establishmentShort");
-		weeknight = req.getParameter("event_weeknight");
+		type = req.getParameter("event_type");
+		establishment = req.getParameter("event_establishment");
+		season = req.getParameter("event_season");
+		team = Integer.parseInt(req.getParameter("event_team"));
+		composition = req.getParameter("event_composition");
+		day = req.getParameter("event_day");
+		time = req.getParameter("event_time");
 		start = req.getParameter("event_start");
-		end_date = req.getParameter("event_end");
+		end = req.getParameter("event_end");
 		gamesPerSession = Integer.parseInt(req.getParameter("event_gamesPerSession"));
+		weeks = Integer.parseInt(req.getParameter("event_weeks"));
+		playoffs = Integer.parseInt(req.getParameter("event_playoffs"));
 		
 		if (longname == null || longname.equals("") ||
 			shortname == null || shortname.equals("")  ||
-			establishmentShort == null || establishmentShort.equals("") ||
-			weeknight == null || weeknight.equals("") ||
+			type == null || type.equals("") ||
+			establishment == null || establishment.equals("") ||
+			season == null || season.equals("") ||
+			team == 0 ||
+			composition == null || composition.equals("") ||
+			day == null || day.equals("") ||
+			time == null || time.equals("") ||
 			start == null || start.equals("") ||
-			end_date == null || end_date.equals("") ||
-			gamesPerSession == 0) {
+			end == null || end.equals("") ||
+			gamesPerSession == 0 ||
+			weeks == 0 ||
+			playoffs == 0) {
 			
 			errorMessage = "Please fill in all of the required fields";
 		} else {
 			controller = new InsertEventController();
 			
 			// get list of books returned from query			
-			if (controller.insertEvent(longname, shortname, establishmentShort, weeknight, start, end_date, gamesPerSession)) {
+			if (controller.insertEvent(longname, shortname, type, establishment, season, team, composition, day, time, start, end, gamesPerSession, weeks, playoffs)) {
 				successMessage = longname;
 			}
 			else {
@@ -86,11 +107,18 @@ public class InsertEventServlet extends HttpServlet {
 		// Add parameters as request attributes
 		req.setAttribute("event_longname", longname);
 		req.setAttribute("event_shortname",  shortname);
-		req.setAttribute("event_establishmentShort", establishmentShort);
-		req.setAttribute("event_weeknight", weeknight);
+		req.setAttribute("event_type",  type);
+		req.setAttribute("event_establishment", establishment);
+		req.setAttribute("event_season", season);
+		req.setAttribute("event_team", team);
+		req.setAttribute("event_composition", composition);
+		req.setAttribute("event_day", day);
+		req.setAttribute("event_time", time);
 		req.setAttribute("event_start", start);
-		req.setAttribute("event_end", end_date);
+		req.setAttribute("event_end", end);
 		req.setAttribute("event_gamesPerSession", gamesPerSession);
+		req.setAttribute("event_weeks", weeks);
+		req.setAttribute("event_playoffs", playoffs);
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage",   errorMessage);

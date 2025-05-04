@@ -109,7 +109,7 @@
 <body>
 
     <div class="wrapper">
-        <h1>Add Event to Arsenal</h1>
+        <h1>Add Event</h1>
 
         <c:if test="${! empty errorMessage}">
             <div class="error">${errorMessage}</div>
@@ -130,12 +130,32 @@
                     <td><input type="text" name="event_shortname" size="20" value="${event_shortname}" /></td>
                 </tr>
                 <tr>
-                    <td class="label">Establishment:</td>
-                    <td><input type="text" name="event_establishmentShort" size="20" value="${event_establishmentShort}" /></td>
+                    <td class="label">Type:</td>
+                    <td><input type="text" name="event_type" size="20" value="${event_type}" /></td>
                 </tr>
                 <tr>
-                    <td class="label">Weeknight:</td>
-                    <td><input type="text" name="event_weeknight" size="20" value="${event_weeknight}" /></td>
+                    <td class="label">Establishment:</td>
+                    <td><input type="text" name="event_establishment" size="20" value="${event_establishment}" /></td>
+                </tr>
+                <tr>
+                    <td class="label">Season:</td>
+                    <td><input type="text" name="event_season" size="20" value="${event_season}" /></td>
+                </tr>
+                <tr>
+                    <td class="label">Team:</td>
+                    <td><input type="number" name="event_team" size="20" value="${event_team}" /></td>
+                </tr>
+                <tr>
+                    <td class="label">Composition:</td>
+                    <td><input type="text" name="event_composition" size="20" value="${event_composition}" /></td>
+                </tr>
+                <tr>
+                    <td class="label">Day:</td>
+                    <td><input type="text" name="event_day" size="20" value="${event_day}" /></td>
+                </tr>
+                <tr>
+                    <td class="label">Time:</td>
+                    <td><input type="text" name="event_time" size="20" value="${event_time}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Start:</td>
@@ -149,13 +169,25 @@
                     <td class="label">Games Per Session:</td>
                     <td><input type="number" name="event_gamesPerSession" size="20" value="${event_gamesPerSession}" /></td>
                 </tr>
+                <tr>
+                    <td class="label">Weeks:</td>
+                    <td><input type="number" name="event_weeks" size="20" value="${event_weeks}" /></td>
+                </tr>
+                <tr>
+                    <td class="label">Playoffs:</td>
+                    <td><input type="number" name="event_playoffs" size="20" value="${event_playoffs}" /></td>
+                </tr>
             </table>
 
             <input type="submit" name="submitinsertevent" value="Add Event">
         </form>
 
         <br>
-
+		
+		<form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
+            <input type="submit" name="submithome" value="View All Events">
+        </form>
+        <br>
         <form action="${pageContext.servletContext.contextPath}/index" method="post">
             <input type="submit" name="submithome" value="Home">
         </form>
