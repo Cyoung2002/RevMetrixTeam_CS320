@@ -316,7 +316,8 @@ public class InitialData {
 	        		}
 	        		
         			Shot shot = new Shot();
-        			shot.setFrameID(gameID);	// this attribute will be changed to game ID
+        			shot.setGameID(gameID);	// this attribute will be changed to game ID
+        			shot.setFrameNumber((int) Math.ceil((double) (s-8) / 2));
         			shot.setShotNumber(String.valueOf(s-8));
         			
         			shot.setCount(rows.get(g).get(s));
