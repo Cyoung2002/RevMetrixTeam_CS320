@@ -22,7 +22,7 @@ public class FindAllShotsInGameController {
 
 	public ArrayList<Shot> findAllShotsInGame(String gameID) {
 		
-		// get the list of (Author, Book) pairs from DB
+		// get the list of shots from DB
 		ArrayList<Shot> shotList = db.findAllShotsInGame(gameID);
 		ArrayList<Shot> shots = null;
 		
@@ -38,7 +38,7 @@ public class FindAllShotsInGameController {
 			}			
 		}
 		
-		// return authors for this title
+		// return shots for this game
 		return shots;
 	}
 }
