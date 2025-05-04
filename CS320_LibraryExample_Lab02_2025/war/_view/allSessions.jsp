@@ -151,17 +151,17 @@
                 <c:forEach items="${sessions}" var="session">
                     <tr class="sessionRow">
                         <td class="leagueCol">${session.league}</td>
-                        <td class="seasonCol">${event.season}</td>
-                        <td class="weekCol">${event.week}</td>
-                        <td class="dateScheduledCol">${event.dateScheduled}</td>
-                        <td class="regSubCol">${event.regSub}</td>
-                        <td class="opponentCol">${event.opponent}</td>
-                        <td class="startLaneCol">${event.startLane}</td>
-                        <td class="ballCol">${event.ball}</td>
-                        <td class="gameOneCol">${event.gameOne}</td>
-                        <td class="gameTwoCol">${event.gameTwo}</td>
-                        <td class="gameThreeCol">${event.gameThree}</td>
-                        <td class="seriesCol">${event.series}</td>
+                        <td class="seasonCol">${session.season}</td>
+                        <td class="weekCol">${session.week}</td>
+                        <td class="dateScheduledCol">${session.dateScheduled}</td>
+                        <td class="regSubCol">${session.regSub}</td>
+                        <td class="opponentCol">${session.opponent}</td>
+                        <td class="startLaneCol">${session.startLane}</td>
+                        <td class="ballCol">${session.ball}</td>
+                        <td class="gameOneCol">${session.gameOne}</td>
+                        <td class="gameTwoCol">${session.gameTwo}</td>
+                        <td class="gameThreeCol">${session.gameThree}</td>
+                        <td class="seriesCol">${session.series}</td>
                     </tr>
                 </c:forEach>
             </table>

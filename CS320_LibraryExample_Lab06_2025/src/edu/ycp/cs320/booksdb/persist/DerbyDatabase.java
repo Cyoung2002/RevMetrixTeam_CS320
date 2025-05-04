@@ -335,7 +335,7 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							"select * from sessions " +
-							" order by week"
+							" order by week asc"
 					);
 					
 					ArrayList<Session> result = new ArrayList<Session>();
