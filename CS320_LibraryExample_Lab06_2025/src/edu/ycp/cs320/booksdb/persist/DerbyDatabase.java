@@ -1369,11 +1369,18 @@ public class DerbyDatabase implements IDatabase {
 	
 	private void loadSession(Session session, ResultSet resultSet, int index) throws SQLException {
 		
+		resultSet.getString(index++);
 		session.setLeague(resultSet.getString(index++));
-		session.setBowled(resultSet.getString(index++));
-		session.setBall(resultSet.getString(index++));
-		session.setStart(resultSet.getString(index++));
+		session.setSeason(resultSet.getString(index++));
 		session.setWeek(resultSet.getString(index++));
+		session.setScheduled(resultSet.getString(index++));
+		session.setRegSub(resultSet.getString(index++));
+		session.setOpponent(resultSet.getString(index++));
+		session.setStart(resultSet.getString(index++));
+		session.setBall(resultSet.getString(index++));
+		session.setGameOneScore(resultSet.getString(index++));
+		session.setGameTwoScore(resultSet.getString(index++));
+		session.setGameThreeScore(resultSet.getString(index++));
 		session.setSeries(resultSet.getString(index++));
 	}
 	
