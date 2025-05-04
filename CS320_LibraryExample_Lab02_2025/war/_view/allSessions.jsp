@@ -153,14 +153,14 @@
                         <td class="leagueCol">${session.league}</td>
                         <td class="seasonCol">${session.season}</td>
                         <td class="weekCol">${session.week}</td>
-                        <td class="dateScheduledCol">${session.dateScheduled}</td>
+                        <td class="dateScheduledCol">${session.scheduled}</td>
                         <td class="regSubCol">${session.regSub}</td>
                         <td class="opponentCol">${session.opponent}</td>
-                        <td class="startLaneCol">${session.startLane}</td>
+                        <td class="startLaneCol">${session.start}</td>
                         <td class="ballCol">${session.ball}</td>
-                        <td class="gameOneCol">${session.gameOne}</td>
-                        <td class="gameTwoCol">${session.gameTwo}</td>
-                        <td class="gameThreeCol">${session.gameThree}</td>
+                        <td class="gameOneCol">${session.gameOneScore}</td>
+                        <td class="gameTwoCol">${session.gameTwoScore}</td>
+                        <td class="gameThreeCol">${session.gameThreeScore}</td>
                         <td class="seriesCol">${session.series}</td>
                     </tr>
                 </c:forEach>
