@@ -139,13 +139,9 @@
         </form>
 
         <form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
-            <input type="submit" name="submitinsertnewball" value="Add New Ball to Library">
+            <input type="submit" name="submitinsertnewball" value="Add New Ball">
         </form>
         <br>
-        
-             <form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
-                <button type="submit" name="submitinsertnewball">Add New Ball</button>
-            </form>
     </div>
 
 </body>

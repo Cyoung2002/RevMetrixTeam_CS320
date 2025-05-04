@@ -42,36 +42,50 @@
             margin-top: 20px;
         }
 
-        td.longnameColHeading,
-        td.ShortnameColHeading,
-        td.EstablishmentColHeading,
-        td.WeeknightColHeading,
-        td.StartColHeading,
-        td.EndColHeading,
-        td.GamesPerSessionColHeading {
-            text-align: center;
-            font-weight: bold;
-            color: #ff00ff;
-            background: #1a0033;
-            padding: 10px;
-            border-bottom: 2px solid #ff6600;
-            text-shadow: none;
-        }
+ td.longnameColHeading,
+td.ShortnameColHeading,
+td.TypeColHeading,
+td.EstablishmentColHeading,
+td.SeasonColHeading,
+td.TeamColHeading,
+td.CompositionColHeading,
+td.DayColHeading,
+td.TimeColHeading,
+td.StartColHeading,
+td.EndColHeading,
+td.GamesPerSessionColHeading,
+td.WeeksColHeading,
+td.PlayoffsHeading {
+    text-align: center;
+    font-weight: bold;
+    color: #ff00ff;
+    background: #1a0033;
+    padding: 10px;
+    border-bottom: 2px solid #ff6600;
+    text-shadow: none;
+}
 
-        td.eventLongnameCol,
-        td.eventShortnameCol,
-        td.establishmentCol,
-        td.weeknightCol,
-        td.startCol,
-        td.endCol,
-        td.gamesPerSessionCol {
-            text-align: left;
-            color: #00ffcc;
-            background: #1a0033;
-            font-weight: bold;
-            padding: 10px 20px;
-            border-bottom: 1px solid #00ffcc;
-        }
+td.eventLongnameCol,
+td.eventShortnameCol,
+td.eventTypeCol,
+td.eventEstablishmentCol,
+td.eventSeasonCol,
+td.eventTeamCol,
+td.eventCompositionCol,
+td.eventDayCol,
+td.eventTimeCol,
+td.eventStartCol,
+td.eventEndCol,
+td.eventGamesPerSessionCol,
+td.eventWeeksCol,
+td.eventPlayoffsCol {
+    text-align: left;
+    color: #00ffcc;
+    background: #1a0033;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-bottom: 1px solid #00ffcc;
+}
 
         tr.eventRow {
             transition: background 0.3s ease;
@@ -105,6 +119,11 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
+        
+        .table-container {
+    overflow-x: auto;
+    max-width: 100%;
+}
 
 				
 </style>
@@ -122,6 +141,7 @@
         <h1>Events</h1>
 
         <form action="${pageContext.servletContext.contextPath}/index" method="post">
+        <div class="table-container">
             <table>
                 <tr>
                     <td class="longnameColHeading">Long Name</td>
@@ -159,6 +179,7 @@
                     </tr>
                 </c:forEach>
             </table>
+            </div>
 
             <button type="submit" name="submithome">Home</button>
         </form>

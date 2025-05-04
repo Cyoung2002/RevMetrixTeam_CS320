@@ -270,7 +270,7 @@ public class InitialData {
 
 
 
-//reads initial game data from CSV file and returns a List of Books
+//reads initial game data from CSV file and returns a List of games, frames, shots
 		public static List<Object> getGames() throws IOException {
 			
 			List<Object> lists = new ArrayList<Object>();
@@ -306,18 +306,19 @@ public class InitialData {
 	        	}
 	        	
 	        	
-	        	for(int s = 10; s < 33; s++) {
+	        	for(int s = 9; s < 32; s++) {
 	        		
-	        		if(s == 30 && ((rows.get(g).get(s) == null) || (rows.get(g).get(s).equals("")))) {
+	        		if(s == 29 && ((rows.get(g).get(s) == null) || (rows.get(g).get(s).equals("")))) {
 	        			break;
 	        		}
-	        		else if(s == 32 && ((rows.get(g).get(s) == null) || (rows.get(g).get(s).equals("")))) {
+	        		else if(s == 31 && ((rows.get(g).get(s) == null) || (rows.get(g).get(s).equals("")))) {
 	        			break;
 	        		}
 	        		
         			Shot shot = new Shot();
-        			shot.setFrameID(gameID);	// this attribute will be changed to game ID
-        			shot.setShotNumber(String.valueOf(s-9));
+        			shot.setGameID(gameID);	// this attribute will be changed to game ID
+        			shot.setFrameNumber((int) Math.ceil((double) (s-8) / 2));
+        			shot.setShotNumber(String.valueOf(s-8));
         			
         			shot.setCount(rows.get(g).get(s));
     	        	shot.setLeave(rows.get(g+1).get(s));
@@ -328,10 +329,10 @@ public class InitialData {
     	        	shot.setBall(rows.get(g+6).get(s));
     	        	shotList.add(shot);
     	        	
-    	        	if (s == 30 && (rows.get(g).get(s).equals("X")) && ((rows.get(g).get(32) == null) || (rows.get(g).get(32).equals("")))) {
+    	        	if (s == 29 && (rows.get(g).get(s).equals("X")) && ((rows.get(g).get(31) == null) || (rows.get(g).get(31).equals("")))) {
 	        			break;
 	        		}
-    	        	else if (s == 30 && !(rows.get(g).get(s).equals("X")) && ((rows.get(g).get(31) == null) || (rows.get(g).get(31).equals("")))) {
+    	        	else if (s == 29 && !(rows.get(g).get(s).equals("X")) && ((rows.get(g).get(30) == null) || (rows.get(g).get(30).equals("")))) {
     	        		break;
     	        	}
         		}
@@ -348,95 +349,6 @@ public class InitialData {
 	        
 	        return lists;
 			
-			/*ReadCSV readGames = new ReadCSV("games.csv");
-			try {
-				while (true) {
-					List<String> tuple = readGames.next();
-					if (tuple == null) {
-						break;
-					}
-					Iterator<String> i = tuple.iterator();
-					Game game = new Game();
-					
-					String skip = i.next();
-					
-					//WE WILL NEED TO ADD MORE OF THE SETTERS HERE JUST WANTED A BASIS
-					
-					//skipping unneeded columns and rows
-					for (int j = 0; j < 33 ; j++) {
-						skip = i.next();
-					}
-					
-					//starts at row 2, column B
-					
-					
-					//have to start this at row 3, column B but still need information prior
-					
-					//also have to figure out how to skip the blank space between leave, score, etc.. and frames and shots
-					
-					
-					//games
-					for (int x = 0; x < 8; x++) {
-						game.setLeague(i.next());
-						game.setSeason(i.next());
-						game.setWeek(i.next());
-						game.setLane(i.next());
-						game.setStrikeball(i.next());
-						game.setSpareball(i.next());
-						
-						//frames
-						for (int y = 0; y < 11; y++) {
-							
-							game.setFrameone(i.next());
-							game.setFrametwo(i.next());
-							game.setFramethree(i.next());
-							game.setFramefour(i.next());
-							game.setFramefive(i.next());
-							game.setFramesix(i.next());
-							game.setFrameseven(i.next());
-							game.setFrameeight(i.next());
-							game.setFramenine(i.next());
-							game.setFrameten(i.next());
-							game.setFrameeleven(i.next());
-							game.setFrametwelve(i.next());
-							
-							//shots
-							for (int z = 0; z < 22; z++) {
-								
-								game.setShotone(i.next());
-								game.setShottwo(i.next());
-								game.setShotthree(i.next());
-								game.setShotfour(i.next());
-								game.setShotfive(i.next());
-								game.setShotsix(i.next());
-								game.setShotseven(i.next());
-								game.setShoteight(i.next());
-								game.setShotnine(i.next());
-								game.setShotten(i.next());
-								game.setShoteleven(i.next());
-								game.setShottwelve(i.next());
-								game.setShotthirteen(i.next());
-								game.setShotfourteen(i.next());
-								game.setShotfifteen(i.next());
-								game.setShotsixteen(i.next());
-								game.setShotseventeen(i.next());
-								game.setShoteighteen(i.next());
-								game.setShotnineteen(i.next());
-								game.setShottwenty(i.next());
-								game.setShottwentyone(i.next());
-								game.setShottwentytwo(i.next());
-								game.setShottwentythree(i.next());
-								
-							}
-								
-						}
-					}
-				}
-				System.out.println("gameList loaded from CSV file");			
-				return gameList;
-			} finally {
-				readGames.close();
-			}*/
 		}
 }
 

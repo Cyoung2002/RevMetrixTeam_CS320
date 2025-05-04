@@ -142,12 +142,10 @@
                     </tr>
                 </c:forEach>
             </table>
+                                    <button type="submit" name="submithome">Home</button>
         </form>
 
-        <div class="button-container">
-            <form action="${pageContext.servletContext.contextPath}/index" method="post">
-                <button type="submit" name="submithome">Home</button>
-            </form>
+
             <br>
             
             <form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="get">

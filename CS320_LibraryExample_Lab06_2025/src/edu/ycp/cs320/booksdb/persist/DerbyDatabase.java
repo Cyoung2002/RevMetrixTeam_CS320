@@ -1379,7 +1379,8 @@ public class DerbyDatabase implements IDatabase {
 	
 	private void loadShot(Shot shot, ResultSet resultSet, int index) throws SQLException {
 		
-		shot.setFrameID(Integer.valueOf(resultSet.getString(index++))); 	// game ID
+		shot.setGameID(Integer.valueOf(resultSet.getString(index++))); 		// game ID
+		shot.setFrameNumber(Integer.valueOf(resultSet.getString(index++)));
 		shot.setShotNumber(String.valueOf(resultSet.getInt(index++)));
 		shot.setCount(resultSet.getString(index++));
 		shot.setLeave(resultSet.getString(index++));
@@ -1558,6 +1559,7 @@ public class DerbyDatabase implements IDatabase {
 									"	shot_id integer primary key " +
 									"		generated always as identity (start with 1, increment by 1), " +
 									"	game_id varchar(30), " +
+									"	frame_number varchar(30), " +
 									"	shot_number Integer, " +
 									"	count varchar(30), " +
 									"	leave varchar(30), " +
@@ -1775,17 +1777,18 @@ public class DerbyDatabase implements IDatabase {
 					//YIPPEE
 					
 					
-					insertShot = conn.prepareStatement("insert into shots (game_id, shot_number, count, leave, score, type, board, lane, ball) values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					insertShot = conn.prepareStatement("insert into shots (game_id, frame_number, shot_number, count, leave, score, type, board, lane, ball) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					for(Shot shot : shotList) {
-						insertShot.setString(1, String.valueOf(shot.getFrameID())); // game ID
-						insertShot.setInt(2, Integer.valueOf(shot.getShotNumber()));
-						insertShot.setString(3, shot.getCount());
-						insertShot.setString(4, shot.getLeave());
-						insertShot.setString(5, shot.getScore());
-						insertShot.setString(6, shot.getType());
-						insertShot.setString(7, shot.getBoard());
-						insertShot.setString(8, shot.getLane());
-						insertShot.setString(9, shot.getBall());
+						insertShot.setString(1, String.valueOf(shot.getGameID())); // game ID
+						insertShot.setString(2, String.valueOf(shot.getFrameNumber()));
+						insertShot.setInt(3, Integer.valueOf(shot.getShotNumber()));
+						insertShot.setString(4, shot.getCount());
+						insertShot.setString(5, shot.getLeave());
+						insertShot.setString(6, shot.getScore());
+						insertShot.setString(7, shot.getType());
+						insertShot.setString(8, shot.getBoard());
+						insertShot.setString(9, shot.getLane());
+						insertShot.setString(10, shot.getBall());
 						insertShot.addBatch();
 					}
 					insertShot.executeBatch();

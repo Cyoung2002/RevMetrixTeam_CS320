@@ -1,8 +1,10 @@
 package edu.ycp.cs320.booksdb.model;
 
 public class Shot {
+	
 	private String shotNumber;
-	private int frameID;
+	private int gameID;
+	private int frameNumber;
 	private String count;
 	private String leave;
 	private String score;
@@ -80,12 +82,20 @@ public class Shot {
 		this.ball = ball;
 	}
 
-	
-	public int getFrameID() {
-		return frameID;
+
+	public int getGameID() {
+		return gameID;
 	}
-	public void setFrameID(int frameID) {
-		this.frameID = frameID;
+	public void setGameID(int gameID) {
+		this.gameID = gameID;
+	}
+
+
+	public int getFrameNumber() {
+		return frameNumber;
+	}
+	public void setFrameNumber(int frameNumber) {
+		this.frameNumber = frameNumber;
 	}
 	
 }
