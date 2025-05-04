@@ -306,18 +306,18 @@ public class InitialData {
 	        	}
 	        	
 	        	
-	        	for(int s = 10; s < 33; s++) {
+	        	for(int s = 9; s < 32; s++) {
 	        		
-	        		if(s == 30 && ((rows.get(g).get(s) == null) || (rows.get(g).get(s).equals("")))) {
+	        		if(s == 29 && ((rows.get(g).get(s) == null) || (rows.get(g).get(s).equals("")))) {
 	        			break;
 	        		}
-	        		else if(s == 32 && ((rows.get(g).get(s) == null) || (rows.get(g).get(s).equals("")))) {
+	        		else if(s == 31 && ((rows.get(g).get(s) == null) || (rows.get(g).get(s).equals("")))) {
 	        			break;
 	        		}
 	        		
         			Shot shot = new Shot();
         			shot.setFrameID(gameID);	// this attribute will be changed to game ID
-        			shot.setShotNumber(String.valueOf(s-9));
+        			shot.setShotNumber(String.valueOf(s-8));
         			
         			shot.setCount(rows.get(g).get(s));
     	        	shot.setLeave(rows.get(g+1).get(s));
@@ -328,10 +328,10 @@ public class InitialData {
     	        	shot.setBall(rows.get(g+6).get(s));
     	        	shotList.add(shot);
     	        	
-    	        	if (s == 30 && (rows.get(g).get(s).equals("X")) && ((rows.get(g).get(32) == null) || (rows.get(g).get(32).equals("")))) {
+    	        	if (s == 29 && (rows.get(g).get(s).equals("X")) && ((rows.get(g).get(31) == null) || (rows.get(g).get(31).equals("")))) {
 	        			break;
 	        		}
-    	        	else if (s == 30 && !(rows.get(g).get(s).equals("X")) && ((rows.get(g).get(31) == null) || (rows.get(g).get(31).equals("")))) {
+    	        	else if (s == 29 && !(rows.get(g).get(s).equals("X")) && ((rows.get(g).get(30) == null) || (rows.get(g).get(30).equals("")))) {
     	        		break;
     	        	}
         		}
