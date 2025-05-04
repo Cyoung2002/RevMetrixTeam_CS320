@@ -55,10 +55,14 @@
     <servlet-name>InsertBallServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab02.servlet.InsertBallServlet</servlet-class>
   </servlet>
-  
-  
-  
-   <servlet>
+  <servlet>
+  	<servlet-name>AllSessionsServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.lab02.servlet.AllSessionsServlet</servlet-class>
+  </servlet>
+
+
+
+  <servlet>
       <servlet-name>AllEstablishmentServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab02.servlet.AllEstablishmentServlet</servlet-class>
   </servlet>
@@ -133,6 +137,10 @@
   <servlet-mapping>
     <servlet-name>InsertEstablishmentServlet</servlet-name>
     <url-pattern>/insertEstablishment</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AllSessionsServlet</servlet-name>
+  	<url-pattern>/allSessions</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
