@@ -151,7 +151,7 @@
                 </tr>
             </table>
 
-            <input type="submit" name="submitinsertevent" value="Add Event to Library">
+            <input type="submit" name="submitinsertevent" value="Add Event">
         </form>
 
         <br>
