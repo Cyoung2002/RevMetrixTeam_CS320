@@ -240,26 +240,29 @@ public class InitialData {
 					
 					//set the type of event (/league)
 					session.setLeague(i.next());
+					session.setSeason(i.next());
 					String skip = i.next();
-					skip = i.next();
 					session.setWeek(i.next());
+					session.setScheduled(i.next());
+					skip = i.next();
+					session.setRegSub(i.next());
+					session.setOpponent(i.next());
+					skip = i.next();
 					System.out.println(session.getLeague() + " week: " + session.getWeek());	
 					//set the date it was bowled
-					session.setBowled(i.next());
-					skip = i.next();
-					skip = i.next();
-					skip = i.next();
-					skip = i.next();
+					
 					session.setStart(i.next());
 					session.setBall(i.next());
 					System.out.println(session.getBowled() + " startlane: " + session.getStart() + " ball: " + session.getBall());
-					//something will put here for setting the games...eventually
-					//session.setGames(getGames);
-					skip = i.next();
-					skip = i.next();
-					skip = i.next();
+					
+					session.setGameOneScore(i.next());
+					session.setGameTwoScore(i.next());
+					session.setGameThreeScore(i.next());
 					session.setSeries(i.next());
 					sessionList.add(session);
+					//Im too lazy to make individual prints rn - Tanner
+					System.out.println(session.getLeague() + ", " + session.getSeason() + ", " + session.getWeek() + ", " + session.getScheduled() + ", " + session.getRegSub() + ", " + session.getOpponent() + ", " + session.getStart() + ", " + session.getBall() + ", " + session.getGameOneScore() + ", " + session.getGameTwoScore() + ", " + session.getGameThreeScore() + ", " + session.getSeries() + ", ");
+
 				}
 				System.out.println("sessionList loaded from CSV file");			
 				return sessionList;
