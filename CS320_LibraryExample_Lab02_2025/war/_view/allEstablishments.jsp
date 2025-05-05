@@ -53,7 +53,10 @@
 
         td.longNameColHeading,
         td.shortNameColHeading,
-        td.addressColHeading {
+        td.addressColHeading,
+        td.phoneColHeading,
+        td.lanesColHeading,
+        td.typeColHeading {
             text-align: center;
             font-weight: bold;
             color: #ff00ff;
@@ -65,7 +68,10 @@
 
         td.longNameCol,
         td.shortNameCol,
-        td.addressCol {
+        td.addressCol,
+        td.phoneCol,
+        td.lanesCol,
+        td.typeCol {
             text-align: left;
             color: #00ffcc;
             background: #1a0033;
@@ -132,6 +138,10 @@
                     <td class="longNameColHeading">Long Name</td>
                     <td class="shortNameColHeading">Short Name</td>
                     <td class="addressColHeading">Address</td>
+                    <td class="phoneColHeading">Phone</td>
+                    <td class="lanesColHeading">Lanes</td>
+                    <td class="typeColHeading">Type</td>
+                    
                 </tr>
 
                 <c:forEach items="${establishments}" var="establishment">
@@ -139,6 +149,9 @@
                         <td class="longNameCol">${establishment.longname}</td>
                         <td class="shortNameCol">${establishment.shortname}</td>
                         <td class="addressCol">${establishment.address}</td>
+                        <td class="phoneCol">${establishment.phone}</td>
+                        <td class="lanesCol">${establishment.lanes}</td>
+                        <td class="typeCol">${establishment.type}</td>
                     </tr>
                 </c:forEach>
             </table>

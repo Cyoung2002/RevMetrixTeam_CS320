@@ -115,6 +115,11 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
+        
+        .table-container {
+    		overflow-x: auto;
+   	 		max-width: 100%;
+		}
 
 				
 </style>
@@ -132,6 +137,7 @@
         <h1>Sessions</h1>
 
         <form action="${pageContext.servletContext.contextPath}/index" method="post">
+          <div class="table-container">
             <table>
                 <tr>
                     <td class="LeagueColHeading">League type</td>
@@ -165,6 +171,7 @@
                     </tr>
                 </c:forEach>
             </table>
+            </div>
         </form>
         <div class="button-container">
             <form action="${pageContext.servletContext.contextPath}/index" method="post">

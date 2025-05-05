@@ -15,10 +15,10 @@ public class InsertEstablishmentController {
 		db = DatabaseProvider.getInstance();		
 	}
 
-	public boolean insertEstablishmentIntoLibrary(String longName, String shortName, String address) {
+	public boolean insertEstablishmentIntoLibrary(String longName, String shortName, String address, String phone, Integer lanes, String type) {
 		
 		// insert new establishment into DB
-		Integer establishment_id = db.insertEstablishmentIntoEstablishmentsTable(longName, shortName, address);
+		Integer establishment_id = db.insertEstablishmentIntoEstablishmentsTable(longName, shortName, address, phone, lanes, type);
 
 		// check if the insertion succeeded
 		if (establishment_id > 0)
