@@ -10,19 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Ball;
+import edu.ycp.cs320.booksdb.model.Game;
+import edu.ycp.cs320.booksdb.model.Shot;
 import edu.ycp.cs320.lab02.controller.AllAuthorsController;
-import edu.ycp.cs320.lab02.controller.ArsenalController;
+import edu.ycp.cs320.lab02.controller.FindAllShotsInGameController;
 
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private ArsenalController controller = null;	
+	private FindAllShotsInGameController controller = null;	
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("\nArsenalServlet: doGet");
+		System.out.println("\nGameServlet: doGet");
 
 		String user = (String) req.getSession().getAttribute("user");
 		if (user == null) {
@@ -38,25 +40,28 @@ public class GameServlet extends HttpServlet {
 
 		System.out.println("   User: <" + user + "> logged in");
 
-		req.getRequestDispatcher("/_view/arsenal.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/game.jsp").forward(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 
-		System.out.println("\nArsenalServlet: doPost");		
+		System.out.println("\nGameServlet: doPost");		
 
-		ArrayList<Ball> arsenal = null;
+		ArrayList<Shot> game = null;
 		String errorMessage       = null;
-
-		controller = new ArsenalController();
+		String gameID = null;
+		
+		gameID = req.getParameter("gameID");
+	
+		controller = new FindAllShotsInGameController();
 
 		// get list of authors returned from query
-		arsenal = controller.getAllBalls();
+		game = controller.findAllShotsInGame(gameID);
 
 		// any authors found?
-		if (arsenal == null) {
+		if (game == null) {
 			errorMessage = "No Balls found in Arsenal";
 		}
 
@@ -69,6 +74,6 @@ public class GameServlet extends HttpServlet {
 		}
 
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/arsenal.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/game.jsp").forward(req, resp);
 	}	
 }
