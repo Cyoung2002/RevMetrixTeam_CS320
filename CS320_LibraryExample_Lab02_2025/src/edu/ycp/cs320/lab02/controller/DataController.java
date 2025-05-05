@@ -5,6 +5,7 @@ import java.util.List;
 
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Establishment;
+import edu.ycp.cs320.booksdb.model.Shot;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
@@ -18,28 +19,31 @@ public class DataController {
 		// creating DB instance here
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();		
-	}
+	
 
-	public ArrayList<Establishment> getAllEstablishments() {
+		public ArrayList<?> OverallGameAverageforEvent(?) {
 		
-		// get the list of establishments from DB
-		ArrayList<Establishment> establishmentList = db.findAllEstablishments();
-		ArrayList<Establishment> establishments = null;
+			// get the list of shots from DB
+			ArrayList<Game> gameList = db.findAllShotsInGame(gameID);
+			ArrayList<Shot> shots = null;
 		
-		if (establishmentList.isEmpty()) {
-			System.out.println("No establishments found in library");
-			return null;
+			if (gameList.isEmpty()) {
+				System.out.println("No games found for this event.");
+				return null;
+			}
+			else {
+				shots = new ArrayList<Shot>();
+				for (Shot shot : shotList) {
+					shots.add(shot);
+				System.out.println(shot.getShotNumber() + ", " + shot.getScore());
+				}			
+			}
+		
+		// return overall average
+		return average;
 		}
-		else {
-			establishments = new ArrayList<Establishment>();
-			for (Establishment establishment : establishmentList) {
-				establishments.add(establishment);
-				System.out.println(establishment.getLongname() + ", " + establishment.getShortname() + ", " + establishment.getAddress());
-			}			
-		}
-		
-		// return establishments for this title
-		return establishments;
 	}
 }
+
+
 
