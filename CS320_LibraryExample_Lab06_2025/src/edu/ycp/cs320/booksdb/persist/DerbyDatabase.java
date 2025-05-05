@@ -1520,7 +1520,7 @@ public class DerbyDatabase implements IDatabase {
 									"	week varchar(10), " +
 									"	date_scheduled varchar(10), " +
 									"	reg_sub varchar(10), " +
-									"	opponent varchar(30), " +
+									"	opponent varchar(50), " +
 									"	start_lane varchar(10), " +
 									"	ball varchar(10), " +
 									"	game_one varchar(10), " +
