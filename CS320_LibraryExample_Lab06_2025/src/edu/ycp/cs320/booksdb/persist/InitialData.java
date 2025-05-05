@@ -136,6 +136,9 @@ public class InitialData {
 				establishment.setLongname(i.next());				
 				establishment.setShortname(i.next());
 				establishment.setAddress(i.next());
+				establishment.setPhone(i.next());
+				establishment.setLanes(Integer.parseInt(i.next()));
+				establishment.setType(i.next());
 				establishmentList.add(establishment);
 			}
 			System.out.println("establishmentList loaded from CSV file");
