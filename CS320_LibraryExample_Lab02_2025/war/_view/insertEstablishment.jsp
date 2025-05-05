@@ -132,7 +132,19 @@
                 <tr>
                     <td class="label">Address:</td>
                     <td><input type="text" name="establishment_address" size="50" value="${establishment_address}" /></td>
-                </tr>							
+                </tr>		
+                 <tr>
+                    <td class="label">Phone:</td>
+                    <td><input type="text" name="establishment_phone" size="50" value="${establishment_phone}" /></td>
+                </tr>	
+                 <tr>
+                    <td class="label">Lanes:</td>
+                    <td><input type="text" name="establishment_lanes" size="50" value="${establishment_lanes}" /></td>
+                </tr>	
+                <tr>
+                    <td class="label">Type:</td>
+                    <td><input type="text" name="establishment_type" size="50" value="${establishment_type}" /></td>
+                </tr>						
             </table>
 
             <input type="submit" name="submitinsertestablishment" value="Add Establishment">
