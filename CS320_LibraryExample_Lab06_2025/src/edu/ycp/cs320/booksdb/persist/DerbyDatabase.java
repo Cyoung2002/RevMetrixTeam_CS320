@@ -234,6 +234,9 @@ public class DerbyDatabase implements IDatabase {
 		establishment.setLongname(resultSet.getString(index++));
 		establishment.setShortname(resultSet.getString(index++));
 		establishment.setAddress(resultSet.getString(index++));
+		establishment.setPhone(resultSet.getString(index++));
+		establishment.setLanes(Integer.parseInt(resultSet.getString(index++)));
+		establishment.setType(resultSet.getString(index++));
 	}
 
 	
@@ -616,7 +619,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
-	public Integer insertEstablishmentIntoEstablishmentsTable(final String longName, final String shortName, final String address) {
+	public Integer insertEstablishmentIntoEstablishmentsTable(final String longName, final String shortName, final String address, final String phone, final Integer lanes, final String type) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -632,12 +635,15 @@ public class DerbyDatabase implements IDatabase {
 					// now insert new Establishment into Establishments table
 					// prepare SQL insert statement to add new Establishment to Establishments table
 					stmt4 = conn.prepareStatement(
-							"insert into establishments (longname, shortname, address) " +
-							"  values(?, ?, ?) "
+							"insert into establishments (longname, shortname, address, phone, lanes, type) " +
+							"  values(?, ?, ?, ?, ?, ?) "
 					);
 					stmt4.setString(1, longName);
 					stmt4.setString(2, shortName);
 					stmt4.setString(3, address);
+					stmt4.setString(4, phone);
+					stmt4.setInt(5, lanes);
+					stmt4.setString(6, type);
 					
 					// execute the update
 					stmt4.executeUpdate();
@@ -649,12 +655,15 @@ public class DerbyDatabase implements IDatabase {
 					// prepare SQL statement to retrieve establishment_id for new Book
 					stmt5 = conn.prepareStatement(
 							"select establishment_id from establishments " +
-							"  where longName = ? and shortName = ? and address = ? "
+							"  where longName = ? and shortName = ? and address = ? and phone = ? and lanes = ? and type = ? "
 									
 					);
 					stmt5.setString(1, longName);
 					stmt5.setString(2, shortName);
 					stmt5.setString(3, address);
+					stmt5.setString(4, phone);
+					stmt5.setInt(5, lanes);
+					stmt5.setString(6, type);
 
 					// execute the query
 					resultSet5 = stmt5.executeQuery();
@@ -878,7 +887,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	@Override
-	public Integer insertEstablishment(final String longname, final String shortname, final String address) {
+	public Integer insertEstablishment(final String longname, final String shortname, final String address, final String phone, final Integer lanes, final String type) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -919,12 +928,15 @@ public class DerbyDatabase implements IDatabase {
 						if (establishment_id <= 0) {
 							// prepare SQL insert statement to add Establishment to Establishments table
 							stmt2 = conn.prepareStatement(
-									"insert into establishments (longname, shortname, address) " +
-									"  values(?, ?, ?) "
+									"insert into establishments (longname, shortname, address, phone, lanes, type) " +
+									"  values(?, ?, ?, ?, ?, ?) "
 							);
 							stmt2.setString(1, longname);
 							stmt2.setString(2, shortname);
 							stmt2.setString(3, address);
+							stmt2.setString(4, phone);
+							stmt2.setString(5, lanes);
+							stmt2.setString(6, type);
 							
 							// execute the update
 							stmt2.executeUpdate();
@@ -1459,7 +1471,10 @@ public class DerbyDatabase implements IDatabase {
 									"		generated always as identity (start with 1, increment by 1), " +
 									"	longname varchar(60), " +
 									"	shortname varchar(30), " +
-									"	address varchar(60) " +
+									"	address varchar(60), " +
+									"	phone varchar(60), " +
+									"	lanes integer, " +
+									"	type varchar(60) " +
 							")"
 					);	
 					stmt4.executeUpdate();
@@ -1681,11 +1696,14 @@ public class DerbyDatabase implements IDatabase {
 					
 					
 					// must completely populate Establishment table before events
-					insertEstablishment = conn.prepareStatement("insert into establishments (longname, shortname, address) values (?, ?, ?)");
+					insertEstablishment = conn.prepareStatement("insert into establishments (longname, shortname, address, phone, lanes, type) values (?, ?, ?, ?, ?, ?)");
 					for (Establishment establishment : establishmentList) {
 						insertEstablishment.setString(1, establishment.getLongname());
 						insertEstablishment.setString(2, establishment.getShortname());
 						insertEstablishment.setString(3, establishment.getAddress());
+						insertEstablishment.setString(4, establishment.getPhone());
+						insertEstablishment.setInt(5, establishment.getLanes());
+						insertEstablishment.setString(6, establishment.getType());
 						insertEstablishment.addBatch();
 					}
 					insertEstablishment.executeBatch();

@@ -34,7 +34,7 @@ public class AllEstablishmentsController {
 			establishments = new ArrayList<Establishment>();
 			for (Establishment establishment : establishmentList) {
 				establishments.add(establishment);
-				System.out.println(establishment.getLongname() + ", " + establishment.getShortname() + ", " + establishment.getAddress());
+				System.out.println(establishment.getLongname() + ", " + establishment.getShortname() + ", " + establishment.getAddress() +  establishment.getPhone() + establishment.getLanes() + establishment.getType());
 			}			
 		}
 		
