@@ -10,22 +10,22 @@ import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
 
-public class DataController {
+public class StatsController {
 
 	private IDatabase db = null;
 
-	public DataController() {
+	public StatsController() {
 		
 		// creating DB instance here
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();		
 	
 
-		public ArrayList<?> OverallGameAverageforEvent(?) {
+		public Integer OverallGameAverageforEvent(Integer date) {
 		
 			// get the list of shots from DB
-			ArrayList<Game> gameList = db.findAllShotsInGame(gameID);
-			ArrayList<Shot> shots = null;
+			ArrayList<Average> gameList = db.findAllShotsInGame(gameID);
+			ArrayList<Game> shots = null;
 		
 			if (gameList.isEmpty()) {
 				System.out.println("No games found for this event.");

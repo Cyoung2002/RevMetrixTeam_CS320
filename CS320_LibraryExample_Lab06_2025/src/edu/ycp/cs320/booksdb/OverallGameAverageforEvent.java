@@ -9,7 +9,7 @@ import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
 
-public class BooksByAuthorLastNameQuery {
+public class OverallGameAverageforEvent {
 	public static void main(String[] args) throws Exception {
 		
 		Scanner keyboard = new Scanner(System.in);
@@ -17,14 +17,14 @@ public class BooksByAuthorLastNameQuery {
 		// Create the default IDatabase instance
 		InitDatabase.init(keyboard);
 		
-		System.out.print("Enter an event name and date: ");
+		System.out.print("Enter an event's long name and date: ");
 		String longname = keyboard.nextLine();
 		String date = keyboard.nextLine();
 		
 		IDatabase db = DatabaseProvider.getInstance();
-		List<Pair<Author, Book>> authorBookList = db.findAuthorAndBookByAuthorLastName(lastName);
+		List<Pair<Author, Book>> authorBookList = db.findAuthorAndBookByAuthorLastName(longname);
 		if (authorBookList.isEmpty()) {
-			System.out.println("No books found for author <" + lastName + ">");
+			System.out.println("No games found for this event <" + longname + ">");
 		}
 		else {
 			for (Pair<Author, Book> authorBook : authorBookList) {
