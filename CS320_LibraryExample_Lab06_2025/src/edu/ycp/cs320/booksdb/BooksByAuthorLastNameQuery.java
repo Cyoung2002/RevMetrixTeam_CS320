@@ -17,9 +17,8 @@ public class BooksByAuthorLastNameQuery {
 		// Create the default IDatabase instance
 		InitDatabase.init(keyboard);
 		
-		System.out.print("Enter an event name and date: ");
-		String longname = keyboard.nextLine();
-		String date = keyboard.nextLine();
+		System.out.print("Enter an author's last name: ");
+		String lastName = keyboard.nextLine();
 		
 		IDatabase db = DatabaseProvider.getInstance();
 		List<Pair<Author, Book>> authorBookList = db.findAuthorAndBookByAuthorLastName(lastName);

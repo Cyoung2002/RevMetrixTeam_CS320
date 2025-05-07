@@ -33,4 +33,5 @@ public interface IDatabase {
 	public ArrayList<Establishment> findAllEstablishments();
 	public Integer insertEstablishmentIntoEstablishmentsTable(final String longname, final String shortname, final String address, final String phone, final Integer lanes, final String type);	
 	public ArrayList<Shot> findAllShotsInGame(String gameID);
+	public ArrayList<Session> findGameswithEventDate(final String longname);
 }
