@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.BookAuthor;
@@ -239,29 +242,34 @@ public class InitialData {
 					Iterator<String> i = tuple.iterator();
 					Session session = new Session();
 					
-					//WE WILL NEED TO ADD MORE OF THE SETTERS HERE JUST WANTED A BASIS
-					
 					//set the type of event (/league)
 					session.setLeague(i.next());
 					session.setSeason(i.next());
 					String skip = i.next();
-					session.setWeek(i.next());
-					session.setScheduled(i.next());
+					session.setWeek(Integer.parseInt(i.next()));
+					//all of this is date stuff
+					String dateStr = i.next();
+		            try {
+		                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		                java.util.Date parsedDate = dateFormat.parse(dateStr);
+		                java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+		                session.setScheduled(sqlDate);
+		            } catch (java.text.ParseException e) {
+		                System.err.println("Error parsing date: " + dateStr);
+		                throw new IOException("Invalid date format", e);
+		            }
 					skip = i.next();
 					session.setRegSub(i.next());
 					session.setOpponent(i.next());
 					skip = i.next();
-					System.out.println(session.getLeague() + " week: " + session.getWeek());	
-					//set the date it was bowled
 					
-					session.setStart(i.next());
+					session.setStart(Integer.parseInt(i.next()));
 					session.setBall(i.next());
-					System.out.println(session.getBowled() + " startlane: " + session.getStart() + " ball: " + session.getBall());
 					
-					session.setGameOneScore(i.next());
-					session.setGameTwoScore(i.next());
-					session.setGameThreeScore(i.next());
-					session.setSeries(i.next());
+					session.setGameOneScore(Integer.parseInt(i.next()));
+					session.setGameTwoScore(Integer.parseInt(i.next()));
+					session.setGameThreeScore(Integer.parseInt(i.next()));
+					session.setSeries(Integer.parseInt(i.next()));
 					sessionList.add(session);
 					//Im too lazy to make individual prints rn - Tanner
 					System.out.println(session.getLeague() + ", " + session.getSeason() + ", " + session.getWeek() + ", " + session.getScheduled() + ", " + session.getRegSub() + ", " + session.getOpponent() + ", " + session.getStart() + ", " + session.getBall() + ", " + session.getGameOneScore() + ", " + session.getGameTwoScore() + ", " + session.getGameThreeScore() + ", " + session.getSeries() + ", ");

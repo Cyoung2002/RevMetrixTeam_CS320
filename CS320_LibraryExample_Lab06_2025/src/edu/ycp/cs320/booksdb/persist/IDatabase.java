@@ -1,5 +1,6 @@
 package edu.ycp.cs320.booksdb.persist;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public interface IDatabase {
 	public List<Author> findAllAuthors();
 	
 	public ArrayList<Session> findAllSessions();
-	public Integer insertSession(final String league, final String bowled, final String ball, final String startLane,final String week, final String series);
+	public Integer insertSession(final String league, final Date bowled, final String ball, final int startLane, final int week, final int series);
 	public ArrayList<Event> findAllEvents();
 	public ArrayList<Ball> findAllBalls();
 	public List<Author> removeBookByTitle(String title);

@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Wed May 07 15:55:57 EDT 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0196-ac51-a11a-000007882410 
-on database directory /Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProject_CS320/CS320_LibraryExample_Lab06_2025/CS320-2025-LibraryExample-DB/library with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@1e2e2406 
-Loaded from file:/Users/caroline/Desktop/CS320_Derby/lib/derby.jar
-java.vendor=Eclipse Adoptium
-java.runtime.version=21.0.5+11-LTS
-user.dir=/Users/caroline/Desktop/cs320-Spring2025/RevMextrixTeamProject_CS320/CS320_LibraryExample_Lab06_2025
-os.name=Mac OS X
-os.arch=x86_64
-os.version=13.2
+Thu May 08 17:47:55 EDT 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0196-b1de-8e15-000006741a60 
+on database directory C:\CS320-2025-LibraryExample-DB\library with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
+Loaded from file:/C:/CS320/CS320/CS320_Derby/CS320_Derby/lib/derby.jar
+java.vendor=Temurin
+java.runtime.version=1.8.0_442-b06
+user.dir=C:\Users\tanne\Documents\GitHub\RevMetrixTeam_CS320\CS320_LibraryExample_Lab06_2025
+os.name=Windows 11
+os.arch=amd64
+os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
