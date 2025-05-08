@@ -185,6 +185,68 @@ public class DerbyDatabase implements IDatabase {
 	}	
 	
 	
+	
+	@Override
+	public ArrayList<Session> findGameswithEventDate(final String longname) {
+		return executeTransaction(new Transaction<ArrayList<Session>>() {
+			@Override
+			public ArrayList<Session> execute(Connection conn) throws SQLException {
+				PreparedStatement stmt = null;
+				ResultSet resultSet = null;
+
+				try {
+					// Step 1: Get start_date from events table
+					stmt = conn.prepareStatement(
+						"SELECT start_date FROM events WHERE longname = ?"
+					);
+					stmt.setString(1, longname);
+					resultSet = stmt.executeQuery();
+
+					if (!resultSet.next()) {
+						System.out.println("No event found with longname: " + longname);
+						return new ArrayList<>();
+					}
+
+					String startDate = resultSet.getString("start_date");
+
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+
+					// Step 2: Get sessions with matching date_scheduled
+					stmt = conn.prepareStatement(
+						"SELECT game_one, game_two, game_three FROM sessions WHERE date_scheduled = ?"
+					);
+					stmt.setString(1, startDate);
+					resultSet = stmt.executeQuery();
+
+					ArrayList<Session> sessions = new ArrayList<>();
+
+					while (resultSet.next()) {
+						Session session = new Session();
+						session.setGameOneScore(resultSet.getString("game_one"));
+						session.setGameTwoScore(resultSet.getString("game_two"));
+						session.setGameThreeScore(resultSet.getString("game_three"));
+						sessions.add(session);
+					}
+
+					if (sessions.isEmpty()) {
+						System.out.println("No sessions found for event date: " + startDate);
+					}
+
+					return sessions;
+
+				} finally {
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+	}
+
+
+
+	
+	
 	// transaction that retrieves all Authors in Library
 	@Override
 	public List<Author> findAllAuthors() {
@@ -282,6 +344,8 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+	
+	
 
 	@Override
 	public ArrayList<Ball> findAllBalls() {
