@@ -1,6 +1,7 @@
 package edu.ycp.cs320.lab02.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -8,11 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab02.controller.InsertEventController;
+import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.model.Establishment;
+import edu.ycp.cs320.lab02.controller.AllEstablishmentsController;
+import edu.ycp.cs320.lab02.controller.AllEventsController;
 
 public class InsertEventServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private InsertEventController controller = null;	
+	private InsertEventController controller = null;
+	private AllEstablishmentsController establishmentsController = null;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -33,6 +39,11 @@ public class InsertEventServlet extends HttpServlet {
 		// proceed to handle request...
 		
 		System.out.println("   User: <" + user + "> logged in");
+		
+		ArrayList<Establishment> establishments = null;
+		establishmentsController = new AllEstablishmentsController();
+		establishments = establishmentsController.getAllEstablishments();
+		req.setAttribute("establishments",  establishments);
 
 		req.getRequestDispatcher("/_view/insertEvent.jsp").forward(req, resp);
 	}
@@ -64,7 +75,7 @@ public class InsertEventServlet extends HttpServlet {
 		longname = req.getParameter("event_longname");
 		shortname = req.getParameter("event_shortname");
 		type = req.getParameter("event_type");
-		establishment = req.getParameter("event_establishment");
+		establishment = req.getParameter("establishment");
 		season = req.getParameter("event_season");
 		team = Integer.parseInt(req.getParameter("event_team"));
 		composition = req.getParameter("event_composition");
@@ -108,7 +119,12 @@ public class InsertEventServlet extends HttpServlet {
 		req.setAttribute("event_longname", longname);
 		req.setAttribute("event_shortname",  shortname);
 		req.setAttribute("event_type",  type);
-		req.setAttribute("event_establishment", establishment);
+		
+		ArrayList<Establishment> establishments = null;
+		establishmentsController = new AllEstablishmentsController();
+		establishments = establishmentsController.getAllEstablishments();
+		req.setAttribute("establishments",  establishments);
+		
 		req.setAttribute("event_season", season);
 		req.setAttribute("event_team", team);
 		req.setAttribute("event_composition", composition);
