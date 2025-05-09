@@ -122,6 +122,31 @@ select:focus {
             background: #ff3300;
             box-shadow: 0 0 15px #ff00ff;
         }
+        
+        input[type="date"] {
+    		width: 90%;
+    		padding: 8px;
+    		border: 2px solid #ff00ff;
+    		border-radius: 5px;
+    		background-color: #0a0a2a;
+    		color: #00ffcc;
+    		font-size: 16px;
+    		font-family: 'Orbitron', sans-serif;
+    		transition: all 0.3s ease;
+    		appearance: none; /* For better cross-browser consistency */
+		}
+
+		input[type="date"]:focus {
+    		border-color: #00ffcc;
+    		outline: none;
+    		box-shadow: 0 0 8px #00ffcc;
+		}
+		
+		input[type="date"]::-webkit-calendar-picker-indicator {
+    		filter: invert(1); /* Makes the icon light-colored */
+    		cursor: pointer;
+		}
+        
     </style>
 </head>
 
@@ -186,11 +211,11 @@ select:focus {
                 </tr>
                 <tr>
                     <td class="label">Start Date:</td>
-                    <td><input type="text" name="event_start" size="20" value="${event_start}" /></td>
+                    <td><input type="date" name="event_start" size="20" value="${event_start}" /></td>
                 </tr>
                 <tr>
                     <td class="label">End Date:</td>
-                    <td><input type="text" name="event_end" size="20" value="${event_end}" /></td>
+                    <td><input type="date" name="event_end" size="20" value="${event_end}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Games Per Session:</td>
