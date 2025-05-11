@@ -187,7 +187,52 @@ public class DerbyDatabase implements IDatabase {
 	
 	
 	@Override
-	public ArrayList<Session> findGameswithEventDate(final String longname) {
+	public ArrayList<Session> findGamesForSessionLeague(final String eventShortname) {
+	    return executeTransaction(new Transaction<ArrayList<Session>>() {
+	        @Override
+	        public ArrayList<Session> execute(Connection conn) throws SQLException {
+	            PreparedStatement stmt = null;
+	            ResultSet resultSet = null;
+
+	            try {
+	                // Query to select all game scores for the specified league (eventShortname)
+	                stmt = conn.prepareStatement(
+	                    "SELECT game_one, game_two, game_three " +
+	                    "FROM sessions WHERE league = ?"
+	                );
+	                stmt.setString(1, eventShortname);
+	                resultSet = stmt.executeQuery();
+
+	                // List to hold all the game scores
+	                ArrayList<Session> allGameScores = new ArrayList<>();
+
+	                // Loop through the result set and add each game score to the list
+	                while (resultSet.next()) {
+	                    int gameOne = resultSet.getInt("game_one");
+	                    int gameTwo = resultSet.getInt("game_two");
+	                    int gameThree = resultSet.getInt("game_three");
+
+	                    // Add all 3 game scores to the list
+	                    allGameScores.add(gameOne);
+	                    allGameScores.add(gameTwo);
+	                    allGameScores.add(gameThree);
+	                }
+
+	                // Return the list of all game scores
+	                return allGameScores;
+
+	            } finally {
+	                DBUtil.closeQuietly(resultSet);
+	                DBUtil.closeQuietly(stmt);
+	            }
+	        }
+	    });
+	}
+
+
+	
+	@Override
+	public ArrayList<Session> findGamesWithSessionDate(final String date) {
 		return executeTransaction(new Transaction<ArrayList<Session>>() {
 			@Override
 			public ArrayList<Session> execute(Connection conn) throws SQLException {
@@ -195,30 +240,11 @@ public class DerbyDatabase implements IDatabase {
 				ResultSet resultSet = null;
 
 				try {
-					// Step 1: Get start_date from events table
-					stmt = conn.prepareStatement(
-						"SELECT start_date FROM events WHERE longname = ?"
-					);
-					stmt.setString(1, longname);
-					resultSet = stmt.executeQuery();
-
-					if (!resultSet.next()) {
-						System.out.println("No event found with longname: " + longname);
-						return new ArrayList<>();
-					}
-
-					String startDate = resultSet.getString("start_date");
-
-					DBUtil.closeQuietly(resultSet);
-					DBUtil.closeQuietly(stmt);
-
-					// Step 2: Get sessions with matching date_scheduled
 					stmt = conn.prepareStatement(
 						"SELECT game_one, game_two, game_three FROM sessions WHERE date_scheduled = ?"
 					);
-					stmt.setString(1, startDate);
+					stmt.setString(1, date);
 					resultSet = stmt.executeQuery();
-
 					ArrayList<Session> sessions = new ArrayList<>();
 
 					while (resultSet.next()) {
@@ -230,7 +256,7 @@ public class DerbyDatabase implements IDatabase {
 					}
 
 					if (sessions.isEmpty()) {
-						System.out.println("No sessions found for event date: " + startDate);
+						System.out.println("No sessions found for this date: " + date);
 					}
 
 					return sessions;
@@ -242,6 +268,7 @@ public class DerbyDatabase implements IDatabase {
 			}
 		});
 	}
+
 
 
 
