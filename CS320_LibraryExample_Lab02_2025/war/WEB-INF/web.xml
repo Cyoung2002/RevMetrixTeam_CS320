@@ -83,6 +83,11 @@
     <servlet-class>edu.ycp.cs320.lab02.servlet.InsertSessionServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>StrikePercentageGameServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.StrikePercentageGameServlet</servlet-class>
+  </servlet>
+  
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
@@ -161,6 +166,11 @@
   <servlet-mapping>
     <servlet-name>InsertSessionServlet</servlet-name>
     <url-pattern>/insertSession</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>StrikePercentageGameServlet</servlet-name>
+    <url-pattern>/strikePercentageGame</url-pattern>
   </servlet-mapping>
   
 </web-app>
