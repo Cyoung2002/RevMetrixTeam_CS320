@@ -403,7 +403,7 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							"select * from sessions " +
-							" order by week asc"
+							" order by week asc, date_scheduled asc"
 					);
 					
 					ArrayList<Session> result = new ArrayList<Session>();

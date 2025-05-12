@@ -230,58 +230,74 @@ public class InitialData {
 	}
 	
 // reads initial session data from CSV file and returns a List of Books
-		public static List<Session> getSessions() throws IOException {
-			List<Session> sessionList = new ArrayList<Session>();
-			ReadCSV readSessions = new ReadCSV("sessions.csv");
-			try {
-				while (true) {
-					List<String> tuple = readSessions.next();
-					if (tuple == null) {
-						break;
-					}
-					Iterator<String> i = tuple.iterator();
-					Session session = new Session();
-					
-					//set the type of event (/league)
-					session.setLeague(i.next());
-					session.setSeason(i.next());
-					String skip = i.next();
-					session.setWeek(Integer.parseInt(i.next()));
-					//all of this is date stuff
-					String dateStr = i.next();
-		            try {
-		                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		                java.util.Date parsedDate = dateFormat.parse(dateStr);
-		                java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
-		                session.setScheduled(sqlDate);
-		            } catch (java.text.ParseException e) {
-		                System.err.println("Error parsing date: " + dateStr);
-		                throw new IOException("Invalid date format", e);
-		            }
-					skip = i.next();
-					session.setRegSub(i.next());
-					session.setOpponent(i.next());
-					skip = i.next();
-					
-					session.setStart(Integer.parseInt(i.next()));
-					session.setBall(i.next());
-					
-					session.setGameOneScore(Integer.parseInt(i.next()));
-					session.setGameTwoScore(Integer.parseInt(i.next()));
-					session.setGameThreeScore(Integer.parseInt(i.next()));
-					session.setSeries(Integer.parseInt(i.next()));
-					sessionList.add(session);
-					//Im too lazy to make individual prints rn - Tanner
-					System.out.println(session.getLeague() + ", " + session.getSeason() + ", " + session.getWeek() + ", " + session.getScheduled() + ", " + session.getRegSub() + ", " + session.getOpponent() + ", " + session.getStart() + ", " + session.getBall() + ", " + session.getGameOneScore() + ", " + session.getGameTwoScore() + ", " + session.getGameThreeScore() + ", " + session.getSeries() + ", ");
+	public static List<Session> getSessions() throws IOException {
+	    List<Session> sessionList = new ArrayList<Session>();
+	    ReadCSV readSessions = new ReadCSV("sessions.csv");
+	    try {
+	        while (true) {
+	            List<String> tuple = readSessions.nextBox(); // Use nextBox() instead of next()
+	            if (tuple == null) {
+	                break;
+	            }
+	            Iterator<String> i = tuple.iterator();
+	            Session session = new Session();
 
-				}
-				System.out.println("sessionList loaded from CSV file");			
-				return sessionList;
-			} finally {
-				readSessions.close();
-			}
-		}
+	            // Set fields (now handles empty strings safely)
+	            session.setLeague(i.hasNext() ? i.next() : "");
+	            session.setSeason(i.hasNext() ? i.next() : "");
+	            String skip = i.hasNext() ? i.next() : ""; // Skip unused field
+	            //need to not use i.next() otherwise will go to the next index
+	            String weekStr = i.hasNext() ? i.next() : "";
+	            session.setWeek(!weekStr.isEmpty() ? Integer.parseInt(weekStr) : 0);
+	            // Date parsing
+	            String dateStr = i.hasNext() ? i.next() : "";
+	            try {
+	                if (!dateStr.isEmpty()) {
+	                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	                    java.util.Date parsedDate = dateFormat.parse(dateStr);
+	                    java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+	                    session.setScheduled(sqlDate);
+	                }
+	            } catch (java.text.ParseException e) {
+	                System.err.println("Error parsing date: " + dateStr);
+	                throw new IOException("Invalid date format", e);
+	            }
 
+	            skip = i.hasNext() ? i.next() : ""; // Skip unused field
+	            session.setRegSub(i.hasNext() ? i.next() : "");
+	            session.setOpponent(i.hasNext() ? i.next() : "");
+	            skip = i.hasNext() ? i.next() : ""; // Skip unused field
+
+	            String startStr = i.hasNext() ? i.next() : "";
+	            session.setStart(!startStr.isEmpty() && !startStr.equals("N/A") ? Integer.parseInt(startStr) : 0);
+	            session.setBall(i.hasNext() ? i.next() : "");
+
+	            String gameOneStr = i.hasNext() ? i.next() : "";
+	            session.setGameOneScore(!gameOneStr.isEmpty() ? Integer.parseInt(gameOneStr) : 0);
+	            
+	            String gameTwoStr = i.hasNext() ? i.next() : "";
+	            session.setGameTwoScore(!gameTwoStr.isEmpty() ? Integer.parseInt(gameTwoStr) : 0);
+	            
+	            String gameThreeStr = i.hasNext() ? i.next() : "";
+	            session.setGameThreeScore(!gameThreeStr.isEmpty() ? Integer.parseInt(gameThreeStr) : 0);
+	            
+	            String seriesStr = i.hasNext() ? i.next() : "";
+	            session.setSeries(!seriesStr.isEmpty() ? Integer.parseInt(seriesStr) : 0);
+
+	            sessionList.add(session);
+	            System.out.println(session.getLeague() + ", " + session.getSeason() + ", " + 
+	                session.getWeek() + ", " + session.getScheduled() + ", " + 
+	                session.getRegSub() + ", " + session.getOpponent() + ", " + 
+	                session.getStart() + ", " + session.getBall() + ", " + 
+	                session.getGameOneScore() + ", " + session.getGameTwoScore() + ", " + 
+	                session.getGameThreeScore() + ", " + session.getSeries());
+	        }
+	        System.out.println("sessionList loaded from CSV file");
+	        return sessionList;
+	    } finally {
+	        readSessions.close();
+	    }
+	}
 
 
 //reads initial game data from CSV file and returns a List of games, frames, shots
