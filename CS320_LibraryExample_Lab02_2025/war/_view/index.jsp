@@ -69,14 +69,15 @@
             font-size: 16px;
         }
 
-        /* Buttons (adjust for side-by-side layout) */
-        .button-container {
-            display: flex;
-            justify-content: space-between; /* To evenly distribute buttons */
-            flex-wrap: wrap; /* Wrap buttons if the screen is smaller */
-            gap: 10px; /* Space between buttons */
-            margin: 20px 0;
-        }
+
+.button-container {
+    display: flex;
+    justify-content: center; 
+    gap: 20px; 
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
 
         button {
             font-family: 'Orbitron', sans-serif; 

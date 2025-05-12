@@ -1,6 +1,9 @@
 package edu.ycp.cs320.lab02.servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,10 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.booksdb.model.Session;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
+import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
 
 public class OverallGameAverageForSessionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	@Override
+	public void init() throws ServletException {
+	    super.init();
+	    System.out.println("Initializing database instance in OverallGameAverageForSessionServlet");
+	    DatabaseProvider.setInstance(new DerbyDatabase());
+	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -21,7 +32,6 @@ public class OverallGameAverageForSessionServlet extends HttpServlet {
 
 	    System.out.println("\nOverallGameAverageForSessionServlet: doGet");
 
-	    // remove previous results if any
 	    req.setAttribute("formSubmitted", false);
 	    req.setAttribute("errorMessage", null);
 	    req.setAttribute("percentResult", null);
@@ -36,23 +46,31 @@ public class OverallGameAverageForSessionServlet extends HttpServlet {
 
 	    System.out.println("\nOverallGameAverageForSessionServlet: doPost");
 
-	    String sessionDate = req.getParameter("sessionDate");
+	    String rawDate = req.getParameter("sessionDate");
+	    String formattedDate = null;
 	    Double average = null;
 	    String errorMessage = null;
 
 	    req.setAttribute("formSubmitted", true);
-	    req.setAttribute("sessionDate", sessionDate);
+	    req.setAttribute("sessionDate", rawDate);  // Keep ISO format for redisplay in form
 
-	    if (sessionDate == null || sessionDate.trim().isEmpty()) {
+	    if (rawDate == null || rawDate.trim().isEmpty()) {
 	        errorMessage = "Please enter a session date.";
 	    } else {
-	        IDatabase db = DatabaseProvider.getInstance();
-	        ArrayList<Session> gameList = db.findGamesWithSessionDate(sessionDate);
+	        try {
+	            // Parse ISO 8601 input (yyyy-MM-dd) and reformat to match DB's expected format (e.g., M/d/yyyy)
+	            LocalDate parsedDate = LocalDate.parse(rawDate); // will throw DateTimeParseException if invalid
+	            DateTimeFormatter dbFormatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+	            formattedDate = parsedDate.format(dbFormatter);
 
-	        if (gameList == null || gameList.isEmpty()) {
-	            errorMessage = "No sessions found for the entered date.";
-	        } else {
-	            try {
+	            System.out.println("Converted input date: " + rawDate + " → formatted for DB: " + formattedDate);
+
+	            IDatabase db = DatabaseProvider.getInstance();
+	            ArrayList<Session> gameList = db.findGamesWithSessionDate(formattedDate);
+
+	            if (gameList == null || gameList.isEmpty()) {
+	                errorMessage = "No sessions found for the entered date.";
+	            } else {
 	                int total = 0;
 	                int count = 0;
 
@@ -64,9 +82,11 @@ public class OverallGameAverageForSessionServlet extends HttpServlet {
 	                }
 
 	                average = (double) total / count;
-	            } catch (Exception e) {
-	                errorMessage = "Error calculating average: " + e.getMessage();
 	            }
+	        } catch (DateTimeParseException e) {
+	            errorMessage = "Invalid date format. Please use the date picker.";
+	        } catch (Exception e) {
+	            errorMessage = "Error calculating average: " + e.getMessage();
 	        }
 	    }
 
