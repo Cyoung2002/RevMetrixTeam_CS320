@@ -5,7 +5,7 @@
 
 <html>
 	<head>
-		<title>Strike Percentages</title>
+		<title>Pocket Percentages</title>
 		<style type="text/css">
 			.error {
 				color: red;
@@ -38,7 +38,7 @@
 			</c:if>
 
 
-		<form action="${pageContext.servletContext.contextPath}/strikePercentageGame" method="post">
+		<form action="${pageContext.servletContext.contextPath}/pocketPercentage" method="post">
 			<table>
 				<tr>
     				<td class="label">Frame Number:</td>
@@ -81,14 +81,14 @@
 			<br>
 			<table>
 				<tr>
-			      <td class="label">Strike Percentage:</td>
+			      <td class="label">Pocket Percentage:</td>
 			         <td class="resultCol">
     					<fmt:formatNumber value="${percentResult}" type="number" maxFractionDigits="2" />%
 					</td>   
 			    </tr>
 			</table>
 			
-			<input type="Submit" name="submitStrikePercentage" value="Find Strike Percentage">
+			<input type="Submit" name="submitStrikePercentage" value="Find Pocket Percentage">
 		</form>
 		<br>
 		<form action="${pageContext.servletContext.contextPath}/index" method="post">

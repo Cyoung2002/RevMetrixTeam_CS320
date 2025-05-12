@@ -171,6 +171,14 @@
 			<form action="${pageContext.servletContext.contextPath}/allSessions" method="post">
                 <button type="submit" name="submitallsessions">View Sessions</button>
             </form>
+            
+            <form action="${pageContext.servletContext.contextPath}/strikePercentageGame" method="post">
+                <button type="submit" name="submitallsessions">Strike Percentage</button>
+            </form>
+            
+            <form action="${pageContext.servletContext.contextPath}/pocketPercentage" method="post">
+                <button type="submit" name="submitallsessions">Pocket Percentage</button>
+            </form>
         </div>
     </div>
 
