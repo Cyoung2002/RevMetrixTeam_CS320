@@ -155,6 +155,29 @@ public class StrikePercentageGameController {
 		}
 	}
 	
+	public Double StrikePercentageEventSeason(String event, String season) {
+		ArrayList<Shot> shotList = db.findAllShotsGivenEventSeason(event, season);
+		Double numStrikes = 0.0;
+		Double numShots = 0.0;
+		Double percentResult = 0.0;
+		
+		for (Shot shot : shotList) {
+			System.out.println(shot.getCount());
+			numShots++;
+			if (shot.getCount().equals("X")) {
+			    numStrikes++;
+			}
+		}
+		
+		if (numShots == 0.0) {
+		    return 0.0;  // or 0.0, or set errorMessage
+		} else {
+			percentResult = (((numStrikes)/(numShots))*100.0);
+			System.out.println(percentResult);
+			return percentResult;
+		}
+	}
+	
 	public Double StrikePercentageFrameEventSeason(String event, String season, String frameNum) {
 		ArrayList<Shot> shotList = db.findAllShotsGivenFrameEventSeason(event, season, frameNum);
 		Double numStrikes = 0.0;

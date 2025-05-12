@@ -91,6 +91,8 @@ public class PocketPercentageServlet extends HttpServlet {
 	            	percentResult = controller.PocketPercentageEvent(event);
 	            } else if ((frameNum == null || frameNum.equals("")) && (event == null || event.equals(""))) {
 	            	percentResult = controller.PocketPercentageSeason(season);
+	            } else if (frameNum == null || frameNum.equals("")) {
+	            	percentResult = controller.PocketPercentageEventSeason(event, season);
 	            } else if (event == null || event.equals("")) {
 	            	percentResult = controller.PocketPercentageFrameSeason(frameNum, season);
 	            } else if (season == null || season.equals("")) {

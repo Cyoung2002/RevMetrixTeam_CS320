@@ -91,6 +91,8 @@ public class StrikePercentageGameServlet extends HttpServlet {
 	            	percentResult = controller.StrikePercentageEvent(event);
 	            } else if ((frameNum == null || frameNum.equals("")) && (event == null || event.equals(""))) {
 	            	percentResult = controller.StrikePercentageSeason(season);
+	            } else if (frameNum == null || frameNum.equals("")) {
+	            	percentResult = controller.StrikePercentageEventSeason(event, season);
 	            } else if (event == null || event.equals("")) {
 	            	percentResult = controller.StrikePercentageFrameSeason(frameNum, season);
 	            } else if (season == null || season.equals("")) {

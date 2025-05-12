@@ -155,6 +155,29 @@ public class PocketPercentageController {
 		}
 	}
 	
+	public Double PocketPercentageEventSeason(String event, String season) {
+		ArrayList<Shot> shotList = db.findAllShotsGivenEventSeason(event, season);
+		Double numPockets = 0.0;
+		Double numShots = 0.0;
+		Double percentResult = 0.0;
+		
+		for (Shot shot : shotList) {
+			System.out.println(shot.getBoard());
+			numShots++;
+			if (shot.getBoard().equals("pocket")) {
+			    numPockets++;
+			}
+		}
+		
+		if (numShots == 0.0) {
+		    return 0.0;  // or 0.0, or set errorMessage
+		} else {
+			percentResult = (((numPockets)/(numShots))*100.0);
+			System.out.println(percentResult);
+			return percentResult;
+		}
+	}
+	
 	public Double PocketPercentageFrameEventSeason(String event, String season, String frameNum) {
 		ArrayList<Shot> shotList = db.findAllShotsGivenFrameEventSeason(event, season, frameNum);
 		Double numPockets = 0.0;
