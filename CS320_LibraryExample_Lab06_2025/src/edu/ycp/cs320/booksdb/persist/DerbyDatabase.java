@@ -1071,7 +1071,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	@Override
-	public Integer insertSession(final String league, final Date bowled, final String ball, final int startLane, final int week, final int series) {
+	public Integer insertSession(final String league, final Date bowled, final String ball, final int startLane) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -1152,8 +1152,8 @@ public class DerbyDatabase implements IDatabase {
 					// now insert new Session into Sessions table
 					// prepare SQL insert statement to add new Session to Sessions table
 					stmt4 = conn.prepareStatement(
-							"insert into sessions (league, date_bowled, start_lane, ball, week, series) " +
-							"  values(?, ?, ?, ?, ?, ?) "
+							"insert into sessions (league, date_bowled, start_lane, ball, week) " +
+							"  values(?, ?, ?, ?, ?) "
 					);
 					stmt4.setString(1, league);
 					stmt4.setDate(2, bowled);
@@ -1161,7 +1161,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt4.setString(4, ball);
 					stmt4.setInt(5, Integer.valueOf(newWeek));
 					//stmt4.setString(5, week);
-					stmt4.setInt(6, series);
+					
 					
 					// execute the update
 					stmt4.executeUpdate();
@@ -1477,7 +1477,7 @@ public class DerbyDatabase implements IDatabase {
 		session.setLeague(resultSet.getString(index++));
 		session.setSeason(resultSet.getString(index++));
 		session.setWeek(Integer.parseInt(resultSet.getString(index++)));
-		session.setScheduled(Date.valueOf(resultSet.getString(index++))); //might need to be adjusted
+		session.setScheduled(Date.valueOf(resultSet.getString(index++))); //might need to be adjusted- should realistically be date bowled but...would adjust if more time
 		session.setRegSub(resultSet.getString(index++));
 		session.setOpponent(resultSet.getString(index++));
 		session.setStart(Integer.parseInt(resultSet.getString(index++)));

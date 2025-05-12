@@ -188,10 +188,6 @@ select:focus {
                     <td class="label">Week:</td>
                     <td><input type="text" name="week" size="20" value="${week}" /></td>
                 </tr-->
-                <tr>
-                    <td class="label">Series:</td>
-                    <td><input type="text" name="series" size="20" value="${series}" /></td>
-                </tr>
 				
             </table>
 
