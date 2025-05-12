@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     
     <meta charset="UTF-8">
-    <title>RevMetrix</title>
+    <title>Statistics Page</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -69,15 +69,14 @@
             font-size: 16px;
         }
 
-
-.button-container {
-    display: flex;
-    justify-content: center; 
-    gap: 20px; 
-    margin: 20px 0;
-    flex-wrap: wrap;
-}
-
+        /* Buttons (adjust for side-by-side layout) */
+        .button-container {
+            display: flex;
+            justify-content: space-between; /* To evenly distribute buttons */
+            flex-wrap: wrap; /* Wrap buttons if the screen is smaller */
+            gap: 10px; /* Space between buttons */
+            margin: 20px 0;
+        }
 
         button {
             font-family: 'Orbitron', sans-serif; 
@@ -152,29 +151,37 @@
 
 <body>
     <div class="title-header">
-        <h1>RevMetrix</h1>
+        <h1>Statistics Page</h1>
     </div>
 
     <div class="container">
 
         <div class="button-container">
-            
-            <form action="${pageContext.servletContext.contextPath}/viewIndex" method="post">
-                <button type="submit" name="submitviewIndex">Viewing Page</button>
+            <form action="${pageContext.servletContext.contextPath}/strikePercentageGame" method="post">
+                <button type="submit" name="submitallsessions">Strike Percentage</button>
             </form>
-                        
-             <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
-                <button type="submit" name="submitstatIndex">Statistics Page</button>
+            
+            <form action="${pageContext.servletContext.contextPath}/pocketPercentage" method="post">
+                <button type="submit" name="submitallsessions">Pocket Percentage</button>
+            </form>
+            
+            
+             <form action="${pageContext.servletContext.contextPath}/overallGameAverageForSession" method="post">
+                <button type="submit" name="submitoverallGameAverageForSession">Game Average for Session</button>
             </form>
         </div>
     </div>
 
     <div class="flex-container">
         <div class="text">
-            <h2>RevMetrix is your ultimate performance-tracking tool to elevate your game. Record scores at the shot level, automatically calculate game and session totals, gain real-time insights into your performance, and so much more with RevMetrix. Track Events, Sessions, Games, Frames, Shots, etc., all while analyzing trends and refining your skills with detailed graphical feedback.</h2>
+            <h2>Welcome to the RevMetrix Statistics Hub, your central dashboard for precision insights. Here, you can dive deep into strike percentages, track performance across frames and sessions, and uncover meaningful trends in your game. Whether you're analyzing specific events or refining your consistency, this page turns raw data into powerful feedback, helping you level up with every session.</h2>
         </div>
         <img src="${pageContext.request.contextPath}/_view/ball.png" alt="Rev Metrix Ball">
     </div>
+    
+        <form action="${pageContext.servletContext.contextPath}/index" method="post">
+            <button type="submit" name="submithome" value="Home">Home</button>
+        </form>
 
 </body>
 
