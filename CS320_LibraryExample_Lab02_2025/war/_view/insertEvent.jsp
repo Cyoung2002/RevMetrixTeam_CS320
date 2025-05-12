@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CS320 Add Event</title>
+    <title>Add Event</title>
 
     <style>
         body {
@@ -20,7 +20,7 @@
 
         .wrapper {
             width: 70%;
-            max-width: 800px;
+            max-width: 900px;
             margin: 30px auto;
             padding: 30px;
             background: #1a0033;
@@ -50,7 +50,7 @@
             font-size: 18px;
         }
 
-        td input[type="text"], td input[type="number"] {
+        td input[type="text"] {
             width: 90%;
             padding: 8px;
             border: 2px solid #ff00ff;
@@ -61,11 +61,30 @@
             transition: all 0.3s ease;
         }
 
-        td input[type="text"]:focus, td input[type="number"]:focus {
+        td input[items="${events}"]:focus {
             border-color: #00ffcc;
             outline: none;
             box-shadow: 0 0 8px #00ffcc;
         }
+        
+        
+select {
+    width: 95%;
+    padding: 8px;
+    border: 2px solid #ff00ff;
+    border-radius: 5px;
+    background-color: #0a0a2a;
+    color: #00ffcc;
+    font-size: 16px;
+    font-family: 'Orbitron', sans-serif;
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    border-color: #00ffcc;
+    outline: none;
+    box-shadow: 0 0 8px #00ffcc;
+}
 
         .error {
             color: red;
@@ -79,13 +98,13 @@
             margin-bottom: 20px;
         }
 
-        .success_longName {
+        .success_title {
             color: #ff00ff;
             font-style: italic;
             font-weight: bold;
         }
 
-        input[type="submit"], button {
+        input[type="submit"] {
             background: #ff6600;
             color: white;
             border: none;
@@ -99,10 +118,35 @@
             box-shadow: 0 0 10px #ff6600;
         }
 
-        input[type="submit"]:hover, button:hover {
+        input[type="submit"]:hover {
             background: #ff3300;
             box-shadow: 0 0 15px #ff00ff;
         }
+        
+        input[type="date"] {
+    		width: 90%;
+    		padding: 8px;
+    		border: 2px solid #ff00ff;
+    		border-radius: 5px;
+    		background-color: #0a0a2a;
+    		color: #00ffcc;
+    		font-size: 16px;
+    		font-family: 'Orbitron', sans-serif;
+    		transition: all 0.3s ease;
+    		appearance: none; /* For better cross-browser consistency */
+		}
+
+		input[type="date"]:focus {
+    		border-color: #00ffcc;
+    		outline: none;
+    		box-shadow: 0 0 8px #00ffcc;
+		}
+		
+		input[type="date"]::-webkit-calendar-picker-indicator {
+    		filter: invert(1); /* Makes the icon light-colored */
+    		cursor: pointer;
+		}
+        
     </style>
 </head>
 
@@ -134,16 +178,24 @@
                     <td><input type="text" name="event_type" size="20" value="${event_type}" /></td>
                 </tr>
                 <tr>
-                    <td class="label">Establishment:</td>
-                    <td><input type="text" name="event_establishment" size="20" value="${event_establishment}" /></td>
-                </tr>
+				    <td class="label">Establishment:</td>
+				    <td>
+				        <select name="establishment">
+				            <c:forEach items="${establishments}" var="establishment">
+				                <option value="${establishment.longname}">
+				                    ${establishment.longname}
+				                </option>
+				            </c:forEach>
+				        </select>
+				    </td>
+				</tr>
                 <tr>
                     <td class="label">Season:</td>
                     <td><input type="text" name="event_season" size="20" value="${event_season}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Team:</td>
-                    <td><input type="number" name="event_team" size="20" value="${event_team}" /></td>
+                    <td><input type="text" name="event_team" size="20" value="${event_team}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Composition:</td>
@@ -158,24 +210,24 @@
                     <td><input type="text" name="event_time" size="20" value="${event_time}" /></td>
                 </tr>
                 <tr>
-                    <td class="label">Start:</td>
-                    <td><input type="text" name="event_start" size="20" value="${event_start}" /></td>
+                    <td class="label">Start Date:</td>
+                    <td><input type="date" name="event_start" size="20" value="${event_start}" /></td>
                 </tr>
                 <tr>
-                    <td class="label">End:</td>
-                    <td><input type="text" name="event_end" size="20" value="${event_end}" /></td>
+                    <td class="label">End Date:</td>
+                    <td><input type="date" name="event_end" size="20" value="${event_end}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Games Per Session:</td>
-                    <td><input type="number" name="event_gamesPerSession" size="20" value="${event_gamesPerSession}" /></td>
+                    <td><input type="text" name="event_gamesPerSession" size="20" value="${event_gamesPerSession}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Weeks:</td>
-                    <td><input type="number" name="event_weeks" size="20" value="${event_weeks}" /></td>
+                    <td><input type="text" name="event_weeks" size="20" value="${event_weeks}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Playoffs:</td>
-                    <td><input type="number" name="event_playoffs" size="20" value="${event_playoffs}" /></td>
+                    <td><input type="text" name="event_playoffs" size="20" value="${event_playoffs}" /></td>
                 </tr>
             </table>
 

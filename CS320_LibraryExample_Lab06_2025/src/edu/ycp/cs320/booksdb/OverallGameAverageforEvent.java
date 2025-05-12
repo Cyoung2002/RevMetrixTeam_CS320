@@ -9,20 +9,19 @@ import edu.ycp.cs320.booksdb.persist.IDatabase;
 
 public class OverallGameAverageforEvent {
 	public static void main(String[] args) throws Exception {
-
 		Scanner keyboard = new Scanner(System.in);
 
-		// Create the default IDatabase instance
+		// Initialize the database
 		InitDatabase.init(keyboard);
 
-		System.out.print("Enter an event's long name: ");
-		String longname = keyboard.nextLine();
-
+		System.out.print("Enter an event's shortname: ");
+		String eventShortname = keyboard.nextLine();
+		
 		IDatabase db = DatabaseProvider.getInstance();
-		ArrayList<Session> gameList = db.findGameswithEventDate(longname);
+		ArrayList<Session> gameList = db.findGamesForSessionLeague(eventShortname);
 
 		if (gameList.isEmpty()) {
-			System.out.println("No games found for this event <" + longname + ">");
+			System.out.println("No games found for this event <" + eventShortname + ">");
 		} else {
 			for (Session session : gameList) {
 				int x = Integer.parseInt(session.getGameOneScore());
@@ -38,4 +37,8 @@ public class OverallGameAverageforEvent {
 		}
 		
 	}
+	
 }
+
+
+
