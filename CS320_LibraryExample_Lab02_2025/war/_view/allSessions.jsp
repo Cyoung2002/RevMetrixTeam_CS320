@@ -184,6 +184,10 @@
 			<form action="${pageContext.servletContext.contextPath}/insertSession" method="get">
                 <button type="submit" name="submitinsertnewsession">Add New Session</button>
             </form>
+           <br></br>
+            <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
+                <button type="submit" name="submitstatIndex">Statistics Page</button>
+            </form>
         </div>
     </div>
 </body>

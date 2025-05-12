@@ -144,6 +144,11 @@
         <br>
             <input type="submit" name="submitinsertnewball" value="Add New Ball">
         </form>
+        <br></br>
+        
+         <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
+                <button type="submit" name="submitstatIndex">Statistics Page</button>
+            </form>
         <br>
     </div>
 

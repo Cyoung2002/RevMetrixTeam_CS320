@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     
     <meta charset="UTF-8">
-    <title>RevMetrix</title>
+    <title>Viewing Page</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -151,29 +151,40 @@
 
 <body>
     <div class="title-header">
-        <h1>RevMetrix</h1>
+        <h1>Viewing Page</h1>
     </div>
 
     <div class="container">
 
         <div class="button-container">
-            
-            <form action="${pageContext.servletContext.contextPath}/viewIndex" method="post">
-                <button type="submit" name="submitviewIndex">Viewing Page</button>
+            <form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
+                <button type="submit" name="submitinsertnewbook">View All Events</button>
             </form>
-                        
-             <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
-                <button type="submit" name="submitstatIndex">Statistics Page</button>
+
+            <form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
+                <button type="submit" name="submitallestablishments">View Establishments</button>
+            </form>
+
+            <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
+                <button type="submit" name="submitarsenal">View Arsenal</button>
+            </form>
+			
+			<form action="${pageContext.servletContext.contextPath}/allSessions" method="post">
+                <button type="submit" name="submitallsessions">View Sessions</button>
             </form>
         </div>
     </div>
 
     <div class="flex-container">
         <div class="text">
-            <h2>RevMetrix is your ultimate performance-tracking tool to elevate your game. Record scores at the shot level, automatically calculate game and session totals, gain real-time insights into your performance, and so much more with RevMetrix. Track Events, Sessions, Games, Frames, Shots, etc., all while analyzing trends and refining your skills with detailed graphical feedback.</h2>
+            <h2>This page is where you can view all your events, sessions, establishments, etc... to make sure you have everything you need to get your bowling game on!</h2>
         </div>
         <img src="${pageContext.request.contextPath}/_view/ball.png" alt="Rev Metrix Ball">
     </div>
+    
+            <form action="${pageContext.servletContext.contextPath}/index" method="post">
+            <button type="submit" name="submithome" value="Home">Home</button>
+        </form>
 
 </body>
 
