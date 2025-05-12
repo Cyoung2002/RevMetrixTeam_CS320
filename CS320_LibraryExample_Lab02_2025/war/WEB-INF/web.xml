@@ -98,6 +98,11 @@
     <servlet-class>edu.ycp.cs320.lab02.servlet.OverallGameAverageForSessionServlet</servlet-class>
   </servlet>
   
+      <servlet>
+    <servlet-name>StatsIndexServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.StatsIndexServlet</servlet-class>
+  </servlet>
+  
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
@@ -192,6 +197,12 @@
     <servlet-mapping>
     <servlet-name>OverallGameAverageForSessionServlet</servlet-name>
     <url-pattern>/overallGameAverageForSession</url-pattern>
+  </servlet-mapping>
+  
+  
+   <servlet-mapping>
+    <servlet-name>StatsIndexServlet</servlet-name>
+    <url-pattern>/statIndex</url-pattern>
   </servlet-mapping>
   
 </web-app>

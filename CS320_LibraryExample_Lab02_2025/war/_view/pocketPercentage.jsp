@@ -110,6 +110,27 @@
             background: #ff3300;
             box-shadow: 0 0 15px #ff00ff;
         }
+        
+        button[type="submit"] {
+    font-family: 'Orbitron', sans-serif; 
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    margin-top: 15px;
+    margin-right: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 10px #ff6600;
+}
+
+button[type="submit"]:hover {
+    background: #ff3300;
+    box-shadow: 0 0 15px #ff00ff;
+}
+        
     </style>
 </head>
 
@@ -173,9 +194,9 @@
     </form>
 
     <br>
-
-    <form action="${pageContext.servletContext.contextPath}/index" method="post">
-        <input type="submit" name="submithome" value="Home">
+    
+    <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
+        <button type="submit" name="submitstatIndex">Statistics Page</button>
     </form>
 </div>
 
