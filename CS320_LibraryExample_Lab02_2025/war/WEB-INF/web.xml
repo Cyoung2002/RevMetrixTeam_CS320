@@ -108,6 +108,11 @@
     <servlet-class>edu.ycp.cs320.lab02.servlet.ViewIndexServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>CarryPercentageServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.CarryPercentageServlet</servlet-class>
+  </servlet>
+  
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
@@ -213,6 +218,11 @@
    <servlet-mapping>
     <servlet-name>ViewIndexServlet</servlet-name>
     <url-pattern>/viewIndex</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>CarryPercentageServlet</servlet-name>
+    <url-pattern>/carryPercentage</url-pattern>
   </servlet-mapping>
   
 </web-app>

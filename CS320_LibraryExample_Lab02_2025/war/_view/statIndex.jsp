@@ -165,10 +165,14 @@
                 <button type="submit" name="submitallsessions">Pocket Percentage</button>
             </form>
             
+            <form action="${pageContext.servletContext.contextPath}/carryPercentage" method="post">
+                <button type="submit" name="submitoverallGameAverageForSession">Carry Percentage</button>
+            </form>
             
              <form action="${pageContext.servletContext.contextPath}/overallGameAverageForSession" method="post">
                 <button type="submit" name="submitoverallGameAverageForSession">Game Average for Session</button>
             </form>
+            
         </div>
     </div>
 
