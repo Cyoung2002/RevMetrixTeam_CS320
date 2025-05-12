@@ -11,36 +11,39 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.lab02.controller.InsertEventController;
 import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.booksdb.model.Establishment;
-import edu.ycp.cs320.lab02.controller.AllEstablishmentsController;
+import edu.ycp.cs320.lab02.controller.AllEventsController;
 import edu.ycp.cs320.lab02.controller.StrikePercentageGameController;
 
 public class StrikePercentageGameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private StrikePercentageGameController controller = null;
-	//private AllEstablishmentsController establishmentsController = null;
+	private AllEventsController eventsController = null;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+	        throws ServletException, IOException {
 
-		System.out.println("\nStrikePercentageGameServlet: doGet");
+	    System.out.println("\nStrikePercentageGameServlet: doGet");
 
-		String user = (String) req.getSession().getAttribute("user");
-		if (user == null) {
-			System.out.println("   User: <" + user + "> not logged in or session timed out");
-			
-			// user is not logged in, or the session expired
-			resp.sendRedirect(req.getContextPath() + "/login");
-			return;
-		}
+	    String user = (String) req.getSession().getAttribute("user");
+	    if (user == null) {
+	        System.out.println("   User: <" + user + "> not logged in or session timed out");
 
-		// now we have the user's User object,
-		// proceed to handle request...
-		
-		System.out.println("   User: <" + user + "> logged in");
+	        // user is not logged in, or the session expired
+	        resp.sendRedirect(req.getContextPath() + "/login");
+	        return;
+	    }
 
-		req.getRequestDispatcher("/_view/strikePercentageGame.jsp").forward(req, resp);
+	    // Now we have the user's User object, proceed to handle request...
+	    System.out.println("   User: <" + user + "> logged in");
+
+	    ArrayList<Event> events = null;
+	    eventsController = new AllEventsController();
+	    events = eventsController.getEvents();
+	    req.setAttribute("events", events);
+
+	    req.getRequestDispatcher("/_view/strikePercentageGame.jsp").forward(req, resp);
 	}
 	
 	@Override
@@ -51,25 +54,54 @@ public class StrikePercentageGameServlet extends HttpServlet {
 		
 		String errorMessage = null;
 		String successMessage = null;
-		String gameID = null;
+		String frameNum = null;
+		String event = null;
+		String season = null;
 		Double percentResult = null;
 		
 		// Decode form parameters and dispatch to controller
-		gameID = req.getParameter("gameID");
+		frameNum = req.getParameter("frameNum");
+		event = req.getParameter("event");
+		season = req.getParameter("season");
 		
-		if (gameID == null || gameID.equals("")) {
+		// Normalize common variations
+		if ("Sr. Singles".equalsIgnoreCase(event)) {
+		    event = "Sr-Singles";  // format as it appears in DB
+		} else if ("Sr. Trio".equalsIgnoreCase(event)) {
+			event = "Sr-Trio";
+		} else {
+		}
+		
+		if (frameNum == null || frameNum.equals("") ||
+				event == null || event.equals("")) {
 			
-			errorMessage = "Please fill in required field";
+			//errorMessage = "Please fill in all of the required fields";
+			
 		} else {
 			controller = new StrikePercentageGameController();
-			
-			percentResult = controller.StrikePercentageGame(gameID);
-			
+			try {
+			    percentResult = controller.StrikePercentageEventFrame(event, season, frameNum);
+			    
+			    if (percentResult == null) {
+			        errorMessage = "Stats cannot be generated for this event (no data available).";
+			    }
+			} catch (NullPointerException e) {
+			    errorMessage = "Stats cannot be generated for this event (missing data).";
+			    percentResult = null; // ensure it's cleared
+			}
 		}
 		
 		// Add parameters as request attributes
-		req.setAttribute("percentResult",  percentResult);
+		req.setAttribute("formSubmitted", true);
+
+		req.setAttribute("frameNum", frameNum);
+		ArrayList<Event> events = null;
+		eventsController = new AllEventsController();
+		events = eventsController.getEvents();
+		req.setAttribute("events", events);
+		req.setAttribute("season", season);
 		
+		req.setAttribute("percentResult",  percentResult);
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage",   errorMessage);
 		req.setAttribute("successMessage", successMessage);

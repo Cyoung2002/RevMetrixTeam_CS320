@@ -29,12 +29,43 @@
 	</head>
 
 	<body>
+	
+			<c:if test="${formSubmitted and not empty errorMessage}">
+    			<div class="error">${errorMessage}</div>
+			</c:if>
+
 		<form action="${pageContext.servletContext.contextPath}/strikePercentageGame" method="post">
 			<table>
 				<tr>
-					<td class="label">Game ID:</td>
-					<td><input type="text" name="gameID" size="20" value="${gameID}" /></td>
-				</tr>						
+					<td class="label">Frame Number:</td>
+					<td>
+    				<select name="frameNum">
+        				<c:forEach begin="1" end="12" var="i">
+            				<option value="${i}" <c:if test="${frameNum == i}">selected</c:if>>${i}</option>
+        				</c:forEach>
+    				</select>
+					</td>
+				</tr>
+				<tr>
+				    <td class="label">Event:</td>
+				    <td>
+				        <select name="event">
+				            <c:forEach items="${events}" var="event">
+				                <option value="${event.shortname}">
+				                    ${event.shortname}
+				                </option>
+				            </c:forEach>
+				        </select>
+				    </td>
+				</tr>
+				<tr>
+    				<td class="label">Season:</td>
+    				<td>
+       					<select name="season">
+            				<option value="Fa-24">Fa-24</option>
+       					</select>
+    				</td>
+				</tr>
 			</table>
 			<br>
 			<table>
