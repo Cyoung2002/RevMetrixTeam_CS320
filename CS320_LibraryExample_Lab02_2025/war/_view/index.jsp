@@ -180,6 +180,11 @@
             <form action="${pageContext.servletContext.contextPath}/pocketPercentage" method="post">
                 <button type="submit" name="submitallsessions">Pocket Percentage</button>
             </form>
+            
+            
+             <form action="${pageContext.servletContext.contextPath}/overallGameAverageForSession" method="post">
+                <button type="submit" name="submitoverallGameAverageForSession">Game Average for Session</button>
+            </form>
         </div>
     </div>
 

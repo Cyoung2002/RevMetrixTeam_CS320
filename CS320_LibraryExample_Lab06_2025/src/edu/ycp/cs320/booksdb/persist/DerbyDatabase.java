@@ -250,9 +250,9 @@ public class DerbyDatabase implements IDatabase {
 
 					while (resultSet.next()) {
 						Session session = new Session();
-						session.setGameOneScore(resultSet.getString("game_one"));
-						session.setGameTwoScore(resultSet.getString("game_two"));
-						session.setGameThreeScore(resultSet.getString("game_three"));
+						session.setGameOneScore(Integer.parseInt(resultSet.getString("game_one")));
+						session.setGameTwoScore(Integer.parseInt(resultSet.getString("game_one")));
+						session.setGameThreeScore(Integer.parseInt(resultSet.getString("game_one")));
 						sessions.add(session);
 					}
 
