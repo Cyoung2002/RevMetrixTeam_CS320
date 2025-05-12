@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>All Establishments</title>
+    		 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -89,6 +90,7 @@
         }
 
         button {
+            font-family: 'Orbitron', sans-serif; 
             background: #ff6600;
             color: white;
             border: none;

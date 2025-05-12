@@ -5,6 +5,8 @@
 <html>
 	<head>
 		<title>CS320 All Events</title>
+		
+				 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 		<style type="text/css">
        body {
             font-family: 'Orbitron', sans-serif;
@@ -96,6 +98,7 @@ td.eventPlayoffsCol {
         }
 
         button {
+            font-family: 'Orbitron', sans-serif; 
             background: #ff6600;
             color: white;
             border: none;

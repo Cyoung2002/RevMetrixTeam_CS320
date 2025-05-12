@@ -5,6 +5,8 @@
 <html>
 	<head>
 		<title>CS320 All Sessions</title>
+		
+				 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 		<style type="text/css">
        body {
             font-family: 'Orbitron', sans-serif;
@@ -92,6 +94,7 @@
         }
 
         button {
+            font-family: 'Orbitron', sans-serif; 
             background: #ff6600;
             color: white;
             border: none;

@@ -6,6 +6,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Bowling Pin Buttons</title>
+  
+  		 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
   <style>
     .pin-container {
       display: flex;

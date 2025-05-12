@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>CS320 Arsenal</title>
+    		 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -73,6 +74,7 @@
         }
 
         button, input[type="submit"] {
+            font-family: 'Orbitron', sans-serif; 
             background: #ff6600;
             color: white;
             border: none;
@@ -134,11 +136,12 @@
                     </tr>
                 </c:forEach>
             </table>
-
+      		  <br>
             <input type="submit" name="submithome" value="Home">
         </form>
 
         <form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
+        <br>
             <input type="submit" name="submitinsertnewball" value="Add New Ball">
         </form>
         <br>
