@@ -2,6 +2,7 @@ package edu.ycp.cs320.booksdb.persist;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -429,7 +430,7 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							"select * from sessions " +
-							" order by week asc"
+							" order by week asc, date_scheduled asc"
 					);
 					
 					ArrayList<Session> result = new ArrayList<Session>();
@@ -1070,7 +1071,7 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	@Override
-	public Integer insertSession(final String league, final String bowled, final String startLane,final String ball, final String week, final String series) {
+	public Integer insertSession(final String league, final Date bowled, final String ball, final int startLane, final int week, final int series) {
 		return executeTransaction(new Transaction<Integer>() {
 			@Override
 			public Integer execute(Connection conn) throws SQLException {
@@ -1151,16 +1152,16 @@ public class DerbyDatabase implements IDatabase {
 					// now insert new Session into Sessions table
 					// prepare SQL insert statement to add new Session to Sessions table
 					stmt4 = conn.prepareStatement(
-							"insert into sessions (league, date_bowled, ball, start_lane, week, series) " +
+							"insert into sessions (league, date_bowled, start_lane, ball, week, series) " +
 							"  values(?, ?, ?, ?, ?, ?) "
 					);
 					stmt4.setString(1, league);
-					stmt4.setString(2, bowled);
-					stmt4.setString(3, ball);
-					stmt4.setString(4, startLane);
-					stmt4.setString(5, String.valueOf(newWeek));
+					stmt4.setDate(2, bowled);
+					stmt4.setInt(3, startLane);
+					stmt4.setString(4, ball);
+					stmt4.setInt(5, Integer.valueOf(newWeek));
 					//stmt4.setString(5, week);
-					stmt4.setString(6, series);
+					stmt4.setInt(6, series);
 					
 					// execute the update
 					stmt4.executeUpdate();
@@ -1475,16 +1476,16 @@ public class DerbyDatabase implements IDatabase {
 		resultSet.getString(index++);
 		session.setLeague(resultSet.getString(index++));
 		session.setSeason(resultSet.getString(index++));
-		session.setWeek(resultSet.getString(index++));
-		session.setScheduled(resultSet.getString(index++));
+		session.setWeek(Integer.parseInt(resultSet.getString(index++)));
+		session.setScheduled(Date.valueOf(resultSet.getString(index++))); //might need to be adjusted
 		session.setRegSub(resultSet.getString(index++));
 		session.setOpponent(resultSet.getString(index++));
-		session.setStart(resultSet.getString(index++));
+		session.setStart(Integer.parseInt(resultSet.getString(index++)));
 		session.setBall(resultSet.getString(index++));
-		session.setGameOneScore(resultSet.getString(index++));
-		session.setGameTwoScore(resultSet.getString(index++));
-		session.setGameThreeScore(resultSet.getString(index++));
-		session.setSeries(resultSet.getString(index++));
+		session.setGameOneScore(Integer.parseInt(resultSet.getString(index++)));
+		session.setGameTwoScore(Integer.parseInt(resultSet.getString(index++)));
+		session.setGameThreeScore(Integer.parseInt(resultSet.getString(index++)));
+		session.setSeries(Integer.parseInt(resultSet.getString(index++)));
 	}
 	
 	private void loadShot(Shot shot, ResultSet resultSet, int index) throws SQLException {
@@ -1623,16 +1624,16 @@ public class DerbyDatabase implements IDatabase {
 									"		generated always as identity (start with 1, increment by 1), " +
 									"	league varchar(30), " +
 									"	season varchar(30), " +
-									"	week varchar(10), " +
-									"	date_scheduled varchar(10), " +
+									"	week integer, " +
+									"	date_scheduled Date, " +
 									"	reg_sub varchar(10), " +
 									"	opponent varchar(50), " +
-									"	start_lane varchar(10), " +
+									"	start_lane integer, " +
 									"	ball varchar(10), " +
-									"	game_one varchar(10), " +
-									"	game_two varchar(10), " +
-									"	game_three varchar(10), " +
-									"	series varchar(10) " +
+									"	game_one integer, " +
+									"	game_two integer, " +
+									"	game_three integer, " +
+									"	series integer " +
 									")"
 					);
 					stmt7.executeUpdate();
@@ -1851,16 +1852,16 @@ public class DerbyDatabase implements IDatabase {
 					for(Session session : sessionList) {
 						insertSession.setString(1, session.getLeague());
 						insertSession.setString(2,  session.getSeason());
-						insertSession.setString(3, session.getWeek());
-						insertSession.setString(4, session.getScheduled());
+						insertSession.setInt(3, session.getWeek());
+						insertSession.setDate(4, session.getScheduled());
 						insertSession.setString(5, session.getRegSub());
 						insertSession.setString(6, session.getOpponent());
-						insertSession.setString(7, session.getStart());
+						insertSession.setInt(7, session.getStart());
 						insertSession.setString(8, session.getBall());
-						insertSession.setString(9, session.getGameOneScore());
-						insertSession.setString(10, session.getGameTwoScore());
-						insertSession.setString(11, session.getGameThreeScore());
-						insertSession.setString(12, session.getSeries());
+						insertSession.setInt(9, session.getGameOneScore());
+						insertSession.setInt(10, session.getGameTwoScore());
+						insertSession.setInt(11, session.getGameThreeScore());
+						insertSession.setInt(12, session.getSeries());
 						insertSession.addBatch();
 					}
 					insertSession.executeBatch();
