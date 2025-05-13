@@ -1,5 +1,7 @@
 package edu.ycp.cs320.booksdb.model;
 
+import java.sql.Date;
+
 public class Session {
 	
 	private int eventId;
@@ -9,21 +11,22 @@ public class Session {
 	private String house;
 	
 	//this is the session ID 
-	private String week;
-	private String scheduled;
-	private String bowled;
+	private int week;
+	//Will possibly need to import DateFormat to parse
+	private Date scheduled;
+	private Date bowled;
 	//this may be boolean if applicable
 	private String regSub;
 	private String opponent;
 	private String lanes;
 	//start is the lane started on
-	private String start;
+	private int start;
 	private String ball;
 	//game scores
-	private String gameOneScore;
-	private String gameTwoScore;
-	private String gameThreeScore;
-	private String series;
+	private int gameOneScore = 0;
+	private int gameTwoScore = 0;
+	private int gameThreeScore = 0;
+	private int series = 0;
 	//make the games;
 	/*
 	private Game gameOne;
@@ -109,32 +112,32 @@ public class Session {
 	}
 
 
-	public String getWeek() {
+	public int getWeek() {
 		return week;
 	}
 
 
-	public void setWeek(String week) {
+	public void setWeek(int week) {
 		this.week = week;
 	}
 
 
-	public String getScheduled() {
+	public Date getScheduled() {
 		return scheduled;
 	}
 
 
-	public void setScheduled(String scheduled) {
+	public void setScheduled(Date scheduled) {
 		this.scheduled = scheduled;
 	}
 
 
-	public String getBowled() {
+	public Date getBowled() {
 		return bowled;
 	}
 
 
-	public void setBowled(String bowled) {
+	public void setBowled(Date bowled) {
 		this.bowled = bowled;
 	}
 
@@ -169,12 +172,12 @@ public class Session {
 	}
 
 
-	public String getStart() {
+	public int getStart() {
 		return start;
 	}
 
 
-	public void setStart(String start) {
+	public void setStart(int start) {
 		this.start = start;
 	}
 
@@ -189,12 +192,12 @@ public class Session {
 	}
 
 
-	public String getSeries() {
+	public int getSeries() {
 		return series;
 	}
 
 
-	public void setSeries(String series) {
+	public void setSeries(int series) {
 		this.series = series;
 	}
 
@@ -540,32 +543,32 @@ public class Session {
 	}
 
 
-	public String getGameOneScore() {
+	public int getGameOneScore() {
 		return gameOneScore;
 	}
 
 
-	public void setGameOneScore(String gameOneScore) {
+	public void setGameOneScore(int gameOneScore) {
 		this.gameOneScore = gameOneScore;
 	}
 
 
-	public String getGameTwoScore() {
+	public int getGameTwoScore() {
 		return gameTwoScore;
 	}
 
 
-	public void setGameTwoScore(String gameTwoScore) {
+	public void setGameTwoScore(int gameTwoScore) {
 		this.gameTwoScore = gameTwoScore;
 	}
 
 
-	public String getGameThreeScore() {
+	public int getGameThreeScore() {
 		return gameThreeScore;
 	}
 
 
-	public void setGameThreeScore(String gameThreeScore) {
+	public void setGameThreeScore(int gameThreeScore) {
 		this.gameThreeScore = gameThreeScore;
 	}
 	

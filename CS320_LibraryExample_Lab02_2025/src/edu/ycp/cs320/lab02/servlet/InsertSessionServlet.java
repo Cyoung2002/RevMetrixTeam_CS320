@@ -1,6 +1,9 @@
 package edu.ycp.cs320.lab02.servlet;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -66,32 +69,57 @@ public class InsertSessionServlet extends HttpServlet {
 		String errorMessage   = null;
 		String successMessage = null;
 		String league      	  = null;
-		String bowled         = null;
+		String bowledStr 	  = null;
+		Date   bowled      	  = null;
 		//String week      	  = null;
 		String strikeBall     = null;
 		String spareBall      = null;
 		String ball      	  = null;
-		String startLane      = null;
-		String series         = null;
+		int startLane         = 0;
+		
 
 		
 		// Decode form parameters and dispatch to controller
-		league    = req.getParameter("league");
-		bowled     = req.getParameter("bowled");
-		strikeBall        = req.getParameter("strikeBall");
-		spareBall        = req.getParameter("spareBall");
-		startLane        = req.getParameter("startLane");
-		//week        = req.getParameter("week");
-		series         = req.getParameter("series");
 		
-		if (league     		== null || league.equals("")  ||
-			bowled     		== null || bowled.equals("")  ||
-			strikeBall      == null || strikeBall.equals("")    ||
-			spareBall       == null || spareBall.equals("")     ||
-			startLane       == null || startLane.equals("")     ||
-			series          == null || series.equals("")) {
-			
-			errorMessage = "Please fill in all of the required fields";
+		
+		league    		= req.getParameter("league");
+		bowledStr 		= req.getParameter("bowled");
+		if (bowledStr == null || bowledStr.trim().isEmpty()) {
+		    errorMessage = "Date is required";
+		} else {
+		    try {
+		        // Trim and ensure proper format
+		        bowledStr = bowledStr.trim();
+		        System.out.println("Attempting to parse date: " + bowledStr);  // Debug log
+		        
+		        // Use strict parsing
+		        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		        dateFormat.setLenient(false);  // This prevents accepting invalid dates like 02/30/2023
+		        
+		        java.util.Date parsedDate = dateFormat.parse(bowledStr);
+		        bowled = new java.sql.Date(parsedDate.getTime());
+		        
+		        System.out.println("Successfully parsed date: " + bowled);  // Debug log
+		    } catch (ParseException e) {
+		        errorMessage = "Invalid date format. Please use MM/DD/YYYY format";
+		        System.err.println("Failed to parse date '" + bowledStr + "': " + e.getMessage());
+		    }
+		}
+		strikeBall      = req.getParameter("strikeBall");
+		spareBall       = req.getParameter("spareBall");
+		startLane       = Integer.parseInt(req.getParameter("startLane"));
+		//week        = req.getParameter("week");
+		
+		if (league == null || league.trim().isEmpty()) {
+		    errorMessage = "League is required";
+		} else if (bowled == null) {
+		    errorMessage = "Valid date is required";
+		} else if (strikeBall == null || strikeBall.trim().isEmpty()) {
+		    errorMessage = "Strike ball is required";
+		} else if (spareBall == null || spareBall.trim().isEmpty()) {
+		    errorMessage = "Spare ball is required";
+		} else if (startLane <= 0) {
+		    errorMessage = "Valid start lane is required";
 		} else {
 			controller = new InsertSessionController();
 			if(strikeBall.equals(spareBall)) {
@@ -100,19 +128,21 @@ public class InsertSessionServlet extends HttpServlet {
 			else {
 				ball = strikeBall + "/" + spareBall;
 			}
+			// convert published to integer now that it is valid
+			// published = Integer.parseInt(strPublished);
+			Integer weekID = controller.insertSession(league, bowled, ball, startLane);
+			// get list of books returned from query			
+			if (weekID >= 1) {
+				successMessage = "League: " + league + " - Bowled: " + bowled + " - Ball: " + ball+ " - Start Lane: " + startLane+ " - Week: " + weekID;
+			}
+			else {
+				errorMessage = "Failed to insert Session - week: " + weekID;					
+			}
+			req.setAttribute("week", weekID);
 		}
 		
 		
-		// convert published to integer now that it is valid
-		// published = Integer.parseInt(strPublished);
-		Integer weekID = controller.insertSession(league, bowled, ball, startLane, "week", series);
-		// get list of books returned from query			
-		if (weekID >= 1) {
-			successMessage = "League: " + league + " - Bowled: " + bowled+ " - Ball: " + ball+ " - Start Lane: " + startLane+ " - Week: " + weekID+ " - Series: " + series;
-		}
-		else {
-			errorMessage = "Failed to insert Session - week: " + weekID;					
-		}
+		
 		
 		ArrayList<Event> events = null;
 		eventsController = new AllEventsController();
@@ -128,8 +158,7 @@ public class InsertSessionServlet extends HttpServlet {
 		req.setAttribute("league", league);
 		req.setAttribute("bowled", bowled);
 		req.setAttribute("startLane",startLane);
-		req.setAttribute("week", weekID);
-		req.setAttribute("series", series);
+		
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage",   errorMessage);

@@ -5,7 +5,7 @@
 
 <html>
 	<head>
-		<title>Strike Percentages</title>
+		<title>Carry Percentages</title>
 		
 		
 		 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
@@ -140,14 +140,13 @@ button[type="submit"]:hover {
 	<body>
 	
 	<div class="wrapper">
-	    <h1>Strike Percentages</h1>
 	
 			<c:if test="${requestScope.formSubmitted and not empty requestScope.errorMessage}">
     			<div class="error">${requestScope.errorMessage}</div>
 			</c:if>
 
 
-		<form action="${pageContext.servletContext.contextPath}/strikePercentageGame" method="post">
+		<form action="${pageContext.servletContext.contextPath}/carryPercentage" method="post">
 			<table>
 				<tr>
     				<td class="label">Frame Number:</td>
@@ -190,21 +189,19 @@ button[type="submit"]:hover {
 			<br>
 			<table>
 				<tr>
-			      <td class="label">Strike Percentage:</td>
+			      <td class="label">Carry Percentage:</td>
 			         <td class="resultCol">
-    					<span class="resultValue"><fmt:formatNumber value="${percentResult}" type="number" maxFractionDigits="2" />%</span>
-
+    					<fmt:formatNumber value="${percentResult}" type="number" maxFractionDigits="2" />%
 					</td>   
 			    </tr>
 			</table>
 			
-			<input type="Submit" name="submitStrikePercentage" value="Find Strike Percentage">
+			<input type="Submit" name="submitStrikePercentage" value="Find Carry Percentage">
 		</form>
 		<br>
-		
-		     <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
+		<form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
                 <button type="submit" name="submitstatIndex">Statistics Page</button>
-            </form>
+        </form>
 		</div>	
 	</body>
 </html>

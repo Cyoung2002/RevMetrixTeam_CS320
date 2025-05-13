@@ -6,198 +6,244 @@ import edu.ycp.cs320.booksdb.persist.IDatabase;
 import edu.ycp.cs320.booksdb.model.Shot;
 import java.util.ArrayList;
 
-public class StrikePercentageGameController {
+public class CarryPercentageController {
 
 	private IDatabase db = null;
 
-	public StrikePercentageGameController() {
+	public CarryPercentageController() {
 		
 		// creating DB instance here
 		DatabaseProvider.setInstance(new DerbyDatabase());
 		db = DatabaseProvider.getInstance();		
 	}
 	
-	public Double AllStrikePercentage() {
+	public Double AllCarryPercentage() {
 		ArrayList<Shot> shotList = db.findAllShots();
+		Double numPockets = 0.0;
 		Double numStrikes = 0.0;
-		Double numShots = 0.0;
 		Double percentResult = 0.0;
 		
 		for (Shot shot : shotList) {
+			System.out.println(shot.getBoard());
+			if (shot.getBoard().equals("pocket")) {
+			    numPockets++;
+			}
+		}
+		
+		for (Shot shot : shotList) {
 			System.out.println(shot.getCount());
-			numShots++;
-			if (shot.getCount().equals("X")) {
+			if ((shot.getCount().equals("X")) && (shot.getBoard().equals("pocket"))) {
 			    numStrikes++;
 			}
 		}
 		
-		if (numShots == 0.0) {
+		if (numPockets == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numPockets))*100.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
 	}
 	
-	public Double StrikePercentageFrame(String frameNum) {
+	public Double CarryPercentageFrame(String frameNum) {
 		ArrayList<Shot> shotList = db.findAllShotsGivenFrame(frameNum);
+		Double numPockets = 0.0;
 		Double numStrikes = 0.0;
-		Double numShots = 0.0;
 		Double percentResult = 0.0;
 		
 		for (Shot shot : shotList) {
+			System.out.println(shot.getBoard());
+			if (shot.getBoard().equals("pocket")) {
+			    numPockets++;
+			}
+		}
+		
+		for (Shot shot : shotList) {
 			System.out.println(shot.getCount());
-			numShots++;
-			if (shot.getCount().equals("X")) {
+			if ((shot.getCount().equals("X")) && (shot.getBoard().equals("pocket"))) {
 			    numStrikes++;
 			}
 		}
 		
-		if (numShots == 0.0) {
+		if (numPockets == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numPockets))*100.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
 	}
 	
-	public Double StrikePercentageEvent(String event) {
+	public Double CarryPercentageEvent(String event) {
 		ArrayList<Shot> shotList = db.findAllShotsGivenEvent(event);
+		Double numPockets = 0.0;
 		Double numStrikes = 0.0;
-		Double numShots = 0.0;
 		Double percentResult = 0.0;
 		
 		for (Shot shot : shotList) {
+			System.out.println(shot.getBoard());
+			if (shot.getBoard().equals("pocket")) {
+			    numPockets++;
+			}
+		}
+		
+		for (Shot shot : shotList) {
 			System.out.println(shot.getCount());
-			numShots++;
-			if (shot.getCount().equals("X")) {
+			if ((shot.getCount().equals("X")) && (shot.getBoard().equals("pocket"))) {
 			    numStrikes++;
 			}
 		}
 		
-		if (numShots == 0.0) {
+		if (numPockets == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numPockets))*100.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
 	}
 	
-	public Double StrikePercentageSeason(String season) {
+	public Double CarryPercentageSeason(String season) {
 		ArrayList<Shot> shotList = db.findAllShotsGivenSeason(season);
+		Double numPockets = 0.0;
 		Double numStrikes = 0.0;
-		Double numShots = 0.0;
 		Double percentResult = 0.0;
 		
 		for (Shot shot : shotList) {
+			System.out.println(shot.getBoard());
+			if (shot.getBoard().equals("pocket")) {
+			    numPockets++;
+			}
+		}
+		
+		for (Shot shot : shotList) {
 			System.out.println(shot.getCount());
-			numShots++;
-			if (shot.getCount().equals("X")) {
+			if ((shot.getCount().equals("X")) && (shot.getBoard().equals("pocket"))) {
 			    numStrikes++;
 			}
 		}
 		
-		if (numShots == 0.0) {
+		if (numPockets == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numPockets))*100.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
 	}
 	
-	public Double StrikePercentageFrameEvent(String event, String frameNum) {
+	public Double CarryPercentageFrameEvent(String event, String frameNum) {
 		ArrayList<Shot> shotList = db.findAllShotsGivenFrameEvent(event, frameNum);
+		Double numPockets = 0.0;
 		Double numStrikes = 0.0;
-		Double numShots = 0.0;
 		Double percentResult = 0.0;
 		
 		for (Shot shot : shotList) {
+			System.out.println(shot.getBoard());
+			if (shot.getBoard().equals("pocket")) {
+			    numPockets++;
+			}
+		}
+		
+		for (Shot shot : shotList) {
 			System.out.println(shot.getCount());
-			numShots++;
-			if (shot.getCount().equals("X")) {
+			if ((shot.getCount().equals("X")) && (shot.getBoard().equals("pocket"))) {
 			    numStrikes++;
 			}
 		}
 		
-		if (numShots == 0.0) {
+		if (numPockets == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numPockets))*100.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
 	}
 	
-	public Double StrikePercentageFrameSeason(String frameNum, String season) {
+	public Double CarryPercentageFrameSeason(String frameNum, String season) {
 		ArrayList<Shot> shotList = db.findAllShotsGivenFrameSeason(frameNum, season);
+		Double numPockets = 0.0;
 		Double numStrikes = 0.0;
-		Double numShots = 0.0;
 		Double percentResult = 0.0;
 		
 		for (Shot shot : shotList) {
+			System.out.println(shot.getBoard());
+			if (shot.getBoard().equals("pocket")) {
+			    numPockets++;
+			}
+		}
+		
+		for (Shot shot : shotList) {
 			System.out.println(shot.getCount());
-			numShots++;
-			if (shot.getCount().equals("X")) {
+			if ((shot.getCount().equals("X")) && (shot.getBoard().equals("pocket"))) {
 			    numStrikes++;
 			}
 		}
 		
-		if (numShots == 0.0) {
+		if (numPockets == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numPockets))*100.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
 	}
 	
-	public Double StrikePercentageEventSeason(String event, String season) {
+	public Double CarryPercentageEventSeason(String event, String season) {
 		ArrayList<Shot> shotList = db.findAllShotsGivenEventSeason(event, season);
+		Double numPockets = 0.0;
 		Double numStrikes = 0.0;
-		Double numShots = 0.0;
 		Double percentResult = 0.0;
 		
 		for (Shot shot : shotList) {
+			System.out.println(shot.getBoard());
+			if (shot.getBoard().equals("pocket")) {
+			    numPockets++;
+			}
+		}
+		
+		for (Shot shot : shotList) {
 			System.out.println(shot.getCount());
-			numShots++;
-			if (shot.getCount().equals("X")) {
+			if ((shot.getCount().equals("X")) && (shot.getBoard().equals("pocket"))) {
 			    numStrikes++;
 			}
 		}
 		
-		if (numShots == 0.0) {
+		if (numPockets == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numPockets))*100.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
 	}
 	
-	public Double StrikePercentageFrameEventSeason(String event, String season, String frameNum) {
+	public Double CarryPercentageFrameEventSeason(String event, String season, String frameNum) {
 		ArrayList<Shot> shotList = db.findAllShotsGivenFrameEventSeason(event, season, frameNum);
+		Double numPockets = 0.0;
 		Double numStrikes = 0.0;
-		Double numShots = 0.0;
 		Double percentResult = 0.0;
 		
 		for (Shot shot : shotList) {
+			System.out.println(shot.getBoard());
+			if (shot.getBoard().equals("pocket")) {
+			    numPockets++;
+			}
+		}
+		
+		for (Shot shot : shotList) {
 			System.out.println(shot.getCount());
-			numShots++;
-			if (shot.getCount().equals("X")) {
+			if ((shot.getCount().equals("X")) && (shot.getBoard().equals("pocket"))) {
 			    numStrikes++;
 			}
 		}
 		
-		System.out.println(numStrikes);
-		
-		if (numShots == 0.0) {
+		if (numPockets == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numPockets))*100.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}

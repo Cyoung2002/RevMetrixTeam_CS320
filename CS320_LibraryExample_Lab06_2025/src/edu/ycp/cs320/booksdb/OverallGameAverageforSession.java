@@ -25,9 +25,9 @@ public class OverallGameAverageforSession {
 			System.out.println("No games found for this session <" + date + ">");
 		} else {
 			for (Session session : gameList) {
-				int x = Integer.parseInt(session.getGameOneScore());
-				int y = Integer.parseInt(session.getGameTwoScore());
-				int z = Integer.parseInt(session.getGameThreeScore());
+				int x = session.getGameOneScore();
+				int y = session.getGameTwoScore();
+				int z = session.getGameThreeScore();
 				
 				int result = ((x + y + z)/3);
 				

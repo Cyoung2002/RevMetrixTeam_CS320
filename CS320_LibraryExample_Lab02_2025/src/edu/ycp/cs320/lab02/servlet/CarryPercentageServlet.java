@@ -12,19 +12,19 @@ import edu.ycp.cs320.lab02.controller.InsertEventController;
 import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.lab02.controller.AllEventsController;
-import edu.ycp.cs320.lab02.controller.StrikePercentageGameController;
+import edu.ycp.cs320.lab02.controller.CarryPercentageController;
 
-public class StrikePercentageGameServlet extends HttpServlet {
+public class CarryPercentageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private StrikePercentageGameController controller = null;
+	private CarryPercentageController controller = null;
 	private AllEventsController eventsController = null;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 	        throws ServletException, IOException {
 
-	    System.out.println("\nStrikePercentageGameServlet: doGet");
+	    System.out.println("\nCarryPercentageServlet: doGet");
 
 	    String user = (String) req.getSession().getAttribute("user");
 	    if (user == null) {
@@ -50,14 +50,14 @@ public class StrikePercentageGameServlet extends HttpServlet {
 	    events = eventsController.getEvents();
 	    req.setAttribute("events", events);
 
-	    req.getRequestDispatcher("/_view/strikePercentageGame.jsp").forward(req, resp);
+	    req.getRequestDispatcher("/_view/carryPercentage.jsp").forward(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("\nStrikePercentageGameServlet: doPost");		
+		System.out.println("\nCarryPercentageServlet: doPost");		
 		
 		String errorMessage = null;
 		String frameNum = null;
@@ -70,7 +70,7 @@ public class StrikePercentageGameServlet extends HttpServlet {
 		event = req.getParameter("event");
 		season = req.getParameter("season");
 		
-		controller = new StrikePercentageGameController();
+		controller = new CarryPercentageController();
 		// Normalize common variations
 		if ("Sr. Singles".equalsIgnoreCase(event)) {
 		    event = "Sr-Singles";  // format as it appears in DB
@@ -84,21 +84,21 @@ public class StrikePercentageGameServlet extends HttpServlet {
 	        try {
 	            // Compute the strike percentage result
 	            if ((frameNum == null || frameNum.equals("")) && (event == null || event.equals("")) && (season == null || season.equals(""))) {
-	            	percentResult = controller.AllStrikePercentage();
+	            	percentResult = controller.AllCarryPercentage();
 	            } else if ((event == null || event.equals("")) && (season == null || season.equals(""))) {
-	            	percentResult = controller.StrikePercentageFrame(frameNum);
+	            	percentResult = controller.CarryPercentageFrame(frameNum);
 	            } else if ((frameNum == null || frameNum.equals("")) && (season == null || season.equals(""))) {
-	            	percentResult = controller.StrikePercentageEvent(event);
+	            	percentResult = controller.CarryPercentageEvent(event);
 	            } else if ((frameNum == null || frameNum.equals("")) && (event == null || event.equals(""))) {
-	            	percentResult = controller.StrikePercentageSeason(season);
+	            	percentResult = controller.CarryPercentageSeason(season);
 	            } else if (frameNum == null || frameNum.equals("")) {
-	            	percentResult = controller.StrikePercentageEventSeason(event, season);
+	            	percentResult = controller.CarryPercentageEventSeason(event, season);
 	            } else if (event == null || event.equals("")) {
-	            	percentResult = controller.StrikePercentageFrameSeason(frameNum, season);
+	            	percentResult = controller.CarryPercentageFrameSeason(frameNum, season);
 	            } else if (season == null || season.equals("")) {
-	                percentResult = controller.StrikePercentageFrameEvent(event, frameNum);
+	                percentResult = controller.CarryPercentageFrameEvent(event, frameNum);
 	            } else {
-	                percentResult = controller.StrikePercentageFrameEventSeason(event, season, frameNum);
+	                percentResult = controller.CarryPercentageFrameEventSeason(event, season, frameNum);
 	            }
 
 	            if (percentResult == 0.0) {
@@ -126,6 +126,6 @@ public class StrikePercentageGameServlet extends HttpServlet {
 		req.setAttribute("errorMessage",   errorMessage);
 		
 		// Forward to view to render the result HTML document
-		req.getRequestDispatcher("/_view/strikePercentageGame.jsp").forward(req, resp);
+		req.getRequestDispatcher("/_view/carryPercentage.jsp").forward(req, resp);
 	}	
 }

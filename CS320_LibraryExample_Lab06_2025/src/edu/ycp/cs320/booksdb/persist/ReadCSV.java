@@ -60,6 +60,20 @@ public class ReadCSV implements Closeable {
 
         return rows;
 	}
+	//this function is used to preserve fields within the csv
+	public List<String> nextBox() throws IOException {
+	    String line = reader.readLine();
+	    if (line == null) {
+	        return null;
+	    }
+	    // Split on |, keep empty fields, and trim each entry
+	    String[] parts = line.split("\\|", -1);
+	    List<String> tuple = new ArrayList<>();
+	    for (String part : parts) {
+	        tuple.add(part.trim());
+	    }
+	    return tuple;
+	}
 	
 	public void close() throws IOException {
 		reader.close();

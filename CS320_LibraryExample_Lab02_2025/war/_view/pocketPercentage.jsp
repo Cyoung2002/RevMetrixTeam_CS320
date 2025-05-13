@@ -4,13 +4,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html>
-	<head>
-		<title>Strike Percentages</title>
-		
-		
-		 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
-		<style type="text/css">
-		
+<head>
+    <title>Pocket Percentages</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <style type="text/css">
         body {
             font-family: 'Orbitron', sans-serif;
             background-color: #0a0a2a;
@@ -134,77 +131,74 @@ button[type="submit"]:hover {
     box-shadow: 0 0 15px #ff00ff;
 }
         
-		</style>
-	</head>
+    </style>
+</head>
 
-	<body>
-	
-	<div class="wrapper">
-	    <h1>Strike Percentages</h1>
-	
-			<c:if test="${requestScope.formSubmitted and not empty requestScope.errorMessage}">
-    			<div class="error">${requestScope.errorMessage}</div>
-			</c:if>
+<body>
 
+<div class="wrapper">
+    <h1>Pocket Percentages</h1>
 
-		<form action="${pageContext.servletContext.contextPath}/strikePercentageGame" method="post">
-			<table>
-				<tr>
-    				<td class="label">Frame Number:</td>
-    				<td>
-        				<select name="frameNum">
-            				<option value="" <c:if test="${empty frameNum}">selected</c:if>> </option>
-            			<c:forEach begin="1" end="12" var="i">
-                			<option value="${i}" <c:if test="${frameNum == i}">selected</c:if>>${i}</option>
-            			</c:forEach>
-        				</select>
-    			</td>
-				</tr>
-				<tr>
-   	 				<td class="label">Event:</td>
-    				<td>
-        				<select name="event">
-            			<!-- Blank option -->
-            			<option value="" <c:if test="${empty selectedEvent}">selected</c:if>> </option>
-            
-            			<!-- Actual event options -->
-            			<c:forEach items="${events}" var="event">
-                			<option value="${event.shortname}" <c:if test="${event.shortname == selectedEvent}">selected</c:if>>
-                    			${event.shortname}
-                			</option>
-            			</c:forEach>
-        				</select>
-    				</td>
-				</tr>
-				<tr>
-    				<td class="label">Season:</td>
-    				<td>
-        				<select name="season">
-            				<option value="Fa-24" <c:if test="${season == 'Fa-24'}">selected</c:if>>Fa-24</option>
-            				<option value="Su-25" <c:if test="${season == 'Su-25'}">selected</c:if>>Su-25</option>
-            				<option value="" <c:if test="${empty season}">selected</c:if>> </option>
-        				</select>
-    				</td>
-				</tr>
-			</table>
-			<br>
-			<table>
-				<tr>
-			      <td class="label">Strike Percentage:</td>
-			         <td class="resultCol">
-    					<span class="resultValue"><fmt:formatNumber value="${percentResult}" type="number" maxFractionDigits="2" />%</span>
+    <c:if test="${requestScope.formSubmitted and not empty requestScope.errorMessage}">
+        <div class="error">${requestScope.errorMessage}</div>
+    </c:if>
 
-					</td>   
-			    </tr>
-			</table>
-			
-			<input type="Submit" name="submitStrikePercentage" value="Find Strike Percentage">
-		</form>
-		<br>
-		
-		     <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
-                <button type="submit" name="submitstatIndex">Statistics Page</button>
-            </form>
-		</div>	
-	</body>
+    <form action="${pageContext.servletContext.contextPath}/pocketPercentage" method="post">
+        <table>
+            <tr>
+                <td class="label">Frame Number:</td>
+                <td>
+                    <select name="frameNum">
+                        <option value="" <c:if test="${empty frameNum}">selected</c:if>> </option>
+                        <c:forEach begin="1" end="12" var="i">
+                            <option value="${i}" <c:if test="${frameNum == i}">selected</c:if>>${i}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Event:</td>
+                <td>
+                    <select name="event">
+                        <option value="" <c:if test="${empty selectedEvent}">selected</c:if>> </option>
+                        <c:forEach items="${events}" var="event">
+                            <option value="${event.shortname}" <c:if test="${event.shortname == selectedEvent}">selected</c:if>>
+                                ${event.shortname}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="label">Season:</td>
+                <td>
+                    <select name="season">
+                        <option value="Fa-24" <c:if test="${season == 'Fa-24'}">selected</c:if>>Fa-24</option>
+                        <option value="Su-25" <c:if test="${season == 'Su-25'}">selected</c:if>>Su-25</option>
+                        <option value="" <c:if test="${empty season}">selected</c:if>> </option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <td class="label">Pocket Percentage:</td>
+                <td class="resultCol">
+                    <fmt:formatNumber value="${percentResult}" type="number" maxFractionDigits="2" />%
+                </td>
+            </tr>
+        </table>
+
+        <input type="submit" name="submitStrikePercentage" value="Find Pocket Percentage">
+    </form>
+
+    <br>
+    
+    <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
+        <button type="submit" name="submitstatIndex">Statistics Page</button>
+    </form>
+</div>
+
+</body>
 </html>
