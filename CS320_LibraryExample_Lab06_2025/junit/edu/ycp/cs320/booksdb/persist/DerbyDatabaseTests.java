@@ -389,42 +389,29 @@ public class DerbyDatabaseTests {
 	public void testInsertGame() {
 		System.out.println("\n*** Testing insertGame ***");
 
-		String league   	= "Laser Lanes";
-		String season    = "LA";
-		String week 		= "3905 E. Market St  York  PA  17402";
-		String date 		= "610-123-4567";
-		String game 		= "Brunswick";
-		String lane			= "Lane One";
+		String league   	= "test";
+		String season    	= "test";
+		String week 		= "test";
+		String date 		= "test";
+		String game 		= "test";
+		String lane			= "test";
   
 				
-		// insert new book (and possibly new author) into DB
-		Integer establishment_id = db.insertGame(league, season, week, date, game, lane);
+		try {
+			// Attempt to insert the game
+			Integer game_id = db.insertGame(league, season, week, date, game, lane);
 
-		// check the return value - should be a book_id > 0
-		if (establishment_id > 0)
-		{
-			// try to retrieve the book and author from the DB
-			// get the list of (Author, Book) pairs from DB
-			establishments = db.findAllEstablishments();
-			
-			if (establishments.isEmpty()) {
-				System.out.println("No establishments found within establishments table <" + establishment_id + ">");
-				fail("Failed to insert new establishment <" + longname + "> into DB");
-			}
-			// otherwise, the test was successful.  Now remove the book just inserted to return the DB
-			// to it's original state, except for using an author_id and a book_id
-			else {
-				System.out.println("New establishment: " + longname + ") successfully added to establishments table: <" + establishment_id + ">");
-				
-				// now delete establishment from DB
-				// leaving the DB in its previous state - except that an author_id, and a book_id have been used
-				//we do not have this function implemented yet
-			}
-		}
-		else
-		{
-			System.out.println("Failed to insert new establishment: " + longname + ") into establishments table: <" + establishment_id + ">");
-			fail("Failed to insert new establishment <" + longname + "> into DB");
+			// Check the return value
+			assertNotNull("Insert returned null game_id", game_id);
+			assertTrue("Insert returned invalid game_id", game_id > 0);
+
+			System.out.println("Successfully inserted game. ID: " + game_id);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testInsertGame: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during insertGame: " + e.getMessage());
 		}
 	}
 }
