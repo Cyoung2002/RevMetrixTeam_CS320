@@ -140,6 +140,7 @@ button[type="submit"]:hover {
 	<body>
 	
 	<div class="wrapper">
+	<h1>Carry Percentages:</h1>
 	
 			<c:if test="${requestScope.formSubmitted and not empty requestScope.errorMessage}">
     			<div class="error">${requestScope.errorMessage}</div>
