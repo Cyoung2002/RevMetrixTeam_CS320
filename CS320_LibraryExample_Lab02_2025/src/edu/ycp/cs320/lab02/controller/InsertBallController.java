@@ -15,18 +15,22 @@ public class InsertBallController {
 		db = DatabaseProvider.getInstance();		
 	}
 
-	public boolean insertGame(String league, String season, String week, String date, String game, String lane) {
+	public boolean insertBallIntoArsenal(String longname, String shortname, String brand, String type, String core, String cover, String color, String surface, String year, String serialNumber, String weight, String mapping) {
 		
 		// insert new book (and possibly new author) into DB
-		Integer game_id = db.insertGame(league, season, week, date, game, lane);
+		Integer ball_id = db.insertBallIntoArsenal(longname, shortname, brand, type, core, cover, color, surface, year, serialNumber, weight, mapping);
 
 		// check if the insertion succeeded
-		if (game_id > 0) {
-			System.out.println("New Game (ID: " + game_id + ") successfully added to Games table");
-			return true;
+		if (ball_id > 0)
+		{
+			System.out.println("New Ball (ID: " + ball_id + ") successfully added to Arsenal table: <" + longname + ">");
 			
-		} else {
-			System.out.println("Failed to insert new game (ID: " + game_id + ") into Games table");
+			return true;
+		}
+		else
+		{
+			System.out.println("Failed to insert new ball (ID: " + ball_id + ") into Arsenal table: <" + longname + ">");
+			
 			return false;
 		}
 	}
