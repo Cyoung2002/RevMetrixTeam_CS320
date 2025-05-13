@@ -242,7 +242,7 @@ public class DerbyDatabase implements IDatabase {
 
 				try {
 					stmt = conn.prepareStatement(
-						"SELECT game_one, game_two, game_three FROM sessions WHERE date_scheduled = ?"
+						"SELECT game_one, game_two, game_three FROM sessions WHERE date_bowled = ?"
 					);
 					stmt.setString(1, date);
 					resultSet = stmt.executeQuery();
@@ -430,7 +430,7 @@ public class DerbyDatabase implements IDatabase {
 				try {
 					stmt = conn.prepareStatement(
 							"select * from sessions " +
-							" order by week asc, date_scheduled asc"
+							" order by week asc, date_bowled asc"
 					);
 					
 					ArrayList<Session> result = new ArrayList<Session>();
@@ -1152,8 +1152,8 @@ public class DerbyDatabase implements IDatabase {
 					// now insert new Session into Sessions table
 					// prepare SQL insert statement to add new Session to Sessions table
 					stmt4 = conn.prepareStatement(
-							"insert into sessions (league, date_bowled, start_lane, ball, week) " +
-							"  values(?, ?, ?, ?, ?) "
+							"insert into sessions (league, date_bowled, start_lane, ball, week, game_one, game_two, game_three, series) " +
+							"  values(?, ?, ?, ?, ?, 0, 0, 0, 0) "
 					);
 					stmt4.setString(1, league);
 					stmt4.setDate(2, bowled);
@@ -1477,7 +1477,7 @@ public class DerbyDatabase implements IDatabase {
 		session.setLeague(resultSet.getString(index++));
 		session.setSeason(resultSet.getString(index++));
 		session.setWeek(Integer.parseInt(resultSet.getString(index++)));
-		session.setScheduled(Date.valueOf(resultSet.getString(index++))); //might need to be adjusted- should realistically be date bowled but...would adjust if more time
+		session.setBowled(Date.valueOf(resultSet.getString(index++))); //might need to be adjusted- should realistically be date bowled but...would adjust if more time
 		session.setRegSub(resultSet.getString(index++));
 		session.setOpponent(resultSet.getString(index++));
 		session.setStart(Integer.parseInt(resultSet.getString(index++)));
@@ -1625,7 +1625,7 @@ public class DerbyDatabase implements IDatabase {
 									"	league varchar(30), " +
 									"	season varchar(30), " +
 									"	week integer, " +
-									"	date_scheduled Date, " +
+									"	date_bowled Date, " +
 									"	reg_sub varchar(10), " +
 									"	opponent varchar(50), " +
 									"	start_lane integer, " +
@@ -1848,12 +1848,12 @@ public class DerbyDatabase implements IDatabase {
 					System.out.println("Arsenal table populated");
 					
 					
-					insertSession = conn.prepareStatement("insert into sessions (league, season, week, date_scheduled, reg_sub, opponent, start_lane, ball, game_one, game_two, game_three, series) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					insertSession = conn.prepareStatement("insert into sessions (league, season, week, date_bowled, reg_sub, opponent, start_lane, ball, game_one, game_two, game_three, series) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					for(Session session : sessionList) {
 						insertSession.setString(1, session.getLeague());
 						insertSession.setString(2,  session.getSeason());
 						insertSession.setInt(3, session.getWeek());
-						insertSession.setDate(4, session.getScheduled());
+						insertSession.setDate(4, session.getBowled());
 						insertSession.setString(5, session.getRegSub());
 						insertSession.setString(6, session.getOpponent());
 						insertSession.setInt(7, session.getStart());

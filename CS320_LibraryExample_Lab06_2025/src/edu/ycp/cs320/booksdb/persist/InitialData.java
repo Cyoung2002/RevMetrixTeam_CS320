@@ -256,7 +256,7 @@ public class InitialData {
 	                    SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	                    java.util.Date parsedDate = dateFormat.parse(dateStr);
 	                    java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
-	                    session.setScheduled(sqlDate);
+	                    session.setBowled(sqlDate);
 	                }
 	            } catch (java.text.ParseException e) {
 	                System.err.println("Error parsing date: " + dateStr);
@@ -286,7 +286,7 @@ public class InitialData {
 
 	            sessionList.add(session);
 	            System.out.println(session.getLeague() + ", " + session.getSeason() + ", " + 
-	                session.getWeek() + ", " + session.getScheduled() + ", " + 
+	                session.getWeek() + ", " + session.getBowled() + ", " + 
 	                session.getRegSub() + ", " + session.getOpponent() + ", " + 
 	                session.getStart() + ", " + session.getBall() + ", " + 
 	                session.getGameOneScore() + ", " + session.getGameTwoScore() + ", " + 

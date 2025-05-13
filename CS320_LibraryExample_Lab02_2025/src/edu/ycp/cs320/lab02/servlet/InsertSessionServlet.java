@@ -83,7 +83,7 @@ public class InsertSessionServlet extends HttpServlet {
 		
 		
 		league    		= req.getParameter("league");
-		bowledStr 		= req.getParameter("scheduled");
+		bowledStr 		= req.getParameter("bowled");
 		if (bowledStr == null || bowledStr.trim().isEmpty()) {
 		    errorMessage = "Date is required";
 		} else {
