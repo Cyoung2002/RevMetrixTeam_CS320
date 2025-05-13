@@ -1348,6 +1348,91 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	//@Override
+	public Integer insertShotIntoGame(final String shotNumber, final int gameID, final int frameNumber, final String count, final String leave, final String score, final String type, final String board, final String lane, final String ball) {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				PreparedStatement stmt1 = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
+				PreparedStatement stmt5 = null;
+				PreparedStatement stmt6 = null;				
+				
+				ResultSet resultSet1 = null;
+				ResultSet resultSet3 = null;
+				ResultSet resultSet5 = null;				
+				
+				// for saving ball_id
+				Integer shot_id   = -1;
+
+				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
+				try {
+					// now insert new ball into Arsenal table
+					// prepare SQL insert statement to add new Book to Books table
+					stmt4 = conn.prepareStatement(
+							"insert into shots (shot_number, game_id, frame_number, count, leave, score, type, board, lane, ball) " +
+							"  values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+					);
+					stmt4.setString(1, shotNumber);
+					stmt4.setString(2, String.valueOf(gameID));
+					stmt4.setString(3, String.valueOf(frameNumber));
+					stmt4.setString(4, count);
+					stmt4.setString(5, leave);
+					stmt4.setString(6, score);
+					stmt4.setString(7, type);
+					stmt4.setString(8, board);
+					stmt4.setString(9, lane);
+					stmt4.setString(10, ball);
+					
+					
+					// execute the update
+					stmt4.executeUpdate();
+					
+					System.out.println("New Shot <" + shotNumber + "> in Frame <" + frameNumber + "> inserted into Shot Table of Game <" + gameID + ">");					
+
+					// now retrieve book_id for new Book, so that we can set up BookAuthor entry
+					// and return the book_id, which the DB auto-generates
+					// prepare SQL statement to retrieve book_id for new Book
+					stmt5 = conn.prepareStatement(
+							"select shot_id from shots  " +
+							"  where game_id = ? and shot_number = ? "
+									
+					);
+					stmt5.setInt(1, gameID);
+					stmt5.setString(2, shotNumber);
+
+					// execute the query
+					resultSet5 = stmt5.executeQuery();
+					
+					// get the result - there had better be one
+					if (resultSet5.next())
+					{
+						shot_id = resultSet5.getInt(1);
+						System.out.println("New shot number < " + shotNumber + "> ID: " + shot_id);						
+					}
+					else	// really should throw an exception here - the new book should have been inserted, but we didn't find it
+					{
+						System.out.println("New shot number <" + shotNumber + "> not found in Shot table (ID: " + shot_id + ") of Game ID <" + gameID + ">");
+					}
+					
+					return shot_id;
+				} finally {
+					DBUtil.closeQuietly(resultSet1);
+					DBUtil.closeQuietly(stmt1);
+					DBUtil.closeQuietly(stmt2);					
+					DBUtil.closeQuietly(resultSet3);
+					DBUtil.closeQuietly(stmt3);					
+					DBUtil.closeQuietly(stmt4);
+					DBUtil.closeQuietly(resultSet5);
+					DBUtil.closeQuietly(stmt5);
+					DBUtil.closeQuietly(stmt6);
+				}
+			}
+		});
+	}
+	
 	@Override
 	public Integer insertEvent(final String longname, final String shortname, final String type, final String establishment, final String season, final Integer team, final String composition, final String day, final String time, final String start, final String end_date, final Integer gamesPerSession, final Integer weeks, final Integer playoffs) {
 		return executeTransaction(new Transaction<Integer>() {
