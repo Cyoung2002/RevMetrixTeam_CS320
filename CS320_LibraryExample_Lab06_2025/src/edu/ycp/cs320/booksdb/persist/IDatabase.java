@@ -34,6 +34,14 @@ public interface IDatabase {
 	public ArrayList<Establishment> findAllEstablishments();
 	public Integer insertEstablishmentIntoEstablishmentsTable(final String longname, final String shortname, final String address, final String phone, final Integer lanes, final String type);	
 	public ArrayList<Shot> findAllShotsInGame(String gameID);
+	public ArrayList<Shot> findAllShots();
+	public ArrayList<Shot> findAllShotsGivenFrame(String frameNum);
+	public ArrayList<Shot> findAllShotsGivenEvent(String event);
+	public ArrayList<Shot> findAllShotsGivenSeason(String season);
+	public ArrayList<Shot> findAllShotsGivenFrameEvent(String event, String frameNum);
+	public ArrayList<Shot> findAllShotsGivenFrameSeason(String frameNum, String season);
+	public ArrayList<Shot> findAllShotsGivenEventSeason(String event, String season);
+	public ArrayList<Shot> findAllShotsGivenFrameEventSeason(String event, String season, String frameNum);
 	public ArrayList<Session> findGameswithEventDate(final String longname);
 	public ArrayList<Session> findGamesWithSessionDate(final String date);
 	Double findOverallAverageForEvent(final String eventShortname);

@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>All Establishments</title>
+    		 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -89,6 +90,7 @@
         }
 
         button {
+            font-family: 'Orbitron', sans-serif; 
             background: #ff6600;
             color: white;
             border: none;
@@ -164,7 +166,17 @@
             <form action="${pageContext.servletContext.contextPath}/insertEstablishment" method="get">
                 <button type="submit" name="submitinsertnewestablishment">Add New Establishment</button>
             </form>
+            <br></br>
+            <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
+                <button type="submit" name="submitstatIndex">Statistics Page</button>
+            </form>
+            <br></br>
+           <form action="${pageContext.servletContext.contextPath}/index" method="post">
+            <button type="submit" name="submithome" value="Home">Home</button>
+        </form>
+        
         </div>
+        
     </div>
 
 </body>

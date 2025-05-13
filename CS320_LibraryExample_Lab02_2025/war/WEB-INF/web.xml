@@ -88,6 +88,31 @@
     <servlet-class>edu.ycp.cs320.lab02.servlet.StrikePercentageGameServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>PocketPercentageServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.PocketPercentageServlet</servlet-class>
+  </servlet>
+  
+    <servlet>
+    <servlet-name>OverallGameAverageForSessionServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.OverallGameAverageForSessionServlet</servlet-class>
+  </servlet>
+  
+      <servlet>
+    <servlet-name>StatsIndexServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.StatsIndexServlet</servlet-class>
+  </servlet>
+  
+    <servlet>
+    <servlet-name>ViewIndexServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.ViewIndexServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>CarryPercentageServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.lab02.servlet.CarryPercentageServlet</servlet-class>
+  </servlet>
+  
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
@@ -171,6 +196,33 @@
   <servlet-mapping>
     <servlet-name>StrikePercentageGameServlet</servlet-name>
     <url-pattern>/strikePercentageGame</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>PocketPercentageServlet</servlet-name>
+    <url-pattern>/pocketPercentage</url-pattern>
+  </servlet-mapping>
+  
+  
+    <servlet-mapping>
+    <servlet-name>OverallGameAverageForSessionServlet</servlet-name>
+    <url-pattern>/overallGameAverageForSession</url-pattern>
+  </servlet-mapping>
+  
+  
+   <servlet-mapping>
+    <servlet-name>StatsIndexServlet</servlet-name>
+    <url-pattern>/statIndex</url-pattern>
+  </servlet-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>ViewIndexServlet</servlet-name>
+    <url-pattern>/viewIndex</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>CarryPercentageServlet</servlet-name>
+    <url-pattern>/carryPercentage</url-pattern>
   </servlet-mapping>
   
 </web-app>

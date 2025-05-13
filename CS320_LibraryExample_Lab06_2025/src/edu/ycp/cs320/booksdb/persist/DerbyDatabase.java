@@ -250,9 +250,9 @@ public class DerbyDatabase implements IDatabase {
 
 					while (resultSet.next()) {
 						Session session = new Session();
-						session.setGameOneScore(resultSet.getString("game_one"));
-						session.setGameTwoScore(resultSet.getString("game_two"));
-						session.setGameThreeScore(resultSet.getString("game_three"));
+						session.setGameOneScore(Integer.parseInt(resultSet.getString("game_one")));
+						session.setGameTwoScore(Integer.parseInt(resultSet.getString("game_one")));
+						session.setGameThreeScore(Integer.parseInt(resultSet.getString("game_one")));
 						sessions.add(session);
 					}
 
@@ -506,6 +506,469 @@ public class DerbyDatabase implements IDatabase {
 				}
 			}
 		});
+	}
+	
+	@Override
+	public ArrayList<Shot> findAllShots() {
+	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
+	        @Override
+	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
+	            PreparedStatement stmt = null;
+	            ResultSet resultSet = null;
+	            
+	            ArrayList<Shot> result = new ArrayList<>();
+
+	            try {
+	                stmt = conn.prepareStatement(
+	                    "SELECT * FROM shots"
+	                );
+	                
+	                resultSet = stmt.executeQuery();
+
+	                while (resultSet.next()) {
+	                   Shot shot = new Shot();
+	                   loadShot(shot, resultSet, 1);
+	                   result.add(shot);
+	                }
+
+	                if (result.isEmpty()) {
+	                    System.out.println("No shots found.");
+	                }
+
+	                return result;
+
+	            } finally {
+	                DBUtil.closeQuietly(resultSet);
+	                DBUtil.closeQuietly(stmt);
+	            }
+	        }
+	    });
+	}
+	
+	@Override
+	public ArrayList<Shot> findAllShotsGivenFrame(String frameNum) {
+	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
+	        @Override
+	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
+	            PreparedStatement stmt = null;
+	            ResultSet resultSet = null;
+	            
+	            ArrayList<Shot> result = new ArrayList<>();
+
+	            try {
+	                stmt = conn.prepareStatement(
+	                    "SELECT * FROM shots WHERE frame_number = ?"
+	                );
+	                stmt.setString(1, frameNum);
+	                resultSet = stmt.executeQuery();
+
+	                while (resultSet.next()) {
+	                   Shot shot = new Shot();
+	                   loadShot(shot, resultSet, 1);
+	                   result.add(shot);
+	                }
+
+	                if (result.isEmpty()) {
+	                    System.out.println("No shots found for the given frame.");
+	                }
+
+	                return result;
+
+	            } finally {
+	                DBUtil.closeQuietly(resultSet);
+	                DBUtil.closeQuietly(stmt);
+	            }
+	        }
+	    });
+	}
+	
+	@Override
+	public ArrayList<Shot> findAllShotsGivenEvent(String event) {
+	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
+	        @Override
+	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
+	            PreparedStatement stmt1 = null;
+	            PreparedStatement stmt2 = null;
+	            ResultSet resultSet1 = null;
+	            ResultSet resultSet2 = null;
+
+	            ArrayList<Shot> result = new ArrayList<>();
+
+	            try {
+	                // Step 1: Get all game_ids for the given event
+	                stmt1 = conn.prepareStatement(
+	                    "SELECT game_id FROM games WHERE league = ?"
+	                );
+	                stmt1.setString(1, event);
+	                resultSet1 = stmt1.executeQuery();
+
+	                List<String> gameIds = new ArrayList<>();
+	                while (resultSet1.next()) {
+	                    gameIds.add(resultSet1.getString("game_id"));
+	                }
+
+	                if (gameIds.isEmpty()) {
+	                    System.out.println("No game_ids found for the given event.");
+	                    return result;
+	                }
+
+	                // Step 2: For each game_id, get matching shots
+	                stmt2 = conn.prepareStatement(
+	                    "SELECT * FROM shots WHERE game_id = ?"
+	                );
+
+	                for (String gameId : gameIds) {
+	                    stmt2.setString(1, gameId);
+	                    resultSet2 = stmt2.executeQuery();
+
+	                    while (resultSet2.next()) {
+	                        Shot shot = new Shot();
+	                        loadShot(shot, resultSet2, 1);
+	                        result.add(shot);
+	                    }
+
+	                    DBUtil.closeQuietly(resultSet2);  // Close between iterations
+	                }
+
+	                if (result.isEmpty()) {
+	                    System.out.println("No shots found for the given event.");
+	                }
+
+	                return result;
+
+	            } finally {
+	                DBUtil.closeQuietly(resultSet1);
+	                DBUtil.closeQuietly(stmt1);
+	                DBUtil.closeQuietly(resultSet2);
+	                DBUtil.closeQuietly(stmt2);
+	            }
+	        }
+	    });
+	}
+	
+	@Override
+	public ArrayList<Shot> findAllShotsGivenSeason(String season) {
+	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
+	        @Override
+	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
+	            PreparedStatement stmt1 = null;
+	            PreparedStatement stmt2 = null;
+	            ResultSet resultSet1 = null;
+	            ResultSet resultSet2 = null;
+
+	            ArrayList<Shot> result = new ArrayList<>();
+
+	            try {
+	                // Step 1: Get all game_ids for the given event
+	                stmt1 = conn.prepareStatement(
+	                    "SELECT game_id FROM games WHERE season = ?"
+	                );
+	                stmt1.setString(1, season);
+	                resultSet1 = stmt1.executeQuery();
+
+	                List<String> gameIds = new ArrayList<>();
+	                while (resultSet1.next()) {
+	                    gameIds.add(resultSet1.getString("game_id"));
+	                }
+
+	                if (gameIds.isEmpty()) {
+	                    System.out.println("No game_ids found for the given event.");
+	                    return result;
+	                }
+
+	                // Step 2: For each game_id, get matching shots
+	                stmt2 = conn.prepareStatement(
+	                    "SELECT * FROM shots WHERE game_id = ?"
+	                );
+
+	                for (String gameId : gameIds) {
+	                    stmt2.setString(1, gameId);
+	                    resultSet2 = stmt2.executeQuery();
+
+	                    while (resultSet2.next()) {
+	                        Shot shot = new Shot();
+	                        loadShot(shot, resultSet2, 1);
+	                        result.add(shot);
+	                    }
+
+	                    DBUtil.closeQuietly(resultSet2);  // Close between iterations
+	                }
+
+	                if (result.isEmpty()) {
+	                    System.out.println("No shots found for the given event.");
+	                }
+
+	                return result;
+
+	            } finally {
+	                DBUtil.closeQuietly(resultSet1);
+	                DBUtil.closeQuietly(stmt1);
+	                DBUtil.closeQuietly(resultSet2);
+	                DBUtil.closeQuietly(stmt2);
+	            }
+	        }
+	    });
+	}
+	
+	@Override
+	public ArrayList<Shot> findAllShotsGivenFrameEvent(String event, String frameNum) {
+	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
+	        @Override
+	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
+	            PreparedStatement stmt1 = null;
+	            PreparedStatement stmt2 = null;
+	            ResultSet resultSet1 = null;
+	            ResultSet resultSet2 = null;
+
+	            ArrayList<Shot> result = new ArrayList<>();
+
+	            try {
+	                // Step 1: Get all game_ids for the given event
+	                stmt1 = conn.prepareStatement(
+	                    "SELECT game_id FROM games WHERE league = ?"
+	                );
+	                stmt1.setString(1, event);
+	                resultSet1 = stmt1.executeQuery();
+
+	                List<String> gameIds = new ArrayList<>();
+	                while (resultSet1.next()) {
+	                    gameIds.add(resultSet1.getString("game_id"));
+	                }
+
+	                if (gameIds.isEmpty()) {
+	                    System.out.println("No game_ids found for the given event.");
+	                    return result;
+	                }
+
+	                // Step 2: For each game_id, get matching shots
+	                stmt2 = conn.prepareStatement(
+	                    "SELECT * FROM shots WHERE game_id = ? AND frame_number = ?"
+	                );
+
+	                for (String gameId : gameIds) {
+	                    stmt2.setString(1, gameId);
+	                    stmt2.setString(2, frameNum);
+	                    resultSet2 = stmt2.executeQuery();
+
+	                    while (resultSet2.next()) {
+	                        Shot shot = new Shot();
+	                        loadShot(shot, resultSet2, 1);
+	                        result.add(shot);
+	                    }
+
+	                    DBUtil.closeQuietly(resultSet2);  // Close between iterations
+	                }
+
+	                if (result.isEmpty()) {
+	                    System.out.println("No shots found for the given frame and event.");
+	                }
+
+	                return result;
+
+	            } finally {
+	                DBUtil.closeQuietly(resultSet1);
+	                DBUtil.closeQuietly(stmt1);
+	                DBUtil.closeQuietly(resultSet2);
+	                DBUtil.closeQuietly(stmt2);
+	            }
+	        }
+	    });
+	}
+	
+	@Override
+	public ArrayList<Shot> findAllShotsGivenFrameSeason(String frameNum, String season) {
+	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
+	        @Override
+	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
+	            PreparedStatement stmt1 = null;
+	            PreparedStatement stmt2 = null;
+	            ResultSet resultSet1 = null;
+	            ResultSet resultSet2 = null;
+
+	            ArrayList<Shot> result = new ArrayList<>();
+
+	            try {
+	                // Step 1: Get all game_ids for the given event
+	                stmt1 = conn.prepareStatement(
+	                    "SELECT game_id FROM games WHERE season = ?"
+	                );
+	                stmt1.setString(1, season);
+	                resultSet1 = stmt1.executeQuery();
+
+	                List<String> gameIds = new ArrayList<>();
+	                while (resultSet1.next()) {
+	                    gameIds.add(resultSet1.getString("game_id"));
+	                }
+
+	                if (gameIds.isEmpty()) {
+	                    System.out.println("No game_ids found for the given event.");
+	                    return result;
+	                }
+
+	                // Step 2: For each game_id, get matching shots
+	                stmt2 = conn.prepareStatement(
+	                    "SELECT * FROM shots WHERE game_id = ? AND frame_number = ?"
+	                );
+
+	                for (String gameId : gameIds) {
+	                    stmt2.setString(1, gameId);
+	                    stmt2.setString(2, frameNum);
+	                    resultSet2 = stmt2.executeQuery();
+
+	                    while (resultSet2.next()) {
+	                        Shot shot = new Shot();
+	                        loadShot(shot, resultSet2, 1);
+	                        result.add(shot);
+	                    }
+
+	                    DBUtil.closeQuietly(resultSet2);  // Close between iterations
+	                }
+
+	                if (result.isEmpty()) {
+	                    System.out.println("No shots found for the given frame and season.");
+	                }
+
+	                return result;
+
+	            } finally {
+	                DBUtil.closeQuietly(resultSet1);
+	                DBUtil.closeQuietly(stmt1);
+	                DBUtil.closeQuietly(resultSet2);
+	                DBUtil.closeQuietly(stmt2);
+	            }
+	        }
+	    });
+	}
+	
+	@Override
+	public ArrayList<Shot> findAllShotsGivenEventSeason(String event, String season) {
+	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
+	        @Override
+	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
+	            PreparedStatement stmt1 = null;
+	            PreparedStatement stmt2 = null;
+	            ResultSet resultSet1 = null;
+	            ResultSet resultSet2 = null;
+
+	            ArrayList<Shot> result = new ArrayList<>();
+
+	            try {
+	                // Step 1: Get all game_ids for the given event
+	                stmt1 = conn.prepareStatement(
+	                    "SELECT game_id FROM games WHERE league = ? AND season = ?"
+	                );
+	                stmt1.setString(1, event);
+	                stmt1.setString(2, season);
+	                resultSet1 = stmt1.executeQuery();
+
+	                List<String> gameIds = new ArrayList<>();
+	                while (resultSet1.next()) {
+	                    gameIds.add(resultSet1.getString("game_id"));
+	                }
+
+	                if (gameIds.isEmpty()) {
+	                    System.out.println("No game_ids found for the given event.");
+	                    return result;
+	                }
+
+	                // Step 2: For each game_id, get matching shots
+	                stmt2 = conn.prepareStatement(
+	                    "SELECT * FROM shots WHERE game_id = ?"
+	                );
+
+	                for (String gameId : gameIds) {
+	                    stmt2.setString(1, gameId);
+	                    resultSet2 = stmt2.executeQuery();
+
+	                    while (resultSet2.next()) {
+	                        Shot shot = new Shot();
+	                        loadShot(shot, resultSet2, 1);
+	                        result.add(shot);
+	                    }
+
+	                    DBUtil.closeQuietly(resultSet2);  // Close between iterations
+	                }
+
+	                if (result.isEmpty()) {
+	                    System.out.println("No shots found for the given event and season.");
+	                }
+
+	                return result;
+
+	            } finally {
+	                DBUtil.closeQuietly(resultSet1);
+	                DBUtil.closeQuietly(stmt1);
+	                DBUtil.closeQuietly(resultSet2);
+	                DBUtil.closeQuietly(stmt2);
+	            }
+	        }
+	    });
+	}
+	
+	@Override
+	public ArrayList<Shot> findAllShotsGivenFrameEventSeason(String event, String season, String frameNum) {
+	    return executeTransaction(new Transaction<ArrayList<Shot>>() {
+	        @Override
+	        public ArrayList<Shot> execute(Connection conn) throws SQLException {
+	            PreparedStatement stmt1 = null;
+	            PreparedStatement stmt2 = null;
+	            ResultSet resultSet1 = null;
+	            ResultSet resultSet2 = null;
+
+	            ArrayList<Shot> result = new ArrayList<>();
+
+	            try {
+	                // Step 1: Get all game_ids for the given event
+	                stmt1 = conn.prepareStatement(
+	                    "SELECT game_id FROM games WHERE league = ? AND season = ?"
+	                );
+	                stmt1.setString(1, event);
+	                stmt1.setString(2, season);
+	                resultSet1 = stmt1.executeQuery();
+
+	                List<String> gameIds = new ArrayList<>();
+	                while (resultSet1.next()) {
+	                    gameIds.add(resultSet1.getString("game_id"));
+	                }
+
+	                if (gameIds.isEmpty()) {
+	                    System.out.println("No game_ids found for the given event.");
+	                    return result;
+	                }
+
+	                // Step 2: For each game_id, get matching shots
+	                stmt2 = conn.prepareStatement(
+	                    "SELECT * FROM shots WHERE game_id = ? AND frame_number = ?"
+	                );
+
+	                for (String gameId : gameIds) {
+	                    stmt2.setString(1, gameId);
+	                    stmt2.setString(2, frameNum);
+	                    resultSet2 = stmt2.executeQuery();
+
+	                    while (resultSet2.next()) {
+	                        Shot shot = new Shot();
+	                        loadShot(shot, resultSet2, 1);
+	                        result.add(shot);
+	                    }
+
+	                    DBUtil.closeQuietly(resultSet2);  // Close between iterations
+	                }
+
+	                if (result.isEmpty()) {
+	                    System.out.println("No shots found for the given frame, event, and season.");
+	                }
+
+	                return result;
+
+	            } finally {
+	                DBUtil.closeQuietly(resultSet1);
+	                DBUtil.closeQuietly(stmt1);
+	                DBUtil.closeQuietly(resultSet2);
+	                DBUtil.closeQuietly(stmt2);
+	            }
+	        }
+	    });
 	}
 	
 	@Override

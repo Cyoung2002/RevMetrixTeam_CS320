@@ -6,6 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>CS320 Add Ball</title>
+    
+    		 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -105,6 +107,7 @@ select:focus {
         }
 
         input[type="submit"] {
+            font-family: 'Orbitron', sans-serif; 
             background: #ff6600;
             color: white;
             border: none;

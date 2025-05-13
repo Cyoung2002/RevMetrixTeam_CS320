@@ -69,16 +69,18 @@
             font-size: 16px;
         }
 
-        /* Buttons (adjust for side-by-side layout) */
-        .button-container {
-            display: flex;
-            justify-content: space-between; /* To evenly distribute buttons */
-            flex-wrap: wrap; /* Wrap buttons if the screen is smaller */
-            gap: 10px; /* Space between buttons */
-            margin: 20px 0;
-        }
+
+.button-container {
+    display: flex;
+    justify-content: center; 
+    gap: 20px; 
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
 
         button {
+            font-family: 'Orbitron', sans-serif; 
             background: #ff6600;
             color: white;
             border: none;
@@ -156,20 +158,13 @@
     <div class="container">
 
         <div class="button-container">
-            <form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
-                <button type="submit" name="submitinsertnewbook">View All Events</button>
+            
+            <form action="${pageContext.servletContext.contextPath}/viewIndex" method="post">
+                <button type="submit" name="submitviewIndex">Viewing Page</button>
             </form>
-
-            <form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
-                <button type="submit" name="submitallestablishments">View Establishments</button>
-            </form>
-
-            <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
-                <button type="submit" name="submitarsenal">View Arsenal</button>
-            </form>
-			
-			<form action="${pageContext.servletContext.contextPath}/allSessions" method="post">
-                <button type="submit" name="submitallsessions">View Sessions</button>
+                        
+             <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
+                <button type="submit" name="submitstatIndex">Statistics Page</button>
             </form>
         </div>
     </div>
