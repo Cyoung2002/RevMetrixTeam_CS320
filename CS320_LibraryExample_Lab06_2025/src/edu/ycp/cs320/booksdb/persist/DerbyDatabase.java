@@ -1422,6 +1422,48 @@ public class DerbyDatabase implements IDatabase {
 		});
 	}
 	
+	@Override
+	public Integer getLastInsertedGameID() {
+		return executeTransaction(new Transaction<Integer>() {
+			@Override
+			public Integer execute(Connection conn) throws SQLException {
+				
+				PreparedStatement stmt5 = null;		
+				ResultSet resultSet5 = null;				
+				
+				// for saving game_id
+				Integer game_id   = -1;
+
+				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
+				try {
+					
+					stmt5 = conn.prepareStatement(
+							"select game_id from games order by game_id desc"
+					);
+
+					// execute the query
+					resultSet5 = stmt5.executeQuery();
+					
+					// get the result - there had better be one
+					if (resultSet5.next()) {
+						game_id = resultSet5.getInt(1);
+						System.out.println("Most recently entered game ID: " + game_id);
+						
+					// really should throw an exception here - the new book should have been inserted, but we didn't find it
+					} else {	
+						System.out.println("New game <" + game_id + "> not found in Game table");
+					}
+					
+					return game_id;
+					
+				} finally {
+					DBUtil.closeQuietly(resultSet5);
+					DBUtil.closeQuietly(stmt5);
+				}
+			}
+		});
+	}
+	
 	//@Override
 	public Integer insertShotIntoGame(final String shotNumber, final int gameID, final int frameNumber, final String count, final String leave, final String score, final String type, final String board, final String lane, final String ball) {
 		return executeTransaction(new Transaction<Integer>() {

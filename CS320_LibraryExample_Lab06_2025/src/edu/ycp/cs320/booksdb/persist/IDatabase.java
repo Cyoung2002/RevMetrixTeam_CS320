@@ -33,6 +33,7 @@ public interface IDatabase {
 	public ArrayList<Ball> findAllBalls();
 	public List<Author> removeBookByTitle(String title);
 	
+	public Integer getLastInsertedGameID();
 	public ArrayList<Establishment> findAllEstablishments();
 	public Integer insertEstablishmentIntoEstablishmentsTable(final String longname, final String shortname, final String address, final String phone, final Integer lanes, final String type);	
 	public ArrayList<Shot> findAllShotsInGame(String gameID);
