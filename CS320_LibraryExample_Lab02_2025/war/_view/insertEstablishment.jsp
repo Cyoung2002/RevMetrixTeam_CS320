@@ -6,6 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <title>CS320 Add Establishment</title>
+    
+    		 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -86,6 +88,7 @@
         }
 
         input[type="submit"], button {
+            font-family: 'Orbitron', sans-serif; 
             background: #ff6600;
             color: white;
             border: none;
@@ -157,6 +160,7 @@
 
    
         <form action="${pageContext.servletContext.contextPath}/index" method="post">
+                        <br></br>
             <input type="submit" name="submithome" value="Home">
         </form>
     </div>

@@ -5,6 +5,8 @@
 <html>
 	<head>
 		<title>CS320 All Sessions</title>
+		
+				 <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 		<style type="text/css">
        body {
             font-family: 'Orbitron', sans-serif;
@@ -45,7 +47,7 @@
         td.LeagueColHeading,
         td.SeasonColHeading,
         td.WeekColHeading,
-        td.DateScheduledColHeading,
+        td.DateBowledColHeading,
         td.RegSubColHeading,
         td.OpponentColHeading,
         td.StartLaneColHeading, 
@@ -66,7 +68,7 @@
         td.leagueCol,
         td.seasonCol,
         td.weekCol,
-        td.dateScheduledCol,
+        td.dateBowledCol,
         td.regSubCol,
         td.opponentCol,
         td.startLaneCol, 
@@ -92,6 +94,7 @@
         }
 
         button {
+            font-family: 'Orbitron', sans-serif; 
             background: #ff6600;
             color: white;
             border: none;
@@ -143,7 +146,7 @@
                     <td class="LeagueColHeading">League type</td>
                     <td class="SeasonColHeading">Season</td>
                     <td class="WeekColHeading">Week Number</td>
-                    <td class="DateScheduledColHeading">Date Scheduled</td>
+                    <td class="DateBowledColHeading">Date Bowled</td>
                     <td class="RegSubColHeading">Reg/Sub</td>
                     <td class="OpponentColHeading">Opponent</td>
                     <td class="StartLaneColHeading">Starting Lane</td>
@@ -159,7 +162,7 @@
                         <td class="leagueCol">${session.league}</td>
                         <td class="seasonCol">${session.season}</td>
                         <td class="weekCol">${session.week}</td>
-                        <td class="dateScheduledCol">${session.scheduled}</td>
+                        <td class="dateBowledCol">${session.bowled}</td>
                         <td class="regSubCol">${session.regSub}</td>
                         <td class="opponentCol">${session.opponent}</td>
                         <td class="startLaneCol">${session.start}</td>
@@ -180,6 +183,10 @@
         	<br>
 			<form action="${pageContext.servletContext.contextPath}/insertSession" method="get">
                 <button type="submit" name="submitinsertnewsession">Add New Session</button>
+            </form>
+           <br></br>
+            <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
+                <button type="submit" name="submitstatIndex">Statistics Page</button>
             </form>
         </div>
     </div>
