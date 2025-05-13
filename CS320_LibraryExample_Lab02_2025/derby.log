@@ -1,16 +1,11 @@
 ----------------------------------------------------------------
-<<<<<<< HEAD
-Mon May 05 15:48:53 EDT 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0196-a1fe-823b-000005fa96b8 
-=======
-Mon May 12 19:16:50 EDT 2025:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0196-c6c9-69d4-00000ee979e0 
->>>>>>> 9ef2168469364ce7897da484023f987292deba23
+Tue May 13 16:11:21 EDT 2025:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0196-cb45-f1d6-00000f6faca0 
 on database directory C:\CS320-2025-LibraryExample-DB\library with class loader sun.misc.Launcher$AppClassLoader@4e0e2f2a 
 Loaded from file:/C:/cs320-spring2025/CS320_Derby/lib/derby.jar
 java.vendor=Temurin
 java.runtime.version=1.8.0_442-b06
-user.dir=C:\Users\olivi\OneDrive\Documents\GitHub\RevMetrixTeam_CS320\CS320_LibraryExample_Lab02_2025
+user.dir=C:\CS320\RevMetrixTeam_CS320\CS320_LibraryExample_Lab02_2025
 os.name=Windows 11
 os.arch=amd64
 os.version=10.0
