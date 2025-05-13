@@ -15,7 +15,7 @@ public class InsertGameController {
 		db = DatabaseProvider.getInstance();		
 	}
 
-public boolean insertGame(String league, String season, String week, String date, String game, String lane) {
+	public Integer insertGame(String league, String season, String week, String date, String game, String lane) {
 		
 		// insert new book (and possibly new author) into DB
 		Integer game_id = db.insertGame(league, season, week, date, game, lane);
@@ -23,11 +23,11 @@ public boolean insertGame(String league, String season, String week, String date
 		// check if the insertion succeeded
 		if (game_id > 0) {
 			System.out.println("New Game (ID: " + game_id + ") successfully added to Games table");
-			return true;
+			return game_id;
 			
 		} else {
 			System.out.println("Failed to insert new game (ID: " + game_id + ") into Games table");
-			return false;
+			return game_id;
 		}
 	}
 }
