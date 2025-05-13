@@ -47,7 +47,7 @@
         td.LeagueColHeading,
         td.SeasonColHeading,
         td.WeekColHeading,
-        td.DateScheduledColHeading,
+        td.DateBowledColHeading,
         td.RegSubColHeading,
         td.OpponentColHeading,
         td.StartLaneColHeading, 
@@ -68,7 +68,7 @@
         td.leagueCol,
         td.seasonCol,
         td.weekCol,
-        td.dateScheduledCol,
+        td.dateBowledCol,
         td.regSubCol,
         td.opponentCol,
         td.startLaneCol, 
@@ -146,7 +146,7 @@
                     <td class="LeagueColHeading">League type</td>
                     <td class="SeasonColHeading">Season</td>
                     <td class="WeekColHeading">Week Number</td>
-                    <td class="DateScheduledColHeading">Date Scheduled</td>
+                    <td class="DateBowledColHeading">Date Bowled</td>
                     <td class="RegSubColHeading">Reg/Sub</td>
                     <td class="OpponentColHeading">Opponent</td>
                     <td class="StartLaneColHeading">Starting Lane</td>
@@ -162,7 +162,7 @@
                         <td class="leagueCol">${session.league}</td>
                         <td class="seasonCol">${session.season}</td>
                         <td class="weekCol">${session.week}</td>
-                        <td class="dateScheduledCol">${session.scheduled}</td>
+                        <td class="dateBowledCol">${session.bowled}</td>
                         <td class="regSubCol">${session.regSub}</td>
                         <td class="opponentCol">${session.opponent}</td>
                         <td class="startLaneCol">${session.start}</td>

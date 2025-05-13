@@ -26,7 +26,7 @@ public interface IDatabase {
 	public List<Author> findAllAuthors();
 	
 	public ArrayList<Session> findAllSessions();
-	public Integer insertSession(final String league, final Date bowled, final String ball, final int startLane, final int week, final int series);
+	public Integer insertSession(final String league, final Date bowled, final String ball, final int startLane);
 	public ArrayList<Event> findAllEvents();
 	public ArrayList<Ball> findAllBalls();
 	public List<Author> removeBookByTitle(String title);

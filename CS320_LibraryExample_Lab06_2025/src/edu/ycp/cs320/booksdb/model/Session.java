@@ -14,7 +14,7 @@ public class Session {
 	private int week;
 	//Will possibly need to import DateFormat to parse
 	private Date scheduled;
-	private String bowled;
+	private Date bowled;
 	//this may be boolean if applicable
 	private String regSub;
 	private String opponent;
@@ -23,10 +23,10 @@ public class Session {
 	private int start;
 	private String ball;
 	//game scores
-	private int gameOneScore;
-	private int gameTwoScore;
-	private int gameThreeScore;
-	private int series;
+	private int gameOneScore = 0;
+	private int gameTwoScore = 0;
+	private int gameThreeScore = 0;
+	private int series = 0;
 	//make the games;
 	/*
 	private Game gameOne;
@@ -132,12 +132,12 @@ public class Session {
 	}
 
 
-	public String getBowled() {
+	public Date getBowled() {
 		return bowled;
 	}
 
 
-	public void setBowled(String bowled) {
+	public void setBowled(Date bowled) {
 		this.bowled = bowled;
 	}
 
