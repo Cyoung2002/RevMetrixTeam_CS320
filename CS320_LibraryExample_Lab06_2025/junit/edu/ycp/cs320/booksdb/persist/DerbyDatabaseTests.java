@@ -204,10 +204,13 @@ public class DerbyDatabaseTests {
 		String longname    	= "Laser Lanes";
 		String shortname    = "LA";
 		String address 		= "3905 E. Market St  York  PA  17402";
+		String phone 		= "610-123-4567";
+		Integer lanes       = 12;
+		String type 		= "Brunswick";
   
 				
 		// insert new book (and possibly new author) into DB
-		Integer establishment_id = db.insertEstablishmentIntoEstablishmentsTable(longname, shortname, address);
+		Integer establishment_id = db.insertEstablishmentIntoEstablishmentsTable(longname, shortname, address, phone, lanes, type);
 
 		// check the return value - should be a book_id > 0
 		if (establishment_id > 0)
@@ -294,14 +297,21 @@ public class DerbyDatabaseTests {
 
 		String longname 			= "Summer Women's Duo";
 		String shortname 			= "SWD"; 
+		String type					= "Practice";
 		String establishmentShort 	= "SB"; 
+		String season				= "Fa-24";
+		Integer team				= 4;
+		String composition			= "Women's";
 		String weeknight 			= "33";
+		String time					= "10:00a";
 		String start 				= "05/15/25"; 
 		String end_date 			= "08/20/25";
 		Integer gamesPerSession 	= 3;
+		Integer weeks				= 32;
+		Integer playoffs			= 2;
 					
 		// insert new event (and possibly new author) into DB
-		Integer event_id = db.insertEvent(longname, shortname, establishmentShort, weeknight, start, end_date, gamesPerSession);
+		Integer event_id = db.insertEvent(longname, shortname, type, establishmentShort, season, team, composition, weeknight, time, start, end_date, gamesPerSession, weeks, playoffs);
 
 		// check the return value - should be a book_id > 0
 		if (event_id > 0)
@@ -372,6 +382,49 @@ public class DerbyDatabaseTests {
 		else {
 			System.out.println("Failed to insert new book (ID: " + book_id + ") into Books table: <" + title + ">");
 			fail("Failed to insert new book <" + title + "> into Library DB");			
+		}
+	}
+	
+	@Test
+	public void testInsertGame() {
+		System.out.println("\n*** Testing insertGame ***");
+
+		String league   	= "Laser Lanes";
+		String season    = "LA";
+		String week 		= "3905 E. Market St  York  PA  17402";
+		String date 		= "610-123-4567";
+		String game 		= "Brunswick";
+		String lane			= "Lane One";
+  
+				
+		// insert new book (and possibly new author) into DB
+		Integer establishment_id = db.insertGame(league, season, week, date, game, lane);
+
+		// check the return value - should be a book_id > 0
+		if (establishment_id > 0)
+		{
+			// try to retrieve the book and author from the DB
+			// get the list of (Author, Book) pairs from DB
+			establishments = db.findAllEstablishments();
+			
+			if (establishments.isEmpty()) {
+				System.out.println("No establishments found within establishments table <" + establishment_id + ">");
+				fail("Failed to insert new establishment <" + longname + "> into DB");
+			}
+			// otherwise, the test was successful.  Now remove the book just inserted to return the DB
+			// to it's original state, except for using an author_id and a book_id
+			else {
+				System.out.println("New establishment: " + longname + ") successfully added to establishments table: <" + establishment_id + ">");
+				
+				// now delete establishment from DB
+				// leaving the DB in its previous state - except that an author_id, and a book_id have been used
+				//we do not have this function implemented yet
+			}
+		}
+		else
+		{
+			System.out.println("Failed to insert new establishment: " + longname + ") into establishments table: <" + establishment_id + ">");
+			fail("Failed to insert new establishment <" + longname + "> into DB");
 		}
 	}
 }
