@@ -492,6 +492,7 @@ public class DerbyDatabase implements IDatabase {
 						loadShot(shot, resultSet, 1);
 						
 						result.add(shot);
+						System.out.println("gameID: " + gameID+ " frame: " + shot.getFrameNumber() + " shot: " + shot.getShotNumber());
 					}
 					
 					// check if any authors were found
@@ -2153,6 +2154,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	private void loadShot(Shot shot, ResultSet resultSet, int index) throws SQLException {
+		System.out.println("loading a shot");
 		resultSet.getString(index++);
 		shot.setGameID(Integer.valueOf(resultSet.getString(index++))); 		// game ID
 		shot.setFrameNumber(Integer.valueOf(resultSet.getString(index++)));

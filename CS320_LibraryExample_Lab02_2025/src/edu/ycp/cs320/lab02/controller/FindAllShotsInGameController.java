@@ -2,8 +2,6 @@ package edu.ycp.cs320.lab02.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.ycp.cs320.booksdb.model.Author;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
@@ -23,7 +21,9 @@ public class FindAllShotsInGameController {
 	public ArrayList<Shot> findAllShotsInGame(String gameID) {
 		
 		// get the list of shots from DB
+		System.out.println("Receiving shot list");
 		ArrayList<Shot> shotList = db.findAllShotsInGame(gameID);
+		System.out.println("Shot list recieved");
 		ArrayList<Shot> shots = null;
 		
 		if (shotList.isEmpty()) {
