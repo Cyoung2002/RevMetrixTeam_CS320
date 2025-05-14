@@ -207,13 +207,13 @@
             </div>
 
             <div class="options">
-                <button type="submit" name="type" value="strike" 
+                <button type="submit" name="type" value="X" 
                     class="option-btn strike ${shotNumber == 2 ? 'disabled-btn' : ''}">X (Strike)</button>
-                <button type="submit" name="type" value="spare" 
+                <button type="submit" name="type" value="/" 
                     class="option-btn spare ${shotNumber == 1 ? 'disabled-btn' : ''}">/ (Spare)</button>
-                <button type="submit" name="type" value="gutter" 
+                <button type="submit" name="type" value="-" 
                     class="option-btn gutter">- (Gutter)</button>
-                <button type="submit" name="type" value="foul" 
+                <button type="submit" name="type" value="F" 
                     class="option-btn foul">F (Foul)</button>
             </div>
         </div>
