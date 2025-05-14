@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.model.Shot;
 import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
 import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
 import edu.ycp.cs320.booksdb.persist.IDatabase;
 import edu.ycp.cs320.lab02.controller.AllEventsController;
+import edu.ycp.cs320.lab02.controller.FindAllShotsInGameController;
 import edu.ycp.cs320.lab02.controller.InsertGameController;
 import edu.ycp.cs320.lab02.controller.InsertShotController;
 
@@ -22,6 +24,7 @@ public class InsertShotServlet extends HttpServlet {
     private InsertShotController shotController = null;    
     private AllEventsController eventsController = null;
     private InsertGameController gameController = null;
+    private FindAllShotsInGameController gameShotsController = null;
     private IDatabase db = null;
 
     @Override
@@ -42,26 +45,42 @@ public class InsertShotServlet extends HttpServlet {
         // Initialize controllers and database
         DatabaseProvider.setInstance(new DerbyDatabase());
         db = DatabaseProvider.getInstance();
+        
         gameController = new InsertGameController();
         shotController = new InsertShotController();
+        int currentFrame = 0;
+        int currentShot = 0;
         
         // Get the last game ID
         Integer gameID = db.getLastInsertedGameID();
+        
         if (gameID == null || gameID <= 0) {
             req.setAttribute("errorMessage", "No game found to add shots to. Please create a game first.");
             req.getRequestDispatcher("/_view/insertShot.jsp").forward(req, resp);
             return;
         }
         
+        ArrayList<Shot> shots = null;
+        shots = gameShotsController.findAllShotsInGame(String.valueOf(gameID));
+        
+        if(shots == null) {
+        	currentFrame = 1;
+        	currentShot = 1;
+        } else {
+        	//currentFrame = Math.ceil(double)((shots.size() + 1)/2);
+        	currentFrame = (int) Math.ceil((double) (shots.size() + 1) / 2);
+        	currentShot = shots.size();
+        }
+        
         // We'll track frame and shot number via session
-        Integer currentFrame = (Integer) req.getSession().getAttribute("currentFrame");
-        String currentShot = (String) req.getSession().getAttribute("currentShot");
+        //Integer currentFrame = (Integer) req.getSession().getAttribute("currentFrame");
+        //String currentShot = (String) req.getSession().getAttribute("currentShot");
         
         // Initialize if first shot
-        if (currentFrame == null) {
+        /*if (currentFrame == null) {
             currentFrame = 1;
-            currentShot = "1";
-        }
+            currentShot = 1;
+        }*/
         
         // Don't allow more than 12 frames
         if (currentFrame > 12) {
@@ -79,6 +98,7 @@ public class InsertShotServlet extends HttpServlet {
         req.setAttribute("gameID", gameID);
         req.setAttribute("frameNumber", currentFrame);
         req.setAttribute("shotNumber", currentShot);
+        req.setAttribute("shots", shots);
         
         req.getRequestDispatcher("/_view/insertShot.jsp").forward(req, resp);
     }
@@ -132,8 +152,8 @@ public class InsertShotServlet extends HttpServlet {
                 // Validate ranges
                 if (frameNumber < 1 || frameNumber > 12) {
                     errorMessage = "Frame number must be between 1 and 12";
-                } else if (!shotNumber.equals("1") && !shotNumber.equals("2")) {
-                    errorMessage = "Shot number must be either 1 or 2";
+                /*} else if (!shotNumber.equals("1") && !shotNumber.equals("2")) {
+                    errorMessage = "Shot number must be either 1 or 2";*/
                 } else {
                     // Handle strike scenario - second shot can be null/empty
                     if (shotNumber.equals("2") && (count == null || count.trim().isEmpty())) {
