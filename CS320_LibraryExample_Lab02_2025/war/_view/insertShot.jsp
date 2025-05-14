@@ -207,23 +207,22 @@
             </div>
 
             <div class="options">
-                <button type="submit" name="type" value="X" 
+                <button type="submit" name="count" value="X" 
                     class="option-btn strike ${shotNumber == 2 ? 'disabled-btn' : ''}">X (Strike)</button>
-                <button type="submit" name="type" value="/" 
+                <button type="submit" name="count" value="/" 
                     class="option-btn spare ${shotNumber == 1 ? 'disabled-btn' : ''}">/ (Spare)</button>
-                <button type="submit" name="type" value="-" 
+                <button type="submit" name="count" value="-" 
                     class="option-btn gutter">- (Gutter)</button>
-                <button type="submit" name="type" value="F" 
+                <button type="submit" name="count" value="F" 
                     class="option-btn foul">F (Foul)</button>
             </div>
         </div>
 
         <input type="hidden" name="count" id="count" value="">
-        <input type="hidden" name="leave" id="leave" value="">
+        <input type="hidden" name="leave" id="leave" value="${standingPinsString}">
         <input type="hidden" name="score" id="score" value="">
         <input type="hidden" name="board" id="board" value="">
         <input type="hidden" name="lane" id="lane" value="">
-        <input type="hidden" name="standingPins" id="standingPins" value="${standingPinsString}">
     </form>
 
     <button id="indexButton" onclick="location.href='${pageContext.request.contextPath}/index'">Index</button>
