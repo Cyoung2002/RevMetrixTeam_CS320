@@ -171,6 +171,10 @@
 			<form action="${pageContext.servletContext.contextPath}/allSessions" method="post">
                 <button type="submit" name="submitallsessions">Sessions</button>
             </form>
+            
+            <form action="${pageContext.servletContext.contextPath}/insertGame" method="post">
+                <button type="submit" name="submitinsertgame">Insert Game</button>
+            </form>
         </div>
     </div>
 
