@@ -166,6 +166,10 @@
              <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
                 <button type="submit" name="submitstatIndex">Statistics Page</button>
             </form>
+            
+             <form action="${pageContext.servletContext.contextPath}/insertGame" method="post">
+                <button type="submit" name="submitinsertgame">Let's Bowl!</button>
+			</form>
         </div>
     </div>
 

@@ -131,7 +131,7 @@ select:focus {
 <body>
 
     <div class="wrapper">
-        <h1>Add Game</h1>
+        <h1>Start a new Game!</h1>
 
         <c:if test="${! empty errorMessage}">
             <div class="error">${errorMessage}</div>
