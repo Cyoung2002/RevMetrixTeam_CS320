@@ -14,11 +14,18 @@ import edu.ycp.cs320.booksdb.model.Game;
 import edu.ycp.cs320.booksdb.model.Shot;
 import edu.ycp.cs320.lab02.controller.AllAuthorsController;
 import edu.ycp.cs320.lab02.controller.FindAllShotsInGameController;
+import edu.ycp.cs320.lab02.controller.InsertShotController;
+import edu.ycp.cs320.lab02.controller.LastGameIDController;
 
 public class GameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private FindAllShotsInGameController controller = null;	
+	private InsertShotController shotController = null;	
+	private LastGameIDController gameIDController = null;	
+	// use this to keep referencing the correct game id for 
+	// finding the shots with the same game_id attribute and entering new shots with the same game_id attribute
+	// into the database
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -62,15 +69,15 @@ public class GameServlet extends HttpServlet {
 
 		// any authors found?
 		if (game == null) {
-			errorMessage = "No Balls found in Arsenal";
+			errorMessage = "No Shots found in Game";
 		}
 
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("arsenal", arsenal);
+		req.setAttribute("game", game);
 		
-		for(Ball ball: arsenal) {
-			System.out.println(ball.getShortname());
+		for(Shot shot: game) {
+			System.out.println(shot.getCount());
 		}
 
 		// Forward to view to render the result HTML document
