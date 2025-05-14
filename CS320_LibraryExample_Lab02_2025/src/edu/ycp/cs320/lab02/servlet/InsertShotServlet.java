@@ -48,6 +48,7 @@ public class InsertShotServlet extends HttpServlet {
         
         gameController = new InsertGameController();
         shotController = new InsertShotController();
+        gameShotsController = new FindAllShotsInGameController();
         int currentFrame = 0;
         int currentShot = 0;
         
@@ -60,8 +61,7 @@ public class InsertShotServlet extends HttpServlet {
             return;
         }
         
-        ArrayList<Shot> shots = null;
-        shots = gameShotsController.findAllShotsInGame(String.valueOf(gameID));
+        ArrayList<Shot> shots = gameShotsController.findAllShotsInGame(String.valueOf(gameID));
         
         if(shots == null) {
         	currentFrame = 1;
