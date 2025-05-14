@@ -38,6 +38,12 @@
       background-color: black;
       color: white;
     }
+    
+    .selected-pins{
+    margin-top: 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    }
   </style>
 </head>
 <body>
@@ -63,10 +69,47 @@
   </div>
 </div>
 
+<div class = "slected-pins" id = "selectedPinsDisplay">
+	Selected Pins: None
+</div>
+
 <script>
-  function togglePin(button) {
-    button.classList.toggle("selected");
-  }
+	let selectedPins = [];
+	
+	function togglePin(button) {
+	   button.classList.toggle("selected");
+	   const pinNumber = button.textContent
+	   
+	   //check if pin already selected
+	   const index = selectedPins.indexOf(pinNumber);
+	   
+	   if(index === -1){
+		   selectedPins.push(pinNumber);
+		   //not in array -> add
+	   }else{
+		   selectedPins.splice(index, 1);
+		   //pin in array -> remove
+	   }
+	   //sort array numerically, since string would sort 10 before 2
+	   selectedPins.sort((a, b) => parseInt(a) - parseInt(b));
+	   //update display
+	   updateSelectedPinsDisplay();
+	   
+	}
+	
+	function updateSelectedPinsDisplay(){
+		const displayElement = document.getElementById('selectedPinsDisplay');
+		
+		if(selectedPins.length === 0){
+			displayElement.textContent = 'Selected Pins: None';
+		}else{
+			const pinsString = selectedPins.join(',');
+			displayElement.textContent = 'Selected Pins: ' + pinsString;
+			//comma seperated string of pins
+			
+		}
+	}
+	  
 </script>
 
 </body>

@@ -137,19 +137,16 @@
                 </c:forEach>
             </table>
       		  <br>
-            <input type="submit" name="submithome" value="Home">
         </form>
 
         <form action="${pageContext.servletContext.contextPath}/insertBall" method="get">
         <br>
             <input type="submit" name="submitinsertnewball" value="Add New Ball">
         </form>
-        <br></br>
-        
-         <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
-                <button type="submit" name="submitstatIndex">Statistics Page</button>
+                 <br></br>
+            <form action="${pageContext.servletContext.contextPath}/viewIndex" method="post">
+                <button type="submit" name="submitviewIndex">View/Adding Page</button>
             </form>
-        <br>
     </div>
 
 </body>

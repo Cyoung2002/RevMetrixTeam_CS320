@@ -69,14 +69,13 @@
             font-size: 16px;
         }
 
-        /* Buttons (adjust for side-by-side layout) */
-        .button-container {
-            display: flex;
-            justify-content: space-between; /* To evenly distribute buttons */
-            flex-wrap: wrap; /* Wrap buttons if the screen is smaller */
-            gap: 10px; /* Space between buttons */
-            margin: 20px 0;
-        }
+.button-container {
+    display: flex;
+    justify-content: center; 
+    gap: 20px; 
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
 
         button {
             font-family: 'Orbitron', sans-serif; 
@@ -151,26 +150,26 @@
 
 <body>
     <div class="title-header">
-        <h1>Viewing Page</h1>
+        <h1>View/Adding Page</h1>
     </div>
 
     <div class="container">
 
         <div class="button-container">
             <form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
-                <button type="submit" name="submitinsertnewbook">View All Events</button>
+                <button type="submit" name="submitinsertnewbook">Events</button>
             </form>
 
             <form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
-                <button type="submit" name="submitallestablishments">View Establishments</button>
+                <button type="submit" name="submitallestablishments">Establishments</button>
             </form>
 
             <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
-                <button type="submit" name="submitarsenal">View Arsenal</button>
+                <button type="submit" name="submitarsenal">Arsenal</button>
             </form>
 			
 			<form action="${pageContext.servletContext.contextPath}/allSessions" method="post">
-                <button type="submit" name="submitallsessions">View Sessions</button>
+                <button type="submit" name="submitallsessions">Sessions</button>
             </form>
         </div>
     </div>
