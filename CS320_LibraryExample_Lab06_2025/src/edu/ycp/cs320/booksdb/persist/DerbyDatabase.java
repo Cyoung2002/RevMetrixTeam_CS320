@@ -1394,7 +1394,7 @@ public class DerbyDatabase implements IDatabase {
 					);
 					stmt5.setString(1, date);
 					stmt5.setString(2, game);
-					stmt5.setString(2, league);
+					stmt5.setString(3, league);
 
 					// execute the query
 					resultSet5 = stmt5.executeQuery();
