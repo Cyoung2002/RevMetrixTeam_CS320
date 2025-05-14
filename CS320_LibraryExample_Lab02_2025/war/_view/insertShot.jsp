@@ -226,7 +226,7 @@
     </form>
 
     <button id="indexButton" onclick="location.href='${pageContext.request.contextPath}/index'">Index</button>
-    <button onclick="location.href='${pageContext.request.contextPath}/game'">Game</button>
+    <button onclick="location.href='${pageContext.request.contextPath}/insertGame'">Game</button>
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
