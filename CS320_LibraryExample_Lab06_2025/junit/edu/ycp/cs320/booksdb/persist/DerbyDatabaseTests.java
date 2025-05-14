@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,9 +17,11 @@ import edu.ycp.cs320.booksdb.model.Ball;
 import edu.ycp.cs320.booksdb.model.Book;
 import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.model.Session;
+import edu.ycp.cs320.booksdb.model.Shot;
 import edu.ycp.cs320.booksdb.model.Pair;
 
-public class DerbyDatabaseTests {
+public class DerbyDatabaseTests<Date> {
 
 	private IDatabase db = null;
 	
@@ -30,6 +33,8 @@ public class DerbyDatabaseTests {
 	ArrayList<Ball> arsenal = null;
 	ArrayList<Establishment> establishments = null;
 	ArrayList<Event> event = null;
+	ArrayList<Session> session = null;
+	ArrayList<Shot> shot = null;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -204,10 +209,13 @@ public class DerbyDatabaseTests {
 		String longname    	= "Laser Lanes";
 		String shortname    = "LA";
 		String address 		= "3905 E. Market St  York  PA  17402";
+		String phone 		= "610-123-4567";
+		Integer lanes       = 12;
+		String type 		= "Brunswick";
   
 				
 		// insert new book (and possibly new author) into DB
-		Integer establishment_id = db.insertEstablishmentIntoEstablishmentsTable(longname, shortname, address);
+		Integer establishment_id = db.insertEstablishmentIntoEstablishmentsTable(longname, shortname, address, phone, lanes, type);
 
 		// check the return value - should be a book_id > 0
 		if (establishment_id > 0)
@@ -294,14 +302,21 @@ public class DerbyDatabaseTests {
 
 		String longname 			= "Summer Women's Duo";
 		String shortname 			= "SWD"; 
+		String type					= "Practice";
 		String establishmentShort 	= "SB"; 
+		String season				= "Fa-24";
+		Integer team				= 4;
+		String composition			= "Women's";
 		String weeknight 			= "33";
+		String time					= "10:00a";
 		String start 				= "05/15/25"; 
 		String end_date 			= "08/20/25";
 		Integer gamesPerSession 	= 3;
+		Integer weeks				= 32;
+		Integer playoffs			= 2;
 					
 		// insert new event (and possibly new author) into DB
-		Integer event_id = db.insertEvent(longname, shortname, establishmentShort, weeknight, start, end_date, gamesPerSession);
+		Integer event_id = db.insertEvent(longname, shortname, type, establishmentShort, season, team, composition, weeknight, time, start, end_date, gamesPerSession, weeks, playoffs);
 
 		// check the return value - should be a book_id > 0
 		if (event_id > 0)
@@ -372,6 +387,322 @@ public class DerbyDatabaseTests {
 		else {
 			System.out.println("Failed to insert new book (ID: " + book_id + ") into Books table: <" + title + ">");
 			fail("Failed to insert new book <" + title + "> into Library DB");			
+		}
+	}
+	
+	@Test
+	public void testInsertGame() {
+		System.out.println("\n*** Testing insertGame ***");
+
+		String league   	= "test";
+		String season    	= "test";
+		String week 		= "test";
+		String date 		= "test";
+		String game 		= "test";
+		String lane			= "test";
+  
+				
+		try {
+			// Attempt to insert the game
+			Integer game_id = db.insertGame(league, season, week, date, game, lane);
+
+			// Check the return value
+			assertNotNull("Insert returned null game_id", game_id);
+			assertTrue("Insert returned invalid game_id", game_id > 0);
+
+			System.out.println("Successfully inserted game. ID: " + game_id);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testInsertGame: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during insertGame: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllEvents() {
+		System.out.println("\n*** Testing findAllEvents ***");		
+		try {
+			// Attempt to insert the game
+			ArrayList<Event> result = db.findAllEvents();
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found events." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllEvents: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllEvents: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllBalls() {
+		System.out.println("\n*** Testing findAllBalls ***");		
+		try {
+			// Attempt to insert the game
+			ArrayList<Ball> result = db.findAllBalls();
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found balls." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllBalls: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllBalls: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllSessions() {
+		System.out.println("\n*** Testing findAllSessions ***");		
+		try {
+			// Attempt to insert the game
+			ArrayList<Session> result = db.findAllSessions();
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found sessions." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllSessions: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllSessions: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllEstablishments() {
+		System.out.println("\n*** Testing findAllEstablishments ***");		
+		try {
+			// Attempt to insert the game
+			ArrayList<Establishment> result = db.findAllEstablishments();
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found establishments." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllEstablishments: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllEstablishments: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllShots() {
+		System.out.println("\n*** Testing findAllShots ***");		
+		try {
+			// Attempt to insert the game
+			ArrayList<Shot> result = db.findAllShots();
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found shots." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllShots: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllShots: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllShotsInGame() {
+		System.out.println("\n*** Testing findAllShotsInGame ***");		
+		try {
+			String gameID = "12";
+			// Attempt to insert the game
+			ArrayList<Shot> result = db.findAllShotsInGame(gameID);
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found shots." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllShotsInGame: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllShotsInGame: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllShotsGivenFrame() {
+		System.out.println("\n*** Testing findAllShotsGivenFrame ***");		
+		try {
+			String frame = "5";
+			// Attempt to insert the game
+			ArrayList<Shot> result = db.findAllShotsGivenFrame(frame);
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found shots." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllShotsGivenFrame: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllShotsGivenFrame: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllShotsGivenEvent() {
+		System.out.println("\n*** Testing findAllShotsGivenEvent ***");		
+		try {
+			String event = "BowlerMaxx";
+			// Attempt to insert the game
+			ArrayList<Shot> result = db.findAllShotsGivenFrame(event);
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found shots." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllShotsGivenEvent: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllShotsGivenEvent: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllShotsGivenSeason() {
+		System.out.println("\n*** Testing findAllShotsGivenSeason ***");		
+		try {
+			String season = "Fa-24";
+			// Attempt to insert the game
+			ArrayList<Shot> result = db.findAllShotsGivenSeason(season);
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found shots." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllShotsGivenSeason: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllShotsGivenSeason: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllShotsGivenFrameEvent() {
+		System.out.println("\n*** Testing findAllShotsGivenFrameEvent ***");		
+		try {
+			String frame = "5";
+			String event = "BowlerMaxx";
+			// Attempt to insert the game
+			ArrayList<Shot> result = db.findAllShotsGivenFrameEvent(frame, event);
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found shots." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllShotsGivenFrameEvent: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllShotsGivenFrameEvent: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllShotsGivenFrameSeason() {
+		System.out.println("\n*** Testing findAllShotsGivenFrameSeason ***");		
+		try {
+			String frame = "5";
+			String season = "Fa-24";
+			// Attempt to insert the game
+			ArrayList<Shot> result = db.findAllShotsGivenFrameSeason(frame, season);
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found shots." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllShotsGivenFrameSeason: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllShotsGivenFrameSeason: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllShotsGivenEventSeason() {
+		System.out.println("\n*** Testing findAllShotsGivenEventSeason ***");		
+		try {
+			String event = "BowlerMaxx";
+			String season = "Fa-24";
+			// Attempt to insert the game
+			ArrayList<Shot> result = db.findAllShotsGivenEventSeason(event, season);
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found shots." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllShotsGivenEventSeason: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllShotsGivenEventSeason: " + e.getMessage());
+		}
+	}
+	
+	@Test
+	public void testFindAllShotsGivenFrameEventSeason() {
+		System.out.println("\n*** Testing findAllShotsGivenFrameEventSeason ***");		
+		try {
+			String frame = "5";
+			String event = "BowlerMaxx";
+			String season = "Fa-24";
+			// Attempt to insert the game
+			ArrayList<Shot> result = db.findAllShotsGivenFrameEventSeason(frame, event, season);
+
+			// Check the return value
+			assertNotNull("Insert returned null result", result);
+			assertTrue("Insert returned invalid result", result != null);
+
+			System.out.println("Successfully found shots." + result);
+
+
+		} catch (Exception e) {
+			System.err.println("Exception occurred during testFindAllShotsGivenFrameEventSeason: " + e.getMessage());
+			e.printStackTrace();
+			fail("Exception thrown during findAllShotsGivenFrameEventSeason: " + e.getMessage());
 		}
 	}
 }

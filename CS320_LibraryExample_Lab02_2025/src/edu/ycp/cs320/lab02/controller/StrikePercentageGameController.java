@@ -21,6 +21,7 @@ public class StrikePercentageGameController {
 		ArrayList<Shot> shotList = db.findAllShots();
 		Double numStrikes = 0.0;
 		Double numShots = 0.0;
+		Double numFrames = 0.0;
 		Double percentResult = 0.0;
 		
 		for (Shot shot : shotList) {
@@ -34,7 +35,8 @@ public class StrikePercentageGameController {
 		if (numShots == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			numFrames = numShots/2;
+			percentResult = (((numStrikes)/(numFrames))*100.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
@@ -57,7 +59,7 @@ public class StrikePercentageGameController {
 		if (numShots == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numShots))*200.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
@@ -80,7 +82,7 @@ public class StrikePercentageGameController {
 		if (numShots == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numShots))*200.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
@@ -103,7 +105,7 @@ public class StrikePercentageGameController {
 		if (numShots == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numShots))*200.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
@@ -126,7 +128,7 @@ public class StrikePercentageGameController {
 		if (numShots == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numShots))*200.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
@@ -149,7 +151,7 @@ public class StrikePercentageGameController {
 		if (numShots == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numShots))*200.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
@@ -172,7 +174,7 @@ public class StrikePercentageGameController {
 		if (numShots == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numShots))*200.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
@@ -197,7 +199,7 @@ public class StrikePercentageGameController {
 		if (numShots == 0.0) {
 		    return 0.0;  // or 0.0, or set errorMessage
 		} else {
-			percentResult = (((numStrikes)/(numShots))*100.0);
+			percentResult = (((numStrikes)/(numShots))*200.0);
 			System.out.println(percentResult);
 			return percentResult;
 		}
