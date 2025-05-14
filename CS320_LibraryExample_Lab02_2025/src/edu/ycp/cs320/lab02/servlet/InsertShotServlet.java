@@ -69,7 +69,7 @@ public class InsertShotServlet extends HttpServlet {
         } else {
         	//currentFrame = Math.ceil(double)((shots.size() + 1)/2);
         	currentFrame = (int) Math.ceil((double) (shots.size() + 1) / 2);
-        	currentShot = shots.size();
+        	currentShot = shots.size() + 1;
         }
         
         // We'll track frame and shot number via session
@@ -83,16 +83,16 @@ public class InsertShotServlet extends HttpServlet {
         }*/
         
         // Don't allow more than 12 frames
-        if (currentFrame > 12) {
+        if (currentFrame > 12 || currentShot > 23) {
             req.setAttribute("errorMessage", "Game already has 12 frames completed. Cannot add more shots.");
             req.getRequestDispatcher("/_view/insertShot.jsp").forward(req, resp);
             return;
         }
         
-        ArrayList<Event> events = null;
+        /*ArrayList<Event> events = null;
         eventsController = new AllEventsController();
         events = eventsController.getEvents();
-        req.setAttribute("events", events);
+        req.setAttribute("events", events);*/
         
         // Set values
         req.setAttribute("gameID", gameID);
@@ -155,33 +155,80 @@ public class InsertShotServlet extends HttpServlet {
                 /*} else if (!shotNumber.equals("1") && !shotNumber.equals("2")) {
                     errorMessage = "Shot number must be either 1 or 2";*/
                 } else {
+                	
+                	System.out.println(leave);
+                	
                     // Handle strike scenario - second shot can be null/empty
-                    if (shotNumber.equals("2") && (count == null || count.trim().isEmpty())) {
+                    /*if (shotNumber.equals("2") && (count == null || count.trim().isEmpty())) {
                         count = "0"; // or null if preferred
-                    }
+                    }*/
+                	if (leave.contains("X")) {
+                		int strikeShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                                "X", "", "", "", "", "", "");
+                		
+                		if(!(Integer.valueOf(shotNumber)%2 == 0)) {
+                			shotNumber = String.valueOf(Integer.valueOf(shotNumber) + 1);
+                    		int emptyShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                                    "", "", "", "", "", "", "");
+                		}
+                        
+                        if (strikeShotID > 0) {
+                            successMessage = "Shot successfully added to Frame " + frameNumber + 
+                                            " (Shot " + shotNumber + ")";
+                        }
+                        
+                	} else if (leave.contains("/")) {
+                		int spareShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                                "/", "", "", "", "", "", "");
+                		
+                	} else if (leave.contains("-")) {
+                		int gutterShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                				"-", "", "", "", "", "", "");
+                		
+                	} else if (leave.contains("F")) {
+                		int gutterShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                				"F", "", "", "", "", "", "");
+                		
+                	} else {
+                		
+                		String[] parts = leave.split(",");
+                		
+                		leave = "";
+                		int sum = 0;
+                		for (String part : parts) {
+                			leave += part.trim();
+                		    sum += Integer.parseInt(part.trim());
+                		}
+                		
+                		int normalShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                				String.valueOf(count), leave , "", "", "", "", "");
+                		
+                	}
+          
+                	
                     
                     // Insert the shot using your existing method
-                    Integer shotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
-                            count, leave, score, type, board, lane, ball);
+                    /*Integer shotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                            count, leave, "", "", "", "", "");*/
                     
-                    if (shotID > 0) {
+                    /*if (normalShotID > 0) {
                         successMessage = "Shot successfully added to Frame " + frameNumber + 
                                         " (Shot " + shotNumber + ")";
                         
                         // Calculate next shot and frame
-                        String nextShot = shotNumber.equals("1") ? "2" : "1";
-                        int nextFrame = shotNumber.equals("1") ? frameNumber : frameNumber + 1;
+                        //String nextShot = shotNumber.equals("1") ? "2" : "1";
+                        //int nextFrame = shotNumber.equals("1") ? frameNumber : frameNumber + 1;
                         
                         // Store in session
-                        req.getSession().setAttribute("currentFrame", nextFrame);
-                        req.getSession().setAttribute("currentShot", nextShot);
+                        //req.getSession().setAttribute("currentFrame", nextFrame);
+                        //req.getSession().setAttribute("currentShot", nextShot);
                         
                         // Set attributes for form
-                        req.setAttribute("nextFrame", nextFrame);
-                        req.setAttribute("nextShotNumber", nextShot);
+                        //req.setAttribute("nextFrame", nextFrame);
+                        //req.setAttribute("nextShotNumber", nextShot);
                     } else {
                         errorMessage = "Failed to insert shot";
-                    }
+                    }*/
                 }
             } catch (NumberFormatException e) {
                 errorMessage = "Game ID and Frame Number must be valid numbers";
@@ -189,10 +236,10 @@ public class InsertShotServlet extends HttpServlet {
         }
         
         // Get events for navigation
-        ArrayList<Event> events = null;
+        /*ArrayList<Event> events = null;
         eventsController = new AllEventsController();
         events = eventsController.getEvents();
-        req.setAttribute("events", events);
+        req.setAttribute("events", events);*/
         
         // Set request attributes
         req.setAttribute("gameID", gameIDStr);
