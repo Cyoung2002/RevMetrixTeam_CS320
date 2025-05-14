@@ -23,7 +23,7 @@ import edu.ycp.cs320.booksdb.model.Establishment;
 import edu.ycp.cs320.booksdb.model.Event;
 import edu.ycp.cs320.booksdb.model.Pair;
 import edu.ycp.cs320.booksdb.model.Shot;
-import edu.ycp.cs320.booksdb.persist.DerbyDatabase.Transaction;
+//import edu.ycp.cs320.booksdb.persist.DerbyDatabase.Transaction;
 
 public class OverallGameAverageForSessionServletTests {
 

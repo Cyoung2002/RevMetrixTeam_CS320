@@ -156,20 +156,20 @@
     <div class="container">
 
         <div class="button-container">
-            <form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
-                <button type="submit" name="submitinsertnewbook">Events</button>
-            </form>
-
-            <form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
+             <form action="${pageContext.servletContext.contextPath}/allEstablishments" method="post">
                 <button type="submit" name="submitallestablishments">Establishments</button>
             </form>
-
-            <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
-                <button type="submit" name="submitarsenal">Arsenal</button>
+            
+            <form action="${pageContext.servletContext.contextPath}/allEvents" method="post">
+                <button type="submit" name="submitinsertnewbook">Events</button>
             </form>
 			
 			<form action="${pageContext.servletContext.contextPath}/allSessions" method="post">
                 <button type="submit" name="submitallsessions">Sessions</button>
+            </form>
+			
+            <form action="${pageContext.servletContext.contextPath}/arsenal" method="post">
+                <button type="submit" name="submitarsenal">Arsenal</button>
             </form>
         </div>
     </div>

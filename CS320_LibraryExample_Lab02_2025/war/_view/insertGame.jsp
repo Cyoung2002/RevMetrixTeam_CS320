@@ -131,7 +131,7 @@ select:focus {
 <body>
 
     <div class="wrapper">
-        <h1>Add Game</h1>
+        <h1>Start a new Game!</h1>
 
         <c:if test="${! empty errorMessage}">
             <div class="error">${errorMessage}</div>
@@ -184,7 +184,7 @@ select:focus {
         </form>
         
         <br>
-        <form action="${pageContext.servletContext.contextPath}/game" method="post">
+        <form action="${pageContext.servletContext.contextPath}/insertShot" method="post">
             <input type="submit" name="submithome" value="Start Bowling New Game">
         </form>
         <br>
