@@ -207,13 +207,13 @@
             </div>
 
             <div class="options">
-                <button type="submit" name="count" value="X" 
+                <button type="submit" name="leave" value="X" 
                     class="option-btn strike ${shotNumber == 2 ? 'disabled-btn' : ''}">X (Strike)</button>
-                <button type="submit" name="count" value="/" 
+                <button type="submit" name="leave" value="/" 
                     class="option-btn spare ${shotNumber == 1 ? 'disabled-btn' : ''}">/ (Spare)</button>
-                <button type="submit" name="count" value="-" 
+                <button type="submit" name="leave" value="-" 
                     class="option-btn gutter">- (Gutter)</button>
-                <button type="submit" name="count" value="F" 
+                <button type="submit" name="leave" value="F" 
                     class="option-btn foul">F (Foul)</button>
             </div>
         </div>
