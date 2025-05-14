@@ -53,9 +53,9 @@ public class InsertShotServlet extends HttpServlet {
         int currentShot = 0;
         
         // Get the last game ID
-        Integer gameID = db.getLastInsertedGameID();
+        int gameID = db.getLastInsertedGameID();
         
-        if (gameID == null || gameID <= 0) {
+        if (gameID <= 0) {
             req.setAttribute("errorMessage", "No game found to add shots to. Please create a game first.");
             req.getRequestDispatcher("/_view/insertShot.jsp").forward(req, resp);
             return;
@@ -112,8 +112,8 @@ public class InsertShotServlet extends HttpServlet {
         String errorMessage = null;
         String successMessage = null;
         String shotNumber = null;
-        String gameIDStr = null;
-        String frameNumberStr = null;
+        int gameID = 0;
+        int frameNumber = 0;
         String count = null;
         String leave = null;
         String score = null;
@@ -122,13 +122,13 @@ public class InsertShotServlet extends HttpServlet {
         String lane = null;
         String ball = null;
         
-        int gameID = 0;
-        int frameNumber = 0;
+        //int gameID = 0;
+        //int frameNumber = 0;
 
         // Get form parameters
         shotNumber = req.getParameter("shotNumber");
-        gameIDStr = req.getParameter("gameID");
-        frameNumberStr = req.getParameter("frameNumber");
+        gameID = Integer.parseInt(req.getParameter("gameID"));
+        frameNumber = Integer.parseInt(req.getParameter("frameNumber"));
         count = req.getParameter("count");
         leave = req.getParameter("leave");
         score = req.getParameter("score");
@@ -140,14 +140,14 @@ public class InsertShotServlet extends HttpServlet {
         // Validate parameters
         if (shotNumber == null || shotNumber.trim().isEmpty()) {
             errorMessage = "Shot number is required";
-        } else if (gameIDStr == null || gameIDStr.trim().isEmpty()) {
+        /*} else if (gameIDStr == null || gameIDStr.trim().isEmpty()) {
             errorMessage = "Game ID is required";
         } else if (frameNumberStr == null || frameNumberStr.trim().isEmpty()) {
-            errorMessage = "Frame number is required";
+            errorMessage = "Frame number is required";*/
         } else {
             try {
-                gameID = Integer.parseInt(gameIDStr);
-                frameNumber = Integer.parseInt(frameNumberStr);
+                //gameID = Integer.parseInt(gameIDStr);
+                // frameNumber = Integer.parseInt(frameNumberStr);
                 
                 // Validate ranges
                 if (frameNumber < 1 || frameNumber > 12) {
@@ -241,9 +241,16 @@ public class InsertShotServlet extends HttpServlet {
         events = eventsController.getEvents();
         req.setAttribute("events", events);*/
         
+        ArrayList<Shot> shots = gameShotsController.findAllShotsInGame(String.valueOf(gameID));
+        
+        
+        	//currentFrame = Math.ceil(double)((shots.size() + 1)/2);
+    	frameNumber = (int) Math.ceil((double) (shots.size() + 1) / 2);
+    	shotNumber = String.valueOf(shots.size() + 1);
+        
         // Set request attributes
-        req.setAttribute("gameID", gameIDStr);
-        req.setAttribute("frameNumber", frameNumberStr);
+        req.setAttribute("gameID", gameID);
+        req.setAttribute("frameNumber", frameNumber);
         req.setAttribute("shotNumber", shotNumber);
         req.setAttribute("count", count);
         req.setAttribute("leave", leave);
