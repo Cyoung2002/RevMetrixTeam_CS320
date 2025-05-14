@@ -160,7 +160,7 @@
         <div class="button-container">
             
             <form action="${pageContext.servletContext.contextPath}/viewIndex" method="post">
-                <button type="submit" name="submitviewIndex">Viewing Page</button>
+                <button type="submit" name="submitviewIndex">View/Adding Page</button>
             </form>
                         
              <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">

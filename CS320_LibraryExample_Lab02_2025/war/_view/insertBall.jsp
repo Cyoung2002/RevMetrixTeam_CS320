@@ -88,6 +88,7 @@
         }
 
         input[type="submit"] {
+            font-family: 'Orbitron', sans-serif; 
             background: #ff6600;
             color: white;
             border: none;
@@ -105,6 +106,27 @@
             background: #ff3300;
             box-shadow: 0 0 15px #ff00ff;
         }
+        
+        button[type="submit"] {
+    font-family: 'Orbitron', sans-serif; 
+    background: #ff6600;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    margin-top: 15px;
+    margin-right: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+    box-shadow: 0 0 10px #ff6600;
+}
+
+button[type="submit"]:hover {
+    background: #ff3300;
+    box-shadow: 0 0 15px #ff00ff;
+}
+        
     </style>
 </head>
 
@@ -180,9 +202,11 @@
             <input type="submit" name="submitarsenal" value="View Arsenal">
         </form>
         
-         <form action="${pageContext.servletContext.contextPath}/index" method="post">
-            <input type="submit" name="submithome" value="Home">
-        </form>
+           <br></br>
+            <form action="${pageContext.servletContext.contextPath}/viewIndex" method="post">
+                <button type="submit" name="submitviewIndex">View/Adding Page</button>
+            </form>
+        
     </div>
 
 </body>

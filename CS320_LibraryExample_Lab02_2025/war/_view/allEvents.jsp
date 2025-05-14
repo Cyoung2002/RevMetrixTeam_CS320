@@ -184,17 +184,15 @@ td.eventPlayoffsCol {
             </table>
             </div>
 
-            <button type="submit" name="submithome">Home</button>
         </form>
         <br>
 
 			<form action="${pageContext.servletContext.contextPath}/insertEvent" method="get">
                 <button type="submit" name="submitinsertnewestablishment">Add New Event</button>
             </form>
-            <br></br>
-            
-           <form action="${pageContext.servletContext.contextPath}/statIndex" method="post">
-                <button type="submit" name="submitstatIndex">Statistics Page</button>
+           <br></br>
+            <form action="${pageContext.servletContext.contextPath}/viewIndex" method="post">
+                <button type="submit" name="submitviewIndex">View/Adding Page</button>
             </form>
             
             
