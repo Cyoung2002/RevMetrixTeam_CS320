@@ -85,9 +85,8 @@
         
         /* Second shot - pins already knocked down (grayed out) */
         .pin.second-shot.knocked-down {
-            background-color: #cccccc;
-            color: #666666;
-            pointer-events: none;
+            background-color: white;
+            color: #666666;   
         }
         .options {
             display: flex;
@@ -239,33 +238,30 @@
             });
         }
         
-        // Set up pin click handlers
+     // Set up pin click handlers
         document.querySelectorAll('.pin').forEach(function(pin) {
-            // Only make standing pins clickable
-             
-                pin.addEventListener('click', function() {
-                    var pinNum = this.getAttribute('data-pin');
-                    
-                    if (currentShotPins.has(pinNum)) {
-                        currentShotPins.delete(pinNum);
-                        this.classList.remove('selected');
-                    } else {
-                        currentShotPins.add(pinNum);
-                        this.classList.add('selected');
-                    }
-                    
-                    // Update hidden inputs
-                    standingPinsInput.value = Array.from(currentShotPins).join(',');
-                    document.getElementById('count').value = calculateCount();
-                    document.getElementById('leave').value = calculateLeave();
-                });
+            pin.addEventListener('click', function() {
+                var pinNum = this.getAttribute('data-pin');
                 
-                // Initialize selected state if needed
-                if (currentShotPins.has(pin.getAttribute('data-pin'))) {
-                    pin.classList.add('selected');
+                if (currentShotPins.has(pinNum)) {
+                    currentShotPins.delete(pinNum);
+                    this.classList.remove('selected');
+                } else {
+                    currentShotPins.add(pinNum);
+                    this.classList.add('selected');
                 }
+                
+                // Update hidden inputs
+                standingPinsInput.value = Array.from(currentShotPins).join(',');
+                document.getElementById('count').value = calculateCount();
+                document.getElementById('leave').value = calculateLeave();
+            });
+            
+            // Initialize selected state if needed
+            if (currentShotPins.has(pin.getAttribute('data-pin'))) {
+                pin.classList.add('selected');
             }
-        });
+        });  // Removed extra closing brace
 
         function calculateCount() {
             // First shot: count is 10 minus number of selected pins
