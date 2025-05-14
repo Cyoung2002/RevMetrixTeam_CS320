@@ -258,7 +258,7 @@
                     standingPinsInput.value = Array.from(currentShotPins).join(',');
                     document.getElementById('count').value = calculateCount();
                     document.getElementById('leave').value = calculateLeave();
-                );
+                });
                 
                 // Initialize selected state if needed
                 if (currentShotPins.has(pin.getAttribute('data-pin'))) {
