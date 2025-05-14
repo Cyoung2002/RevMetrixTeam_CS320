@@ -1,0 +1,193 @@
+package edu.ycp.cs320.lab02.servlet;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import edu.ycp.cs320.booksdb.model.Event;
+import edu.ycp.cs320.booksdb.persist.DatabaseProvider;
+import edu.ycp.cs320.booksdb.persist.DerbyDatabase;
+import edu.ycp.cs320.booksdb.persist.IDatabase;
+import edu.ycp.cs320.lab02.controller.AllEventsController;
+import edu.ycp.cs320.lab02.controller.InsertGameController;
+import edu.ycp.cs320.lab02.controller.InsertShotController;
+
+public class InsertShotServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    
+    private InsertShotController shotController = null;    
+    private AllEventsController eventsController = null;
+    private InsertGameController gameController = null;
+    private IDatabase db = null;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        System.out.println("\nInsertShotServlet: doGet");
+
+        String user = (String) req.getSession().getAttribute("user");
+        if (user == null) {
+            System.out.println("   User: <" + user + "> not logged in or session timed out");
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
+        System.out.println("   User: <" + user + "> logged in");
+        
+        // Initialize controllers and database
+        DatabaseProvider.setInstance(new DerbyDatabase());
+        db = DatabaseProvider.getInstance();
+        gameController = new InsertGameController();
+        shotController = new InsertShotController();
+        
+        // Get the last game ID
+        Integer gameID = db.getLastInsertedGameID();
+        if (gameID == null || gameID <= 0) {
+            req.setAttribute("errorMessage", "No game found to add shots to. Please create a game first.");
+            req.getRequestDispatcher("/_view/insertShot.jsp").forward(req, resp);
+            return;
+        }
+        
+        // We'll track frame and shot number via session
+        Integer currentFrame = (Integer) req.getSession().getAttribute("currentFrame");
+        String currentShot = (String) req.getSession().getAttribute("currentShot");
+        
+        // Initialize if first shot
+        if (currentFrame == null) {
+            currentFrame = 1;
+            currentShot = "1";
+        }
+        
+        // Don't allow more than 12 frames
+        if (currentFrame > 12) {
+            req.setAttribute("errorMessage", "Game already has 12 frames completed. Cannot add more shots.");
+            req.getRequestDispatcher("/_view/insertShot.jsp").forward(req, resp);
+            return;
+        }
+        
+        ArrayList<Event> events = null;
+        eventsController = new AllEventsController();
+        events = eventsController.getEvents();
+        req.setAttribute("events", events);
+        
+        // Set values
+        req.setAttribute("gameID", gameID);
+        req.setAttribute("frameNumber", currentFrame);
+        req.setAttribute("shotNumber", currentShot);
+        
+        req.getRequestDispatcher("/_view/insertShot.jsp").forward(req, resp);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        
+        System.out.println("\nInsertShotServlet: doPost");    
+        
+        String errorMessage = null;
+        String successMessage = null;
+        String shotNumber = null;
+        String gameIDStr = null;
+        String frameNumberStr = null;
+        String count = null;
+        String leave = null;
+        String score = null;
+        String type = null;
+        String board = null;
+        String lane = null;
+        String ball = null;
+        
+        int gameID = 0;
+        int frameNumber = 0;
+
+        // Get form parameters
+        shotNumber = req.getParameter("shotNumber");
+        gameIDStr = req.getParameter("gameID");
+        frameNumberStr = req.getParameter("frameNumber");
+        count = req.getParameter("count");
+        leave = req.getParameter("leave");
+        score = req.getParameter("score");
+        type = req.getParameter("type");
+        board = req.getParameter("board");
+        lane = req.getParameter("lane");
+        ball = req.getParameter("ball");
+
+        // Validate parameters
+        if (shotNumber == null || shotNumber.trim().isEmpty()) {
+            errorMessage = "Shot number is required";
+        } else if (gameIDStr == null || gameIDStr.trim().isEmpty()) {
+            errorMessage = "Game ID is required";
+        } else if (frameNumberStr == null || frameNumberStr.trim().isEmpty()) {
+            errorMessage = "Frame number is required";
+        } else {
+            try {
+                gameID = Integer.parseInt(gameIDStr);
+                frameNumber = Integer.parseInt(frameNumberStr);
+                
+                // Validate ranges
+                if (frameNumber < 1 || frameNumber > 12) {
+                    errorMessage = "Frame number must be between 1 and 12";
+                } else if (!shotNumber.equals("1") && !shotNumber.equals("2")) {
+                    errorMessage = "Shot number must be either 1 or 2";
+                } else {
+                    // Handle strike scenario - second shot can be null/empty
+                    if (shotNumber.equals("2") && (count == null || count.trim().isEmpty())) {
+                        count = "0"; // or null if preferred
+                    }
+                    
+                    // Insert the shot using your existing method
+                    Integer shotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                            count, leave, score, type, board, lane, ball);
+                    
+                    if (shotID > 0) {
+                        successMessage = "Shot successfully added to Frame " + frameNumber + 
+                                        " (Shot " + shotNumber + ")";
+                        
+                        // Calculate next shot and frame
+                        String nextShot = shotNumber.equals("1") ? "2" : "1";
+                        int nextFrame = shotNumber.equals("1") ? frameNumber : frameNumber + 1;
+                        
+                        // Store in session
+                        req.getSession().setAttribute("currentFrame", nextFrame);
+                        req.getSession().setAttribute("currentShot", nextShot);
+                        
+                        // Set attributes for form
+                        req.setAttribute("nextFrame", nextFrame);
+                        req.setAttribute("nextShotNumber", nextShot);
+                    } else {
+                        errorMessage = "Failed to insert shot";
+                    }
+                }
+            } catch (NumberFormatException e) {
+                errorMessage = "Game ID and Frame Number must be valid numbers";
+            }
+        }
+        
+        // Get events for navigation
+        ArrayList<Event> events = null;
+        eventsController = new AllEventsController();
+        events = eventsController.getEvents();
+        req.setAttribute("events", events);
+        
+        // Set request attributes
+        req.setAttribute("gameID", gameIDStr);
+        req.setAttribute("frameNumber", frameNumberStr);
+        req.setAttribute("shotNumber", shotNumber);
+        req.setAttribute("count", count);
+        req.setAttribute("leave", leave);
+        req.setAttribute("score", score);
+        req.setAttribute("type", type);
+        req.setAttribute("board", board);
+        req.setAttribute("lane", lane);
+        req.setAttribute("ball", ball);
+        req.setAttribute("errorMessage", errorMessage);
+        req.setAttribute("successMessage", successMessage);
+        
+        req.getRequestDispatcher("/_view/insertShot.jsp").forward(req, resp);
+    }    
+}

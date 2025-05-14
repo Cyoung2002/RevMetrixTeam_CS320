@@ -117,7 +117,11 @@
     <servlet-name>InsertGameServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.lab02.servlet.InsertGameServlet</servlet-class>
   </servlet>
-  
+  <servlet>
+  	<servlet-name>InsertShotServlet</servlet-name>
+  	<servlet-class>edu.ycp.cs320.lab02.servlet.InsertShotServlet</servlet-class>
+  </servlet>
+
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
@@ -212,8 +216,12 @@
     <servlet-name>InsertGameServlet</servlet-name>
     <url-pattern>/insertGame</url-pattern>
   </servlet-mapping>
-  
-    <servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>InsertShotServlet</servlet-name>
+  	<url-pattern>/insertShot</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
     <servlet-name>OverallGameAverageForSessionServlet</servlet-name>
     <url-pattern>/overallGameAverageForSession</url-pattern>
   </servlet-mapping>
