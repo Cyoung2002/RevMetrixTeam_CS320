@@ -1233,22 +1233,7 @@ public class DerbyDatabase implements IDatabase {
 					else	// really should throw an exception here - the new establishment should have been inserted, but we didn't find it
 					{
 						System.out.println("New establishment <" + longName + "> not found in Establishments table (ID: " + establishment_id);
-					}
-					
-//					// now that we have all the information, insert entry into Establishments table
-//					// prepare SQL insert statement to add new establishment to Establishments table
-//					stmt6 = conn.prepareStatement(
-//							"insert into establishments (establishment_id) " +
-//							"  values(?) "
-//					);
-//					stmt6.setInt(1, establishment_id);
-//					
-//					// execute the update
-//					stmt6.executeUpdate();
-//					
-//					System.out.println("New entry for establishment ID <" + establishment_id + "> inserted into Establishments table");						
-//					
-//					System.out.println("New establishment <" + longName + "> inserted into Establishments table");					
+					}				
 					
 					return establishment_id;
 				} finally {				
@@ -1636,8 +1621,6 @@ public class DerbyDatabase implements IDatabase {
 					DBUtil.closeQuietly(resultSet1);
 					DBUtil.closeQuietly(stmt1);
 					DBUtil.closeQuietly(stmt2);					
-					//DBUtil.closeQuietly(resultSet3);
-					//DBUtil.closeQuietly(stmt3);					
 				}
 			}
 		});
@@ -1761,12 +1744,7 @@ public class DerbyDatabase implements IDatabase {
 
 				// try to retrieve author_id (if it exists) from DB, for Author's full name, passed into query
 				try {
-					/*stmt = conn.prepareStatement(
-							"select * from events " +
-							"  where shortname = ? " +
-							"  order by session_id desc " +
-							"  limit 1 " 
-					);*/
+					
 					stmt = conn.prepareStatement(
 							"select sessions.week from sessions " +
 							"  where sessions.league = ? " +
@@ -1783,35 +1761,6 @@ public class DerbyDatabase implements IDatabase {
 					} else {
 						newWeek = 1;
 					}
-						
-						
-					
-					/*stmt1 = conn.prepareStatement(
-							"select event_id from events " +
-							"  where shortname = ? "
-					);
-					stmt1.setString(1, league);
-					
-					// execute the query, get the result
-					resultSet1 = stmt1.executeQuery();
-
-					
-					// if event was found then save event_id					
-					if (resultSet1.next())
-					{
-						event_id = resultSet1.getInt(1);
-						System.out.println("Event/League <" + league +  "> found with ID: " + event_id);						
-					}
-					else
-					{
-						System.out.println("Event/League <" + league +  "> not found");
-						//Kinda unsure what to do if the event/league isnt found. Simple solution
-						//for while I was working was to just print that they should first insert the new event
-						//and return to this page later, should probably be another way.
-						System.out.println("Please insert the new event from the events page, then try again.");
-		
-						return session_id; //(?) not sure if I should do this but temp idea
-					}*/
 					
 					
 					// now insert new Session into Sessions table
@@ -1824,9 +1773,7 @@ public class DerbyDatabase implements IDatabase {
 					stmt4.setDate(2, bowled);
 					stmt4.setInt(3, startLane);
 					stmt4.setString(4, ball);
-					stmt4.setInt(5, Integer.valueOf(newWeek));
-					//stmt4.setString(5, week);
-					
+					stmt4.setInt(5, Integer.valueOf(newWeek));					
 					
 					// execute the update
 					stmt4.executeUpdate();
@@ -1837,7 +1784,6 @@ public class DerbyDatabase implements IDatabase {
 					// and return the session_id, which the DB SHOULD NOT-auto-generate. THE REASON-
 					// User entered the week, so can't have two id's for the same thing
 					// prepare SQL statement to retrieve book_id for new Book
-					
 				
 					return newWeek;
 				} finally {
@@ -2154,6 +2100,7 @@ public class DerbyDatabase implements IDatabase {
 	}
 	
 	private void loadShot(Shot shot, ResultSet resultSet, int index) throws SQLException {
+		
 		System.out.println("loading a shot");
 		resultSet.getString(index++);
 		shot.setGameID(Integer.valueOf(resultSet.getString(index++))); 		// game ID
@@ -2203,7 +2150,6 @@ public class DerbyDatabase implements IDatabase {
 							"create table books (" +
 							"	book_id integer primary key " +
 							"		generated always as identity (start with 1, increment by 1), " +
-//							"	author_id integer constraint author_id references authors, " +  	// this is now in the BookAuthors table
 							"	title varchar(70)," +
 							"	isbn varchar(15)," +
 							"   published integer" +
@@ -2430,8 +2376,6 @@ public class DerbyDatabase implements IDatabase {
 					// must completely populate Books table before populating BookAuthors table because of primary keys
 					insertBook = conn.prepareStatement("insert into books (title, isbn, published) values (?, ?, ?)");
 					for (Book book : bookList) {
-//						insertBook.setInt(1, book.getBookId());		// auto-generated primary key, don't insert this
-//						insertBook.setInt(1, book.getAuthorId());	// this is now in the BookAuthors table
 						insertBook.setString(1, book.getTitle());
 						insertBook.setString(2, book.getIsbn());
 						insertBook.setInt(3, book.getPublished());
@@ -2471,7 +2415,6 @@ public class DerbyDatabase implements IDatabase {
 					// must completely populate Establishment table before events
 					insertEvent = conn.prepareStatement("insert into events (longname, shortname, type, establishment, season, team, composition, day, time, start_date, end_date, games_per_session, weeks, playoffs) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					for (Event event : eventList) {
-						//insertEvent.setInt(1, event.getEstablishmentId());
 						insertEvent.setString(1, event.getLongname());
 						insertEvent.setString(2, event.getShortname());
 						insertEvent.setString(3, event.getType());
@@ -2495,7 +2438,6 @@ public class DerbyDatabase implements IDatabase {
 					// must completely populate Establishment table before events
 					insertBall = conn.prepareStatement("insert into arsenal (long_name, short_name, brand, type, core, cover, color, surface, ball_year, serial_number, weight, mapping) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 					for (Ball ball : arsenal) {
-						//insertEvent.setInt(1, event.getEstablishmentId());
 						insertBall.setString(1, ball.getLongname());
 						insertBall.setString(2, ball.getShortname());
 						insertBall.setString(3, ball.getBrand());

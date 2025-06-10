@@ -145,6 +145,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="header">
         <h1>Enter Shot Details</h1>
