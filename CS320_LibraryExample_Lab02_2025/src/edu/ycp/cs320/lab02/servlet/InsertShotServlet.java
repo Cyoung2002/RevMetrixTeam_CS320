@@ -136,6 +136,15 @@ public class InsertShotServlet extends HttpServlet {
         board = req.getParameter("board");
         lane = req.getParameter("lane");
         ball = req.getParameter("ball");
+        
+        
+        int strikeShotID = -1;
+        int emptyShotID = -1;
+        int spareShotID = -1;
+        int gutterShotID = -1;
+        int foulShotID = -1;
+        int normalShotID = -1;
+        
 
         // Validate parameters
         if (shotNumber == null || shotNumber.trim().isEmpty()) {
@@ -163,12 +172,12 @@ public class InsertShotServlet extends HttpServlet {
                         count = "0"; // or null if preferred
                     }*/
                 	if (leave.contains("X")) {
-                		int strikeShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                		strikeShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
                                 "X", "", "", "", "", "", "");
                 		
                 		if(!(Integer.valueOf(shotNumber)%2 == 0)) {
                 			shotNumber = String.valueOf(Integer.valueOf(shotNumber) + 1);
-                    		int emptyShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                    		emptyShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
                                     "", "", "", "", "", "", "");
                 		}
                         
@@ -178,15 +187,15 @@ public class InsertShotServlet extends HttpServlet {
                         }
                         
                 	} else if (leave.contains("/")) {
-                		int spareShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                		spareShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
                                 "/", "", "", "", "", "", "");
                 		
                 	} else if (leave.contains("-")) {
-                		int gutterShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                		gutterShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
                 				"-", "", "", "", "", "", "");
                 		
                 	} else if (leave.contains("F")) {
-                		int gutterShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                		foulShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
                 				"F", "", "", "", "", "", "");
                 		
                 	} else {
@@ -200,7 +209,7 @@ public class InsertShotServlet extends HttpServlet {
                 		    sum += Integer.parseInt(part.trim());
                 		}
                 		
-                		int normalShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
+                		normalShotID = shotController.insertShot(shotNumber, gameID, frameNumber, 
                 				String.valueOf(count), leave , "", "", "", "", "");
                 		
                 	}
